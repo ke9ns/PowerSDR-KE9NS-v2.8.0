@@ -14,7 +14,9 @@ Based on the last version of FlexRadio PowerSDR v2.7.2
 
 Ke9ns V2.8 is a highly modified version of that PowerSDR software
 
-see https://ke9ns.com/revision.html for revision history since 2.7.2 Written in C# (PowerSDR), C (DttSP), C++(PowerMate)
+Free download, manuals, service manuals, operational instructions, etc., at ke9ns.com/flexpage.html
+
+see ke9ns.com/revision.html for revision history since 2.7.2 Written in C# (PowerSDR), C (DttSP), C++(PowerMate)
 
 Currently compiled under VS2022 (including C and C++ and C# modules) and .NET 4.8
 
