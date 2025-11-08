@@ -1,6 +1,6 @@
 <!-- This makes the image show up beautifully on GitHub -->
 <div align="center">
-   <img src="assets/SS1.jpg" width="30%"/>
+   <img src="assets/SS1.jpg" width="60%"/>
 
   <br><br>
   <b>PowerSDR KE9NS v2.8.0 SDR software for the Flex-1500, Flex-3000, and Flex-5000 radios</b>
