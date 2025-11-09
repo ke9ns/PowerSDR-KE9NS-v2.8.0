@@ -24,7 +24,7 @@ Currently compiled under VS2022 (including C and C++ and C# modules) and .NET 4.
 IMPORTANT: To make sure this project will compile and run correctly, go to ke9sn.com/flexpage.html then download and install the full PowerSDR ke9ns v2.8.0 installer (Orange button)
 This will make sure all DLLs and EXEs are in the correct locations ahead of time.
 
-Then in Visual Studio, Clone this github project (https://github.com/ke9ns/PowerSDR_KE9NS_v2.8.0) 
+Then in Visual Studio, Clone this github project (https://github.com/ke9ns/PowerSDR-KE9NS-v2.8.0) 
 You may need to upgrade the Toolset for "DttSP" and "PowerMate" projects
 
 Set the "DttSP" and "powerMaate" properties: Configuration manager Release, Any CPU, and to build only PowerSDR (platform x86)
