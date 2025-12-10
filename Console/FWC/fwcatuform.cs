@@ -183,8 +183,8 @@ namespace PowerSDR
             if (!console.fwc_init || console.CurrentModel != Model.FLEX5000) return;
             if (radModeAuto.Checked)
             {
-                if (!FWCATU.Active)  FWCATU.Activate(true);
-                if (FWCATU.AutoStatus == 0)  FWCATU.AutoTuning(true);
+                if (!FWCATU.Active) FWCATU.Activate(true);
+                if (FWCATU.AutoStatus == 0) FWCATU.AutoTuning(true);
 
                 if (FWC.old_atu == false)
                 {
@@ -232,14 +232,14 @@ namespace PowerSDR
             UpdateFeedback();
             console.FWCATUTuned();
         }
-        
+
         public void DoTuneFull()
         {
             radModeSemiAuto.Checked = true;
             chkUseTUN.Checked = true;
             btnTuneFull_Click(this, EventArgs.Empty);
         }
-        
+
         private void btnTuneFull_Click(object sender, System.EventArgs e)
         {
             Thread t = new Thread(new ThreadStart(TuneFull));
@@ -352,7 +352,6 @@ namespace PowerSDR
         public void READSWR()
         {
             SWRRUN = true;
-            int old_tun_pwr = 50;
 
             do
             {

@@ -27,7 +27,6 @@
 //=================================================================
 
 
-using Flex.Control; // .250
 using System.Diagnostics;
 
 namespace PowerSDR
@@ -362,15 +361,15 @@ namespace PowerSDR
                     switch (dir)
                     {
                         case FlexControl.RotateDirection.Clockwise:
-                                                      
-                                console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, num_steps);
-                           
+
+                            console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, num_steps);
+
                             break;
                         case FlexControl.RotateDirection.CounterClockwise:
 
-                          
-                               console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, -num_steps);
-                           
+
+                            console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, -num_steps);
+
 
                             break;
                     }

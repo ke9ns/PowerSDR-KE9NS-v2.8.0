@@ -35,7 +35,6 @@ using System.Threading;
 using System.Windows.Forms;
 #if(!NO_MCL_PM)
 using mcl_pm;
-using TDxInput;
 #endif
 
 namespace PowerSDR
@@ -889,7 +888,7 @@ namespace PowerSDR
                 console.SyncCalDateTime();
                 lstDebug.Items[0] = "Saving Power data to EEPROM...done";
             }
-            }
+        }
         #endregion
 
         private void FLEX5000VUCalForm_KeyDown(object sender, KeyEventArgs e)

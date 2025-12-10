@@ -28,13 +28,9 @@
 //=================================================================
 
 
-using EnvDTE;
-using Microsoft.JScript;
-using Microsoft.VisualBasic.Logging;
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 
 namespace PowerSDR
 {
@@ -105,7 +101,7 @@ namespace PowerSDR
 
         public void CreateDSP()
         {
-           // System.String app_data_path = "";
+            // System.String app_data_path = "";
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             System.String version = fvi.FileVersion.Substring(0, fvi.FileVersion.LastIndexOf("."));
@@ -573,7 +569,7 @@ namespace PowerSDR
                         break;
 
                     default:
-                       
+
                         break;
                 }
 
@@ -2024,7 +2020,7 @@ namespace PowerSDR
         private int tx_alc_bottom = -120;
         private int TXALCBottom
         {
-           get { return tx_alc_bottom; }
+            get { return tx_alc_bottom; }
             set
             {
                 tx_alc_bottom = value;

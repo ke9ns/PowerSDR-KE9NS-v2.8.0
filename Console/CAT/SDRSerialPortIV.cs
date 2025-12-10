@@ -128,10 +128,10 @@ namespace PowerSDR
             if (bitBangOnly) return 0;
 
             byte[] data = { 0xFE, 0xFE, 0xB0, 0x00, 0x03, 0xFD }; // ke9ns: question CXAuto device for current ANT pos 0-7 or 8=all off
-        
+
             try
             {
-                commPort.Write(data,0,6);
+                commPort.Write(data, 0, 6);
             }
             catch
             {
@@ -145,28 +145,28 @@ namespace PowerSDR
 
         public uint put0(string s) // .275 ke9ns: SET NEW ANT POS:  0=antenna 0 through 7, 8=ALL OFF, 9=invalid
         {
-             if (bitBangOnly) return 0;
+            if (bitBangOnly) return 0;
 
             try
             {
 
                 byte[] data = { 0xFE, 0xFE, 0xB0, 0x00, 0x12 };
-                byte[] data1 = { (byte)int.Parse(s), 0xFD};
-               
+                byte[] data1 = { (byte)int.Parse(s), 0xFD };
+
                 commPort.Write(data, 0, 5);
-                commPort.Write(data1,0,2);
-                
+                commPort.Write(data1, 0, 2);
+
             }
             catch
             {
                 return 0;
             }
 
-            return 8; 
+            return 8;
 
         } // put0
 
-             
+
 
         public int Create()
         {

@@ -72,7 +72,7 @@ namespace PowerSDR
         } // SIOListenerIII(Console c)
 
 
-      
+
 
         public void enableROTOR()
         {
@@ -106,7 +106,7 @@ namespace PowerSDR
                                 console.CATHandshake);
 
             Initialize();
-            
+
 
         } // enableRotor
 

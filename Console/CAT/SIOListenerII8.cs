@@ -347,16 +347,16 @@ namespace PowerSDR
 
                         Debug.WriteLine("S SIO8----->" + m.Value);
 
-                      //  console.SpoofAB = true; // ke9ns add: .200 used by IF command in CATCommands.cs
+                        //  console.SpoofAB = true; // ke9ns add: .200 used by IF command in CATCommands.cs
                         console.SpoofRXATXB = true; //.311
 
                         console.KWAI8 = true; // .214 check for AI command     sets or clears console.KWAutoInformation8
                         answer = parser.Get(m.Value);                                   //send the match to the parser
                         console.KWAI8 = false; // .214
 
-                        if (answer.Length > 0)  result = SIO8.put(answer);                                   //send the answer to the serial port
+                        if (answer.Length > 0) result = SIO8.put(answer);                                   //send the answer to the serial port
 
-                      //  console.SpoofAB = false;
+                        //  console.SpoofAB = false;
                         console.SpoofRXATXB = false; //.311
 
 

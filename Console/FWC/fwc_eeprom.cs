@@ -356,7 +356,6 @@ namespace PowerSDR
                 return;  // for production
             }
             uint data, count = 0;
-            byte data1; // ke9ns add
 
             if (model == 99) // keep from reading the model more than once
                 FWC.GetModel(out model);

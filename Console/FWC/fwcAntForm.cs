@@ -28,7 +28,6 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -468,7 +467,7 @@ namespace PowerSDR
 
                 chkRX1Loop.Checked = console.RX1Loop;
 
-                if (console.TXBand == Band.B6M)  comboTXAnt.Enabled = false;
+                if (console.TXBand == Band.B6M) comboTXAnt.Enabled = false;
 
                 chkRCATX1_CheckedChanged(this, EventArgs.Empty);
                 chkRCATX2_CheckedChanged(this, EventArgs.Empty);
@@ -603,7 +602,7 @@ namespace PowerSDR
                 return;
             }
 
-            if (comboRX1Ant.Text == "RX1 IN")  chkRX1Loop.Enabled = false;
+            if (comboRX1Ant.Text == "RX1 IN") chkRX1Loop.Enabled = false;
             else
                 chkRX1Loop.Enabled = true;
 
@@ -900,7 +899,7 @@ namespace PowerSDR
         // ke9ns add .205
         private void comboTXAnt2_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-             AntennaTextUpdate(); //.243
+            AntennaTextUpdate(); //.243
 
 
             if ((byte)(FWCEEPROM.RFIORev) < 34)
@@ -1140,7 +1139,7 @@ namespace PowerSDR
                     chkRX2TX1.Visible = true;
                     chkRX2TX2.Visible = true;
                     chkRX2TX3.Visible = true;
-                   
+
                     console.panelAntenna.Size = new Size(115, 78);
 
                 }
@@ -1179,12 +1178,12 @@ namespace PowerSDR
 
         } // chkTX2Active_CheckedChanged
 
-  
+
         // updated .274
 
         private void textBoxRX1Ant_TextChanged(object sender, EventArgs e) //.243 allow nameing of antennas
         {
-            
+
             if (comboRX1Ant.Text == "ANT 1")
             {
                 txtBoxAnt1.Text = textBoxRX1Ant.Text;
@@ -1245,9 +1244,9 @@ namespace PowerSDR
 
 
             AntennaTextUpdate(); //.243
-         //   comboRX1Ant_SelectedIndexChanged(this, EventArgs.Empty);
+                                 //   comboRX1Ant_SelectedIndexChanged(this, EventArgs.Empty);
 
-          
+
 
         } // textBoxRX1Ant
 
@@ -1312,9 +1311,9 @@ namespace PowerSDR
             if (txtBoxAnt11.Text == "") txtBoxAnt11.Text = "XVTX/C";
             if (txtBoxAnt12.Text == "") txtBoxAnt12.Text = "PA";
 
-         //   comboTXAnt_SelectedIndexChanged(this, EventArgs.Empty);
+            //   comboTXAnt_SelectedIndexChanged(this, EventArgs.Empty);
             AntennaTextUpdate(); //.243
-        
+
 
         } // textBoxTX1Ant
 
@@ -1378,9 +1377,9 @@ namespace PowerSDR
             if (txtBoxAnt11.Text == "") txtBoxAnt11.Text = "XVTX/C";
             if (txtBoxAnt12.Text == "") txtBoxAnt12.Text = "PA";
 
-          //  comboRX2Ant_SelectedIndexChanged(this, EventArgs.Empty);
+            //  comboRX2Ant_SelectedIndexChanged(this, EventArgs.Empty);
             AntennaTextUpdate(); //.243
-          
+
 
         } // textBoxRX2Ant
 
@@ -1444,9 +1443,9 @@ namespace PowerSDR
             if (txtBoxAnt11.Text == "") txtBoxAnt11.Text = "XVTX/C";
             if (txtBoxAnt12.Text == "") txtBoxAnt12.Text = "PA";
 
-          //  comboTXAnt2_SelectedIndexChanged(this, EventArgs.Empty);
-             AntennaTextUpdate(); //.243
-        
+            //  comboTXAnt2_SelectedIndexChanged(this, EventArgs.Empty);
+            AntennaTextUpdate(); //.243
+
 
         } // textBoxTX2
 
@@ -1457,13 +1456,13 @@ namespace PowerSDR
             if ((me.Button == System.Windows.Forms.MouseButtons.Right))
             {
                 txtBoxAnt1.Text = "ANT1"; //.274
-                 txtBoxAnt2.Text = "ANT2";
+                txtBoxAnt2.Text = "ANT2";
                 txtBoxAnt3.Text = "ANT3";
                 txtBoxAnt4.Text = "RX1 IN";
                 txtBoxAnt5.Text = "RX2 IN";
                 txtBoxAnt6.Text = "RX1 Tap";
                 txtBoxAnt7.Text = "Sig Gen";
-                 txtBoxAnt8.Text = "VHF";
+                txtBoxAnt8.Text = "VHF";
                 txtBoxAnt9.Text = "UHF";
                 txtBoxAnt10.Text = "XVRX";
                 txtBoxAnt11.Text = "XVTX/C";

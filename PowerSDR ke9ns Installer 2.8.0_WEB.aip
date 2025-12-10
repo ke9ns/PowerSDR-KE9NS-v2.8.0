@@ -19,10 +19,10 @@
     <ROW Property="ARPURLUPDATEINFO" Value="ke9ns.com/flexpage.html"/>
     <ROW Property="CTRLS" Value="1"/>
     <ROW Property="Manufacturer" Value="ke9ns"/>
-    <ROW Property="ProductCode" Value="1033:{E51C20DF-1EE6-49DF-A705-1F05180643C8} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{93629537-7323-4F59-A0DC-601EDD8C1D89} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="PowerSDR v2.8.0.318"/>
-    <ROW Property="ProductVersion" Value="22.318.5.0" Type="32"/>
+    <ROW Property="ProductName" Value="PowerSDR v2.8.0.321"/>
+    <ROW Property="ProductVersion" Value="22.321.3.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{A5226811-E4EA-414C-8491-CEFB1FC47B7C}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="AnyCPU_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -1549,7 +1549,7 @@
     <ROW Action="AI_DetectSoftware" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="AnyCPU_Release" BuildName="AnyCPU_Release" BuildOrder="1" BuildType="0" PackageFolder="..\..\..\Documents\Advanced Installer\Projects\PowerSDR ke9ns 2.8.0\Setup Files" PackageFileName="PowerSDR_KE9NS_V2.8.0.318_Incremental_Installer" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ROW BuildKey="AnyCPU_Release" BuildName="AnyCPU_Release" BuildOrder="1" BuildType="0" PackageFolder="..\..\..\Documents\Advanced Installer\Projects\PowerSDR ke9ns 2.8.0\Setup Files" PackageFileName="PowerSDR_KE9NS_V2.8.0.321_Incremental_Installer" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
     <ATTRIBUTE name="CacheIndex" value="PowerSDR ke9ns Installer 2.8.0_WEB.txt"/>

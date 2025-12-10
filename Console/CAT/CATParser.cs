@@ -22,6 +22,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -132,7 +133,10 @@ namespace PowerSDR
 
             if (goodcmd)
             {
-              //  console.helpboxForm.helpbox_message.Text += " " + counter1 + " CAT REC: " + prefix +  "\n\r"; //.278
+
+                Debug.WriteLine("CAT RX: " + prefix + "," + suffix);
+
+                //  console.helpboxForm.helpbox_message.Text += " " + counter1 + " CAT REC: " + prefix +  "\n\r"; //.278
 
                 switch (prefix)
                 {

@@ -34,13 +34,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Globalization;
-using System.Diagnostics.Eventing.Reader;
-using stdole;
-using System.Reflection.Emit;
-using System.Windows.Forms.DataVisualization.Charting;
 using Font = System.Drawing.Font;
-using Microsoft.JScript;
 using Convert = System.Convert;
+
 
 
 
@@ -76,6 +72,8 @@ namespace PowerSDR
         //private static int waterfall_counter;
         private static Bitmap waterfall_bmp;                    // RX1 saved waterfall picture for display
         private static Bitmap waterfall_bmp2;                   // RX2
+
+
         private static int[] histogram_data;                    // histogram display buffer
         private static int[] histogram_history;                 // histogram counter
                                                                 //private static Graphics display_graphics;				// GDI graphics object
@@ -523,7 +521,7 @@ namespace PowerSDR
         private static float temp_low_threshold = 0; // ke9ns add: to switch between TX and RX low level waterfall levels
         private static float temp_high_threshold = 0; // ke9ns add: for TX upper level
 
-      
+
         public static int DIS_X = 0; // ke9ns add: always the size of picdisplay
         public static int DIS_Y = 0; // ke9ns add:
 
@@ -794,7 +792,7 @@ namespace PowerSDR
 
                 if (average_on)
                 {
-                 //   Debug.WriteLine("294 reset avg");
+                    //   Debug.WriteLine("294 reset avg");
                     ResetRX1DisplayAverage();      // ke9ns: rx1_average_buffer[0] = -999.999f
                 }
                 if (peak_on) ResetRX1DisplayPeak();
@@ -948,7 +946,7 @@ namespace PowerSDR
             set
             {
                 spectrum_grid_rx2_min1 = spectrum_grid_rx2_min = value;
-             //   Debug.WriteLine("RX2 " + spectrum_grid_rx2_min);
+                //   Debug.WriteLine("RX2 " + spectrum_grid_rx2_min);
 
                 DrawBackground();
             }
@@ -1586,6 +1584,7 @@ namespace PowerSDR
                 histogram_data[i] = Int32.MaxValue;
                 histogram_history[i] = 0;
             }
+
 
             //display_bmp = new Bitmap(W, H);
             //display_graphics = Graphics.FromImage(display_bmp);
@@ -2355,7 +2354,7 @@ namespace PowerSDR
             }
             else
             {
-              //  Debug.WriteLine("display update = false");
+                //  Debug.WriteLine("display update = false");
             }
 
 
@@ -2919,6 +2918,8 @@ namespace PowerSDR
         static int cw_line_x; // ke9ns used to move the 0hz line over by the pitch mount of hz
         static int top1; // ke9ns
         static int top3; // .295
+
+
         private static void DrawPanadapterGrid(ref Graphics g, int W, int H, int rx, bool bottom)
         {
 
@@ -2939,7 +2940,7 @@ namespace PowerSDR
                 {
                     SWR_Multi = true;
                     SWRLINE = 10; // reduce size of SWR plot since you have up to 5 to display
-                  //  Debug.WriteLine("SWR MULTI");
+                                  //  Debug.WriteLine("SWR MULTI");
                 }
                 else
                 {
@@ -3013,11 +3014,13 @@ namespace PowerSDR
                     {
                         spectrum_grid_step = 6; // 6
                         grid_step = 6;  // 6
+
                     }
                     else
                     {
                         spectrum_grid_step = 6;  // 6
                         grid_step = 12;  // 12
+
                     }
 
                 }
@@ -3037,6 +3040,7 @@ namespace PowerSDR
                     spectrum_grid_step = 6;
                     grid_step = 6;
 
+
                 } // just rx1
 
 
@@ -3052,6 +3056,7 @@ namespace PowerSDR
                 }
 
                 grid_step = spectrum_grid_step; // you maybe in TX mode here
+
 
                 if (split_display) grid_step = grid_step * 2; // increase grid_step since you have less space on screen
 
@@ -3179,7 +3184,7 @@ namespace PowerSDR
 
 
             int top = top1 = (int)((double)grid_step * H / y_range); // find top of each window for the panadapter
-          
+
             int top2 = top3 = (int)((double)grid_step * H / y_range2); // find top of each window for the panadapter //.295
 
 
@@ -3378,7 +3383,7 @@ namespace PowerSDR
                 //   if ((!local_mox) && (draw_tx_cw_freq || console.setupForm.chkCWDisplay.Checked) && (rx1_dsp_mode == DSPMode.CWL || rx1_dsp_mode == DSPMode.CWU)) // ke9ns mod
                 if ((draw_tx_cw_freq || console.setupForm.chkCWDisplay.Checked) && (rx1_dsp_mode == DSPMode.CWL || rx1_dsp_mode == DSPMode.CWU)) // ke9ns mod
                 {
-                  
+
                     int pitch = cw_pitch;
                     if ((rx1_dsp_mode == DSPMode.CWL)) pitch = -cw_pitch;
 
@@ -3407,7 +3412,7 @@ namespace PowerSDR
                     //  if (draw_tx_cw_freq) // ke9ns add
                     if ((!local_mox) && (draw_tx_cw_freq)) //RX
                     {
-                      //  Debug.WriteLine("CW1=======================");
+                        //  Debug.WriteLine("CW1=======================");
                         if ((bottom)) // && tx_on_vfob) // KE9NS ADD  fix mistake made by flex (draw TX line on bottom for VFOB)
                         {
                             g.DrawLine(tx_filter_pen, cw_line_x, H + top, cw_line_x, H + H);
@@ -3419,7 +3424,7 @@ namespace PowerSDR
                             g.DrawLine(tx_filter_pen, cw_line_x, top, cw_line_x, H);
                             g.DrawLine(tx_filter_pen, cw_line_x + 1, top, cw_line_x + 1, H);
 
-                         //   Debug.WriteLine("CW2=======================");
+                            //   Debug.WriteLine("CW2=======================");
 
                         }
                     }
@@ -3928,20 +3933,20 @@ namespace PowerSDR
 
 
             // ke9ns: this below is not used
-         //   double temp0 = (double)W / (double)(H - top); // .309 ratio of Y to X
-         //   double temp1 = (double)(H - top)  / (double)(Y1 * Z1);  // .309 Opposite height
-          //  double temp2 = (double)W / (double)(X1 * Z1); // .309 adjacent height 
-          //  double temp3 = Math.Atan(temp1 / temp2); //.309 TAN radians = Opp / ADJ  find angle of 3d history pan based on x,y,z,top and W values
-          //  int D3a = (int)(90.0 - temp3);
+            //   double temp0 = (double)W / (double)(H - top); // .309 ratio of Y to X
+            //   double temp1 = (double)(H - top)  / (double)(Y1 * Z1);  // .309 Opposite height
+            //  double temp2 = (double)W / (double)(X1 * Z1); // .309 adjacent height 
+            //  double temp3 = Math.Atan(temp1 / temp2); //.309 TAN radians = Opp / ADJ  find angle of 3d history pan based on x,y,z,top and W values
+            //  int D3a = (int)(90.0 - temp3);
             // Debug.WriteLine("D3Angle: " + temp3 + " ,Top: " + top + " ,H: " + H + " ,W: " + W + " ,D3: " + D3a + " ,Z: " + Z1 + " ,X: " + X1 + " , " + temp1 + " , " + temp2);
-          //  int temp4 = (int)console.setupForm.num3d.Value;             // .309
-         //   int temp5 = (int)console.setupForm.num4d.Value;              // .309
+            //  int temp4 = (int)console.setupForm.num3d.Value;             // .309
+            //   int temp5 = (int)console.setupForm.num4d.Value;              // .309
 
-            Z1 = (H-top)/2/Y1;  //.309 draw isometric lines to follow 3D pan
+            Z1 = (H - top) / 2 / Y1;  //.309 draw isometric lines to follow 3D pan
             X2 = (X1 * Z1);
             Y2 = (H - ((Y1 * Z1)));     //* (int)(2.0 + temp0))); //
 
-          //  Debug.WriteLine("Ang: " + X2 + " , " + Y2 );
+            //  Debug.WriteLine("Ang: " + X2 + " , " + Y2 );
 
 
             switch (console.CurrentRegion)
@@ -3983,8 +3988,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
 
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -3996,9 +4001,9 @@ namespace PowerSDR
                                 else offsetL = (int)((label.Length) * 4.1) - 8;
 
                                 // Draw band edge vfo text across the top of the panadapter
-                               
+
                                 if (bottom) g.DrawString(label, font, new SolidBrush(band_edge_color), vgrid - offsetL, H + (float)Math.Floor(H * .01));
-                                else g.DrawString(label, font, new SolidBrush(band_edge_color), vgrid - offsetL, (float)Math.Floor(H * .01) );
+                                else g.DrawString(label, font, new SolidBrush(band_edge_color), vgrid - offsetL, (float)Math.Floor(H * .01));
 
 
                                 //----------------------------------------------------------------
@@ -4066,15 +4071,15 @@ namespace PowerSDR
 
                                         if (console.setupForm.check3DPan.Checked) //.309A
                                         {
-                                          //  g.DrawLine(grid_pen_dark, x3 + X2, top + Y2, x3  , H);
-                                            g.DrawLine(grid_pen_dark, x3 + X2, top + Y2-Y3, x3, H-Y3);
+                                            //  g.DrawLine(grid_pen_dark, x3 + X2, top + Y2, x3  , H);
+                                            g.DrawLine(grid_pen_dark, x3 + X2, top + Y2 - Y3, x3, H - Y3);
                                         }
                                         else
                                         {
                                             if (bottom) g.DrawLine(grid_pen_dark, x3, H + top, x3, H + H); // ke9ns vertical lines
                                             else g.DrawLine(grid_pen_dark, x3, top, x3, H);
                                         }
-                                  
+
                                     } // grid off
 
                                     //----------------------------------------------------------------
@@ -4133,10 +4138,10 @@ namespace PowerSDR
                                 {
                                     if (console.setupForm.check3DPan.Checked) //.309B
                                     {
-                                         if (bottom) g.DrawLine(grid_pen, vgrid, H + top, vgrid, H + H); // draw vertical lines below the freq labels
-                                          else g.DrawLine(grid_pen, vgrid , top, vgrid , H);            //wa6ahl
+                                        if (bottom) g.DrawLine(grid_pen, vgrid, H + top, vgrid, H + H); // draw vertical lines below the freq labels
+                                        else g.DrawLine(grid_pen, vgrid, top, vgrid, H);            //wa6ahl
 
-                                     //   g.DrawLine(grid_pen,vgrid + X2, top + Y2, vgrid, H);
+                                        //   g.DrawLine(grid_pen,vgrid + X2, top + Y2, vgrid, H);
                                         g.DrawLine(grid_pen, vgrid + X2, top + Y2 - Y3, vgrid, H - Y3);
                                     }
                                     else
@@ -4157,10 +4162,10 @@ namespace PowerSDR
                                     if (grid_off == 0) // ke9ns add (dont draw grid lines if =1 
                                     {
                                         float x3 = (float)vgrid + (j * scale);
-                                    
+
                                         if (console.setupForm.check3DPan.Checked) //.309C
                                         {
-                                         //   g.DrawLine(grid_pen_dark, x3 + X2, top + Y2, x3, H);
+                                            //   g.DrawLine(grid_pen_dark, x3 + X2, top + Y2, x3, H);
                                             g.DrawLine(grid_pen_dark, x3 + X2, top + Y2 - Y3, x3, H - Y3);
                                         }
                                         else
@@ -4303,10 +4308,10 @@ namespace PowerSDR
                             {
                                 if (console.setupForm.check3DPan.Checked) //.309D
                                 {
-                                 //     if (bottom) g.DrawLine(grid_pen, vgrid, H + top, vgrid, H + H); // draw vertical lines below the freq labels
-                                 //    else g.DrawLine(grid_pen, vgrid, top, vgrid, H);            //wa6ahl
-                                 
-                                 //   g.DrawLine(grid_pen, vgrid + X2, top + Y2, vgrid , H);
+                                    //     if (bottom) g.DrawLine(grid_pen, vgrid, H + top, vgrid, H + H); // draw vertical lines below the freq labels
+                                    //    else g.DrawLine(grid_pen, vgrid, top, vgrid, H);            //wa6ahl
+
+                                    //   g.DrawLine(grid_pen, vgrid + X2, top + Y2, vgrid , H);
                                     g.DrawLine(grid_pen, vgrid + X2, top + Y2 - Y3, vgrid, H - Y3);
                                 }
                                 else
@@ -4341,8 +4346,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
 
                     } // for (int i = 0; i < f_steps + 1; i++)
@@ -4457,8 +4462,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -4598,7 +4603,7 @@ namespace PowerSDR
                             } // band edge
                             else // not band edge
                             {
-                               
+
                                 if (grid_off == 0) // ke9ns add (dont draw grid lines if =1 
                                 {
                                     if (console.setupForm.check3DPan.Checked) //.309B
@@ -4763,7 +4768,7 @@ namespace PowerSDR
                         else
                         {
                             vgrid = Convert.ToInt32((double)-(fgrid - Low) / (Low - High) * W); //wa6ahl
-                           
+
                             if (grid_off == 0) // ke9ns add (dont draw grid lines if =1 
                             {
                                 if (console.setupForm.check3DPan.Checked) //.309D
@@ -4807,8 +4812,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
                     // draw 60m band segment rectangles - UK+ only
@@ -4894,8 +4899,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -5059,7 +5064,7 @@ namespace PowerSDR
 
                                 for (int j = 1; j < inbetweenies; j++) // inbetweenies = 5  (so 4 (2khz) spaced vert lines inbetween labels)
                                 {
-                                   
+
                                     if (grid_off == 0) // ke9ns add (dont draw grid lines if =1 
                                     {
                                         float x3 = (float)vgrid + (j * scale);
@@ -5245,8 +5250,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -5343,8 +5348,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -5694,8 +5699,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -5790,8 +5795,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -6140,8 +6145,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -6231,8 +6236,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -6582,8 +6587,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -6675,8 +6680,8 @@ namespace PowerSDR
                             {
 
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -7026,8 +7031,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -7117,8 +7122,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -7469,8 +7474,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -7561,8 +7566,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -7912,8 +7917,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -8005,8 +8010,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -8357,8 +8362,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -8448,8 +8453,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -8798,8 +8803,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -8888,8 +8893,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -9237,8 +9242,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -9322,8 +9327,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -9671,8 +9676,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -9757,8 +9762,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -10109,8 +10114,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -10200,8 +10205,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -10552,8 +10557,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -10641,8 +10646,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -10993,8 +10998,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -11083,8 +11088,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 147.975)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -11434,8 +11439,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -11526,8 +11531,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 146.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -11878,8 +11883,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -11971,8 +11976,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -12321,8 +12326,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -12455,8 +12460,8 @@ namespace PowerSDR
                                 actual_fgrid == 144.0 || actual_fgrid == 148.0)
                             {
                                 // BEGIN of FRSRegion common block
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                 label = actual_fgrid.ToString("f4");
                                 label = label.Replace(",", ".");    // handle Windows localization issues
@@ -12804,8 +12809,8 @@ namespace PowerSDR
                         if (band_edge_offset >= Low && band_edge_offset <= High)
                         {
                             int temp_vline = (int)((double)(band_edge_offset - Low) / (High - Low) * W);//wa6ahl
-                            if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
-                            else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
+                            if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H + top, temp_vline, H + H);//wa6ahl
+                            else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, top, temp_vline, H);//wa6ahl
                         }
                     }
 
@@ -12885,8 +12890,8 @@ namespace PowerSDR
                 {
                     if (console.setupForm.check3DPan.Checked) //.309E   same for every turf
                     {
-                          if (bottom) g.DrawLine(grid_pen, 0, H + y, W, H + y);  // HORIZONTAL draw lines 
-                          else g.DrawLine(grid_pen, 0, y, W, y);
+                        if (bottom) g.DrawLine(grid_pen, 0, H + y, W, H + y);  // HORIZONTAL draw lines 
+                        else g.DrawLine(grid_pen, 0, y, W, y);
                     }
                     else
                     {
@@ -12957,7 +12962,7 @@ namespace PowerSDR
                 //===============================================================
                 if (i != 1) // avoid intersecting vertical and horizontal labels
                 {
-
+                    //.321 reference point
                     if ((K9 == 5) & (K10 != 5) && (bottom)) num = spectrum_grid_max - (i * (spectrum_grid_step * 2)); // ke9ns mod (lines based on area of panadapter and waterfall etc)
                     else if ((K9 == 5) & (K10 == 5) && (bottom)) num = spectrum_grid_max - (i * (spectrum_grid_step * 2)); // ke9ns mod
                     else num = spectrum_grid_max - (i * grid_step);
@@ -14160,9 +14165,6 @@ namespace PowerSDR
                 {
 
                     int CWPitch1 = 0;
-
-                    bool Pitch1 = false;
-                    bool Pitch2 = false;
 
 
 
@@ -15389,8 +15391,8 @@ namespace PowerSDR
                                     actual_fgrid == 144.0 || actual_fgrid == 148.0)
                                 {
 
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H); // ke9ns draw little tick lines under freq at band edges only
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // ke9ns draw little tick lines under freq at band edges only
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -15573,8 +15575,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -15615,8 +15617,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.03 || actual_fgrid == 51.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -15749,8 +15751,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -15802,8 +15804,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.00 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -15936,8 +15938,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -15979,8 +15981,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.00 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16113,8 +16115,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -16155,8 +16157,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.00 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16289,8 +16291,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -16331,8 +16333,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.05 || actual_fgrid == 50.2 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16465,8 +16467,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -16506,8 +16508,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 51.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16640,8 +16642,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -16681,8 +16683,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16815,8 +16817,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -16857,8 +16859,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 51.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -16991,8 +16993,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17033,8 +17035,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 51.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -17167,8 +17169,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17208,8 +17210,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -17342,8 +17344,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17384,8 +17386,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 52.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -17518,8 +17520,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17559,8 +17561,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 148.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -17693,8 +17695,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17734,8 +17736,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 147.975)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -17868,8 +17870,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -17909,8 +17911,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -18043,8 +18045,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -18084,8 +18086,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -18218,8 +18220,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -18259,8 +18261,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -18393,8 +18395,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -18437,8 +18439,8 @@ namespace PowerSDR
                                     actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
                                     actual_fgrid == 144.0 || actual_fgrid == 146.0)
                                 {
-                                    if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, H + top, vgrid, H + H);
-                                    else g.DrawLine(new Pen(band_edge_color,band_edge_width), vgrid, top, vgrid, H);
+                                    if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H);
+                                    else g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, top, vgrid, H);
 
                                     label = actual_fgrid.ToString("f4");
                                     label = label.Replace(",", ".");    // handle Windows localization issues
@@ -18571,8 +18573,8 @@ namespace PowerSDR
                             if (band_edge_offset >= low && band_edge_offset <= high)
                             {
                                 int temp_vline = (int)((double)(band_edge_offset - low) / (high - low) * W);//wa6ahl
-                                if (bottom) g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
-                                else g.DrawLine(new Pen(band_edge_color,band_edge_width), temp_vline, 0, temp_vline, top);
+                                if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, H, temp_vline, H + top);//wa6ahl
+                                else g.DrawLine(new Pen(band_edge_color, band_edge_width), temp_vline, 0, temp_vline, top);
                             }
                             if (i == 1 && !show_freq_offset) break;
                         }
@@ -19344,15 +19346,15 @@ namespace PowerSDR
 
 
         public static float floor = 0; // ke9ns add: noise floor of panadapter (not the meter) 
-        public static int[] IDENT_CountP = new int[5000]; // ke9ns add records time remaining for any detected peaks
-        public static Point[] points1 = new Point[5000]; // ke9ns add X and Y of the peak
-
+        public static int[] IDENT_CountP = new int[3300]; // ke9ns add records time remaining for any detected peaks
+        public static Point[] points1 = new Point[3300]; // ke9ns add X and Y of the peak
+        public static int[] IDENT_Flag = new int[3300]; // .321 dont display signal until its been here for some time
         public static int IDENT_Space = 0; // ke9ns add counter for spacing out the peaks (look for dead space after signal to know you are finished detecting this siganl)
         public static int IDENT_LastY = 0; // ke9ns add temp holder for finding peak
         public static int IDENT_Lasti = 0; // ke9ns add temp holder for i position of the peak you detected
         public static int IDENT_Peaki = 0; // ke9ns add
-        public static int[] IDENT_Begin = new int[5000]; // ke9ns add begin of signal
-        public static int[] IDENT_End = new int[5000]; // ke9ns add end of signal
+        public static int[] IDENT_Begin = new int[3300]; // ke9ns add begin of signal
+        public static int[] IDENT_End = new int[3300]; // ke9ns add end of signal
         public static int IDENT_Begini = 0; // ke9ns add 
         public static float Zoom_last = 0; // ke9ns add  if zoom changes, then reset signal detection
         public static int pan_last = 0; // ke9ns add  if pan or water moves then reset signals or move them
@@ -19406,7 +19408,7 @@ namespace PowerSDR
             Y1 = (int)console.setupForm.number3DY.Value; // y step up (decrease) for each point darwing vertical
             Z1 = (int)console.setupForm.number3DZ.Value; // .309 how many 3d lines of history in the Panadapter view (16 in Panafall, or 40 with no waterfall)
 
-            
+
 
 
             if (console.powerMate.Look(10) != 0) //.294 use instad of onRotateEvent handler because it caused a strange pan lag glitch as you scroll left/right
@@ -19421,9 +19423,9 @@ namespace PowerSDR
             }
             if (console.flexControl.FlexPush == true && console.setupForm.chkBoxIND2.Checked) //.296 if flexcontrol pushed when alt1-2 selected
             {
-              //  Debug.WriteLine("296 flexpush ");
+                //  Debug.WriteLine("296 flexpush ");
 
-               console.onbuttonflex();
+                console.onbuttonflex();
                 console.flexControl.FlexPush = false; // reset the push
             }
 
@@ -19673,6 +19675,8 @@ namespace PowerSDR
                     PON = false;
 
                 }
+
+
 
             } // NO FILL
 
@@ -19950,11 +19954,11 @@ namespace PowerSDR
             //=================================================================
             // VFOA
 
-           
+
             // do below if AVG is ON, and Avg move ON, and freq changed OR
 
-            if ( average_on && (console.setupForm != null && console.setupForm.chkAvgMove.Checked) && ((PWM2A_LAST != vfoa_hz))
-                || ( PWM2A_LAST < (vfoa_hz - 200000) || PWM2A_LAST > (vfoa_hz + 200000) ) ) // ke9ns dont move waterfall if in  PAN mode CTUN
+            if (average_on && (console.setupForm != null && console.setupForm.chkAvgMove.Checked) && ((PWM2A_LAST != vfoa_hz))
+                || (PWM2A_LAST < (vfoa_hz - 200000) || PWM2A_LAST > (vfoa_hz + 200000))) // ke9ns dont move waterfall if in  PAN mode CTUN
             {
 
                 Debug.WriteLine("294 freq moved");
@@ -19989,7 +19993,7 @@ namespace PowerSDR
                     {
                         // copy last AVG stream into the NEW stream, then SHIFT both over
                         Array.Copy(rx1_average_buffer, PWM1A, current_display_data, 0, T); // source array, source index start point, dest arry, dest index start point, length
-                       Array.Copy(rx1_average_buffer, PWM1A, rx1_average_buffer, 0, T); // source array, source index start point, dest arry, dest index start point, length
+                        Array.Copy(rx1_average_buffer, PWM1A, rx1_average_buffer, 0, T); // source array, source index start point, dest arry, dest index start point, length
                         Debug.WriteLine("294 MOVE LEFT");
                     }
                     else if (PWM1A < 0) //the Pan moved from Left ---> right) so the data needs to shift from Right <---- Left, leaving no valid data on the Upper end (Right)
@@ -20000,7 +20004,7 @@ namespace PowerSDR
 
                     } //  if (PWM1A < 0)
 
-                  
+
 
                 } //   if ((Math.Abs(PWM1A) < num_samples) && PWM1A != 0)
                 else
@@ -20011,15 +20015,15 @@ namespace PowerSDR
 
                 console.UP1 = false; // .251
             } // freq change
-            else if (PF3A != 0 && average_on && (console.setupForm != null && console.setupForm.chkAvgMove.Checked) )
+            else if (PF3A != 0 && average_on && (console.setupForm != null && console.setupForm.chkAvgMove.Checked))
             {
-                
-             //   Debug.WriteLine("294- " + PF3A);
+
+                //   Debug.WriteLine("294- " + PF3A);
                 PF3A--;
             }
             else
             {
-              //  Debug.WriteLine("HOLDHOLDHOLD0");
+                //  Debug.WriteLine("HOLDHOLDHOLD0");
                 PF3A = 0;
             }
 
@@ -20094,7 +20098,7 @@ namespace PowerSDR
 
             if (rx == 1 && average_on && PF3A == 0) //
             {
-              //   Debug.WriteLine("294 AVERAGE update " );
+                //   Debug.WriteLine("294 AVERAGE update " );
                 console.UpdateRX1DisplayAverage(rx1_average_buffer, current_display_data); // only do an AVG if AVG is ON and your not turning the VFO
                 // rx1_average_buffer = current_display_data * factor + old rx1_average_buffer * factor
                 // so we get new averaged rx1_average_buffer
@@ -20132,12 +20136,14 @@ namespace PowerSDR
             int IDENT_Time = 90; // ke9ns add
             int IDENT_Thres = 6; // ke9ns add
 
+
             if (console.ScanForm != null)
             {
                 IDENT_Width = (int)console.ScanForm.udIDGap.Value; // ke9ns add max signal amount
                 IDENT_Time = (int)console.ScanForm.udIDTimer.Value; // ke9ns add persistance of Peak signal detected
                 IDENT_Thres = (int)console.ScanForm.udIDThres.Value; // ke9ns add dBm threshold
             }
+
 
             if (console.ptbDisplayZoom.Value != Zoom_last) // if zoom level changes then reset signal detection
             {
@@ -20246,6 +20252,9 @@ namespace PowerSDR
 
 
 
+            System.Drawing.Font fontID = new System.Drawing.Font("Swis721 BT", 9, FontStyle.Italic); // Arial size and style of freq text for waterfall
+            SolidBrush grid_text_brushID = new SolidBrush(grid_text_color); //.321
+
             //=================================================================
             // draw line that makes up spectrum (width of window)  ke9nsdraw
             // generate a new set of points[i].X = pos, and points[i].Y = data from spectrum
@@ -20294,7 +20303,7 @@ namespace PowerSDR
                 if (rx == 1) max += rx1_display_cal_offset;
                 else if (rx == 2) max += rx2_display_cal_offset;
 
-              
+
                 if (!local_mox) // RX below    
                 {
                     if (rx == 1) max += rx1_preamp_offset;         // adjust for preamp on/off
@@ -20547,6 +20556,7 @@ namespace PowerSDR
 
                 } // if (PON == true)
 
+
                 //==============================================
                 // ke9ns: get latest (newest) pan data line
 
@@ -20612,9 +20622,26 @@ namespace PowerSDR
                                     IDENT_LastY = points[i].Y; // temp holder
                                     IDENT_Peaki = i; // temp holder for the i bin that holds the peak of this current signal
 
+                                    /*
+                                    for (int x = i; x < IDENT_Width; x++) // reset the space counter since you found a higher peak
+                                    {
+                                        IDENT_CountP[x] = 0;// clear +/- around the new peak
+                                    }
+                                    for (int x = i; x > (i - IDENT_Width); x--)
+                                    {
+                                        if (x >= 0)
+                                        {
+                                            IDENT_CountP[x] = 0;// clear +/- around the new peak
+                                        }
+                                    }  
+                                    
+                                    */
+                                    IDENT_Space = IDENT_Width;
+
+
                                 }
                                 IDENT_Lasti = i;           // temp holder
-                                IDENT_Space = IDENT_Width; // keep going since your still seeing signal
+                                IDENT_Space = IDENT_Width; // reset keep going since your still seeing signal
 
 
                             }
@@ -20632,12 +20659,10 @@ namespace PowerSDR
                             }
 
                         } //  if (max > floor) strong signal 
-
-
                         else // do below if in a low spot of the panadapter (either between signals or a low part of the signal)
                         {
 
-                            if ((IDENT_Space > 0) && (i < (W - 2))) // stil believe your in the current identified signal
+                            if ((IDENT_Space > 0) && (i < (W - 2))) // still believe your in the current identified signal
                             {
                                 IDENT_Space--; // this might be open space if never above the floor for IDENT_Width times
                             }
@@ -20648,11 +20673,13 @@ namespace PowerSDR
                                     if (points[IDENT_Peaki].Y < points1[IDENT_Peaki].Y)  // < because we are talking about Y dims and not dBm
                                     {
                                         points1[IDENT_Peaki] = points[IDENT_Peaki]; // record the new higher dBm value (as a Y dim)
+                                        IDENT_CountP[IDENT_Peaki] = IDENT_Time; // reset the onscreen counter for this peak
 
                                     }
+
                                     IDENT_Begin[IDENT_Peaki] = IDENT_Begini; // this records the width of the signal
                                     IDENT_End[IDENT_Peaki] = IDENT_Lasti;
-                                    IDENT_CountP[IDENT_Peaki] = IDENT_Time; // reset the onscreen counter for this peak
+                                    //   IDENT_CountP[IDENT_Peaki] = IDENT_Time; // reset the onscreen counter for this peak
 
                                     IDENT_Sig = false; // reset for next signal
                                 }
@@ -20661,21 +20688,99 @@ namespace PowerSDR
 
                         } // if (max < floor) no signal
 
+
+
                         //-----------------------------------------------------------------------------------------
+                        // ke9ns: this is where we draw the box above the peak signal for SIG IDENT and label the dBm value
 
                         if (IDENT_CountP[i] > 0)
                         {
-                            // countB++;
-                            //  if (countB > 15) countB = 0;
+
+                            //   Debug.WriteLine("COUNT: " + i + " value:" + IDENT_CountP[i]);
 
                             if ((i > 0) && (points1[i - 1].Y > points1[i].Y) && (points1[i].Y < points1[i + 1].Y)) // try to filter out nearby peaks and just display the best
                             {
+
+                                //  if (IDENT_Flag[i] > 50)
+                                //  {
+                                //   g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw  line showing begin and end of signal
+
                                 g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw  line showing begin and end of signal
-                                g.DrawRectangle(IDENT_pen, points1[i].X - 2, points1[i].Y - 10, 4, 4);
+                                g.DrawRectangle(IDENT_pen, points1[i].X - 2, points1[i].Y - 10, 5, 5); // draw box at peak of signal
 
+                                //    g.DrawRectangle(IDENT_pen, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 10, 4, 4); // draw box at peak of signal
 
-                                // g.DrawString("AM",)
+                                int num = (int)console.PixelToDb(points1[i].Y); //.321
+                                string SS = ""; //.321
 
+                                if (VFOA < 30000000)
+                                {
+                                    if (num >= -68) // wait until your 5dbm over s9
+                                    {
+                                        SS = "+" + (num + 73).ToString();
+                                    }
+
+                                    else if (num >= -73) SS = "S9"; // S9 is -73 to -64
+                                    else if (num >= -79) SS = "S8"; // S8 is -79 to -74
+                                    else if (num >= -85) SS = "S7"; // S7 is -85 to -80
+                                    else if (num >= -91) SS = "S6"; // S6 is -91 to -86
+                                    else if (num >= -97) SS = "S5"; // S5 is -97 to -92
+                                    else if (num >= -103) SS = "S4"; // S4 is -103 to -98
+                                    else if (num >= -109) SS = "S3"; // S3 is -109 to -104 
+                                    else if (num >= -115) SS = "S2"; // S2 is -115 to -110
+                                    else if (num >= -121) SS = "S1"; // S1 is -121 to -114 
+                                    else SS = "<S1";                  // S0 is -133 to -122
+                                }
+                                else // VHF S readings
+                                {
+
+                                    if (num >= -88) // wait until your 5dbm over s9
+                                    {
+                                        SS = "+" + (num + 93).ToString();
+                                    }
+
+                                    else if (num >= -93) SS = "S9";  // S9 is -93 to -82
+                                    else if (num >= -99) SS = "S8";  // S8 is -99 to -94
+                                    else if (num >= -105) SS = "S7"; // S7 is -105 to -100
+                                    else if (num >= -111) SS = "S6"; // S6 is -111 to -106
+                                    else if (num >= -117) SS = "S5"; // S5 is -117 to -112
+                                    else if (num >= -123) SS = "S4"; // S4 is -123 to -118
+                                    else if (num >= -129) SS = "S3"; // S3 is -129 to -124 
+                                    else if (num >= -135) SS = "S2"; // S2 is -135 to -130
+                                    else if (num >= -141) SS = "S1"; // S1 is -141 to -134 
+                                    else SS = "<S1";                  // S0 is -153 to -142
+                                }
+
+                                if (console.ScanForm != null && console.RX2Enabled == false)
+                                {
+                                    if (console.ScanForm.chkIDdBM.Checked && console.ScanForm.chkIDSIG.Checked)
+                                    {
+                                        g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm (" + SS + ")", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                                                                                                                                                                              //   g.DrawString( (console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm (" + SS + ")", fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+
+                                    }
+                                    else if (console.ScanForm.chkIDdBM.Checked)
+                                    {
+                                        g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                                                                                                                                                                 //  g.DrawString((console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm", fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+
+                                    }
+                                    else if (console.ScanForm.chkIDSIG.Checked)
+                                    {
+                                        g.DrawString(SS, fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                                                                                                          //   g.DrawString(SS, fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+                                    }
+                                }
+                                //  } // IDENT_Flag
+                                //  else // IDENT_Flag <= 5
+                                //  {
+                                //     IDENT_Flag[i]++; //.321
+                                //  }
+
+                            } // if ((i > 0) && (points1[i - 1].Y > points1[i].Y) && (points1[i].Y < points1[i + 1].Y))
+                            else
+                            {
+                                IDENT_Flag[i] = 0; //.321
                             }
                             IDENT_CountP[i]--; // slowly turn off old peak signals unless they re appear
 
@@ -20924,10 +21029,10 @@ namespace PowerSDR
                     }
                     else
                     {
-                                               
+
                         g.FillPolygon(pan_Brush, points); // fill with gradient color
 
-                      //  Debug.WriteLine("294 DRAW");
+                        //  Debug.WriteLine("294 DRAW");
                     }
                 } //  if (panfillgradient == true)
 
@@ -21036,7 +21141,7 @@ namespace PowerSDR
                                 // temporarilly moved
                                 g.FillPolygon(pan_Brush, points0); // fill with gradient color
 
-                               
+
                             }
                         } //  if (panfillgradient == true)
 
@@ -21138,7 +21243,7 @@ namespace PowerSDR
 
                     // .293 ke9ns draw grid_zero_color on zoomed display
 
-                  
+
 
                     int original_bw = High - Low;
                     int zoom_bw = original_bw / 10;
@@ -21159,7 +21264,7 @@ namespace PowerSDR
                         low = High - zoom_bw;
                     }
 
-                 // decide colors to draw notch
+                    // decide colors to draw notch
                     c1 = notch_on_color_zoomed;
                     c2 = notch_highlight_color_zoomed;
 
@@ -21304,29 +21409,27 @@ namespace PowerSDR
                     SolidBrush grid_text_brush = new SolidBrush(grid_text_color);
 
                     //  int mid_w = W / 2;
-                    int[] step_list = { 10, 20, 25, 50}; // 10, 20, 25, 50
-                    int step_power = 1;
-                    int step_index = 0;
+                    int[] step_list = { 10, 20, 25, 50 }; // 10, 20, 25, 50
                     int freq_step_size = 50;
-                  //  int inbetweenies = 5; // ke9ns number of lines from 1 freq label to the next (a line every 2khz)
+                    //  int inbetweenies = 5; // ke9ns number of lines from 1 freq label to the next (a line every 2khz)
 
-                 //   int grid_step = 0;  // 
+                    //   int grid_step = 0;  // 
 
                     double vfo;
-                   
-                        if (local_mox && !tx_on_vfob)
-                        {
-                            if (split_enabled) vfo = vfoa_sub_hz;
-                            else vfo = vfoa_hz;
 
-                            vfo += xit_hz;
-                        }
-                        else
-                        {
-                            vfo = vfoa_hz + rit_hz;
-                        }
+                    if (local_mox && !tx_on_vfob)
+                    {
+                        if (split_enabled) vfo = vfoa_sub_hz;
+                        else vfo = vfoa_hz;
 
-                  
+                        vfo += xit_hz;
+                    }
+                    else
+                    {
+                        vfo = vfoa_hz + rit_hz;
+                    }
+
+
                     int zoomed_notch_center_freq = (int)(notch_zoom_start_freq * 1e6 - vfoa_hz - rit_hz);
 
                     int original_bw = High - Low;
@@ -21334,24 +21437,24 @@ namespace PowerSDR
 
                     int low = zoomed_notch_center_freq - zoom_bw / 2;
                     int high = zoomed_notch_center_freq + zoom_bw / 2;
-                                
-                    
+
+
                     int width = high - low; //  was int width = (High - Low);
 
                     freq_step_size = 500;
 
-                  double w_pixel_step = (double)W * freq_step_size / width;
+                    double w_pixel_step = (double)W * freq_step_size / width;
                     int w_steps = width / freq_step_size;   // 15 = 11782 / x =785
 
-                  
+
                     long vfo_round = ((long)(vfo / freq_step_size)) * freq_step_size;
                     long vfo_delta = (long)(vfo - vfo_round);
 
                     int f_steps = (width / freq_step_size) + 1; // freq_step_size = 50
 
                     // 192khzSR,current zoom = .45045, vfo = 18200khz, high=79371, low=-97370, zoom=11782, freq stepsize=20000hz, f steps=9
-                   
-                  //  Debug.WriteLine("ZZOOOM " + width + " , " + High + " , " + Low +  " , " + freq_step_size + " , " + f_steps + " , " + high + " , "+ low);
+
+                    //  Debug.WriteLine("ZZOOOM " + width + " , " + High + " , " + Low +  " , " + freq_step_size + " , " + f_steps + " , " + high + " , "+ low);
 
 
                     for (int i = 0; i < f_steps + 1; i++) // ke9ns: step to each freq label across the display
@@ -21360,7 +21463,7 @@ namespace PowerSDR
                         int offsetL; // X pixel offset for every 10khz based on screen size and zoom etc 
                         int offsetR;
 
-                       
+
                         int fgrid = i * freq_step_size + (low / freq_step_size) * freq_step_size;
 
                         double actual_fgrid = ((double)(vfo_round + fgrid)) / 1000000;
@@ -21387,22 +21490,22 @@ namespace PowerSDR
                         }
                         else
                         {
-                             int vgrid = Convert.ToInt32((double)-(fgrid - low) / (low - high) * W); //wa6ahl
+                            int vgrid = Convert.ToInt32((double)-(fgrid - low) / (low - high) * W); //wa6ahl
 
 
-                                double new_fgrid = (vfoa_hz + fgrid) / 1000000;
+                            double new_fgrid = (vfoa_hz + fgrid) / 1000000;
 
-                                label = fgrid.ToString();
-                                offsetL = (int)((label.Length + 1) * 4.1);
-                                offsetR = (int)(label.Length * 4.1);
+                            label = fgrid.ToString();
+                            offsetL = (int)((label.Length + 1) * 4.1);
+                            offsetR = (int)(label.Length * 4.1);
 
-                                if ((vgrid - offsetL >= 0) && (vgrid + offsetR < W) && (fgrid != 0))
-                                {
-                                     g.DrawString(label, font, grid_text_brush, vgrid - offsetL, (float)Math.Floor(H * .01)); //.305a
-                                     g.DrawString(label, font, grid_text_brush, vgrid - offsetL, H / zoom_height - 20); //.305a
+                            if ((vgrid - offsetL >= 0) && (vgrid + offsetR < W) && (fgrid != 0))
+                            {
+                                g.DrawString(label, font, grid_text_brush, vgrid - offsetL, (float)Math.Floor(H * .01)); //.305a
+                                g.DrawString(label, font, grid_text_brush, vgrid - offsetL, H / zoom_height - 20); //.305a
 
-                                }
-                           
+                            }
+
                         }
 
                     } // for loop
@@ -21463,7 +21566,7 @@ namespace PowerSDR
                     }
 
 */
-                        int center_line_x = (int)(-(double)low / (high - low) * W); // center of display window
+                    int center_line_x = (int)(-(double)low / (high - low) * W); // center of display window
                                                                                 //  int top = top1 = (int)((double)grid_step * H / y_range); // find top of each window for the panadapter
 
 
@@ -21474,7 +21577,7 @@ namespace PowerSDR
                     g.DrawLine(new Pen(grid_zero_color), center_line_x, 0, center_line_x, (int)(H / zoom_height));
                     g.DrawLine(new Pen(grid_zero_color), center_line_x + 1, 0, center_line_x + 1, (int)(H / zoom_height));
 
-                 //   Debug.WriteLine("ZOOM1 " + W + " , " + High + " , " + Low + " , " + high + " , " + low + " , " + center_line_x + " , " + zoomed_notch_center_freq);
+                    //   Debug.WriteLine("ZOOM1 " + W + " , " + High + " , " + Low + " , " + high + " , " + low + " , " + center_line_x + " , " + zoomed_notch_center_freq);
 
 
 
@@ -21616,7 +21719,7 @@ namespace PowerSDR
                         data_line_pen.Color = data_line_color;
 
                         g.DrawLines(data_line_pen, points);
-                       
+
 
                     }
                     else
@@ -21650,18 +21753,23 @@ namespace PowerSDR
 
                 IDENT_Reset = false; // any reset going on is now over
 
+                // this is the floor line
                 int temp2 = (int)(Math.Floor((double)(spectrum_grid_max - (max1 / W)) * H / yRange));  // display normal
                 floorB = temp2 = Math.Min(temp2, H); // returns smaller of the 2 numbers
 
+
+                // this is the floor + threshold line
                 int temp3 = (int)(Math.Floor((double)(spectrum_grid_max - ((max1 / W) + IDENT_Thres)) * H / yRange));  // display normal
                 temp3 = Math.Min(temp3, H); // returns smaller of the 2 numbers
 
+
                 g.DrawLine(IDENT_pen2, 0, temp2, 40, temp2); // Goldenrod these lines represent what is determined to be the noise floor
                 g.DrawLine(IDENT_pen2, W, temp2, W - 40, temp2);
+                //   g.DrawString((console.PixelToDb(temp2)).ToString("f1") + "dbm", new System.Drawing.Font("Swis721 BT", 9, FontStyle.Italic), new SolidBrush(grid_text_color), 40, temp2 - 6);  //.321
 
                 g.DrawLine(IDENT_pen, 0, temp3, 40, temp3); // PaleGreen these lines represent what is determined to be the noise floor
                 g.DrawLine(IDENT_pen, W, temp3, W - 40, temp3);
-
+                //  g.DrawString((console.PixelToDb(temp3)).ToString("f1") + "dbm", new System.Drawing.Font("Swis721 BT", 9, FontStyle.Italic), new SolidBrush(grid_text_color), 40, temp3 - 6); //.321   
 
                 if ((mox))
                 {
@@ -21982,7 +22090,7 @@ namespace PowerSDR
             temp_low_threshold = waterfall_low_threshold;  // store original low rx1 threshold
             temp_high_threshold = waterfall_high_threshold; // store original high rx1/rx2 threshold
 
-        
+
 
             //================================================
             // STEP 1) ke9ns change waterfall bitmap size to mode your in
@@ -22243,7 +22351,7 @@ namespace PowerSDR
 
                         //   if (start_sample_index < 0) start_sample_index += DATA_BUFFER_SIZE;
                         //    if ((num_samples - start_sample_index) > (BUFFER_SIZE + 1)) num_samples = BUFFER_SIZE - start_sample_index;
-                     
+
                         int pos1 = (int)(((float)cw_line_x / (float)W) * (float)num_samples) + start_sample_index;
 
                         //   Debug.WriteLine("CWWATER: " + cw_line_x + " , " + pos1 + " , " + W + " , " + slope1 +  " , " + num_samples1 + " , " + num_samples + " , " + start_sample_index);
@@ -22567,61 +22675,61 @@ namespace PowerSDR
                 } //rx == 1
                 else if (rx == 2 && Console.CTUNIF == false) // rx2
                 {
-                   
-                        if (F2B == 2)                // wait for freq to be set and 1 extra cycle because of the timing between freq set and getting here first.
+
+                    if (F2B == 2)                // wait for freq to be set and 1 extra cycle because of the timing between freq set and getting here first.
+                    {
+
+                        if ((WM2B_LAST != vfob_hz))
                         {
 
-                            if ((WM2B_LAST != vfob_hz))
+                            if (F3B == 2) // routine to delay 1 cycle updating the watermove because of timing error.
                             {
 
-                                if (F3B == 2) // routine to delay 1 cycle updating the watermove because of timing error.
+                                F3B = 0;
+
+                                WM2B_LAST = vfob_hz; // new last value
+
+                                WM2B_DIFF = WM2B_LAST - WM2B; //  difference from original spot in bmp
+
+                                WM5 = (float)((float)(High - Low) / (float)num_samples); // number of hz on screen
+
+                                WM2 = (int)((float)WM2B_DIFF / WM5 / slope); // how many pixels to move the bmp frame -=going down in freq +=going up in freq
+
+                                //  Debug.WriteLine("wm2 " + WM2);
+                                //    Debug.WriteLine("wm5 " + WM5);
+                                //    Debug.WriteLine("WM2B " + WM2B);
+
+                                if ((WM2 >= ((W * WaterMove1) - 2)) || (WM2 <= (-(W * WaterMove1) + 2)))  // either you move W beyond or -W below
                                 {
+                                    K10LAST = 0; // redraw bitmap
+                                    WM2 = 0;
 
-                                    F3B = 0;
+                                } // reset the bitmap
 
-                                    WM2B_LAST = vfob_hz; // new last value
+                                // this is the position to place the upper left corner of the 3W bitmap so WM2 appears in the upper left corner of the display window 
+                                // WM2F = the pixel offset from the original freq when the bitmap was created.
 
-                                    WM2B_DIFF = WM2B_LAST - WM2B; //  difference from original spot in bmp
+                                WM2F = WM2;
 
-                                    WM5 = (float)((float)(High - Low) / (float)num_samples); // number of hz on screen
+                                // final WM2 = Position within the 3W bitmap that you start writing too.
+                                // WM2F*3 = # of RGB pixels to shift +/-
+                                // 3*w = start at the center of the 3Wide bitmap
+                                WM2 = (WM2F * 3) + WaterMove2; //(WM2F * 3) + (3 * W);
 
-                                    WM2 = (int)((float)WM2B_DIFF / WM5 / slope); // how many pixels to move the bmp frame -=going down in freq +=going up in freq
+                            } // F3B
+                            else F3B++;
 
-                                    //  Debug.WriteLine("wm2 " + WM2);
-                                    //    Debug.WriteLine("wm5 " + WM5);
-                                    //    Debug.WriteLine("WM2B " + WM2B);
+                            W2temp = (W * 3) / 4;
+                            M2temp = (W * 3 * WaterMove) / 4; // used by black routine
 
-                                    if ((WM2 >= ((W * WaterMove1) - 2)) || (WM2 <= (-(W * WaterMove1) + 2)))  // either you move W beyond or -W below
-                                    {
-                                        K10LAST = 0; // redraw bitmap
-                                        WM2 = 0;
+                        } // vfoB moved in freq
+                    }
+                    else
+                    {
+                        F2B++;
+                        WM2 = (WM2F * 3) + WaterMove2; // for RGB (WM2F * 3) + (3 * W);
+                    }
 
-                                    } // reset the bitmap
-
-                                    // this is the position to place the upper left corner of the 3W bitmap so WM2 appears in the upper left corner of the display window 
-                                    // WM2F = the pixel offset from the original freq when the bitmap was created.
-
-                                    WM2F = WM2;
-
-                                    // final WM2 = Position within the 3W bitmap that you start writing too.
-                                    // WM2F*3 = # of RGB pixels to shift +/-
-                                    // 3*w = start at the center of the 3Wide bitmap
-                                    WM2 = (WM2F * 3) + WaterMove2; //(WM2F * 3) + (3 * W);
-
-                                } // F3B
-                                else F3B++;
-
-                                W2temp = (W * 3) / 4;
-                                M2temp = (W * 3 * WaterMove) / 4; // used by black routine
-
-                            } // vfoB moved in freq
-                        }
-                        else
-                        {
-                            F2B++;
-                            WM2 = (WM2F * 3) + WaterMove2; // for RGB (WM2F * 3) + (3 * W);
-                        }
-                   
                 } // rx2
 
 
@@ -22869,7 +22977,7 @@ namespace PowerSDR
                         if (tx_on_vfob)
                         {
                             if (rx == 1) max += rx1_preamp_offset; // if TX on RX2, keep RX1 normal (preamp was not included in full duplex TX VFOB before)
-                        }   
+                        }
                         else // vfoa
                         {
                             if (rx == 2) max += rx2_preamp_offset;
@@ -23293,8 +23401,8 @@ namespace PowerSDR
                 //=================================================================
                 if (local_mox) // ke9ns: local_mox will only be true for rx =2 when VFOB is TX, and true only for rx = 1when VFOA is TX
                 {
-                    
-                    if (tx_on_vfob == true ) // transmit VFOB below (ke9ns: local_mox will only be true for rx =2 when vfob is TX)
+
+                    if (tx_on_vfob == true) // transmit VFOB below (ke9ns: local_mox will only be true for rx =2 when vfob is TX)
                     {
 
                         if (rx == 2) // and VFOB is the TX
@@ -23322,17 +23430,17 @@ namespace PowerSDR
                         }
                         else // should never get here
                         {
-                       
+
                             waterfall_low_threshold = temp_low_threshold;  // rx1 db
                             waterfall_high_threshold = temp_high_threshold;  // rx1 db
-                            
+
                         }
 
 
                     } // TX VFOB above
                     else // transmit VFOA below
                     {
-                        Debug.WriteLine("VFOA TX");
+                        // Debug.WriteLine("VFOA TX");
 
                         if (rx == 1)
                         {
@@ -23363,7 +23471,7 @@ namespace PowerSDR
                         }
 
                     } // transmit VFOA above
-                   
+
 
                 } // transmitting above
                 else  // do below if Receiving (no transmit on either VFOA or B)
@@ -23737,8 +23845,8 @@ namespace PowerSDR
         unsafe static private bool DrawHistogram(Graphics g, int W, int H)
         {
             DrawSpectrumGrid(ref g, W, H, false);
-            if (points == null || points.Length < W)
-                points = new Point[W];          // array of points to display
+            if (points == null || points.Length < W) points = new Point[W];          // array of points to display
+
             float slope = 0.0F;                     // samples to process per pixel
             int num_samples = 0;                    // number of samples to process
             int start_sample_index = 0;             // index to begin looking at samples
@@ -23843,7 +23951,9 @@ namespace PowerSDR
 
             // get the average
             float avg = 0.0F;
+
             int sum = 0;
+
             foreach (Point p in points)
                 sum += p.Y;
 
@@ -23881,7 +23991,7 @@ namespace PowerSDR
                     g.DrawRectangle(new Pen(Color.FromArgb(150, 0, 0, 255)), points[i].X, (int)Math.Floor(avg), 1, H - (int)Math.Floor(avg));
                     g.DrawRectangle(new Pen(Color.FromArgb(150, 255, 0, 0)), points[i].X, points[i].Y, 1, (int)Math.Floor(avg) - points[i].Y);
                 }
-            }
+            } // for
 
             // draw long cursor
             if (current_click_tune_mode != ClickTuneMode.Off)

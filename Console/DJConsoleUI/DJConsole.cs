@@ -102,7 +102,8 @@ namespace PowerSDR
                 ResetDJConsole();
                 parser = new CATParser(m_parent);
                 commands = new CATCommands(m_parent, parser);
-            };
+            }
+            ;
 
 
         }
@@ -122,7 +123,8 @@ namespace PowerSDR
                 ResetDJConsole();
                 parser = new CATParser(m_parent);
                 commands = new CATCommands(m_parent, parser);
-            };
+            }
+            ;
 
 
         }
@@ -967,7 +969,8 @@ namespace PowerSDR
                             int cmd = m_parent.DJConsoleObj.DJConsole_MK2.SelectFxB;
                             {
                                 execute(cmd, e.Message.Data2);
-                            };
+                            }
+                            ;
                             break;
                         }
 
@@ -976,7 +979,8 @@ namespace PowerSDR
                             int cmd = m_parent.DJConsoleObj.DJConsole_MK2.PlayB;
                             {
                                 execute(cmd, e.Message.Data2);
-                            };
+                            }
+                            ;
                             break;
                         }
 
@@ -985,7 +989,8 @@ namespace PowerSDR
                             int cmd = m_parent.DJConsoleObj.DJConsole_MK2.CueB;
                             {
                                 execute(cmd, e.Message.Data2);
-                            };
+                            }
+                            ;
                             break;
                         }
 
@@ -2417,7 +2422,7 @@ namespace PowerSDR
                         {
                             VKMacro3(msg);
                         }
-                        else 
+                        else
                         {
                             CWXMacro3(msg);
                         }
@@ -2430,7 +2435,7 @@ namespace PowerSDR
                         {
                             VKMacro4(msg);
                         }
-                        else if ( (m_parent.RX1DSPMode != DSPMode.CWL && m_parent.RX1DSPMode != DSPMode.CWU))
+                        else if ((m_parent.RX1DSPMode != DSPMode.CWL && m_parent.RX1DSPMode != DSPMode.CWU))
                         {
                             VKMacro4(msg);
                         }
@@ -2447,7 +2452,7 @@ namespace PowerSDR
                         {
                             VKMacro5(msg);
                         }
-                        else if ( (m_parent.RX1DSPMode != DSPMode.CWL && m_parent.RX1DSPMode != DSPMode.CWU))
+                        else if ((m_parent.RX1DSPMode != DSPMode.CWL && m_parent.RX1DSPMode != DSPMode.CWU))
                         {
                             VKMacro5(msg);
                         }

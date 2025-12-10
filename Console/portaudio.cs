@@ -81,28 +81,28 @@ namespace PowerSDR
             paUnanticipatedHostError,
             paInvalidChannelCount,
             paInvalidSampleRate,
-            paInvalidDevice, 
+            paInvalidDevice,
             paInvalidFlag,
             paSampleFormatNotSupported,
-            paBadIODeviceCombination, 
-            paInsufficientMemory, 
-            paBufferTooBig, 
+            paBadIODeviceCombination,
+            paInsufficientMemory,
+            paBufferTooBig,
             paBufferTooSmall,
-            paNullCallback, 
+            paNullCallback,
             paBadStreamPtr,
-            paTimedOut, 
+            paTimedOut,
             paInternalError,
             paDeviceUnavailable,
             paIncompatibleHostApiSpecificStreamInfo,
-            paStreamIsStopped, 
+            paStreamIsStopped,
             paStreamIsNotStopped,
-            paInputOverflowed, 
-            paOutputUnderflowed, 
+            paInputOverflowed,
+            paOutputUnderflowed,
             paHostApiNotFound,
             paInvalidHostApi,
             paCanNotReadFromACallbackStream,
-            paCanNotWriteToACallbackStream, 
-            paCanNotReadFromAnOutputOnlyStream, 
+            paCanNotWriteToACallbackStream,
+            paCanNotReadFromAnOutputOnlyStream,
             paCanNotWriteToAnInputOnlyStream,
             paIncompatibleStreamHostApi
 
@@ -112,7 +112,7 @@ namespace PowerSDR
         {
             paInDevelopment = 0,
             paDirectSound = 1,
-            paMME = 2, 
+            paMME = 2,
             paASIO = 3,
             paSoundManager = 4,
             paCoreAudio = 5,
@@ -123,7 +123,7 @@ namespace PowerSDR
         }
 
         public enum PaStreamCallbackResult
-        { 
+        {
             paContinue = 0,
             paComplete = 1,
             paAbort = 2
@@ -279,15 +279,15 @@ namespace PowerSDR
         }
 
         [DllImport("PA19.dll")]
-        unsafe public static extern PaError PA_IsFormatSupported(PaStreamParameters* inputParameters,PaStreamParameters* outputParameters,double sampleRate);
+        unsafe public static extern PaError PA_IsFormatSupported(PaStreamParameters* inputParameters, PaStreamParameters* outputParameters, double sampleRate);
 
         [DllImport("PA19.dll")]
-        unsafe public static extern PaError PA_OpenStream(out void* stream, PaStreamParameters* inputParameters,PaStreamParameters* outputParameters,
-            double sampleRate, uint framesPerBuffer, PaStreamFlags streamFlags, PaStreamCallback streamCallback,int callback_id);       // 0 for callback1, else callback2     // ke9ns 0=callback8 (which is really callback2)
+        unsafe public static extern PaError PA_OpenStream(out void* stream, PaStreamParameters* inputParameters, PaStreamParameters* outputParameters,
+            double sampleRate, uint framesPerBuffer, PaStreamFlags streamFlags, PaStreamCallback streamCallback, int callback_id);       // 0 for callback1, else callback2     // ke9ns 0=callback8 (which is really callback2)
 
         [DllImport("PA19.dll")]
-        unsafe public static extern PaError PA_OpenDefaultStream(out void* stream,int numInputChannels,int numOutputChannels,PaSampleFormat sampleFormat,
-            double sampleRate,uint framesPerBuffer, PaStreamCallback streamCallback, int callback_id);       // 0 for callback1, else callback2
+        unsafe public static extern PaError PA_OpenDefaultStream(out void* stream, int numInputChannels, int numOutputChannels, PaSampleFormat sampleFormat,
+            double sampleRate, uint framesPerBuffer, PaStreamCallback streamCallback, int callback_id);       // 0 for callback1, else callback2
 
         [DllImport("PA19.dll")]
         unsafe public static extern PaError PA_CloseStream(void* stream);

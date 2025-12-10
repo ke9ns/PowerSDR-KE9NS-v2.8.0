@@ -161,7 +161,7 @@ namespace PowerSDR
 
             Gname = "";
             memcount = 0;
-           
+
             ST3.Stop(); // .288
             ST3.Reset(); //.288
             ST2.Stop(); //.288
@@ -177,7 +177,7 @@ namespace PowerSDR
             if (ScanRun == true)
             {
                 ScanRun = false; //.288
-              //  scantype = 0; // .288 reset
+                                 //  scantype = 0; // .288 reset
                 return;
             }
 
@@ -493,7 +493,8 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    };
+                    }
+                    ;
 
                     pausebtn.BackColor = SystemColors.ControlLight;
 
@@ -944,10 +945,10 @@ namespace PowerSDR
         // Group memory scanner. Scanning only frequencies in 1 group name
         private void btnGroupMemory_Click(object sender, EventArgs e)
         {
-         //   ST3.Stop();
-         //   ST3.Reset();
+            //   ST3.Stop();
+            //   ST3.Reset();
 
-            
+
             textBox1.Text = ""; //.288 clear SWL listing
 
             ST3.Stop(); // .288
@@ -964,8 +965,8 @@ namespace PowerSDR
             if (ScanRun == true)
             {
                 ScanRun = false; //.288
-              //  scantype = 0; // .288 reset
-                
+                                 //  scantype = 0; // .288 reset
+
                 return;
             }
 
@@ -1020,8 +1021,8 @@ namespace PowerSDR
             //  ST3.Reset();
 
             comboBoxTS1.Text = ""; //.288 // clear Memory listing
-           
-           
+
+
             ST3.Stop(); // .288
             ST3.Reset(); //.288
             ST2.Stop(); //.288
@@ -1036,7 +1037,7 @@ namespace PowerSDR
             if (ScanRun == true)
             {
                 ScanRun = false; //.288
-              //  scantype = 0; // .288 reset
+                                 //  scantype = 0; // .288 reset
 
                 return;
             }
@@ -1166,29 +1167,29 @@ namespace PowerSDR
 
         private void comboBoxTS2_SelectedIndexChanged(object sender, KeyEventArgs e)
         {
-          //  ScanPause = false;
-         //   ScanRun = false;
-           scantype = 1;
+            //  ScanPause = false;
+            //   ScanRun = false;
+            scantype = 1;
 
 
-           
-              //  Gname = "";
-              //  memcount = 0;
-             //   scantype = 0; // .288 reset
-                ST3.Stop(); // .288
-                ST3.Reset(); //.288
-                ST2.Stop(); //.288
-                ST2.Reset(); //.288
-                ScanPause = false; //.288
-                ScanRST = 0; // .288
 
-               // currFBox.Text = ""; //.288
-                ScanRun = false; //.288
-                scanstop = false; //.288
-                scanstop2 = false; //.288
-                SP5_Active = 0; //.288 stop any scan
+            //  Gname = "";
+            //  memcount = 0;
+            //   scantype = 0; // .288 reset
+            ST3.Stop(); // .288
+            ST3.Reset(); //.288
+            ST2.Stop(); //.288
+            ST2.Reset(); //.288
+            ScanPause = false; //.288
+            ScanRST = 0; // .288
 
-           
+            // currFBox.Text = ""; //.288
+            ScanRun = false; //.288
+            scanstop = false; //.288
+            scanstop2 = false; //.288
+            SP5_Active = 0; //.288 stop any scan
+
+
 
 
             //  comboBoxTS1.SelectedIndexChanged -= comboBoxTS1_SelectedIndexChanged;  // ke9ns turn off checkchanged temporarily   
@@ -1766,7 +1767,8 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }; //  while (ScanPause == true)  // wait here in in pause
+                    }
+                    ; //  while (ScanPause == true)  // wait here in in pause
 
 
                     pausebtn.BackColor = SystemColors.ControlLight;
@@ -2064,7 +2066,8 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }; // while PAUSE
+                    }
+                    ; // while PAUSE
 
                     if (scanstop == true) //.221
                     {
@@ -2361,7 +2364,7 @@ namespace PowerSDR
                 // find if you are authorized to TX on this freq
                 if (console.CheckValidTXFreq(console.current_region, ii, console.dsp.GetDSPTX(0).CurrentDSPMode) == false) continue;
 
-                
+
                 console.chkTUN.Checked = true; // TX 
 
                 if (SWR_SLOT == 10)
@@ -3252,7 +3255,8 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    };
+                    }
+                    ;
 
                     pausebtn.BackColor = SystemColors.ControlLight;
 
@@ -4017,24 +4021,24 @@ namespace PowerSDR
 
             // runs thread Scan6 (SWL scan)
 
-            
-              //  Gname = "";
-               // memcount = 0;
-              //  scantype = 0; // .288 reset
-                ST3.Stop(); // .288
-                ST3.Reset(); //.288
-                ST2.Stop(); //.288
-                ST2.Reset(); //.288
-                ScanPause = false; //.288
-                ScanRST = 0; // .288
 
-                currFBox.Text = ""; //.288
-                ScanRun = false; //.288
-                scanstop = false; //.288
-                scanstop2 = false; //.288
-                SP5_Active = 0; //.288 stop any scan
+            //  Gname = "";
+            // memcount = 0;
+            //  scantype = 0; // .288 reset
+            ST3.Stop(); // .288
+            ST3.Reset(); //.288
+            ST2.Stop(); //.288
+            ST2.Reset(); //.288
+            ScanPause = false; //.288
+            ScanRST = 0; // .288
 
-            
+            currFBox.Text = ""; //.288
+            ScanRun = false; //.288
+            scanstop = false; //.288
+            scanstop2 = false; //.288
+            SP5_Active = 0; //.288 stop any scan
+
+
 
 
         }

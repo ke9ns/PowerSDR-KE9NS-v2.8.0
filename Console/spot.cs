@@ -37,9 +37,7 @@
 
 //using Microsoft.JScript;
 
-using Microsoft.JScript;
 using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Modules.Script;
 using OpenQA.Selenium.Chrome;
 using PdfiumViewer; //.314
 using RTF; // allows creating RTF strings just like you use stringbuilder. from Anton Rogue Trader (with RTF you can color the text of the LoTW call signs)
@@ -56,7 +54,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 //using System.Runtime.Serialization.Json;
 
 //reference Nuget Package NAudio.Lame
@@ -65,11 +62,7 @@ using System.Runtime.InteropServices;
 using System.Text;                    // ke9ns add for stringbuilder
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Convert = System.Convert;
 using Keys = System.Windows.Forms.Keys;
 
@@ -328,7 +321,7 @@ namespace PowerSDR
 
             if (SpotAge.chkPanSpotBlank.Checked) SpotBackground = true; //.307
             else SpotBackground = false;
-       
+
             if (SpotAge.chkPanLoTWColor.Checked) SpotLoTWColor = true; //.307
             else SpotLoTWColor = false;
 
@@ -612,7 +605,7 @@ namespace PowerSDR
         // this URL above does not require a headless browser drivers
         public void BeamMap_DOESNOTWORK()
         {
-            
+
             string latlong = "42.01,-88.19";
             try
             {
@@ -634,8 +627,6 @@ namespace PowerSDR
             string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
 
             Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
-
-            string URL1 = "https://ns6t.net/azimuth/code/azimuth.fcgi?distance=17500&paper=LETTER&title=Title&";
 
             // https://ns6t.net/azimuth/code/azimuth.fcgi?bw=checked&noheadingfooting=checked&location=42.01,-88.29&distance=17500&paper=LETTER&title=Titled
 
@@ -686,7 +677,7 @@ namespace PowerSDR
         // This THREAD uses Selenium and chromedriver as a headless browser and NS6T maps, to download a PDF map (as though you went online and filled out the html form)
         // need to download Pdfiumviewer 2.13.0, and PdfiumViewer.Native.x86.v8-xfa to get the pdfium.dll, both from tools->nuget package
         //  end up with AzimuthalMap.bmp 570 x 570 pixels
-      
+
         public void BeamMap()  //.314  download a Beam heading map based on your lat/long from ns6t website
         {
             string latlong = "42.01,-88.19";
@@ -697,7 +688,7 @@ namespace PowerSDR
             }
             catch (Exception e)
             {
-              
+
                 Debug.WriteLine("no valid lat,long, so use en52 " + e);
 
             }
@@ -705,13 +696,13 @@ namespace PowerSDR
 
             textBox1.Text = textBox1.Text + "Lat and Long: " + latlong + "\r\n";
 
-            string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),@"FlexRadio Systems\PowerSDR v2.8.0\");
+            string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
             string originalFile = Path.Combine(downloadPath1, "AzimuthalMap.pdf");
             string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
 
             Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
-         
-          
+
+
             try
             {
 
@@ -719,7 +710,7 @@ namespace PowerSDR
                 service.HideCommandPromptWindow = true; // <-- Hides the DOS window
 
                 ChromeOptions options = new ChromeOptions();
-              
+
                 options.AddArgument("--no-sandbox"); // bypass OS security model
                 options.AddArgument("--disable-dev-shm-usage"); // overcome limited resource
                 options.AddArgument("--headless"); // Run in headless mode
@@ -728,7 +719,7 @@ namespace PowerSDR
                 options.AddUserProfilePreference("download.default_directory", downloadPath1); // Set download directory
                 options.AddUserProfilePreference("download.prompt_for_download", false); // Disable download prompt
                 options.AddUserProfilePreference("plugins.always_open_pdf_externally", true); // Download PDF instead of opening in browser
-          
+
                 // chrome to auto download PDFS to specific dir
                 options.AddUserProfilePreference("download", new { defaultDirectory = downloadPath1, promptForDownload = false });
                 options.AddUserProfilePreference("plugins", new { alwaysOpenPdfExternally = true });
@@ -737,7 +728,7 @@ namespace PowerSDR
                 textBox1.Text = textBox1.Text + "chrome options \r\n";
 
                 // init chromedriver
-                using (IWebDriver driver = new ChromeDriver(service,options))
+                using (IWebDriver driver = new ChromeDriver(service, options))
                 {
 
                     textBox1.Text = textBox1.Text + "go to site now \r\n";
@@ -773,14 +764,14 @@ namespace PowerSDR
 
                     if (viewCheckbox.Selected) viewCheckbox.Click(); // turn off view map directly
                     if (!noHeadingCheckbox.Selected) noHeadingCheckbox.Click(); // turn off map headings
-                    
+
 
                     createMapButton.Click();
 
                     textBox1.Text = textBox1.Text + "genereate map \r\n";
                     Debug.WriteLine("done click button ");
 
-                  //  Thread.Sleep(6000);
+                    //  Thread.Sleep(6000);
                     var stopwatch = Stopwatch.StartNew(); // start timer
 
                     TimeSpan timeout = TimeSpan.FromSeconds(8);
@@ -855,18 +846,18 @@ namespace PowerSDR
 
                     } // while
 
-                        Debug.WriteLine("shut down azimuth routine");
-                        driver.Quit();
+                    Debug.WriteLine("shut down azimuth routine");
+                    driver.Quit();
 
                 } // using selenium and chromedriver
 
             }
-            catch(Exception ew)
+            catch (Exception ew)
             {
 
                 textBox1.Text = textBox1.Text + "=================MAP CRASH=============== \r\n";
                 Debug.WriteLine("Exception " + ew);
-                
+
             }
 
             bMapFlag = false; // tell udDisplayLong your done
@@ -1097,7 +1088,7 @@ namespace PowerSDR
             String last = File.ReadLines(file_name).Last(); //.275
 
             if (last.Contains("469999") == false)
-            File.AppendAllText(file_name, "469999;0000-2400;;Wld;VHF;;Wld;;1;;" + Environment.NewLine); //.275
+                File.AppendAllText(file_name, "469999;0000-2400;;Wld;VHF;;Wld;;1;;" + Environment.NewLine); //.275
 
 
             file_name1 = console.AppDataPath + "SWL2.csv"; // ke9ns extra swl freq that eibispace.de wont add
@@ -1298,7 +1289,7 @@ namespace PowerSDR
                         {
                             newChar = (char)reader2a.ReadChar(); // read \n char to finishline
 
-                          //   Debug.WriteLine("SWL LINE: " + result);
+                            //   Debug.WriteLine("SWL LINE: " + result);
 
                             if (Flag1 == 1)
                             {
@@ -1778,7 +1769,7 @@ namespace PowerSDR
                     SP_Active = 0; // turn off DX Spotter
                     SP2_Active = 0; // turn off DX Spotter
 
-                  
+
 
 
                 }
@@ -2112,7 +2103,7 @@ namespace PowerSDR
                                 processDXAGE();
 
                                 if (SP_SPOTSTART == false || SP_SHOWDX == true) Thread.Sleep(5);
-                                else  Thread.Sleep(50); // slow down the thread here
+                                else Thread.Sleep(50); // slow down the thread here
 
                                 sb.Append((char)SP_reader.Read());  // get next char from socket and add it to build the next dx spot string to parse out 
 
@@ -2132,7 +2123,7 @@ namespace PowerSDR
 
                             }// for (;!(sb.ToString().Contains("\r\n"));) //  wait for end of line
                              //-------------------------------------------------------------------------------------------------------------------------------------
-                            // come here after the CR and line feed characters
+                             // come here after the CR and line feed characters
 
                             statusBox.ForeColor = Color.Green;
                             statusBox.Text = "Spotting";
@@ -2174,7 +2165,7 @@ namespace PowerSDR
 
                         //-------------------------------------------------------------------------------------------------------------------------------------
                         // ke9ns process received standard DX spot message .276
-                        if ((message1.StartsWith("DX de ") == true) && (message1.Length > 76) ) // string can be 77 (with no grid) or 82 (with grid)
+                        if ((message1.StartsWith("DX de ") == true) && (message1.Length > 76)) // string can be 77 (with no grid) or 82 (with grid)
                         {
 
                             DX_Index1 = 250; // use 250 as a temp holding spot. always fill from the top
@@ -2188,8 +2179,8 @@ namespace PowerSDR
                             try
                             {
                                 DX_Spotter[DX_Index1] = message1.Substring(6, 10); // get dx call with : at the end
-                                Debug.WriteLine("DX_spotter " + DX_Spotter[DX_Index1] );
-                                
+                                Debug.WriteLine("DX_spotter " + DX_Spotter[DX_Index1]);
+
 
 
                                 int pos = 10;
@@ -2205,12 +2196,12 @@ namespace PowerSDR
 
                                 DX_Spotter[DX_Index1] = DX_Spotter[DX_Index1].Substring(0, pos); // reduce the call without the :
 
-                             //   Debug.WriteLine("DX_Spotter " + DX_Station[DX_Index1] + " >" + SpotWatchCall + "<");
+                                //   Debug.WriteLine("DX_Spotter " + DX_Station[DX_Index1] + " >" + SpotWatchCall + "<");
 
-                              
+
                                 if (DX_Spotter[DX_Index1].IndexOf(SpotWatchCall, StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
                                 {
-                                   
+
                                     SpotWatchFound = true;
                                 }
 
@@ -2232,16 +2223,16 @@ namespace PowerSDR
 
                                 //    textBox1.Text = e.ToString();
                             }
-                              
+
 
 
                             // grab DX_Freq ========================================================================================
                             try
                             {
                                 int start = message1.IndexOf(':'); // .261 location of : (which is the start of the freq)
-                               
-                                
-                             //    DX_Freq[DX_Index1] = (int)((double)Convert.ToDouble(message1.Substring(15, 9)) * (double)1000.0); //  get dx freq 7016.0  in khz 
+
+
+                                //    DX_Freq[DX_Index1] = (int)((double)Convert.ToDouble(message1.Substring(15, 9)) * (double)1000.0); //  get dx freq 7016.0  in khz 
 
                                 DX_Freq[DX_Index1] = (int)((double)Convert.ToDouble(message1.Substring(start + 1, (23 - start))) * (double)1000.0); // .262   get dx freq 7016.0  in khz 
 
@@ -2436,13 +2427,13 @@ namespace PowerSDR
                                 int pos = DX_Station[DX_Index1].IndexOf(' '); // find the
                                 DX_Station[DX_Index1] = DX_Station[DX_Index1].Substring(0, pos); // reduce the call without the
 
-                              //  Debug.WriteLine("DX_Station " + DX_Station[DX_Index1] + " >" + SpotWatchCall +"<" );
-                             
+                                //  Debug.WriteLine("DX_Station " + DX_Station[DX_Index1] + " >" + SpotWatchCall +"<" );
 
-                                if (DX_Station[DX_Index1].IndexOf(SpotWatchCall,StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
+
+                                if (DX_Station[DX_Index1].IndexOf(SpotWatchCall, StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
                                 {
                                     SpotWatchFoundDX = true;
-                                 
+
                                 }
 
                             }
@@ -2454,7 +2445,7 @@ namespace PowerSDR
                             {
                                 DX_Station[DX_Index1] = "NA";
                             }
-                          
+
 
 
 
@@ -2465,11 +2456,11 @@ namespace PowerSDR
 
                                 DX_Message[DX_Index1] = message1.Substring(39, 29).ToLower(); // get dx call with : at the end
 
-                                
+
                                 if (DX_Message[DX_Index1].IndexOf(SpotWatchCall, StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
                                 {
                                     SpotWatchFoundMess = true;
-                                 
+
                                 }
 
                                 if (DX_Message[DX_Index1].Contains("cw"))
@@ -2664,7 +2655,7 @@ namespace PowerSDR
 
                                     if (chkBoxSSB.Checked != true)
                                     {
-                                     //   Debug.WriteLine("bypass ssb because not looking for ssb");
+                                        //   Debug.WriteLine("bypass ssb because not looking for ssb");
                                         continue; // check for a SSB mode spot
                                     }
 
@@ -2675,7 +2666,7 @@ namespace PowerSDR
 
                                     if (chkBoxCW.Checked != true)
                                     {
-                                      //  Debug.WriteLine("bypass CW because not looking for CW");
+                                        //  Debug.WriteLine("bypass CW because not looking for CW");
                                         continue; // check for a CW mode spot
                                     }
 
@@ -2686,7 +2677,7 @@ namespace PowerSDR
 
                                     if (chkBoxBeacon.Checked != true)
                                     {
-                                     //   Debug.WriteLine("bypass Beacon because not looking for Beacons");
+                                        //   Debug.WriteLine("bypass Beacon because not looking for Beacons");
                                         continue; // check for a Beacon spot
                                     }
 
@@ -3566,7 +3557,7 @@ namespace PowerSDR
 
                         PASS2: int xx = 0;
 
-                            if(SpotWatchFound || SpotWatchFoundDX || SpotWatchFoundMess) //.269 270
+                            if (SpotWatchFound || SpotWatchFoundDX || SpotWatchFoundMess) //.269 270
                             {
                                 SpotWatchOK = true;
 
@@ -3581,7 +3572,7 @@ namespace PowerSDR
                                 SpotWatchFoundDX = false;
                                 SpotWatchFoundMess = false;
                                 SpotWatchOK = false;
-                          
+
                             }
 
 
@@ -4234,16 +4225,16 @@ namespace PowerSDR
                             try
                             {
                                 int pos2 = message1.IndexOf(">", 67);
-                               
+
                                 DX_Spotter[DX_Index1] = message1.Substring(67, pos2 - 66); // get dx call with : at the end
-                              
+
                                 Debug.WriteLine("SHOWDX_spotter:" + DX_Spotter[DX_Index1]);
 
                                 if (DX_Spotter[DX_Index1].IndexOf(SpotWatchCall, StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
                                 {
                                     SpotWatchFound = true;
                                 }
-                            
+
 
                             }
                             catch (FormatException)
@@ -4263,7 +4254,7 @@ namespace PowerSDR
                             // grab DX_Freq ========================================================================================
                             try
                             {
-                              
+
                                 DX_Freq[DX_Index1] = (int)((double)Convert.ToDouble(message1.Substring(0, 9)) * (double)1000.0); //   get dx freq 7016.0  in khz 
 
 
@@ -4469,7 +4460,7 @@ namespace PowerSDR
                                 int pos = DX_Station[DX_Index1].IndexOf(' '); // find the
                                 DX_Station[DX_Index1] = DX_Station[DX_Index1].Substring(0, pos); // reduce the call without the
 
-                                  Debug.WriteLine("DX_Station:" + DX_Station[DX_Index1] + " >" + SpotWatchCall +"<" );
+                                Debug.WriteLine("DX_Station:" + DX_Station[DX_Index1] + " >" + SpotWatchCall + "<");
 
 
                                 if (DX_Station[DX_Index1].IndexOf(SpotWatchCall, StringComparison.OrdinalIgnoreCase) != -1) //.269 ignore case
@@ -4616,7 +4607,7 @@ namespace PowerSDR
                                     if (chkBoxDIG.Checked != true) continue; // check for a Digital mode spot
                                     DX_Mode[DX_Index1] = 15; // ft8 mode
 
-                                  
+
 
                                 } // FT8
                                 else if (DX_Message[DX_Index1].Contains("ft4")
@@ -4700,13 +4691,13 @@ namespace PowerSDR
                                 //------------------------------------------------------------------------
 
                                 // grab GRID #
-                              //  DX_Grid[DX_Index1] = message1.Substring(76, 4); // get grid
+                                //  DX_Grid[DX_Index1] = message1.Substring(76, 4); // get grid
 
-                             //   sb = new StringBuilder(DX_Grid[DX_Index1]); // clear sb string over again
-                             //   sb.Append(')');
-                             //   sb.Insert(0, '('); // to differentiate the spotter from the spotted
+                                //   sb = new StringBuilder(DX_Grid[DX_Index1]); // clear sb string over again
+                                //   sb.Append(')');
+                                //   sb.Insert(0, '('); // to differentiate the spotter from the spotted
 
-                             //   DX_Grid[DX_Index1] = sb.ToString();
+                                //   DX_Grid[DX_Index1] = sb.ToString();
 
 
 
@@ -5774,11 +5765,11 @@ namespace PowerSDR
                             int pos6 = 10 - pos5; // max is 10, so how many white spaces to add?
 
                             // .276 make a line for the spotter screen when in SHOW/DX
-                            DX_FULLSTRING[0] = "DX de " + message1.Substring(68, pos1 - 68) + ":".PadRight(pos6) + message1.Substring(0, 9) + " " + message1.Substring(10,11) + " " + message1.Substring(40,26)+ "      " + message1.Substring(34,5).PadRight(10);
+                            DX_FULLSTRING[0] = "DX de " + message1.Substring(68, pos1 - 68) + ":".PadRight(pos6) + message1.Substring(0, 9) + " " + message1.Substring(10, 11) + " " + message1.Substring(40, 26) + "      " + message1.Substring(34, 5).PadRight(10);
 
 
 
-                          //  DX_FULLSTRING[0] = message1; // add newest message to top
+                            //  DX_FULLSTRING[0] = message1; // add newest message to top
 
 
                             DX_Station[0] = DX_Station[DX_Index1];    //insert new spot on top of list now
@@ -6246,7 +6237,7 @@ namespace PowerSDR
                             Debug.WriteLine("SHOWDX:" + callBox.Text.ToLower() + ":");
                             try
                             {
-                               
+
                                 if (message1.ToLower().StartsWith(callBox.Text.ToLower() + " de "))
                                 {
                                     SP_SHOWDX = false;
@@ -6276,7 +6267,7 @@ namespace PowerSDR
                                 {
                                     SP_SPOTSTART = true;
                                     button5.BackColor = Color.LightBlue; //   SystemColors.ButtonFace;
-                                    
+
 
                                     continue;
                                 }
@@ -6571,8 +6562,6 @@ namespace PowerSDR
             bool ListHide = false;
 
             Debug.WriteLine("SpotControl processTCPMessage() here");
-
-            string bigmessage = null;
             RTFBuilderbase BIGM = new RTFBuilder(RTFFont.CourierNew, 18f);
 
 
@@ -6647,15 +6636,15 @@ namespace PowerSDR
                     // DX_Spotter[ii].Substring(1, DX_Spotter[ii].Length-2).ToLower() == textBoxDXCall.Text.ToLower()
                     // .277 check partial call signs and full call signs
 
-                    if ( DX_Station[ii].ToLower() == textBoxDXCall.Text.ToLower() || DX_Station[ii].ToLower().Contains(textBoxDXCall.Text.ToLower()) )
+                    if (DX_Station[ii].ToLower() == textBoxDXCall.Text.ToLower() || DX_Station[ii].ToLower().Contains(textBoxDXCall.Text.ToLower()))
                     {
                         ListHide = false; // show this spot in the list
-                      
+
                     }
                     else
                     {
                         ListHide = true; // HIDE this spot from the listing
-                       
+
                     }
 
                 } //.277
@@ -7151,7 +7140,7 @@ namespace PowerSDR
         public int LineLength = 105; // was 105
         public string DX_TEXT;
         public bool DX_RX2 = false; // .170 add to allow a CTRL click on a spot to keep it in RX2 VFOB
-       
+
         //===============================================================================
         public bool beam_selected = false; // ke9ns if you clicked on the beam angle
 
@@ -7164,7 +7153,7 @@ namespace PowerSDR
 
             chkDXMode.Checked = true;  // the callsign box
 
-         
+
             if (e.Button == MouseButtons.Left)
             {
                 int ii = 0;
@@ -7172,7 +7161,7 @@ namespace PowerSDR
 
                 Debug.WriteLine("LEFT CLICK");
 
-             
+
                 if (e.Location.X == 0 && e.Location.Y == 0) // come here is if click on pandisplay either red dot, or CTRL over a spot on pan in console. OR Watch
                 {
                     if (SpotWatchGoVfoA == true) //.269
@@ -7193,7 +7182,7 @@ namespace PowerSDR
 
                 }
                 else// come here if click on SPOT textbox1 screen
-                { 
+                {
                     ii = textBox1.GetCharIndexFromPosition(e.Location);
                     iii = (byte)(ii / LineLength); // get line  /82  or /86 if AGE turned on or 91 if mode is also on /99 if country added but now /105 with DX_Beam heading
 
@@ -7219,9 +7208,9 @@ namespace PowerSDR
                 }
 
 
-                 DX_TEXT = textBox1.Text.Substring((DX_SELECTED * LineLength) + 16, 40); // just check freq and callsign of dx station
+                DX_TEXT = textBox1.Text.Substring((DX_SELECTED * LineLength) + 16, 40); // just check freq and callsign of dx station
 
-                 Debug.WriteLine("+DX_SELECTED " + DX_SELECTED + " , "+ DX_TEXT + " , " + e.Location);
+                Debug.WriteLine("+DX_SELECTED " + DX_SELECTED + " , " + DX_TEXT + " , " + e.Location);
 
                 int gg = ii % LineLength;  // get remainder for checking beam heading
 
@@ -7615,7 +7604,7 @@ namespace PowerSDR
                 lastselected = 10000;
                 Debug.WriteLine("MOUSEWHEEL");
 
-              
+
                 //  const int WM_VSCROLL = 0x115;
                 //  const int SB_ENDSCROLL = 8;
                 Console.SendMessageW(this.Handle, 0x115, (IntPtr)0x08, this.Handle); // to prevent a silly windows scroll feature that normally comes from a mouse wheel click
@@ -7626,7 +7615,7 @@ namespace PowerSDR
 
                 if (e.Location.X == 0 && e.Location.Y == 0) // .268 // come here is if click on pandisplay either red dot or CTRL, OR from WATCH
                 {
-                    
+
                     if (SpotWatchGoVfoB == true) //.269
                     {
                         SpotWatchGoVfoB = false;
@@ -7667,20 +7656,20 @@ namespace PowerSDR
 
                 }
 
-               
 
-                    DX_TEXT = textBox1.Text.Substring((DX_SELECTED * LineLength) + 16, 40); // just check freq and callsign of dx station
 
-                      Debug.WriteLine("1DX_SELECTED " + DX_SELECTED + " , "+ DX_TEXT);
+                DX_TEXT = textBox1.Text.Substring((DX_SELECTED * LineLength) + 16, 40); // just check freq and callsign of dx station
 
-                    int gg = ii % LineLength;  // get remainder for checking beam heading
+                Debug.WriteLine("1DX_SELECTED " + DX_SELECTED + " , " + DX_TEXT);
 
-                    //   Debug.WriteLine("position in line" + gg);
+                int gg = ii % LineLength;  // get remainder for checking beam heading
 
-                    if (gg > (LineLength - 10)) beam_selected = true; // did user Left click over the beam heading on the dx spot list ?
-                    else beam_selected = false;
+                //   Debug.WriteLine("position in line" + gg);
 
-               
+                if (gg > (LineLength - 10)) beam_selected = true; // did user Left click over the beam heading on the dx spot list ?
+                else beam_selected = false;
+
+
 
                 if ((DXt_Index > iii) && (beacon1 == false))
                 {
@@ -11311,7 +11300,7 @@ namespace PowerSDR
         // Your station Lat and Long used in Beam heading for Spots
         private void udDisplayLat_ValueChanged(object sender, EventArgs e)
         {
-           
+
 
             Map_Last = 1;
             if (checkBoxMUF.Checked == true)
@@ -13074,21 +13063,21 @@ namespace PowerSDR
             //   setup_timer(1000);
 
             console.PowerOn = false; // pause radio while changing settings .257
-          
+
             textBox1.Text += "Setting up Radio for WWV reception. \r\n";
 
-          //  Thread.Sleep(200);
+            //  Thread.Sleep(200);
 
-           
+
 
             beacon44 = console.RX1PreampMode;       // get preamp mode so you can restore it when you turn off wwvtime
 
             beacon7 = console.RX1DSPMode;           // get mode so you can restore it when you turn off wwvtime
             beacon8 = console.RX1FilterHigh;        // get high filter so you can restore it when you turn off wwvtime
             beacon9 = console.RX1FilterLow;         // get low filter so you can restore it when you turn off wwvtime
-          
+
             beacon9a = console.RX1AGCMode;          // get AGC mode so you can resetor it when you turn off wwvtime .257
-          
+
             beacon89 = console.RX1Filter;           // get filter name so you can restore
 
             beacon88 = console.VFOAFreq;            // get freq you were on before 
@@ -13125,7 +13114,7 @@ namespace PowerSDR
                 console.DSPBufPhoneRX = 4096;
             }
 
-          
+
             textBox2.Text = "";
             checkBoxTone.Checked = false;   // turn off tone marker when done.
 
@@ -13255,7 +13244,7 @@ namespace PowerSDR
 
             textBox1.Text += "Wait for PowerSDR DttSP to come back up...\r\n";
 
-         
+
 
             console.PowerOn = true; //.257
 
@@ -14041,7 +14030,7 @@ namespace PowerSDR
 
             console.chkPower.Checked = true;
 
-         //   console.PowerOn = true; // .257 pause temporarily to put back settings
+            //   console.PowerOn = true; // .257 pause temporarily to put back settings
 
 
         } // WWVTime()
@@ -15088,10 +15077,10 @@ namespace PowerSDR
                         return;
                     }
 
-                   // remarks = console.RX1DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
+                    // remarks = console.RX1DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
                     if (console.RX1DSPMode.ToString() == "CWU" || console.RX1DSPMode.ToString() == "CWL") //.261
                     {
-                        remarks = "CW";  
+                        remarks = "CW";
                     }
                     else
                     {
@@ -15135,10 +15124,10 @@ namespace PowerSDR
                         return;
                     }
 
-                  //  remarks = console.RX2DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
+                    //  remarks = console.RX2DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
                     if (console.RX2DSPMode.ToString() == "CWU" || console.RX2DSPMode.ToString() == "CWL") //.261
                     {
-                        remarks = "CW";  
+                        remarks = "CW";
                     }
                     else
                     {
@@ -15171,16 +15160,16 @@ namespace PowerSDR
                     Debug.WriteLine("cannot parse VFOA");
                     return;
                 }
-               
+
                 if (console.RX1DSPMode.ToString() == "CWU" || console.RX1DSPMode.ToString() == "CWL") //.261
                 {
-                    remarks = "CW"; 
+                    remarks = "CW";
                 }
                 else
                 {
                     remarks = console.RX1DSPMode.ToString();
                 }
-               
+
                 if (console.chkVFOSplit.Checked == true)
                 {
 
@@ -15264,8 +15253,6 @@ namespace PowerSDR
 
                 call = DX_Station[DX_SELECTED]; // use current selected call
 
-                double freq;
-
                 /*
                 try  // ke9ns add  the try to prevent a crash
                 {
@@ -15335,7 +15322,7 @@ namespace PowerSDR
                     //  remarks = console.RX1DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
                     if (console.RX1DSPMode.ToString() == "CWU" || console.RX1DSPMode.ToString() == "CWL") //.261
                     {
-                        remarks = "CW"; 
+                        remarks = "CW";
                     }
                     else
                     {
@@ -15382,7 +15369,7 @@ namespace PowerSDR
                     //  remarks = console.RX2DSPMode.ToString() + "p";  // send DSP MODE with - to indicate PowerSDR was sending it.
                     if (console.RX2DSPMode.ToString() == "CWU" || console.RX2DSPMode.ToString() == "CWL") //.261
                     {
-                        remarks = "CW";  
+                        remarks = "CW";
                     }
                     else
                     {
@@ -15419,7 +15406,7 @@ namespace PowerSDR
                 // remarks = console.RX1DSPMode.ToString() + "p";
                 if (console.RX1DSPMode.ToString() == "CWU" || console.RX1DSPMode.ToString() == "CWL") //.261
                 {
-                    remarks = "CW";  
+                    remarks = "CW";
                 }
                 else
                 {
@@ -15463,10 +15450,10 @@ namespace PowerSDR
                     return;
                 }
 
-               // remarks = console.RX2DSPMode.ToString() + "p";
+                // remarks = console.RX2DSPMode.ToString() + "p";
                 if (console.RX2DSPMode.ToString() == "CWU" || console.RX2DSPMode.ToString() == "CWL") //.261
                 {
-                    remarks = "CW"; 
+                    remarks = "CW";
                 }
                 else
                 {
@@ -16263,21 +16250,13 @@ namespace PowerSDR
             LetterElement[2, 2, 2, 2, 1] = "9";
             LetterElement[2, 2, 2, 2, 2] = "0";
 
-            int dit = 80; // msec time for a dit
-            int dah = 240; // msec time for a dah (3 dits)
-            int CWSpace = 0; // msec time between words (7 dits in length)
-
             int CWLow = 300; // tone signal level 
             int CWHigh = 0; // tone signal level
-            int CWAvg = 0;
             long RecordDITLength = 0;
             long RecordSpaceLength = 0;
 
             long TIMER1 = 0;
             long TIMER2 = 0;
-            long TIMER3 = 0;
-
-            bool IDENT = false; // Mark = true, Space = false
 
             ditLength.Reset();
             spaceLength.Reset();
@@ -16550,10 +16529,10 @@ namespace PowerSDR
 
 
                     int x2 = 937; // right side of screen (W = 1591 in FHD full screen)
-                    int x3 = 947; 
+                    int x3 = 947;
 
 
-                  //  Debug.WriteLine("WIDTH = " + Display.Target.Width);
+                    //  Debug.WriteLine("WIDTH = " + Display.Target.Width);
 
 
                     using (Graphics g = Graphics.FromImage(result))
@@ -16562,7 +16541,7 @@ namespace PowerSDR
                         g.CompositingQuality = CompositingQuality.HighQuality;
                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                         g.SmoothingMode = SmoothingMode.HighQuality;
-                     
+
                         g.DrawImage(img8, r1);  // draw F layer
 
                         g.DrawString("SWS_AU", font2, new SolidBrush(Color.White), x, 10);
@@ -16613,7 +16592,7 @@ namespace PowerSDR
                     System.Windows.Forms.Cursor.Current = CSR; // .242 change cursor back to normal
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     console.MapNOAA = true; //.243 update map
 
@@ -16644,7 +16623,7 @@ namespace PowerSDR
 
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
-                  
+
 
                     System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "DRAP.png"); // bring in D-layer full image
                     Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
@@ -16686,7 +16665,7 @@ namespace PowerSDR
                     MAP = Lighten(result, MBG, MB);
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     console.MapNOAA = true; //.243 update map
 
@@ -16776,7 +16755,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
 
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -16819,7 +16798,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -16837,7 +16816,6 @@ namespace PowerSDR
                 chkLightningMap.Checked = false; //.316
 
                 Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
-                int x = 55;
 
                 var CSR = System.Windows.Forms.Cursor.Current; //.242
 
@@ -16856,7 +16834,7 @@ namespace PowerSDR
                         Bitmap img8 = img7.Clone(r, img7.PixelFormat);  // make a new bitmap of just the lightning world map
                         Rectangle r1 = new Rectangle(70, 30, 875, 450); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
 
-                       
+
                         int xZ = console.ZoomX;    // =  mouse X location on a 1000 wide bitmap
                         int yZ = console.ZoomY;     //= mouse Y location on a 507 tall bitmap
                         float fZ = console.ZoomFactor; //= 2.0
@@ -16894,7 +16872,7 @@ namespace PowerSDR
                             g.SmoothingMode = SmoothingMode.HighQuality;
 
                             g.DrawImage(img8, r1);  // draw lightning map
-                         
+
                             g.DrawString("coolwx.com", font2, new SolidBrush(Color.White), 10, 15);
                             g.DrawString("Bouy & Ship Sea surface Temperature", font2, new SolidBrush(Color.Black), 80, 30);
 
@@ -16937,7 +16915,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
 
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -16959,7 +16937,7 @@ namespace PowerSDR
                         System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "front1.png"); //.240
                         Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
 
-                      
+
 
                         Rectangle r = new Rectangle(54, 83, 708, 417);    // cut out only the water bouy temp equirectangular map (ignore the lat/long data surounding it)
                         Bitmap img8 = img7.Clone(r, img7.PixelFormat);  // make a new bitmap of just the lightning world map
@@ -16990,9 +16968,9 @@ namespace PowerSDR
                             g.DrawImage(img8, r1, 0, 0, img8.Width, img8.Height, GraphicsUnit.Pixel, imageAttributes);
                             //   g.DrawImage(img8, r1);  // draw lightning map
 
-                            g.DrawString("coolwx.com", font2, new SolidBrush(Color.White), 10,15 );
+                            g.DrawString("coolwx.com", font2, new SolidBrush(Color.White), 10, 15);
                             g.DrawString("Bouy & Ship Sea surface Temperature", font2, new SolidBrush(Color.Black), 80, 30);
-                       
+
                         } // using
 
                         Rectangle cropRect = new Rectangle(38, 543, 722, 21); // get temp gradiant legend 
@@ -17008,8 +16986,8 @@ namespace PowerSDR
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
 
-                          
-                            float[][] colorMatrixElements = 
+
+                            float[][] colorMatrixElements =
                                 {
                                 new float[] {0.8f, 0, 0, 0, 0},  // Red scaling
                                 new float[] {0, 0.8f, 0, 0, 0},  // Green scaling
@@ -17017,12 +16995,12 @@ namespace PowerSDR
                                 new float[] {0, 0, 0, 1, 0},           // Alpha scaling
                                 new float[] {0, 0, 0, 0, 1}            // Translation
                                 };
-                          
+
                             ColorMatrix colorMatrix = new ColorMatrix(colorMatrixElements);
                             ImageAttributes imageAttributes = new ImageAttributes();
                             imageAttributes.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-                             g.DrawImage(img9, r2,0, 0, img9.Width, img9.Height, GraphicsUnit.Pixel, imageAttributes);
+                            g.DrawImage(img9, r2, 0, 0, img9.Width, img9.Height, GraphicsUnit.Pixel, imageAttributes);
 
                             //  g.DrawImage(img9, r2);  // draw lightning map
 
@@ -17043,7 +17021,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -17064,7 +17042,7 @@ namespace PowerSDR
                 Debug.WriteLine("IR Cloud map DRAW");
 
                 var CSR = System.Windows.Forms.Cursor.Current; //.242
-              
+
 
                 if (console.ZoomOn)
                 {
@@ -17078,7 +17056,7 @@ namespace PowerSDR
                         System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudE.jpg"); //.241
                         System.Drawing.Image imag3 = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudW.jpg"); //.241
                         System.Drawing.Image imag2 = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudS.jpg"); //.241
-                    
+
 
                         Bitmap img11 = new Bitmap(imag3);
                         Rectangle r11 = new Rectangle(571, 0, 382, 592);    //  upper right side
@@ -17177,7 +17155,7 @@ namespace PowerSDR
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                         MAP = Lighten(result3, MBG, MB);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 
                         console.MapNOAA = true; //.243 update map
@@ -17234,63 +17212,63 @@ namespace PowerSDR
                         System.Drawing.Image imag2 = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudS.jpg"); //.241
 
 
-                                Bitmap img11 = new Bitmap(imag3);
-                                Rectangle r11 = new Rectangle(571, 0, 382, 592);    //  upper right side
-                                Bitmap img111 = img11.Clone(r11, img11.PixelFormat);  // make a new bitmap of just the Cloud map
+                        Bitmap img11 = new Bitmap(imag3);
+                        Rectangle r11 = new Rectangle(571, 0, 382, 592);    //  upper right side
+                        Bitmap img111 = img11.Clone(r11, img11.PixelFormat);  // make a new bitmap of just the Cloud map
 
-                                Bitmap img22 = new Bitmap(imag);
-                                Rectangle r22 = new Rectangle(0, 0, 1200, 592); // upper middle
-                                Bitmap img222 = img22.Clone(r22, img22.PixelFormat);  // make a new bitmap of just the Cloud map
+                        Bitmap img22 = new Bitmap(imag);
+                        Rectangle r22 = new Rectangle(0, 0, 1200, 592); // upper middle
+                        Bitmap img222 = img22.Clone(r22, img22.PixelFormat);  // make a new bitmap of just the Cloud map
 
-                                Bitmap img33 = new Bitmap(imag3);
-                                Rectangle r33 = new Rectangle(0, 0, 571, 592);    //  upper right side
-                                Bitmap img333 = img33.Clone(r33, img33.PixelFormat);  // make a new bitmap of just the Cloud map
+                        Bitmap img33 = new Bitmap(imag3);
+                        Rectangle r33 = new Rectangle(0, 0, 571, 592);    //  upper right side
+                        Bitmap img333 = img33.Clone(r33, img33.PixelFormat);  // make a new bitmap of just the Cloud map
 
-                                Bitmap img44 = new Bitmap(imag2);
-                                Rectangle r44 = new Rectangle(821, 155, 379, 437);    //  lower left side
-                                Bitmap img444 = img44.Clone(r44, img44.PixelFormat);  // make a new bitmap of just the Cloud map
+                        Bitmap img44 = new Bitmap(imag2);
+                        Rectangle r44 = new Rectangle(821, 155, 379, 437);    //  lower left side
+                        Bitmap img444 = img44.Clone(r44, img44.PixelFormat);  // make a new bitmap of just the Cloud map
 
-                                Bitmap img66 = new Bitmap(imag2);
-                                Rectangle r66 = new Rectangle(0, 155, 821, 437);    //  lower right side
-                                Bitmap img666 = img66.Clone(r66, img66.PixelFormat);  // make a new bitmap of just the Cloud map
-
-
-                                Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
-                                                                                //  Rectangle r1 = new Rectangle(210, 56, 557, 261); // this is where to place the smaller lightning world map into the big result bitmap
-
-                                Rectangle r1 = new Rectangle(57, 56, 155, 261); // upper left 
-
-                                Rectangle r2 = new Rectangle(210, 56, 557, 261); // upper middle 
-
-                                Rectangle r3 = new Rectangle(700, 56, 246, 261); // upper right
-
-                                Rectangle r4 = new Rectangle(57, 248, 154, 194); // lower left
-
-                                Rectangle r6 = new Rectangle(586, 246, 361, 194); // lower right
-
-                                using (Graphics g = Graphics.FromImage(result))
-                                {
-
-                                    g.CompositingQuality = CompositingQuality.HighQuality;
-                                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                                    g.SmoothingMode = SmoothingMode.HighQuality;
+                        Bitmap img66 = new Bitmap(imag2);
+                        Rectangle r66 = new Rectangle(0, 155, 821, 437);    //  lower right side
+                        Bitmap img666 = img66.Clone(r66, img66.PixelFormat);  // make a new bitmap of just the Cloud map
 
 
-                                    g.DrawImage(img111, r1);  // this results in a 
-                                    g.DrawImage(img222, r2);  // this results in a
-                                    g.DrawImage(img333, r3);  // this results in a .
-                                    g.DrawImage(img444, r4);  // this results in a 
-                                    g.DrawImage(img666, r6);  // this results in a 
+                        Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
+                                                                        //  Rectangle r1 = new Rectangle(210, 56, 557, 261); // this is where to place the smaller lightning world map into the big result bitmap
+
+                        Rectangle r1 = new Rectangle(57, 56, 155, 261); // upper left 
+
+                        Rectangle r2 = new Rectangle(210, 56, 557, 261); // upper middle 
+
+                        Rectangle r3 = new Rectangle(700, 56, 246, 261); // upper right
+
+                        Rectangle r4 = new Rectangle(57, 248, 154, 194); // lower left
+
+                        Rectangle r6 = new Rectangle(586, 246, 361, 194); // lower right
+
+                        using (Graphics g = Graphics.FromImage(result))
+                        {
+
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
 
 
-                                }
-                                                
+                            g.DrawImage(img111, r1);  // this results in a 
+                            g.DrawImage(img222, r2);  // this results in a
+                            g.DrawImage(img333, r3);  // this results in a .
+                            g.DrawImage(img444, r4);  // this results in a 
+                            g.DrawImage(img666, r6);  // this results in a 
+
+
+                        }
+
 
                         System.Windows.Forms.Cursor.Current = CSR; //.242
 
                         MAP = Lighten(result, MBG, MB);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 
                         console.MapNOAA = true; //.243 update map
@@ -18499,7 +18477,7 @@ namespace PowerSDR
 
             }
 
-           
+
         }
 
         private void SpotControl_MouseLeave(object sender, EventArgs e)
@@ -18552,7 +18530,7 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first
 
 
-            if (chkFLayerON.Checked && (chkDLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked)  )
+            if (chkFLayerON.Checked && (chkDLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked))
             {
 
                 chkDLayerON.Checked = false;
@@ -19313,7 +19291,7 @@ namespace PowerSDR
                 SP_writer.Write((char)13);
                 SP_writer.Write((char)10);
 
-              //  textBoxDXCall.Text = "SHOW/DX"; // reset back
+                //  textBoxDXCall.Text = "SHOW/DX"; // reset back
 
                 SP_SHOWDX = true;
 
@@ -19348,7 +19326,7 @@ namespace PowerSDR
 
         private void button6_Click(object sender, EventArgs e)
         {
-          
+
 
         }
 
@@ -19356,15 +19334,15 @@ namespace PowerSDR
         {
             // display beam heading map when you enter in lat/long postion
 
-           
+
             if (!File.Exists(console.AppDataPath + "AzimuthalMap.bmp")) return; // is a map available for display
             if (bMapFlag) return; // is the beam heading map in use at this time?
 
             int H = Beamheadingmap.ClientSize.Height;
             int W = Beamheadingmap.ClientSize.Width;
-          
+
             Graphics g = e.Graphics; // so everything we add to g here will go to paint the meter
-          
+
             g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.SmoothingMode = SmoothingMode.HighQuality;
@@ -19384,23 +19362,23 @@ namespace PowerSDR
             float x2 = 235 + 230 * (float)Math.Cos(angleRad);
             float y2 = 235 + 230 * (float)Math.Sin(angleRad);
 
-            g.DrawLine(new Pen(Color.Red,2f), 235, 235, x2, y2);
+            g.DrawLine(new Pen(Color.Red, 2f), 235, 235, x2, y2);
 
             //-----------------------------------
 
             //-----------------------------------
-           
+
             string temp = RotorHead.Text.Trim('°');
-         
+
             int temp1 = 0;
-            int.TryParse(temp,out temp1);
-         
+            int.TryParse(temp, out temp1);
+
             angleDeg = (float)temp1 - 90f;
 
 
-             angleRad = angleDeg * (float)Math.PI / 180f;
-             x2 = 235 + 230 * (float)Math.Cos(angleRad);
-             y2 = 235 + 230 * (float)Math.Sin(angleRad);
+            angleRad = angleDeg * (float)Math.PI / 180f;
+            x2 = 235 + 230 * (float)Math.Cos(angleRad);
+            y2 = 235 + 230 * (float)Math.Sin(angleRad);
 
             g.DrawLine(new Pen(Color.Yellow, 2f), 235, 235, x2, y2);
 
@@ -19414,7 +19392,7 @@ namespace PowerSDR
 
         private void chkWaterTempMap_CheckedChanged(object sender, EventArgs e) //.316
         {
-         
+
             if (SP5_Active == 0)  // .239 if map was off when you turned on watertempmap
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first+
 

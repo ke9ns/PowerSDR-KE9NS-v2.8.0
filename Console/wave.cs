@@ -1123,7 +1123,7 @@ namespace PowerSDR
                 temp_record = Audio.RecordRXPreProcessed;
                 quickmp3SR = WaveOptions.comboSampleRate.Text;
 
-                if (chkBoxMP3.Checked == true)    WaveOptions.comboSampleRate.Text = "48000"; // reduce file size
+                if (chkBoxMP3.Checked == true) WaveOptions.comboSampleRate.Text = "48000"; // reduce file size
 
                 Audio.RecordRXPreProcessed = false;                            //ke9ns add  set this FALSE temporarily
 
@@ -1733,7 +1733,7 @@ namespace PowerSDR
                     byte[] ri = new byte[xm4 + 1];
 
                     ap = new byte[xm4 + 10, ym + 10];  // get bitmap data
-                 // ap1 = new float[xm4 + 10, ym + 10];  // convert to grayscale
+                                                       // ap1 = new float[xm4 + 10, ym + 10];  // convert to grayscale
 
                     // color mapping
                     for (int n = 0; n < 256; n++) // Blue,Green,Red
@@ -1847,9 +1847,6 @@ namespace PowerSDR
             const short bitsPerSample = 16;                   // 16
             int data = 0x61746164;                            // (0x64617461 big-endian form). Spell out "data"
 
-
-            const int headerSize = 8;                         // 8 bytes (
-
             int waveSize = ym; // how tall is the images
 
             const int lowtx = 150; // lowest frequency to display
@@ -1952,7 +1949,6 @@ namespace PowerSDR
 
             Debug.WriteLine("PCM END================");
             double temp7 = 0.0;
-            double temp8 = 0.0;
 
             int i = 0;
 

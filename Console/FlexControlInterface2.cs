@@ -28,7 +28,6 @@
 
 // For BASIC FC operation
 
-using Flex.Control;
 namespace PowerSDR
 {
     public class FlexControlInterface2
@@ -190,16 +189,16 @@ namespace PowerSDR
                     {
                         case FlexControl.RotateDirection.Clockwise:
 
-                            
-                                console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, num_steps);
-                            
+
+                            console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, num_steps);
+
 
                             break;
                         case FlexControl.RotateDirection.CounterClockwise:
 
-                           
-                                console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, -num_steps);
-                            
+
+                            console.VFOAFreq = console.SnapTune(console.VFOAFreq, step, -num_steps);
+
 
                             break;
                     }

@@ -135,14 +135,14 @@ namespace PowerSDR
             f.Name = f.Name.Replace("ptbDisplayPan2", "ptbDisplayPan"); // ke9ns
 
             f.Name = f.Name.Replace("ptbAngle", "ptbRX1Gain"); // ke9ns .310
-          
+
 
             f.Name = f.Name.Replace("checkVOX", "chkVOX"); // ke9ns add
             f.Name = f.Name.Replace("prettyTrackBarVOX", "ptbVOX"); // ke9ns add
 
             f.Name = f.Name.Replace("chkVFOBSplit", "chkVFOSplit"); // ke9ns add .271
 
-          //  f.Name = f.Name.Replace("chkVFOBSplit", "chkVFOSplit"); // ke9ns add .271
+            //  f.Name = f.Name.Replace("chkVFOBSplit", "chkVFOSplit"); // ke9ns add .271
 
             f.Name = f.Name.Replace("btnTNFAdd2", "btnTNFAdd"); // .292
 

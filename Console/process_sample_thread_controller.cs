@@ -40,7 +40,7 @@ namespace PowerSDR
 
         public void ProcessSampleThread()
         {
-           
+
             DttSP.ProcessSamplesThread(thread);
         }
     }

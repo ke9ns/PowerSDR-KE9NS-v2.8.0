@@ -42,7 +42,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -1538,6 +1537,7 @@ namespace PowerSDR
             byte data;
 
 
+
             if (quit)       // if true shut 'er all down
             {
                 Debug.WriteLine("Quit1");
@@ -1613,7 +1613,7 @@ namespace PowerSDR
                     setptt(true);
                     ttx = ttdel / tel;
 
-                   
+
                 }
                 if ((data == EL_KEYDOWN) || (data == EL_KEYUP))     // key command
                 {
@@ -1782,7 +1782,7 @@ namespace PowerSDR
                 default: tqq = "?bad msg?"; break;
             }
 
-           
+
 
             try
             {
@@ -2125,12 +2125,12 @@ namespace PowerSDR
                     else if (console.CurrentModel == Model.FLEX5000 || console.CurrentModel == Model.FLEX3000)  //.259
                     {
 
-                      //  int rtn = Pal.ReadOp(Opcode.RDAL_OP_READ_PTT, 0, 0, out data);
-                      //  dot = ((data & 0x01) == 1);
-                      //  dash = ((data & 0x02) == 2);
-                      //  rca_ptt = ((data & 0x04) == 4);
-                      //  mic_ptt = ((data & 0x08) == 8);
-                       
+                        //  int rtn = Pal.ReadOp(Opcode.RDAL_OP_READ_PTT, 0, 0, out data);
+                        //  dot = ((data & 0x01) == 1);
+                        //  dash = ((data & 0x02) == 2);
+                        //  rca_ptt = ((data & 0x04) == 4);
+                        //  mic_ptt = ((data & 0x08) == 8);
+
 
                         if (FWC.ReadPTT(out dot, out dash, out rca_ptt, out mic_ptt) != 0)   // ke9ns: read Flex radio TRS plug and PTT circuits
                         {

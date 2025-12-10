@@ -283,7 +283,7 @@ namespace PowerSDR
         {
 
         }
-       
+
 
         private void chkPanSpotBlank_CheckedChanged_1(object sender, EventArgs e) //.261
         {
@@ -303,7 +303,7 @@ namespace PowerSDR
             else SpotForm.SpotNoVert = false;
         }
 
-      
+
 
     } // SpotAge
 

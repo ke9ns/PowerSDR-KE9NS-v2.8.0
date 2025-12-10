@@ -55,7 +55,7 @@ namespace PowerSDR
                 }
                 catch (Exception ex)
                 {
-                   
+
                     console.CXAutoEnabled = false;
                     if (console.setupForm != null)
                     {
@@ -126,7 +126,7 @@ namespace PowerSDR
             return;
         } //  disableCXAuto
 
-       
+
 
         #endregion Constructor
 
@@ -139,7 +139,7 @@ namespace PowerSDR
         Console console;
         ASCIIEncoding AE = new ASCIIEncoding();
         private bool Fpass = true;
-                                             //		private System.Timers.Timer SIOMonitor;
+        //		private System.Timers.Timer SIOMonitor;
         private bool CXAuto_enabled = false; // .275
 
         CATParser parser;
@@ -255,7 +255,7 @@ namespace PowerSDR
 
                 try
                 {
-                   
+
                     console.CXAuto_Rec = CommBuffer.ToString();
 
 

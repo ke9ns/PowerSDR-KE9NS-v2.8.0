@@ -93,7 +93,7 @@ namespace PowerSDR
             Initialize();
         }
 
-      
+
 
 
         public bool UseForKeyPTT

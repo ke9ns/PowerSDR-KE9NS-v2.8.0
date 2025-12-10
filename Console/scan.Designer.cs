@@ -103,55 +103,57 @@ namespace PowerSDR
             this.pausebtn = new System.Windows.Forms.Button();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.groupBoxTS2 = new System.Windows.Forms.GroupBoxTS();
             this.udIDGap = new System.Windows.Forms.NumericUpDownTS();
             this.udIDThres = new System.Windows.Forms.NumericUpDownTS();
-            this.chkAlwaysOnTop = new System.Windows.Forms.CheckBoxTS();
-            this.label13 = new System.Windows.Forms.Label();
             this.udIDTimer = new System.Windows.Forms.NumericUpDownTS();
-            this.labelTS27 = new System.Windows.Forms.LabelTS();
-            this.labelTS23 = new System.Windows.Forms.LabelTS();
             this.chkBoxIdent = new System.Windows.Forms.CheckBoxTS();
             this.udPauseLength = new System.Windows.Forms.NumericUpDownTS();
-            this.comboMemGroupName = new System.Windows.Forms.ComboBoxTS();
             this.chkBoxSQLBRK = new System.Windows.Forms.CheckBoxTS();
-            this.grpGenCustomTitleText = new System.Windows.Forms.GroupBoxTS();
             this.button_reset = new System.Windows.Forms.Button();
             this.chkBoxLoop = new System.Windows.Forms.CheckBoxTS();
             this.btnGroupMemory1 = new System.Windows.Forms.Button();
+            this.numericSWRTest = new System.Windows.Forms.NumericUpDownTS();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnGroupMemory = new System.Windows.Forms.Button();
+            this.btnCustomList = new System.Windows.Forms.Button();
+            this.btnBandstack = new System.Windows.Forms.Button();
+            this.checkBoxSWR = new System.Windows.Forms.CheckBoxTS();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chkBoxSQLBRKWait = new System.Windows.Forms.CheckBoxTS();
+            this.chkIDdBM = new System.Windows.Forms.CheckBoxTS();
+            this.chkIDSIG = new System.Windows.Forms.CheckBoxTS();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.groupBoxTS2 = new System.Windows.Forms.GroupBoxTS();
+            this.chkAlwaysOnTop = new System.Windows.Forms.CheckBoxTS();
+            this.label13 = new System.Windows.Forms.Label();
+            this.labelTS27 = new System.Windows.Forms.LabelTS();
+            this.labelTS23 = new System.Windows.Forms.LabelTS();
+            this.comboMemGroupName = new System.Windows.Forms.ComboBoxTS();
+            this.grpGenCustomTitleText = new System.Windows.Forms.GroupBoxTS();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.numericSWRTest = new System.Windows.Forms.NumericUpDownTS();
-            this.button2 = new System.Windows.Forms.Button();
             this.udspeedBox = new System.Windows.Forms.NumericUpDownTS();
             this.udstepBox = new System.Windows.Forms.NumericUpDownTS();
             this.udspeedBox1 = new System.Windows.Forms.NumericUpDownTS();
             this.comboBoxTS1 = new System.Windows.Forms.ComboBoxTS();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnGroupMemory = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.highFBox = new System.Windows.Forms.TextBox();
-            this.btnCustomList = new System.Windows.Forms.Button();
-            this.btnBandstack = new System.Windows.Forms.Button();
-            this.checkBoxSWR = new System.Windows.Forms.CheckBoxTS();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lowFBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.chkBoxSQLBRKWait = new System.Windows.Forms.CheckBoxTS();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.groupBoxTS2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udIDGap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udIDThres)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udIDTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udPauseLength)).BeginInit();
-            this.grpGenCustomTitleText.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSWRTest)).BeginInit();
+            this.groupBoxTS2.SuspendLayout();
+            this.grpGenCustomTitleText.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udspeedBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udstepBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udspeedBox1)).BeginInit();
@@ -298,46 +300,6 @@ namespace PowerSDR
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 40;
             // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label11.Location = new System.Drawing.Point(115, 530);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(101, 13);
-            this.label11.TabIndex = 92;
-            this.label11.Text = "Pause Length (Sec)";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label12.Location = new System.Drawing.Point(100, 117);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(36, 13);
-            this.label12.TabIndex = 93;
-            this.label12.Text = "Group";
-            // 
-            // groupBoxTS2
-            // 
-            this.groupBoxTS2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxTS2.Controls.Add(this.udIDGap);
-            this.groupBoxTS2.Controls.Add(this.udIDThres);
-            this.groupBoxTS2.Controls.Add(this.chkAlwaysOnTop);
-            this.groupBoxTS2.Controls.Add(this.label13);
-            this.groupBoxTS2.Controls.Add(this.udIDTimer);
-            this.groupBoxTS2.Controls.Add(this.labelTS27);
-            this.groupBoxTS2.Controls.Add(this.labelTS23);
-            this.groupBoxTS2.Controls.Add(this.chkBoxIdent);
-            this.groupBoxTS2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBoxTS2.Location = new System.Drawing.Point(222, 500);
-            this.groupBoxTS2.Name = "groupBoxTS2";
-            this.groupBoxTS2.Size = new System.Drawing.Size(410, 70);
-            this.groupBoxTS2.TabIndex = 94;
-            this.groupBoxTS2.TabStop = false;
-            this.groupBoxTS2.Text = "Sig Ident";
-            // 
             // udIDGap
             // 
             this.udIDGap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -361,7 +323,7 @@ namespace PowerSDR
             this.udIDGap.Name = "udIDGap";
             this.udIDGap.Size = new System.Drawing.Size(55, 22);
             this.udIDGap.TabIndex = 97;
-            this.toolTip1.SetToolTip(this.udIDGap, "Sets Threshold to detect signals above the noise floor.");
+            this.toolTip1.SetToolTip(this.udIDGap, resources.GetString("udIDGap.ToolTip"));
             this.udIDGap.Value = new decimal(new int[] {
             6,
             0,
@@ -398,29 +360,6 @@ namespace PowerSDR
             0,
             0});
             // 
-            // chkAlwaysOnTop
-            // 
-            this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkAlwaysOnTop.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.chkAlwaysOnTop.Image = null;
-            this.chkAlwaysOnTop.Location = new System.Drawing.Point(300, 42);
-            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
-            this.chkAlwaysOnTop.Size = new System.Drawing.Size(104, 24);
-            this.chkAlwaysOnTop.TabIndex = 59;
-            this.chkAlwaysOnTop.Text = "Always On Top";
-            this.chkAlwaysOnTop.CheckedChanged += new System.EventHandler(this.chkAlwaysOnTop_CheckedChanged);
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label13.Location = new System.Drawing.Point(197, 12);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(65, 13);
-            this.label13.TabIndex = 95;
-            this.label13.Text = "Persistance:";
-            // 
             // udIDTimer
             // 
             this.udIDTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -430,7 +369,7 @@ namespace PowerSDR
             0,
             0,
             0});
-            this.udIDTimer.Location = new System.Drawing.Point(265, 8);
+            this.udIDTimer.Location = new System.Drawing.Point(357, 8);
             this.udIDTimer.Maximum = new decimal(new int[] {
             200,
             0,
@@ -452,26 +391,6 @@ namespace PowerSDR
             0,
             0});
             // 
-            // labelTS27
-            // 
-            this.labelTS27.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.labelTS27.Image = null;
-            this.labelTS27.Location = new System.Drawing.Point(70, 36);
-            this.labelTS27.Name = "labelTS27";
-            this.labelTS27.Size = new System.Drawing.Size(51, 18);
-            this.labelTS27.TabIndex = 91;
-            this.labelTS27.Text = "Hz Gap:";
-            // 
-            // labelTS23
-            // 
-            this.labelTS23.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.labelTS23.Image = null;
-            this.labelTS23.Location = new System.Drawing.Point(70, 8);
-            this.labelTS23.Name = "labelTS23";
-            this.labelTS23.Size = new System.Drawing.Size(63, 18);
-            this.labelTS23.TabIndex = 89;
-            this.labelTS23.Text = "dBm Thres:";
-            // 
             // chkBoxIdent
             // 
             this.chkBoxIdent.Image = null;
@@ -480,7 +399,7 @@ namespace PowerSDR
             this.chkBoxIdent.Size = new System.Drawing.Size(58, 19);
             this.chkBoxIdent.TabIndex = 89;
             this.chkBoxIdent.Text = "ON";
-            this.toolTip1.SetToolTip(this.chkBoxIdent, "Check to turn on Peak signal identify in the Panadapter");
+            this.toolTip1.SetToolTip(this.chkBoxIdent, resources.GetString("chkBoxIdent.ToolTip"));
             this.chkBoxIdent.CheckedChanged += new System.EventHandler(this.chkBoxIdent_CheckedChanged);
             // 
             // udPauseLength
@@ -513,19 +432,6 @@ namespace PowerSDR
             0,
             0});
             // 
-            // comboMemGroupName
-            // 
-            this.comboMemGroupName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboMemGroupName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboMemGroupName.DropDownWidth = 112;
-            this.comboMemGroupName.Location = new System.Drawing.Point(404, 305);
-            this.comboMemGroupName.Name = "comboMemGroupName";
-            this.comboMemGroupName.Size = new System.Drawing.Size(223, 21);
-            this.comboMemGroupName.TabIndex = 64;
-            this.comboMemGroupName.Visible = false;
-            this.comboMemGroupName.SelectedIndexChanged += new System.EventHandler(this.comboMemGroupName_SelectedIndexChanged);
-            // 
             // chkBoxSQLBRK
             // 
             this.chkBoxSQLBRK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -538,42 +444,6 @@ namespace PowerSDR
             this.chkBoxSQLBRK.Text = "Pause on Squelch Break";
             this.toolTip1.SetToolTip(this.chkBoxSQLBRK, resources.GetString("chkBoxSQLBRK.ToolTip"));
             this.chkBoxSQLBRK.CheckedChanged += new System.EventHandler(this.chkBoxSQLBRK_CheckedChanged);
-            // 
-            // grpGenCustomTitleText
-            // 
-            this.grpGenCustomTitleText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.grpGenCustomTitleText.Controls.Add(this.button_reset);
-            this.grpGenCustomTitleText.Controls.Add(this.chkBoxLoop);
-            this.grpGenCustomTitleText.Controls.Add(this.btnGroupMemory1);
-            this.grpGenCustomTitleText.Controls.Add(this.textBox1);
-            this.grpGenCustomTitleText.Controls.Add(this.label1);
-            this.grpGenCustomTitleText.Controls.Add(this.label15);
-            this.grpGenCustomTitleText.Controls.Add(this.label14);
-            this.grpGenCustomTitleText.Controls.Add(this.numericSWRTest);
-            this.grpGenCustomTitleText.Controls.Add(this.button2);
-            this.grpGenCustomTitleText.Controls.Add(this.udspeedBox);
-            this.grpGenCustomTitleText.Controls.Add(this.udstepBox);
-            this.grpGenCustomTitleText.Controls.Add(this.udspeedBox1);
-            this.grpGenCustomTitleText.Controls.Add(this.comboBoxTS1);
-            this.grpGenCustomTitleText.Controls.Add(this.label6);
-            this.grpGenCustomTitleText.Controls.Add(this.btnGroupMemory);
-            this.grpGenCustomTitleText.Controls.Add(this.label4);
-            this.grpGenCustomTitleText.Controls.Add(this.highFBox);
-            this.grpGenCustomTitleText.Controls.Add(this.btnCustomList);
-            this.grpGenCustomTitleText.Controls.Add(this.btnBandstack);
-            this.grpGenCustomTitleText.Controls.Add(this.checkBoxSWR);
-            this.grpGenCustomTitleText.Controls.Add(this.label2);
-            this.grpGenCustomTitleText.Controls.Add(this.label5);
-            this.grpGenCustomTitleText.Controls.Add(this.lowFBox);
-            this.grpGenCustomTitleText.Controls.Add(this.button1);
-            this.grpGenCustomTitleText.Controls.Add(this.label10);
-            this.grpGenCustomTitleText.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.grpGenCustomTitleText.Location = new System.Drawing.Point(12, 332);
-            this.grpGenCustomTitleText.Name = "grpGenCustomTitleText";
-            this.grpGenCustomTitleText.Size = new System.Drawing.Size(620, 162);
-            this.grpGenCustomTitleText.TabIndex = 61;
-            this.grpGenCustomTitleText.TabStop = false;
-            this.grpGenCustomTitleText.Text = "Scan Type";
             // 
             // button_reset
             // 
@@ -614,51 +484,6 @@ namespace PowerSDR
         "");
             this.btnGroupMemory1.UseVisualStyleBackColor = true;
             this.btnGroupMemory1.Click += new System.EventHandler(this.btnGroupMemory1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox1.BackColor = System.Drawing.Color.LightYellow;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(139, 44);
-            this.textBox1.MaxLength = 20;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(232, 24);
-            this.textBox1.TabIndex = 104;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.comboBoxTS2_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(195, 71);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 13);
-            this.label1.TabIndex = 103;
-            this.label1.Text = "\"SWL\" Group to Scan";
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(11, 111);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(34, 13);
-            this.label15.TabIndex = 101;
-            this.label15.Text = "Run#";
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(549, 113);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
-            this.label14.TabIndex = 99;
-            this.label14.Text = "(mSec)";
             // 
             // numericSWRTest
             // 
@@ -706,6 +531,298 @@ namespace PowerSDR
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             this.button2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button2_MouseDown);
+            // 
+            // btnGroupMemory
+            // 
+            this.btnGroupMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGroupMemory.Enabled = false;
+            this.btnGroupMemory.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnGroupMemory.Location = new System.Drawing.Point(14, 20);
+            this.btnGroupMemory.Name = "btnGroupMemory";
+            this.btnGroupMemory.Size = new System.Drawing.Size(115, 23);
+            this.btnGroupMemory.TabIndex = 5;
+            this.btnGroupMemory.Text = "Memory Scan (RX)";
+            this.toolTip1.SetToolTip(this.btnGroupMemory, resources.GetString("btnGroupMemory.ToolTip"));
+            this.btnGroupMemory.UseVisualStyleBackColor = true;
+            this.btnGroupMemory.Click += new System.EventHandler(this.btnGroupMemory_Click);
+            this.btnGroupMemory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGroupMemory_MouseDown);
+            // 
+            // btnCustomList
+            // 
+            this.btnCustomList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCustomList.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCustomList.Location = new System.Drawing.Point(496, 49);
+            this.btnCustomList.Name = "btnCustomList";
+            this.btnCustomList.Size = new System.Drawing.Size(108, 23);
+            this.btnCustomList.TabIndex = 3;
+            this.btnCustomList.Text = "Cstm List Start";
+            this.toolTip1.SetToolTip(this.btnCustomList, resources.GetString("btnCustomList.ToolTip"));
+            this.btnCustomList.UseVisualStyleBackColor = true;
+            this.btnCustomList.Click += new System.EventHandler(this.btnCustomList_Click);
+            // 
+            // btnBandstack
+            // 
+            this.btnBandstack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnBandstack.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBandstack.Location = new System.Drawing.Point(496, 20);
+            this.btnBandstack.Name = "btnBandstack";
+            this.btnBandstack.Size = new System.Drawing.Size(108, 23);
+            this.btnBandstack.TabIndex = 4;
+            this.btnBandstack.Text = "BandStack Start";
+            this.toolTip1.SetToolTip(this.btnBandstack, "Click to start scanning your current BandStack.");
+            this.btnBandstack.UseVisualStyleBackColor = true;
+            this.btnBandstack.Click += new System.EventHandler(this.btnBandstack_Click);
+            // 
+            // checkBoxSWR
+            // 
+            this.checkBoxSWR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxSWR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.checkBoxSWR.Image = null;
+            this.checkBoxSWR.Location = new System.Drawing.Point(6, 87);
+            this.checkBoxSWR.Name = "checkBoxSWR";
+            this.checkBoxSWR.Size = new System.Drawing.Size(214, 17);
+            this.checkBoxSWR.TabIndex = 95;
+            this.checkBoxSWR.Text = "Display Recorded SWR Plot(s) to Pan";
+            this.toolTip1.SetToolTip(this.checkBoxSWR, "Hit F1 for more HELP\r\n\r\nDisplay SWR Plot(s) to Panadapter display area\r\n\r\nRecords" +
+        " SWR to SWR_PLOTS Folder (right click on SWR SCAN button to open)");
+            this.checkBoxSWR.CheckedChanged += new System.EventHandler(this.checkBoxSWR_CheckedChanged);
+            this.checkBoxSWR.MouseEnter += new System.EventHandler(this.checkBoxSWR_MouseEnter);
+            this.checkBoxSWR.MouseLeave += new System.EventHandler(this.checkBoxSWR_MouseLeave);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Location = new System.Drawing.Point(115, 103);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(54, 48);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Low-Hi Scan (RX)";
+            this.toolTip1.SetToolTip(this.button1, "Click here to start scanning from Low Freq to High Freq.\r\n\r\nYou can manually chan" +
+        "ge the Low and High Freq Edges.\r\n\r\nLoop checkbox for continous Scan");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // chkBoxSQLBRKWait
+            // 
+            this.chkBoxSQLBRKWait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkBoxSQLBRKWait.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.chkBoxSQLBRKWait.Image = null;
+            this.chkBoxSQLBRKWait.Location = new System.Drawing.Point(12, 495);
+            this.chkBoxSQLBRKWait.Name = "chkBoxSQLBRKWait";
+            this.chkBoxSQLBRKWait.Size = new System.Drawing.Size(104, 31);
+            this.chkBoxSQLBRKWait.TabIndex = 95;
+            this.chkBoxSQLBRKWait.Text = "Wait on Squelch Break";
+            this.toolTip1.SetToolTip(this.chkBoxSQLBRKWait, resources.GetString("chkBoxSQLBRKWait.ToolTip"));
+            this.chkBoxSQLBRKWait.CheckedChanged += new System.EventHandler(this.chkBoxSQLBRKWait_CheckedChanged);
+            // 
+            // chkIDdBM
+            // 
+            this.chkIDdBM.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkIDdBM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.chkIDdBM.Image = null;
+            this.chkIDdBM.Location = new System.Drawing.Point(182, 10);
+            this.chkIDdBM.Name = "chkIDdBM";
+            this.chkIDdBM.Size = new System.Drawing.Size(95, 16);
+            this.chkIDdBM.TabIndex = 98;
+            this.chkIDdBM.Text = "display dBm";
+            this.toolTip1.SetToolTip(this.chkIDdBM, "Display \"Peak Hold\" signal dBm value \r\n\r\nNOTE: This is not the true Signal streng" +
+        "h of the Signal\r\nbut rather the strengh of a single FFT Bin as displayed on the " +
+        "Pan\r\n");
+            // 
+            // chkIDSIG
+            // 
+            this.chkIDSIG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkIDSIG.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.chkIDSIG.Image = null;
+            this.chkIDSIG.Location = new System.Drawing.Point(182, 32);
+            this.chkIDSIG.Name = "chkIDSIG";
+            this.chkIDSIG.Size = new System.Drawing.Size(95, 16);
+            this.chkIDSIG.TabIndex = 99;
+            this.chkIDSIG.Text = "display S Units";
+            this.toolTip1.SetToolTip(this.chkIDSIG, "Display \"Peak Hold\" signal dBm value in S units\r\n\r\nNOTE: This is not the true Sig" +
+        "nal strengh of the Signal\r\nbut rather the strengh of a single FFT Bin as display" +
+        "ed on the Pan");
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label11.Location = new System.Drawing.Point(115, 530);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(101, 13);
+            this.label11.TabIndex = 92;
+            this.label11.Text = "Pause Length (Sec)";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label12.Location = new System.Drawing.Point(100, 117);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(36, 13);
+            this.label12.TabIndex = 93;
+            this.label12.Text = "Group";
+            // 
+            // groupBoxTS2
+            // 
+            this.groupBoxTS2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxTS2.Controls.Add(this.chkIDSIG);
+            this.groupBoxTS2.Controls.Add(this.chkIDdBM);
+            this.groupBoxTS2.Controls.Add(this.udIDGap);
+            this.groupBoxTS2.Controls.Add(this.udIDThres);
+            this.groupBoxTS2.Controls.Add(this.chkAlwaysOnTop);
+            this.groupBoxTS2.Controls.Add(this.label13);
+            this.groupBoxTS2.Controls.Add(this.udIDTimer);
+            this.groupBoxTS2.Controls.Add(this.labelTS27);
+            this.groupBoxTS2.Controls.Add(this.labelTS23);
+            this.groupBoxTS2.Controls.Add(this.chkBoxIdent);
+            this.groupBoxTS2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBoxTS2.Location = new System.Drawing.Point(222, 500);
+            this.groupBoxTS2.Name = "groupBoxTS2";
+            this.groupBoxTS2.Size = new System.Drawing.Size(410, 70);
+            this.groupBoxTS2.TabIndex = 94;
+            this.groupBoxTS2.TabStop = false;
+            this.groupBoxTS2.Text = "Sig Ident";
+            this.toolTip1.SetToolTip(this.groupBoxTS2, resources.GetString("groupBoxTS2.ToolTip"));
+            // 
+            // chkAlwaysOnTop
+            // 
+            this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkAlwaysOnTop.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.chkAlwaysOnTop.Image = null;
+            this.chkAlwaysOnTop.Location = new System.Drawing.Point(300, 42);
+            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
+            this.chkAlwaysOnTop.Size = new System.Drawing.Size(104, 24);
+            this.chkAlwaysOnTop.TabIndex = 59;
+            this.chkAlwaysOnTop.Text = "Always On Top";
+            this.chkAlwaysOnTop.CheckedChanged += new System.EventHandler(this.chkAlwaysOnTop_CheckedChanged);
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label13.Location = new System.Drawing.Point(290, 13);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 13);
+            this.label13.TabIndex = 95;
+            this.label13.Text = "Persistance:";
+            // 
+            // labelTS27
+            // 
+            this.labelTS27.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelTS27.Image = null;
+            this.labelTS27.Location = new System.Drawing.Point(70, 36);
+            this.labelTS27.Name = "labelTS27";
+            this.labelTS27.Size = new System.Drawing.Size(51, 18);
+            this.labelTS27.TabIndex = 91;
+            this.labelTS27.Text = "Hz Gap:";
+            // 
+            // labelTS23
+            // 
+            this.labelTS23.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelTS23.Image = null;
+            this.labelTS23.Location = new System.Drawing.Point(70, 8);
+            this.labelTS23.Name = "labelTS23";
+            this.labelTS23.Size = new System.Drawing.Size(63, 18);
+            this.labelTS23.TabIndex = 89;
+            this.labelTS23.Text = "dBm Thres:";
+            // 
+            // comboMemGroupName
+            // 
+            this.comboMemGroupName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboMemGroupName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboMemGroupName.DropDownWidth = 112;
+            this.comboMemGroupName.Location = new System.Drawing.Point(404, 305);
+            this.comboMemGroupName.Name = "comboMemGroupName";
+            this.comboMemGroupName.Size = new System.Drawing.Size(223, 21);
+            this.comboMemGroupName.TabIndex = 64;
+            this.comboMemGroupName.Visible = false;
+            this.comboMemGroupName.SelectedIndexChanged += new System.EventHandler(this.comboMemGroupName_SelectedIndexChanged);
+            // 
+            // grpGenCustomTitleText
+            // 
+            this.grpGenCustomTitleText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.grpGenCustomTitleText.Controls.Add(this.button_reset);
+            this.grpGenCustomTitleText.Controls.Add(this.chkBoxLoop);
+            this.grpGenCustomTitleText.Controls.Add(this.btnGroupMemory1);
+            this.grpGenCustomTitleText.Controls.Add(this.textBox1);
+            this.grpGenCustomTitleText.Controls.Add(this.label1);
+            this.grpGenCustomTitleText.Controls.Add(this.label15);
+            this.grpGenCustomTitleText.Controls.Add(this.label14);
+            this.grpGenCustomTitleText.Controls.Add(this.numericSWRTest);
+            this.grpGenCustomTitleText.Controls.Add(this.button2);
+            this.grpGenCustomTitleText.Controls.Add(this.udspeedBox);
+            this.grpGenCustomTitleText.Controls.Add(this.udstepBox);
+            this.grpGenCustomTitleText.Controls.Add(this.udspeedBox1);
+            this.grpGenCustomTitleText.Controls.Add(this.comboBoxTS1);
+            this.grpGenCustomTitleText.Controls.Add(this.label6);
+            this.grpGenCustomTitleText.Controls.Add(this.btnGroupMemory);
+            this.grpGenCustomTitleText.Controls.Add(this.label4);
+            this.grpGenCustomTitleText.Controls.Add(this.highFBox);
+            this.grpGenCustomTitleText.Controls.Add(this.btnCustomList);
+            this.grpGenCustomTitleText.Controls.Add(this.btnBandstack);
+            this.grpGenCustomTitleText.Controls.Add(this.checkBoxSWR);
+            this.grpGenCustomTitleText.Controls.Add(this.label2);
+            this.grpGenCustomTitleText.Controls.Add(this.label5);
+            this.grpGenCustomTitleText.Controls.Add(this.lowFBox);
+            this.grpGenCustomTitleText.Controls.Add(this.button1);
+            this.grpGenCustomTitleText.Controls.Add(this.label10);
+            this.grpGenCustomTitleText.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.grpGenCustomTitleText.Location = new System.Drawing.Point(12, 332);
+            this.grpGenCustomTitleText.Name = "grpGenCustomTitleText";
+            this.grpGenCustomTitleText.Size = new System.Drawing.Size(620, 162);
+            this.grpGenCustomTitleText.TabIndex = 61;
+            this.grpGenCustomTitleText.TabStop = false;
+            this.grpGenCustomTitleText.Text = "Scan Type";
+            // 
+            // textBox1
+            // 
+            this.textBox1.AcceptsReturn = true;
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox1.BackColor = System.Drawing.Color.LightYellow;
+            this.textBox1.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(139, 44);
+            this.textBox1.MaxLength = 20;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(232, 24);
+            this.textBox1.TabIndex = 104;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.comboBoxTS2_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(195, 71);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 13);
+            this.label1.TabIndex = 103;
+            this.label1.Text = "\"SWL\" Group to Scan";
+            // 
+            // label15
+            // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(11, 111);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(34, 13);
+            this.label15.TabIndex = 101;
+            this.label15.Text = "Run#";
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(549, 113);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.TabIndex = 99;
+            this.label14.Text = "(mSec)";
             // 
             // udspeedBox
             // 
@@ -817,21 +934,6 @@ namespace PowerSDR
             this.label6.TabIndex = 62;
             this.label6.Text = "\"Memory\" Group to Scan";
             // 
-            // btnGroupMemory
-            // 
-            this.btnGroupMemory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGroupMemory.Enabled = false;
-            this.btnGroupMemory.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnGroupMemory.Location = new System.Drawing.Point(14, 20);
-            this.btnGroupMemory.Name = "btnGroupMemory";
-            this.btnGroupMemory.Size = new System.Drawing.Size(115, 23);
-            this.btnGroupMemory.TabIndex = 5;
-            this.btnGroupMemory.Text = "Memory Scan (RX)";
-            this.toolTip1.SetToolTip(this.btnGroupMemory, resources.GetString("btnGroupMemory.ToolTip"));
-            this.btnGroupMemory.UseVisualStyleBackColor = true;
-            this.btnGroupMemory.Click += new System.EventHandler(this.btnGroupMemory_Click);
-            this.btnGroupMemory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGroupMemory_MouseDown);
-            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -855,48 +957,6 @@ namespace PowerSDR
             this.highFBox.Click += new System.EventHandler(this.highFBox_Click);
             this.highFBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.highFBox_KeyDown);
             this.highFBox.MouseLeave += new System.EventHandler(this.highFBox_MouseLeave);
-            // 
-            // btnCustomList
-            // 
-            this.btnCustomList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCustomList.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnCustomList.Location = new System.Drawing.Point(496, 49);
-            this.btnCustomList.Name = "btnCustomList";
-            this.btnCustomList.Size = new System.Drawing.Size(108, 23);
-            this.btnCustomList.TabIndex = 3;
-            this.btnCustomList.Text = "Cstm List Start";
-            this.toolTip1.SetToolTip(this.btnCustomList, resources.GetString("btnCustomList.ToolTip"));
-            this.btnCustomList.UseVisualStyleBackColor = true;
-            this.btnCustomList.Click += new System.EventHandler(this.btnCustomList_Click);
-            // 
-            // btnBandstack
-            // 
-            this.btnBandstack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnBandstack.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnBandstack.Location = new System.Drawing.Point(496, 20);
-            this.btnBandstack.Name = "btnBandstack";
-            this.btnBandstack.Size = new System.Drawing.Size(108, 23);
-            this.btnBandstack.TabIndex = 4;
-            this.btnBandstack.Text = "BandStack Start";
-            this.toolTip1.SetToolTip(this.btnBandstack, "Click to start scanning your current BandStack.");
-            this.btnBandstack.UseVisualStyleBackColor = true;
-            this.btnBandstack.Click += new System.EventHandler(this.btnBandstack_Click);
-            // 
-            // checkBoxSWR
-            // 
-            this.checkBoxSWR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxSWR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.checkBoxSWR.Image = null;
-            this.checkBoxSWR.Location = new System.Drawing.Point(6, 87);
-            this.checkBoxSWR.Name = "checkBoxSWR";
-            this.checkBoxSWR.Size = new System.Drawing.Size(214, 17);
-            this.checkBoxSWR.TabIndex = 95;
-            this.checkBoxSWR.Text = "Display Recorded SWR Plot(s) to Pan";
-            this.toolTip1.SetToolTip(this.checkBoxSWR, "Hit F1 for more HELP\r\n\r\nDisplay SWR Plot(s) to Panadapter display area\r\n\r\nRecords" +
-        " SWR to SWR_PLOTS Folder (right click on SWR SCAN button to open)");
-            this.checkBoxSWR.CheckedChanged += new System.EventHandler(this.checkBoxSWR_CheckedChanged);
-            this.checkBoxSWR.MouseEnter += new System.EventHandler(this.checkBoxSWR_MouseEnter);
-            this.checkBoxSWR.MouseLeave += new System.EventHandler(this.checkBoxSWR_MouseLeave);
             // 
             // label2
             // 
@@ -932,20 +992,6 @@ namespace PowerSDR
             this.lowFBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lowFBox_KeyDown);
             this.lowFBox.MouseLeave += new System.EventHandler(this.lowFBox_MouseLeave);
             // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button1.Location = new System.Drawing.Point(115, 103);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(54, 48);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Low-Hi Scan (RX)";
-            this.toolTip1.SetToolTip(this.button1, "Click here to start scanning from Low Freq to High Freq.\r\n\r\nYou can manually chan" +
-        "ge the Low and High Freq Edges.\r\n\r\nLoop checkbox for continous Scan");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button5_Click);
-            // 
             // label10
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -955,19 +1001,6 @@ namespace PowerSDR
             this.label10.Size = new System.Drawing.Size(66, 13);
             this.label10.TabIndex = 90;
             this.label10.Text = "Scan Speed";
-            // 
-            // chkBoxSQLBRKWait
-            // 
-            this.chkBoxSQLBRKWait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkBoxSQLBRKWait.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.chkBoxSQLBRKWait.Image = null;
-            this.chkBoxSQLBRKWait.Location = new System.Drawing.Point(12, 495);
-            this.chkBoxSQLBRKWait.Name = "chkBoxSQLBRKWait";
-            this.chkBoxSQLBRKWait.Size = new System.Drawing.Size(104, 31);
-            this.chkBoxSQLBRKWait.TabIndex = 95;
-            this.chkBoxSQLBRKWait.Text = "Wait on Squelch Break";
-            this.toolTip1.SetToolTip(this.chkBoxSQLBRKWait, resources.GetString("chkBoxSQLBRKWait.ToolTip"));
-            this.chkBoxSQLBRKWait.CheckedChanged += new System.EventHandler(this.chkBoxSQLBRKWait_CheckedChanged);
             // 
             // ScanControl
             // 
@@ -1000,15 +1033,15 @@ namespace PowerSDR
             this.MouseEnter += new System.EventHandler(this.ScanControl_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.ScanControl_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.groupBoxTS2.ResumeLayout(false);
-            this.groupBoxTS2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udIDGap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udIDThres)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udIDTimer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udPauseLength)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSWRTest)).EndInit();
+            this.groupBoxTS2.ResumeLayout(false);
+            this.groupBoxTS2.PerformLayout();
             this.grpGenCustomTitleText.ResumeLayout(false);
             this.grpGenCustomTitleText.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericSWRTest)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udspeedBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udstepBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udspeedBox1)).EndInit();
@@ -1021,9 +1054,11 @@ namespace PowerSDR
 
 
 
+
         #endregion
 
-  
+        public System.Windows.Forms.CheckBoxTS chkIDdBM;
+        public System.Windows.Forms.CheckBoxTS chkIDSIG;
     } // scancontrol
 
 

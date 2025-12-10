@@ -32,7 +32,6 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PowerSDR
 {
@@ -216,7 +215,7 @@ namespace PowerSDR
                                 0.283501, 0.414999, "Long Wave - Beacons",      false, // ke9ns add
                                 0.415000, 0.471999, "Maritime Band",            false,
 
-                                0.472000, 0.478999, "630M CW/JT9/WSPR/Narrow",    true, // 630m ham ke9ns change
+                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
 
                                 0.479000, 0.526400, "Maritime Band",            false,
                                 0.526401, 0.529999, "Long Wave - Beacons",      false,   // ke9ns add
@@ -438,7 +437,7 @@ namespace PowerSDR
                                 0.283501, 0.414999, "Long Wave - Beacons",      false, // ke9ns add
                                 0.415000, 0.471999, "Maritime Band",            false,
 
-                                0.472000, 0.478999, "630M CW & Narrow Band",    true, // 630m ham ke9ns change
+                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
 
                                 0.479000, 0.526400, "Maritime Band",            false,
 
@@ -1516,7 +1515,7 @@ namespace PowerSDR
                                 51.810000, 51.989999, "6M FM Repeater Ouputs",  true,
                                 51.990000, 51.999999, "6M All Modes",           true,
 
-                             
+
                                 52.000000, 53.999999, "6M Deadband",            true,
                               //------------------------------------------------------- //.300
                                   54.000000, 67.999999, "5m Out of band",true,
@@ -2302,7 +2301,7 @@ namespace PowerSDR
                                 50.620000, 50.749999, "6M Digital Comms.",      true,
                                 50.750000, 50.999999, "6M All Modes",           true,
                                 51.000000, 51.999999, "6M General RX",          false,
-  
+
                                 52.000000, 53.999999, "6M Deadband",            true,
                               //------------------------------------------------------- //.300
                                 54.000000, 67.999999, "5m Out of band",true,
@@ -2487,8 +2486,10 @@ namespace PowerSDR
             object[] data = {
                 //------------------------------------------------------------------
 
-                             //   0.4720000, 0.472000, "630M JT9/WSPR/CW/Narrow DIGU",            true, // ke9ns add  1.84
-                             //   0.4720001, 0.478999, "630M JT9/WSPR/CW/Narrow DIGU",            true, // ke9ns add
+                             //   0.4720000, 0.472000, "630M FST4/CW/FSTW/Narrow",            true, // ke9ns add  1.84
+                             //   0.4720001, 0.478999, "630M FST4/CW/FSTW/Narrow",            true, // ke9ns add
+
+                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
 
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
@@ -3192,6 +3193,9 @@ namespace PowerSDR
 
 
             object[] data = {
+
+                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
                                 1.810001, 1.837999, "160M CW",                  true, // was 1.842999,
@@ -3739,6 +3743,9 @@ namespace PowerSDR
 
 
             object[] data = {
+
+                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
                                 1.810001, 1.837999, "160M CW",                  true,
@@ -5260,6 +5267,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F5", 1.810000,
                                 "160M", "CWU", "F1", 1.835000,
                                 "160M", "LSB", "F6", 1.845000,
+
                                 "80M", "CWL", "F1", 3.501000,
                                 "80M", "LSB", "F6", 3.751000,
                                 "80M", "LSB", "F6", 3.850000,
@@ -5419,6 +5427,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F1", 1.820000,
                                 "160M", "DIGU", "F1", 1.838000,
                                 "160M", "LSB", "F6", 1.843000,
+
                                 "80M", "CWL", "F1", 3.510000,
                                 "80M", "DIGU", "F1", 3.590000,
                                 "80M", "LSB", "F6", 3.750000,
@@ -5507,6 +5516,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F1", 1.820000,
                                 "160M", "DIGU", "F1", 1.838000,
                                 "160M", "LSB", "F6", 1.843000,
+
                                 "80M", "CWL", "F1", 3.510000,
                                 "80M", "DIGU", "F1", 3.590000,
                                 "80M", "LSB", "F6", 3.750000,
@@ -5598,6 +5608,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F1", 1.820000,
                                 "160M", "DIGU", "F1", 1.832000,
                                 "160M", "LSB", "F6", 1.843000,
+
                                 "80M", "CWL", "F1", 3.510000,
                                 "80M", "DIGU", "F1", 3.580000,
                                 "80M", "LSB", "F6", 3.750000,
@@ -5677,6 +5688,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F1", 1.820000,
                                 "160M", "DIGU", "F1", 1.838000,
                                 "160M", "LSB", "F6", 1.843000,
+
                                 "80M", "CWL", "F1", 3.510000,
                                 "80M", "DIGU", "F1", 3.590000,
                                 "80M", "LSB", "F6", 3.750000,
@@ -5758,6 +5770,7 @@ namespace PowerSDR
                                 "160M", "CWL", "F1", 1.820000,
                                 "160M", "DIGU", "F1", 1.838000,
                                 "160M", "LSB", "F6", 1.843000,
+
                                 "80M", "CWL", "F1", 3.510000,
                                 "80M", "DIGU", "F1", 3.590000,
                                 "80M", "LSB", "F6", 3.750000,
@@ -5895,7 +5908,7 @@ namespace PowerSDR
             {
                 t.Columns.Add("TXEQ28Preamp", typeof(int)); // ke9ns add
             }
-            catch (Exception e1)
+            catch (Exception)
             {
                 //   Debug.WriteLine("ALEADY a TXEQ28Preamp " + e1);
             }
@@ -6072,9 +6085,9 @@ namespace PowerSDR
                 //  udTXDriveMax.Value = (int)dr["Drive_Max"]; //.279a
 
             }
-            catch (Exception )
+            catch (Exception)
             {
-               
+
 
             }
 
@@ -6102,7 +6115,7 @@ namespace PowerSDR
             {
                 t.Columns.Add("TXEQ28Preamp", typeof(int)); // ke9ns add
             }
-            catch (Exception e1)
+            catch (Exception)
             {
                 //  Debug.WriteLine("ALEADY a TXEQ28Preamp " + e1);
             }
@@ -6273,7 +6286,7 @@ namespace PowerSDR
                 t.Columns.Add("VAC1_Reset", typeof(bool)); //.281
                 t.Columns.Add("Drive_Max", typeof(int)); //.281
 
-           
+
             }
             catch (Exception)
             {
@@ -7415,7 +7428,7 @@ namespace PowerSDR
             t.Columns.Add("VAC1_SelectB", typeof(bool)); //.279
             t.Columns.Add("VAC1_MixAudio", typeof(bool)); //.279
             t.Columns.Add("VAC1_Reset", typeof(bool)); //.279
-           
+
             t.Columns.Add("Drive_Max", typeof(int)); //.279a
 
 
@@ -7588,7 +7601,7 @@ namespace PowerSDR
             dr["RX1DSPMODE"] = DSPMode.LSB; // .196
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
 
-         
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279
@@ -7794,7 +7807,7 @@ namespace PowerSDR
 
             dr["RX1DSPMODE"] = DSPMode.LSB; // .196
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
-          
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279
@@ -8002,7 +8015,7 @@ namespace PowerSDR
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
 
 
-         
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279
@@ -8209,7 +8222,7 @@ namespace PowerSDR
             dr["RX1DSPMODE"] = DSPMode.LSB; // .196
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
 
-        
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279
@@ -8415,11 +8428,11 @@ namespace PowerSDR
             dr["RX1DSPMODE"] = DSPMode.LSB; // .196
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
 
-         
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279
-            
+
             dr["VAC1_Reset"] = false; //.279
             dr["Drive_Max"] = 100; // .279a
 
@@ -8623,7 +8636,7 @@ namespace PowerSDR
             dr["RX1DSPMODE"] = DSPMode.LSB; // .196
             dr["RX2DSPMODE"] = DSPMode.LSB; // .196
 
-         
+
             dr["VAC1_SelectA"] = true; //.279
             dr["VAC1_SelectB"] = false; //.279
             dr["VAC1_MixAudio"] = false; //.279

@@ -236,7 +236,6 @@ namespace GDF
         {
             Font font = null;
             string raw = base._rawFonts[_font];
-            string ResultString = null;
             try
             {
                 string reg =
@@ -255,7 +254,7 @@ namespace GDF
                     font = new Font("Arial", _fontSize * 0.6F, _fontStyle, GraphicsUnit.Pixel);
                 }
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 font = new Font("Arial", _fontSize * 0.6F, _fontStyle, GraphicsUnit.Pixel);
             }

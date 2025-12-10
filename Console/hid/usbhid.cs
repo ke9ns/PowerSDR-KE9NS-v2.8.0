@@ -38,9 +38,7 @@
 // 0x181a-0x181f    All FF
 //
 // 0x3000-0x310f    Calibration data (RX and TX)
-using NAudio.Gui;
 using System;
-using System.Security.Policy;
 
 namespace PowerSDR
 {
@@ -337,7 +335,7 @@ namespace PowerSDR
 
         public static bool GetDash(out uint data) //.259
         {
-          //  Flex1500.ReadOp(Opcode.USB_OP_READ_GPIO, 0, 0, out gpio);
+            //  Flex1500.ReadOp(Opcode.USB_OP_READ_GPIO, 0, 0, out gpio);
 
             Flex1500.ReadOp(Opcode.USB_OP_READ_PTT, 0, 0, out data);
             bool dot = ((data & 0x01) == 1);
@@ -345,7 +343,7 @@ namespace PowerSDR
 
             if (dash) return true;
             else return false;
-       
+
         }
 
         public static bool GetDot(out uint data) //.259
@@ -566,7 +564,7 @@ namespace PowerSDR
             return Flex1500.WriteOp(Opcode.USB_OP_SET_AMP_TX1, Convert.ToUInt32(b), 0);
         }
 
-        
+
 
         public static int SetLED(bool b)
         {

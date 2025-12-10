@@ -37,8 +37,8 @@ namespace PowerSDR
     public class Pal
     {
 
-#if(!NO_PAL)     
-                            
+#if (!NO_PAL)
+
         [DllImport("pal.dll", EntryPoint = "Init", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool Init();				// initialize PAL system

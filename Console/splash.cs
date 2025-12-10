@@ -345,7 +345,7 @@ namespace PowerSDR
 					Color.Black,//Color.FromArgb(100, 100, 100),
 					Color.White,//Color.FromArgb(130, 255, 130), 
 					LinearGradientMode.Horizontal);*/
-                if (status_brush == null)  status_brush = new SolidBrush(Color.White); // .286
+                if (status_brush == null) status_brush = new SolidBrush(Color.White); // .286
 
                 e.Graphics.FillRectangle(status_brush, m_rProgress);
             }

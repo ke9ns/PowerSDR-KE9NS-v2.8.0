@@ -134,7 +134,7 @@ namespace PowerSDR
                 cat_enabled = true;
             }
             Debug.WriteLine("==============CAT PORT OPEN");
-          
+
 
             int port_num = console.CATPort;
 
@@ -147,7 +147,7 @@ namespace PowerSDR
 
             Initialize();
 
-         //   console.helpboxForm.helpbox_message.Text = "Initialize CAT port OPEN NOW \n\r"; //.278
+            //   console.helpboxForm.helpbox_message.Text = "Initialize CAT port OPEN NOW \n\r"; //.278
 
         } // enableCAT()
 
@@ -371,7 +371,7 @@ namespace PowerSDR
                         answer = parser.Get(m.Value);                                   //send the match to the parser
 
                         if (console.helpboxForm != null && console.helpboxForm.helpbox_message.Visible) //.278
-                            console.helpboxForm.helpbox_message.Text += "CAT:" +counter1++ + "  Received=" +m.Value + "(" + console.Siolisten.CATDEF + ")" + "  Transmit=" + answer + "\n\r"; //.278
+                            console.helpboxForm.helpbox_message.Text += "CAT:" + counter1++ + "  Received=" + m.Value + "(" + console.Siolisten.CATDEF + ")" + "  Transmit=" + answer + "\n\r"; //.278
 
                         //console.helpboxForm.helpbox_message.Text = console.helpboxForm.helpbox_message.Text + counter1 + " CAT REC: " + prefix + "\n\r"; //.278
 

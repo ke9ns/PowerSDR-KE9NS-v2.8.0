@@ -26,7 +26,6 @@
 //    USA
 //=================================================================
 
-using EnvDTE;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -46,7 +45,7 @@ namespace PowerSDR
 
         #region Constructor and Destructor
 
-        public  SpotWatchBox(Console c)  // called the very first time
+        public SpotWatchBox(Console c)  // called the very first time
         {
             //
             // Required for Windows Form Designer support
@@ -59,25 +58,25 @@ namespace PowerSDR
             this.TopMost = true;
 
 
-          
-           
-               console.SpotLive = true; //.269 true= stay in thread until the DX Spot times out or moves, then close this SpotWatchbox
 
-               Thread t1 = new Thread(new ThreadStart(SpotTimer));                                // 
 
-                t1.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
-                t1.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+            console.SpotLive = true; //.269 true= stay in thread until the DX Spot times out or moves, then close this SpotWatchbox
 
-                t1.Name = "SpotTimer";
-                t1.IsBackground = true;
-                t1.Priority = ThreadPriority.BelowNormal;
-                t1.Start();
-            
-           
+            Thread t1 = new Thread(new ThreadStart(SpotTimer));                                // 
+
+            t1.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+            t1.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
+            t1.Name = "SpotTimer";
+            t1.IsBackground = true;
+            t1.Priority = ThreadPriority.BelowNormal;
+            t1.Start();
+
+
 
         }
 
-       
+
 
         private void SpotTimer()   // 
         {
@@ -86,7 +85,7 @@ namespace PowerSDR
 
             while (console.SpotLive == true)
             {
-               
+
                 Thread.Sleep(250);
 
                 int ii = 0;
@@ -95,7 +94,7 @@ namespace PowerSDR
                 {
                     try
                     {
-                       
+
                         for (ii = 0; ii <= SpotControl.DX_Index; ii++)
                         {
                             if (SpotControl.DX_FULLSTRING[ii] == btnTrack.Text)
@@ -108,7 +107,7 @@ namespace PowerSDR
                         {
                             Debug.WriteLine("SPOTTIMER reset");
                             btnTrack.Text = "Not Yet";
-                           
+
                             this.Close();
                         }
 
@@ -121,7 +120,7 @@ namespace PowerSDR
                     }
                 }
 
-               
+
             } // while 
 
 
@@ -144,7 +143,7 @@ namespace PowerSDR
             }
             base.Dispose(disposing);
 
-          
+
         }
 
         #endregion
@@ -165,14 +164,14 @@ namespace PowerSDR
 
 
         // ke9ns close big pop-up box
-        private void  SpotWatchBox_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void SpotWatchBox_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            
+
             this.Hide();
             e.Cancel = true;
             Common.SaveForm(this, " SpotWatchBox");
-         
+
         }
 
 
@@ -184,7 +183,7 @@ namespace PowerSDR
 
 
         // ke9ns close big pop-up box
-        private void  SpotWatchBox_VisibleChanged(object sender, EventArgs e)
+        private void SpotWatchBox_VisibleChanged(object sender, EventArgs e)
         {
 
 
@@ -220,14 +219,14 @@ namespace PowerSDR
         private void SpotWatchBox_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
             Common.SaveForm(this, "SpotWatchBox");
-          
+
         }
 
         private void btnTrack_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
 
             Common.SaveForm(this, "SpotWatchBox");
-           
+
             MouseEventArgs me = (MouseEventArgs)e;
 
             if ((me.Button == System.Windows.Forms.MouseButtons.Right))
@@ -241,7 +240,7 @@ namespace PowerSDR
                 try
                 {
 
-                    for (int ii =0; ii <= SpotControl.DX_Index; ii++)
+                    for (int ii = 0; ii <= SpotControl.DX_Index; ii++)
                     {
                         if (SpotControl.DX_FULLSTRING[ii] == btnTrack.Text)
                         {
@@ -251,7 +250,7 @@ namespace PowerSDR
 
                         }
                     }
-           
+
                 }
                 catch (Exception f)
                 {

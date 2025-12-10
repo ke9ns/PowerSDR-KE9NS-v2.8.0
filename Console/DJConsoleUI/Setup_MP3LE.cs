@@ -267,19 +267,23 @@ namespace PowerSDR
             if (cBoxTrebleA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrebleA = (int)cBoxTrebleA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxTrebleB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrebleB = (int)cBoxTrebleB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxMediumA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.MediumA = (int)cBoxMediumA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxMediumB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.MediumB = (int)cBoxMediumB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxBassA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.BassA = (int)cBoxBassA.SelectedValue;
@@ -287,183 +291,225 @@ namespace PowerSDR
             if (cBoxBassB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.BassB = (int)cBoxBassB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxVolumeA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.VolumeA = (int)cBoxVolumeA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxVolumeB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.VolumeB = (int)cBoxVolumeB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxCrossfader.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Crossfader = (int)cBoxCrossfader.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchA = (int)cBoxPitchA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchB = (int)cBoxPitchB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxJogWheelA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.JogWheelA = (int)cBoxJogWheelA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxJogWheelB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.JogWheelB = (int)cBoxJogWheelB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPlayA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PlayA = (int)cBoxPlayA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPlayB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PlayB = (int)cBoxPlayB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxCueA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.CueA = (int)cBoxCueA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxCueB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.CueB = (int)cBoxCueB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxTrackNextA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrackNextA = (int)cBoxTrackNextA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxTrackPrevA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrackPrevA = (int)cBoxTrackPrevA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxTrackNextB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrackNextB = (int)cBoxTrackNextB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxTrackPrevB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TrackPrevB = (int)cBoxTrackPrevB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchDownA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchDownA = (int)cBoxPitchDownA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchUpA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchUpA = (int)cBoxPitchUpA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchUpB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchUpB = (int)cBoxPitchUpB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxPitchDownB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchDownB = (int)cBoxPitchDownB.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxOneA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.OneA = (int)cBoxOneA.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxOneB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.OneB = (int)cBoxOneB.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxTwoA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TwoA = (int)cBoxTwoA.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxTwoB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.TwoB = (int)cBoxTwoB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxThreeA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.ThreeA = (int)cBoxThreeA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxThreeB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.ThreeB = (int)cBoxThreeB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxFourA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.FourA = (int)cBoxFourA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxFourB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.FourB = (int)cBoxFourB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxListenA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.ListenA = (int)cBoxListenA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxListenB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.ListenB = (int)cBoxListenB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxSyncA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.SyncA = (int)cBoxSyncA.SelectedValue;
-            };
+            }
+            ;
             if (cBoxSyncB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.SyncB = (int)cBoxSyncB.SelectedValue;
-            };
+            }
+            ;
             if (cBoxUp.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Up = (int)cBoxUp.SelectedValue;
-            };
+            }
+            ;
             if (cBoxDown.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Down = (int)cBoxDown.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxLoadA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.LoadA = (int)cBoxLoadA.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxLoadB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.LoadB = (int)cBoxLoadB.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxPitchResetA.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchResetA = (int)cBoxPitchResetA.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxPitchResetB.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.PitchResetB = (int)cBoxPitchResetB.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxVinyl.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Vinyl = (int)cBoxVinyl.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxMagic.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Magic = (int)cBoxMagic.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxFiles.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Files = (int)cBoxFiles.SelectedValue;
-            };
+            }
+            ;
 
             if (cBoxFolders.SelectedValue != null)
             {
                 m_parent.DJConsoleObj.DJConsole_MP3LE.Folders = (int)cBoxFolders.SelectedValue;
-            };
+            }
+            ;
 
             m_parent.DJConsoleObj.SaveSettings();
             //m_parent.DJConsoleObj = null;

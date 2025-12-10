@@ -2,3 +2,25 @@
 
 # RCS1036: Remove redundant empty line.
 dotnet_diagnostic.RCS1036.severity = none
+
+# All C# files
+
+# Brace placement: force new line for both opening and closing braces
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_before_query_clauses = true
+
+# This is the key line for closing braces too
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
+csharp_indent_switch_labels = true
+
+# Optional: make closing brace always on its own line
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false

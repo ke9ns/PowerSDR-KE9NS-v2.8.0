@@ -26,7 +26,6 @@
 //    USA
 //=================================================================
 
-using EnvDTE;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -46,7 +45,7 @@ namespace PowerSDR
 
         private string common_data_path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\FlexRadio Systems\\PowerSDR\\";
 
-     //   For windows XP:   C:\Documents and Settings\FlexRadio Systems\PowerSDR\
+        //   For windows XP:   C:\Documents and Settings\FlexRadio Systems\PowerSDR\
         #endregion
 
         #region Constructor and Destructor
@@ -3165,14 +3164,14 @@ namespace PowerSDR
                     Application.DoEvents();
                     console.VFOAFreq = band_freqs[i];
                     console.VFOBFreq = band_freqs[i];
-                    
+
                     console.CalibrateTXImage(band_freqs[i], p, true, checkBoxLSB.Checked); //.312 add LSB option for image cal
 
                     if (p.Text == "") break;
 
                     if (console.tx_image_rejection[(int)bands[i]] > tol)
                     {
-                        if (!test_tx_image.StartsWith("TX Image Test: Failed ("))  test_tx_image = "TX Image Test: Failed (";
+                        if (!test_tx_image.StartsWith("TX Image Test: Failed (")) test_tx_image = "TX Image Test: Failed (";
 
                         test_tx_image += BandToString(bands[i]) + ",";
                         btnTXImage.BackColor = Color.Red;

@@ -27,7 +27,6 @@
 //    USA
 //=================================================================
 
-using Flex.Control;     //.250  ke9ns add
 using FlexCW; // .250          //
 using System;
 using System.Collections;
@@ -39,12 +38,10 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 
 
 namespace PowerSDR
@@ -82,7 +79,7 @@ namespace PowerSDR
         #region Constructor and Destructor
 
         public bool CrashProtection = true; // .281 this is used to add delays during certain operations that cause FireWire to PFN BSOD crash udPFNDelay is the delay teim
-        
+
 
 
         public Setup(Console c)
@@ -462,8 +459,8 @@ namespace PowerSDR
                 grpRX2DSPAGC.Visible = false; //.283
             }
 
-            
-            
+
+
 
 
         } // setup
@@ -965,7 +962,7 @@ namespace PowerSDR
 
         private static bool saving = false;
 
-       
+
 
         public void SaveOptions()
         {
@@ -976,7 +973,7 @@ namespace PowerSDR
             saving = true;
 
 
-           
+
 
             if (CrashProtection)  //.255
             {
@@ -1585,15 +1582,16 @@ namespace PowerSDR
                 if (comboTXProfileName != null) return comboTXProfileName.Text;
                 else return "";
             }
-            set { 
-                
+            set
+            {
+
                 if (comboTXProfileName != null) comboTXProfileName.Text = value;
 
-               comboTXProfileName_SelectedIndexChanged(this, EventArgs.Empty); //.279a
+                comboTXProfileName_SelectedIndexChanged(this, EventArgs.Empty); //.279a
 
-                }
-       
-        
+            }
+
+
         } // TXProfile
 
 
@@ -1667,7 +1665,7 @@ namespace PowerSDR
 
             if (console.eqForm.TXEQEnabled != (bool)rows[0]["TXEQEnabled"]) return true;
 
-           
+
 
             for (int i = 1; i < eq.Length; i++)
             {
@@ -1723,7 +1721,7 @@ namespace PowerSDR
             } // for loop
 
 
-           
+
 
             Debug.WriteLine("5EQ ");
 
@@ -1935,7 +1933,7 @@ namespace PowerSDR
             }
 
 
-         
+
 
             //------------------------------------------------------------------
             dr["DXOn"] = console.DX;
@@ -2167,7 +2165,7 @@ namespace PowerSDR
                 else if (comboAudioDriver2B.Items.Count - 1 >= value) comboAudioDriver2B.SelectedIndex = value;
             }
         }
-       
+
         public int VAC2Driver
         {
             get
@@ -4914,11 +4912,11 @@ namespace PowerSDR
         {
             if (chkClickTuneCatMatch.Checked) // ke9ns .306 add
             {
-               
+
                 udRTTYU.Value = udOptClickTuneOffsetDIGU.Value;
                 udRTTYL.Value = udOptClickTuneOffsetDIGL.Value;
             }
-           
+
             console.DIGLClickTuneOffset = (int)udOptClickTuneOffsetDIGL.Value;
         }
 
@@ -4927,13 +4925,13 @@ namespace PowerSDR
 
             if (chkClickTuneCatMatch.Checked) // ke9ns .306 add
             {
-               
+
                 udRTTYU.Value = udOptClickTuneOffsetDIGU.Value;
                 udRTTYL.Value = udOptClickTuneOffsetDIGL.Value;
             }
-           
+
             console.DIGUClickTuneOffset = (int)udOptClickTuneOffsetDIGU.Value;
-          
+
         }
 
         private void udOptMaxFilterWidth_ValueChanged(object sender, System.EventArgs e)
@@ -5119,7 +5117,7 @@ namespace PowerSDR
                 radVAC1SelectA.CheckedChanged += chkVAC1SelectA_CheckedChanged;
             }
 
-            bool val = chkAudioEnableVAC.Checked; 
+            bool val = chkAudioEnableVAC.Checked;
             bool old_val = console.VACEnabled;
 
             if (val)
@@ -5140,7 +5138,7 @@ namespace PowerSDR
 
             if (CrashProtection) //.281
             {
-               
+
                 if (power && val != old_val)
                 {
                     console.PowerOn = false;
@@ -5811,7 +5809,7 @@ namespace PowerSDR
             {
                 udDDSIFFreq.Maximum = 23000; // the normal settings was 20k
                 udDDSIFFreq.Minimum = -23000;
-                
+
                 udDDSIFBFreq.Maximum = 23000; // rx2
                 udDDSIFBFreq.Minimum = -23000;
                 udDDSIFBFreq.Value = 9000;
@@ -7336,7 +7334,7 @@ namespace PowerSDR
 
             Display.SpectrumGridRX2Min = (int)udDisplayGridRX2Min.Value;
 
-          //  Display.Gradient(Display.SpectrumGridMax, Display.SpectrumGridMin); // set new Gradient color scheme
+            //  Display.Gradient(Display.SpectrumGridMax, Display.SpectrumGridMin); // set new Gradient color scheme
 
             // console.AutoPanScaleMin = (int)udDisplayGridMin.Value; // ke9ns add storage of original  value
         }
@@ -8158,7 +8156,7 @@ namespace PowerSDR
             console.dsp.GetDSPRX(0, 0).RXFixedAGC = (double)udDSPAGCFixedGaindB.Value;
             console.dsp.GetDSPRX(0, 1).RXFixedAGC = (double)udDSPAGCFixedGaindB.Value;
 
-            if (console.RX1AGCMode == AGCMode.FIXD)  console.RF = (int)udDSPAGCFixedGaindB.Value;
+            if (console.RX1AGCMode == AGCMode.FIXD) console.RF = (int)udDSPAGCFixedGaindB.Value;
         }
 
         private void udDSPAGCMaxGaindB_ValueChanged(object sender, System.EventArgs e)
@@ -8396,7 +8394,7 @@ namespace PowerSDR
             //int[] eq = null;
 
 
-         
+
 
 
 
@@ -8593,14 +8591,14 @@ namespace PowerSDR
                 console.eqForm.chkBothEQ.Checked = false;
             }
 
-          
+
             //----------------------------------
             // ke9ns: done with retrieving database data and puting into EQ registers, not update buffers
 
             console.eqForm.EQLoad(); // ke9ns: update the EQ now (by taking newly restored data and updating DSP.cs buffers immediatly
 
 
-           
+
 
             //--------------------------------------------------------------------------------------------------
 
@@ -8609,7 +8607,7 @@ namespace PowerSDR
 
             //   chkBoxMixAudio.Checked = (bool)dr["VACMix"]; // .255
 
-           
+
 
 
             Debug.WriteLine("LOAD VAC1 extras1 =============="); //.279
@@ -8775,9 +8773,9 @@ namespace PowerSDR
 
             current_profile = comboTXProfileName.Text;
 
-        
-           
-          
+
+
+
             //--------------------------------------------------------------------------------------------------
             // ke9ns: .196 save DSP MODE for both RX1 and RX2
 
@@ -8924,10 +8922,10 @@ namespace PowerSDR
                             }
 
 
-                         //   if ((bool)d["VACMix"] == false) //.255
-                          //  {
+                            //   if ((bool)d["VACMix"] == false) //.255
+                            //  {
 
-                          //  }
+                            //  }
 
                             //   Debug.WriteLine("YES TXEQ12");
                             dr = d; // ke9ns when you match the name, copy over all the rows into the DataRow dr
@@ -10178,7 +10176,7 @@ namespace PowerSDR
             chkCXAuto.Checked = console.CXAutoEnabled; // ke9ns add
             port = "COM" + console.CXAutoPort;
             if (comboCXAuto.Items.Contains(port)) //.275
-                comboCXAuto.Text = port; 
+                comboCXAuto.Text = port;
 
 
             port = "COM" + console.CATPTTBitBangPort.ToString();
@@ -10188,7 +10186,7 @@ namespace PowerSDR
             // wjt fixme -- need to hand baudrate, parity, data, stop -- see initCATandPTTprops 
         } // copyCATPropsToDialogVars()
 
-       
+
         private void chkCATEnable_CheckedChanged(object sender, System.EventArgs e)
         {
             if (initializing) return;
@@ -10238,7 +10236,7 @@ namespace PowerSDR
 
                     console.helpboxForm.helpbox_message.Text = "CAT1 Enabled " + comboCATPort.Text + "\n\r"; //.278
 
-                   
+
 
                 }
                 catch (Exception ex)
@@ -12277,7 +12275,7 @@ namespace PowerSDR
 
         private void udBandEdgeLineThick_Changed(object sender, System.EventArgs e) //.312
         {
-            Display.BandEdgeWidth = (float) udBandEdgeLineThick.Value;
+            Display.BandEdgeWidth = (float)udBandEdgeLineThick.Value;
         }
 
         private void clrbtnBandSegmentBox_Changed(object sender, System.EventArgs e)
@@ -12327,15 +12325,15 @@ namespace PowerSDR
                         console.lblRX2Meter.Visible = true;
                     }
 
-                //    Debug.WriteLine("MODE==== " + console.comboMeterRXMode.Text + " , " +console.comboMeterRXMode.SelectedIndex + " , " + console.comboMeterRXMode.SelectedItem);
+                    //    Debug.WriteLine("MODE==== " + console.comboMeterRXMode.Text + " , " +console.comboMeterRXMode.SelectedIndex + " , " + console.comboMeterRXMode.SelectedItem);
 
 
-                   if (console.comboMeterRXMode.SelectedIndex == 2) // .265 "Sig Pk"
-                   {
-                       console.comboMeterRXMode.SelectedIndex = 0; // set to "Signal" since Bar already has a PK function
-                       console.comboMeterRXMode_SelectedIndexChanged(this, EventArgs.Empty); //
+                    if (console.comboMeterRXMode.SelectedIndex == 2) // .265 "Sig Pk"
+                    {
+                        console.comboMeterRXMode.SelectedIndex = 0; // set to "Signal" since Bar already has a PK function
+                        console.comboMeterRXMode_SelectedIndexChanged(this, EventArgs.Empty); //
 
-                   }
+                    }
 
                     if (console.comboRX2MeterMode.SelectedIndex == 2) // .265
                     {
@@ -12642,7 +12640,7 @@ namespace PowerSDR
                     udDDSCorrection.Visible = b;
                     lblIFFrequency.Visible = b;
                     udDDSIFFreq.Visible = b;
-                     break;
+                    break;
                 default:
                     lblClockCorrection.Visible = b;
                     udDDSCorrection.Visible = b;
@@ -12650,7 +12648,7 @@ namespace PowerSDR
                     udDDSPLLMult.Visible = b;
                     lblIFFrequency.Visible = b;
                     udDDSIFFreq.Visible = b;
-                  
+
                     break;
             }
         }
@@ -12901,7 +12899,7 @@ namespace PowerSDR
                 AllowFreqBroadcast6 = false;
         }
 
-      
+
 
 
         private void chkKWAI7_CheckedChanged(object sender, System.EventArgs e) // ke9ns add .214
@@ -13093,15 +13091,15 @@ namespace PowerSDR
 
         private void udRTTYL_ValueChanged(object sender, System.EventArgs e)
         {
-            
+
             if (chkCDigitalOffsetMatch.Checked) // ke9ns .306 add
             {
-              
+
                 udOptClickTuneOffsetDIGU.Value = udRTTYU.Value;
                 udOptClickTuneOffsetDIGL.Value = udRTTYL.Value;
             }
-           
-          
+
+
             rtty_offset_low = (int)udRTTYL.Value;
         }
 
@@ -13110,12 +13108,12 @@ namespace PowerSDR
 
             if (chkCDigitalOffsetMatch.Checked) // ke9ns .306 add
             {
-              
+
                 udOptClickTuneOffsetDIGU.Value = udRTTYU.Value;
                 udOptClickTuneOffsetDIGL.Value = udRTTYL.Value;
             }
-           
-           
+
+
             rtty_offset_high = (int)udRTTYU.Value;
         }
 
@@ -13418,7 +13416,7 @@ namespace PowerSDR
                 case Model.FLEX3000:
                     if (!console.fwc_init) return;
                     FWC.SetAmpTX1Delay((uint)udGenTX1Delay.Value);
-                    
+
                     break;
                 case Model.FLEX1500:
                     if (!console.hid_init) return;
@@ -13953,7 +13951,7 @@ namespace PowerSDR
             } // switch (RX2 band) 
 
             // .295 add
-           // decimal temp1 = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value;
+            // decimal temp1 = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value;
 
 
             udDisplayGridRX2Min.Value = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value + udDisplayWaterfallRX2Level.Value;
@@ -14196,10 +14194,10 @@ namespace PowerSDR
                         console.KBON = 1;
                         Debug.WriteLine("FOUND KNOB2==============" + console.KBON);
                         powerMate.ButtonEvent += new HidDevice.PowerMate.ButtonHandler(console.OnButtonEvent);      // create button event
-                      
-                     //   powerMate.RotateEvent += new HidDevice.PowerMate.RotationHandler(console.OnRotateEvent);    // create rotation event
-                     // .294 turn off event handler and just use console.UpdateRX1
-                       
+
+                        //   powerMate.RotateEvent += new HidDevice.PowerMate.RotationHandler(console.OnRotateEvent);    // create rotation event
+                        // .294 turn off event handler and just use console.UpdateRX1
+
 
                     }
                 }
@@ -14216,7 +14214,7 @@ namespace PowerSDR
 
         } //chkBoxPM_CheckedChanged
 
-      
+
 
         // ke9ns add
         private void udSpeedPM_ValueChanged(object sender, EventArgs e)
@@ -15850,7 +15848,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -15859,7 +15857,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16125,7 +16123,7 @@ namespace PowerSDR
                         }
                         else if (RX2.Contains("\r") && (cnt > 2))
                         {
-                          //  console.helpboxForm.helpbox_message.Text += "\r\n>>Command ReceiveD: " + RX2;
+                            //  console.helpboxForm.helpbox_message.Text += "\r\n>>Command ReceiveD: " + RX2;
 
                             Debug.WriteLine("got CR instead of end character " + cnt + " length: " + msg.Length);
                             if (cnt > 1)
@@ -16141,8 +16139,8 @@ namespace PowerSDR
 
                             //   console.helpboxForm.helpbox_message.Text += "\r\n>>PowerSDR sent: " + RX3;
 
-                            if(console.helpboxForm != null && console.helpboxForm.helpbox_message.Visible) //.278
-                            console.helpboxForm.helpbox_message.Text += "CAT:" + "  Received=" + RX2 + "(" + console.Siolisten.CATDEF + ")" + "  Transmit=" + RX3 + "\n\r"; //.278
+                            if (console.helpboxForm != null && console.helpboxForm.helpbox_message.Visible) //.278
+                                console.helpboxForm.helpbox_message.Text += "CAT:" + "  Received=" + RX2 + "(" + console.Siolisten.CATDEF + ")" + "  Transmit=" + RX3 + "\n\r"; //.278
 
 
                             test = Encoding.Default.GetBytes(RX3); // convert CAT answer to byte array in order to send back via TCP/IP
@@ -16293,7 +16291,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -16301,7 +16299,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16318,7 +16316,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -16327,7 +16325,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception e2)
+            catch (Exception)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16490,7 +16488,7 @@ namespace PowerSDR
 
         }
 
-      
+
 
         private void chkCWXOverRide_CheckedChanged(object sender, EventArgs e)
         {
@@ -16580,7 +16578,7 @@ namespace PowerSDR
 
             Debug.WriteLine("chkCATEnable.Checked====" + chkCATEnable.Checked);
 
-            
+
 
             try
             {
@@ -16594,7 +16592,7 @@ namespace PowerSDR
                     "\n\nCXAuto control has been disabled.", "Error Initializing CXAuto control",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-           
+
 
 
         } // chkCXAuto_CheckedCHanged
@@ -16648,8 +16646,8 @@ namespace PowerSDR
                     console.radModeFMN.Text = "WFM";
                 }
             }
-             
-         } // chkFMDataMode_CheckedChanged
+
+        } // chkFMDataMode_CheckedChanged
 
         private void chkCATEnable_MouseDown(object sender, MouseEventArgs e)
         {
@@ -16727,29 +16725,29 @@ namespace PowerSDR
             console.dsp.GetDSPRX(1, 0).RXFixedAGC = (double)udRX2DSPAGCFixedGaindB.Value;
             console.dsp.GetDSPRX(1, 1).RXFixedAGC = (double)udRX2DSPAGCFixedGaindB.Value;
 
-            if (console.RX2AGCMode == AGCMode.FIXD)  console.RX2RF = (int)udRX2DSPAGCFixedGaindB.Value;
+            if (console.RX2AGCMode == AGCMode.FIXD) console.RX2RF = (int)udRX2DSPAGCFixedGaindB.Value;
         }
 
         private void chkClickTuneCatMatch_CheckedChanged(object sender, EventArgs e) // ke9ns add .306
         {
             if (chkClickTuneCatMatch.Checked) // ke9ns .306 add
             {
-                
+
                 udRTTYU.Value = udOptClickTuneOffsetDIGU.Value;
                 udRTTYL.Value = udOptClickTuneOffsetDIGL.Value;
             }
-            
+
         }
 
         private void chkCDigitalOffsetMatch_CheckedChanged(object sender, EventArgs e) // ke9ns add .306
         {
             if (chkCDigitalOffsetMatch.Checked) // ke9ns .306 add
             {
-          
+
                 udOptClickTuneOffsetDIGU.Value = udRTTYU.Value;
                 udOptClickTuneOffsetDIGL.Value = udRTTYL.Value;
             }
-           
+
 
         }
 
@@ -16855,7 +16853,7 @@ namespace PowerSDR
         {
             if (udPFNDelay.Value == 0)
             {
-              //  CrashProtection = false;
+                //  CrashProtection = false;
             }
             else
             {
@@ -16863,7 +16861,7 @@ namespace PowerSDR
             }
         }
 
-      
+
 
 
 

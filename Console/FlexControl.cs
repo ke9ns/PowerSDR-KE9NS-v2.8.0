@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Ports;
@@ -17,7 +16,7 @@ namespace PowerSDR //Flex.Control
         public static Console console;   // .296 ke9ns mod  to allow console to pass back values to setup screen
         public static Setup setupForm;   // .296 ke9ns communications with setupform  (i.e. allow combometertype.text update from inside console.cs) 
 
-      
+
         public FlexControl(Console c) //.296 add
         {
             console = c;
@@ -203,24 +202,24 @@ namespace PowerSDR //Flex.Control
                 case "U;":
 
                     if (Console.CTUNIF) console.powerMate.Lookflex(1); //.296 
-                    else   OnKnobRotated(RotateDirection.Clockwise, 1);
+                    else OnKnobRotated(RotateDirection.Clockwise, 1);
                     break;
                 case "D;":
                     if (Console.CTUNIF) console.powerMate.Lookflex(-1); //.296
-                    else  OnKnobRotated(RotateDirection.CounterClockwise, 1);
+                    else OnKnobRotated(RotateDirection.CounterClockwise, 1);
                     break;
                 case "S;":
-                  //  Debug.WriteLine("296 PUSH S");
+                    //  Debug.WriteLine("296 PUSH S");
                     if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
                     else OnButtonClicked(Button.Knob, ClickType.Single);
                     break;
                 case "C;":
-                  //  Debug.WriteLine("296 PUSH C");
+                    //  Debug.WriteLine("296 PUSH C");
                     if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
                     else OnButtonClicked(Button.Knob, ClickType.Double);
                     break;
                 case "L;":
-                  //  Debug.WriteLine("296 PUSH L");
+                    //  Debug.WriteLine("296 PUSH L");
                     if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
                     else OnButtonClicked(Button.Knob, ClickType.Long);
                     break;
@@ -262,15 +261,15 @@ namespace PowerSDR //Flex.Control
                         {
                             case "S":
                                 if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
-                               else type = ClickType.Single;
+                                else type = ClickType.Single;
                                 break;
                             case "C":
                                 if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
-                               else type = ClickType.Double;
+                                else type = ClickType.Double;
                                 break;
                             case "L":
                                 if (console.setupForm.chkBoxIND2.Checked) FlexPush = true;  //.296
-                               else type = ClickType.Long;
+                                else type = ClickType.Long;
                                 break;
                         }
 

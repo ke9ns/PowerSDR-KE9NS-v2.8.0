@@ -25,13 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace PowerSDR
 {
@@ -74,6 +70,7 @@ namespace PowerSDR
             console = c;
             parser = p;
             MakeBandList();
+
         }
 
         #endregion Constructors
@@ -235,11 +232,11 @@ namespace PowerSDR
             {
                 bool retval = console.SwapVFOA_BTX; // .278 whichever one is TX the other is obviously RX
                 if (retval)
-                  
+
                     return "0";
-                  else
+                else
                     return "1";
-   
+
             }
             else
                 return parser.Error1;
@@ -323,28 +320,28 @@ namespace PowerSDR
             //string temp;
 
             // Get the rit/xit status
-            if (console.RITOn)  rit = "1";
+            if (console.RITOn) rit = "1";
             else if (console.XITOn) xit = "1";
 
             // Get the incremental tuning value for whichever control is selected
-            if (rit == "1")  ITValue = console.RITValue;
-            else if (xit == "1")  ITValue = console.XITValue;
+            if (rit == "1") ITValue = console.RITValue;
+            else if (xit == "1") ITValue = console.XITValue;
 
 
             // Format the IT value
-            if (ITValue < 0)  incr = "-" + Convert.ToString(Math.Abs(ITValue)).PadLeft(5, '0');
-            else              incr = "+" + Convert.ToString(Math.Abs(ITValue)).PadLeft(5, '0');
-            
+            if (ITValue < 0) incr = "-" + Convert.ToString(Math.Abs(ITValue)).PadLeft(5, '0');
+            else incr = "+" + Convert.ToString(Math.Abs(ITValue)).PadLeft(5, '0');
+
             // Get the rx - tx status
-            if (console.MOX)  tx = "1";
-            
+            if (console.MOX) tx = "1";
+
             // Get the step size
             int step = console.TuneStepIndex;
             string stepsize = Step2String(step);
-            
+
             // Get the vfo split status
             string split = "0";
-            
+
             bool retval = console.VFOSplit;
             if (retval) split = "1";
 
@@ -360,10 +357,10 @@ namespace PowerSDR
                 f = ZZFB("");
             }
 
-          //  if (console.SpoofRXATXB == true) //.311
-          //  {
-          //      f = ZZFB("");
-          //  }
+            //  if (console.SpoofRXATXB == true) //.311
+            //  {
+            //      f = ZZFB("");
+            //  }
 
             if (f.Length > 11)
             {
@@ -391,7 +388,7 @@ namespace PowerSDR
                 tempmode = Mode2KString(console.RX1DSPMode);
             }
 
-            if (tempmode == "?;")  rtn += "2";
+            if (tempmode == "?;") rtn += "2";
             else rtn += tempmode;                        // P9 (1 byte kenwood, 2 bytes ZZIF)
 
             rtn += "0";                                 // P10 dummy for FR  			 1 byte
@@ -601,6 +598,9 @@ namespace PowerSDR
         // Sets or reads the transceiver mode
         public string MD(string s)
         {
+
+            Debug.WriteLine("MD " + s);
+
             if (console.SpoofAB == true)
             {
                 if (console.CurrentModel == Model.FLEX5000 && FWCEEPROM.RX2OK)
@@ -845,21 +845,21 @@ namespace PowerSDR
         // Sets or reads the CW PITCH in 3 digit HZ
         public string PT(string s) //.311
         {
-            if(s.Length == parser.nSet)
+            if (s.Length == parser.nSet)
             {
-               int i = 0;
-               bool isValid = int.TryParse(s, out i);
+                int i = 0;
+                bool isValid = int.TryParse(s, out i);
 
-               if (isValid)
-               {
-                   console.CWPitch = i;
-               }
-               else
+                if (isValid)
+                {
+                    console.CWPitch = i;
+                }
+                else
                     return parser.Error1;
             }
-            else if(s.Length == parser.nGet)
+            else if (s.Length == parser.nGet)
             {
-                 return console.CWPitch.ToString("000");
+                return console.CWPitch.ToString("000");
 
             }
             else
@@ -1201,7 +1201,7 @@ namespace PowerSDR
         {
             int step = 0;
 
-         //   Debug.WriteLine("294 ZZAD " + s + " , " + s.Length );
+            //   Debug.WriteLine("294 ZZAD " + s + " , " + s.Length );
 
             if (s.Length == parser.nSet)
             {
@@ -1214,7 +1214,7 @@ namespace PowerSDR
                     {
                         if (console.setupForm != null)
                         {
-                          
+
                             if (console.setupForm.chkBoxWheelRev.Checked == true) console.Console_MouseWheel(this.console, new MouseEventArgs(MouseButtons.None, 0, 0, 0, 120));
                             else console.Console_MouseWheel(this.console, new MouseEventArgs(MouseButtons.None, 0, 0, 0, -120));
                         }
@@ -1258,6 +1258,8 @@ namespace PowerSDR
 
         public string ZZAI(string s)
         {
+            Debug.WriteLine("AI " + s);
+
             // if ( console.setupForm.AllowFreqBroadcast)
             if (console.KWAI1) // && console.setupForm.AllowFreqBroadcast) // ke9ns mod .214
             {
@@ -1265,11 +1267,10 @@ namespace PowerSDR
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI.Checked = false;  //.317 1 though 8
-                      //  console.KWAutoInformation = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI.Checked = true;
-                            
-                     //   console.KWAutoInformation = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1288,10 +1289,10 @@ namespace PowerSDR
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI2.Checked = false;
-                    //console.KWAutoInformation2 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI2.Checked = true;
-                    //console.KWAutoInformation2 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1306,19 +1307,31 @@ namespace PowerSDR
             }
             else if (console.KWAI3) // && console.setupForm.AllowFreqBroadcast3) // ke9ns add .214
             {
+
                 if (s.Length == parser.nSet)
                 {
+
+
+
                     if (s == "0")
+                    {
+
                         console.setupForm.chkKWAI3.Checked = false;
-                  //  console.KWAutoInformation3 = false;
-                    else
+                    }
+
+                    else if (s == "1")
+                    {
 
                         console.setupForm.chkKWAI3.Checked = true;
-                   // console.KWAutoInformation3 = true;
+                    }
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
                 {
+
+
+
                     if (console.KWAutoInformation3)
                         return "1";
                     else
@@ -1327,16 +1340,16 @@ namespace PowerSDR
                 else
                     return parser.Error1;
             }
-            else if (console.KWAI4 ) //&& console.setupForm.AllowFreqBroadcast4) // ke9ns add .214
+            else if (console.KWAI4) //&& console.setupForm.AllowFreqBroadcast4) // ke9ns add .214
             {
                 if (s.Length == parser.nSet)
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI4.Checked = false;
-                    //console.KWAutoInformation4 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI4.Checked = true;
-                   // console.KWAutoInformation4 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1349,16 +1362,16 @@ namespace PowerSDR
                 else
                     return parser.Error1;
             }
-            else if (console.KWAI5 ) //&& console.setupForm.AllowFreqBroadcast5) // ke9ns add .214
+            else if (console.KWAI5) //&& console.setupForm.AllowFreqBroadcast5) // ke9ns add .214
             {
                 if (s.Length == parser.nSet)
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI5.Checked = false;
-                   // console.KWAutoInformation5 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI5.Checked = true;
-                  //  console.KWAutoInformation5 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1371,16 +1384,16 @@ namespace PowerSDR
                 else
                     return parser.Error1;
             }
-            else if (console.KWAI6 ) // && console.setupForm.AllowFreqBroadcast6) // ke9ns add .214
+            else if (console.KWAI6) // && console.setupForm.AllowFreqBroadcast6) // ke9ns add .214
             {
                 if (s.Length == parser.nSet)
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI6.Checked = false;
-                   // console.KWAutoInformation6 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI6.Checked = true;
-                    //console.KWAutoInformation6 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1399,10 +1412,10 @@ namespace PowerSDR
                 {
                     if (s == "0")
                         console.setupForm.chkKWAI8.Checked = false;
-                      //  console.KWAutoInformation8 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI8.Checked = true;
-                      //  console.KWAutoInformation8 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1422,10 +1435,10 @@ namespace PowerSDR
                     if (s == "0")
 
                         console.setupForm.chkKWAI7.Checked = false;
-                   // console.KWAutoInformation7 = false;
-                    else
+
+                    else if (s == "1")
                         console.setupForm.chkKWAI7.Checked = true;
-                  //  console.KWAutoInformation7 = true;
+
                     return "";
                 }
                 else if (s.Length == parser.nGet)
@@ -1741,11 +1754,11 @@ namespace PowerSDR
         //Shuts down the console
         public string ZZBY()
         {
-            
+
             Environment.Exit(0); // .257
-          
-         //   this.console.Close();
-                       
+
+            //   this.console.Close();
+
             return "";
         }
 
@@ -2598,7 +2611,7 @@ namespace PowerSDR
         {
 
             if (console.setupForm == null) return "";
-           
+
             if (console.SpoofAB == true) // get VFOB freq instead
             {
                 if (s.Length == parser.nSet)
@@ -2607,7 +2620,7 @@ namespace PowerSDR
                     {
                         int f = int.Parse(s);
                         if (console.RX1DSPMode == DSPMode.DIGU) f = f - Convert.ToInt32(console.setupForm.RttyOffsetHigh);
-                        else if (console.RX1DSPMode == DSPMode.DIGL)  f = f + Convert.ToInt32(console.setupForm.RttyOffsetLow);
+                        else if (console.RX1DSPMode == DSPMode.DIGL) f = f + Convert.ToInt32(console.setupForm.RttyOffsetLow);
                         s = AddLeadingZeros(f);
                         s = s.Insert(5, separator);
                     }
@@ -2622,8 +2635,8 @@ namespace PowerSDR
                     if (console.setupForm.RttyOffsetEnabledB && (console.RX1DSPMode == DSPMode.DIGU || console.RX1DSPMode == DSPMode.DIGL))
                     {
                         int f = Convert.ToInt32(Math.Round(console.CATVFOB, 6) * 1e6);
-                        if (console.RX1DSPMode == DSPMode.DIGU)  f = f + Convert.ToInt32(console.setupForm.RttyOffsetHigh);
-                        else if (console.RX1DSPMode == DSPMode.DIGL)   f = f - Convert.ToInt32(console.setupForm.RttyOffsetLow);
+                        if (console.RX1DSPMode == DSPMode.DIGU) f = f + Convert.ToInt32(console.setupForm.RttyOffsetHigh);
+                        else if (console.RX1DSPMode == DSPMode.DIGL) f = f - Convert.ToInt32(console.setupForm.RttyOffsetLow);
                         return AddLeadingZeros(f);
                     }
                     else
@@ -2655,9 +2668,9 @@ namespace PowerSDR
                     {
 
                         double tempA = double.Parse(s); // .311
-                    
+
                         console.VFOBFreq = tempA; //.311 when mouse click on the CWSkimmer display to move frequency, move VFOB becuase of RX<A, TX>B CAT port
-               
+
                     }
 
 
@@ -3332,8 +3345,8 @@ namespace PowerSDR
                 f = f.Substring(f.Length - 11, 11);
             }
 
-           
-          
+
+
             rtn += f; // P1
             //			rtn += StrVFOFreq("A");						// VFO A frequency			11 bytes
             rtn += stepsize;                            // P2 Console step frequency	 4 bytes
@@ -3343,11 +3356,11 @@ namespace PowerSDR
             rtn += "000";                               // P6P7 dummy for memory bank	 3 bytes
             rtn += tx;                                  // P8tx-rx status				 1 byte
 
-           
+
             if (console.SpoofAB == true) // return VFOB mode instead
             {
                 rtn += Mode2KString(console.RX2DSPMode); // P9
-       
+
             }
             else
             {
@@ -3366,7 +3379,7 @@ namespace PowerSDR
             {
                 rtn += split;                               // P12 VFO Split status			 1 byte
             }
-          
+
 
             rtn += "0000";                              // P13-P15 dummy for the balance	 4 bytes
             return rtn;
@@ -3522,7 +3535,7 @@ namespace PowerSDR
             {
                 qn = Convert.ToInt32(s);
 
-              
+
 
                 if (qn == 1)
                 {
@@ -3647,13 +3660,18 @@ namespace PowerSDR
         //Sets or reads the CWX CW speed
         public string ZZKS(string s)
         {
+            Debug.WriteLine("KS " + s);
+
             int cws = 0;
             // Make sure we have an instance of the form
-            if (console.cwxForm == null || console.cwxForm.IsDisposed)
+            if (console.cwxForm == null) //|| console.cwxForm.IsDisposed)
             {
                 try
                 {
+
                     console.cwxForm = new CWX(console);
+                    console.cwxForm.Close(); // close to prevent timerperiodic from tripping endlessly even though the CWX panel is not actually open
+
                 }
                 catch
                 {
@@ -3672,6 +3690,7 @@ namespace PowerSDR
             }
             else if (s.Length == parser.nGet)
             {
+
                 return AddLeadingZeros(console.cwxForm.WPM);
             }
             else
@@ -7409,19 +7428,19 @@ namespace PowerSDR
             {
                 if (s == "0")
                 {
-                   // console.CATVFOLock = false;
+                    // console.CATVFOLock = false;
                     console.CATVFOLockAB = 0;
                 }
                 else if (s == "1")
                 {
-                  //  console.CATVFOLock = true;
+                    //  console.CATVFOLock = true;
                     console.CATVFOLockAB = 1;
                 }
                 else if (s == "2")
                 {
-                   
+
                     console.CATVFOLockAB = 2;
-                     
+
                 }
                 else if (s == "3")
                 {
@@ -7433,13 +7452,13 @@ namespace PowerSDR
             else if (s.Length == parser.nGet) // ke9ns: if you send ZZVL with no number after then come here
             {
 
-              
+
                 if (console.setupForm != null && console.setupForm.chkBoxVFOLockAB.Checked) //.284
                 {
                     int retval = console.CATVFOLockAB;
                     Debug.WriteLine("--ZZVL " + retval);
 
-                  
+
                     if (retval == 0) return "0";
                     else if (retval == 1) return "1";
                     else if (retval == 2) return "2";
@@ -7447,7 +7466,7 @@ namespace PowerSDR
                 }
                 else
                 {
-                   
+
                     bool retval = console.CATVFOLock;
                     if (retval)
                     {
@@ -7458,9 +7477,9 @@ namespace PowerSDR
                         return "0";
                     }
                 }
-                
 
-                
+
+
             }
             else
             {
@@ -9531,7 +9550,7 @@ namespace PowerSDR
             else if (vfo == "C")
                 freq = Convert.ToDouble(console.CATQMSValue);
 
-          //  Debug.WriteLine("CATCATCAT " + freq);
+            //  Debug.WriteLine("CATCATCAT " + freq);
 
             if ((int)freq < 10)
             {
@@ -9558,7 +9577,7 @@ namespace PowerSDR
                 cmd_string = cmd_string.Remove(cmd_string.IndexOf(separator), 1);
             cmd_string = cmd_string.PadRight(11, '0');
 
-           // Debug.WriteLine("CATCATCAT0 " + cmd_string);
+            // Debug.WriteLine("CATCATCAT0 " + cmd_string);
             return cmd_string;
         }
         #endregion VFO Methods

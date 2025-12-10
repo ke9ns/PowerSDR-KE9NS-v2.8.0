@@ -489,7 +489,7 @@ namespace PowerSDR
 
 
         //==========================================================
-        // ke9ns add 1 = pre-processes full audio (includes AM/FM) , 0=original default post-process (filtered) (SSB is only mode)
+        // ke9ns add: 1 = pre-processes full audio (includes AM/FM) , 0=original default post-process (filtered) (SSB is only mode)
         private static byte monpre = 0;
         public static byte MON_PRE
         {
@@ -624,9 +624,9 @@ namespace PowerSDR
         private static int sample_rate1 = 48000;
         public static int SampleRate1
         {
-            get
-            { 
-                return sample_rate1;
+            get 
+            {
+                return sample_rate1; 
             }
             set
             {
@@ -950,7 +950,7 @@ namespace PowerSDR
 
 
         //==============================================================================================================         
-        // ke9ns   not used for Flex radios (use callback2 or callback1500)
+        // ke9ns   not used for Flex radios  (use callback2 or callback1500)
         //==============================================================================================================         
         unsafe public static int Callback1(void* input, void* output, int frameCount, PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
         {
@@ -1678,7 +1678,7 @@ namespace PowerSDR
                 ScaleBuffer(out_r, out_r, frameCount, (float)vol);
             }
 
-          
+
 #if (MINMAX)
 			Debug.Write(MaxSample(out_l, out_r, frameCount).ToString("f6")+",");
 
@@ -1792,16 +1792,16 @@ namespace PowerSDR
 
                     if (vac_bypass || !localmox) // drain VAC Input ring buffer
                     {
-                        if (console.setupForm.chkVACRXMon.Checked == false) //.318
+  						if (console.setupForm.chkVACRXMon.Checked == false) //.318
                         {
-                            if ((rb_vacIN_l.ReadSpace() >= frameCount) && (rb_vacIN_r.ReadSpace() >= frameCount))
-                            {
-                                Win32.EnterCriticalSection(cs_vac);
-                                rb_vacIN_l.ReadPtr(out_l_ptr1, frameCount);
-                                rb_vacIN_r.ReadPtr(out_r_ptr1, frameCount);
-                                Win32.LeaveCriticalSection(cs_vac);
-                            }
-                        }
+	                        if ((rb_vacIN_l.ReadSpace() >= frameCount) && (rb_vacIN_r.ReadSpace() >= frameCount))
+	                        {
+	                            Win32.EnterCriticalSection(cs_vac);
+	                            rb_vacIN_l.ReadPtr(out_l_ptr1, frameCount);
+	                            rb_vacIN_r.ReadPtr(out_r_ptr1, frameCount);
+	                            Win32.LeaveCriticalSection(cs_vac);
+	                        }
+						}
 
                     }
                     else // VAC is on -- copy data for transmit mode
@@ -2131,7 +2131,7 @@ namespace PowerSDR
                     if (!localmox)
                     {
 
-                        
+
                         if ((rb_vacOUT_l.WriteSpace() >= frameCount) && (rb_vacOUT_r.WriteSpace() >= frameCount))
                         {
                             if (vac_correct_iq)
@@ -2432,11 +2432,11 @@ namespace PowerSDR
                 {
                     if (!localmox)
                     {
-                       
+
 
                         if (console.setupForm.chkVACRXMon.Checked == true) //.318 
                         {
-                        
+
 
                             Win32.EnterCriticalSection(cs_vac);             // copy VACin steam to output buffer (left channel only)
                             rb_vacIN_l.ReadPtr(out_l, frameCount);         // out_l1 and out_r1 ends up going to the headset
@@ -2447,10 +2447,10 @@ namespace PowerSDR
                             ScaleBuffer(out_r, in_r, frameCount, (float)vac_rx_scale); // and keep the receiver audio steam on the right channel 
 
                         }
-                        else 
-                        { 
-                            ScaleBuffer(out_l, in_l, frameCount, (float)vac_rx_scale);
-                            ScaleBuffer(out_r, in_r, frameCount, (float)vac_rx_scale);
+                        else
+                        {
+	                        ScaleBuffer(out_l, in_l, frameCount, (float)vac_rx_scale);
+	                        ScaleBuffer(out_r, in_r, frameCount, (float)vac_rx_scale);
                         }
                     }
                     else if (mon)
@@ -2812,7 +2812,7 @@ namespace PowerSDR
                         rb_vacIN_l.ReadPtr(in_l, frameCount);
                         rb_vacIN_r.ReadPtr(in_r, frameCount);
                         Win32.LeaveCriticalSection(cs_vac);
-                      
+
                         if (vac_combine_input) AddBuffer(in_l, in_r, frameCount);
                     }
                     else
@@ -3583,14 +3583,14 @@ namespace PowerSDR
             float* in_l = null, in_r = null;
             float* out_l1 = null, out_r1 = null, out_l2 = null, out_r2 = null;
             float* out_l3 = null, out_r3 = null, out_l4 = null, out_r4 = null;
-
-
+           
+           
             float* rx1_in_l = null, rx1_in_r = null;
 
             float* tx_in_l = null, tx_in_r = null;   // ke9ns: Mic alone
-            
-            float* tx_in1_l = null, tx_in1_r = null; // ke9ns: add for mix audio (mic + VAC1 input)
           
+            float* tx_in1_l = null, tx_in1_r = null; // ke9ns: add for mix audio (mic + VAC1 input)
+
             float* rx2_in_l = null, rx2_in_r = null;
             float* rx1_out_l = null, rx1_out_r = null, tx_out_l = null, tx_out_r = null;
             float* rx2_out_l = null, rx2_out_r = null;
@@ -3643,7 +3643,7 @@ namespace PowerSDR
             //int* array_ptr = (int *)input;
 
 
-            switch (in_rx1_l) // 
+            switch (in_rx1_l) //
             {
                 case 0: array_ptr_input[0] = (int)in_l_ptr1; break; // ke9ns default Flex-5000 here
                 case 1: array_ptr_input[0] = (int)in_r_ptr1; break; // ke9ns default Flex-3000 here
@@ -3655,7 +3655,7 @@ namespace PowerSDR
                 case 7: array_ptr_input[0] = (int)in_r_ptr4; break;
             }
 
-            switch (in_rx1_r) // 
+            switch (in_rx1_r) //
             {
                 case 0: array_ptr_input[1] = (int)in_l_ptr1; break; // ke9ns default Flex-3000 here
                 case 1: array_ptr_input[1] = (int)in_r_ptr1; break; // ke9ns default Flex-5000 here
@@ -3741,7 +3741,7 @@ namespace PowerSDR
             //------------------------------------------------------------------------------
             // PRE PROCESSED STREAMS (original input streams)
 
-            // RECEIVER1 INPUT Stream (as wide as your sample rate) and you will see it on the Panadapter and Waterfall and hear it
+           // RECEIVER1 INPUT Stream (as wide as your sample rate) and you will see it on the Panadapter and Waterfall and hear it
             // if receiving on RX1 (this is raw audio stream from the RX1 signal)
             rx1_in_l = (float*)array_ptr_input[0]; // = in_l_ptr1;  points to -> in_l
             rx1_in_r = (float*)array_ptr_input[1]; // = in_r_ptr1;  points to -> in_r
@@ -3757,7 +3757,7 @@ namespace PowerSDR
             tx_in1_r = (float*)array_ptr_input[5]; // = in_r_ptr4;  points to = in_r
 
 
-           
+
             //------------------------------------------------------------------------------
             // RECEIVER2 INPUT Stream (wide as your sample rate)
             // if receiving on RX2 (this is the raw audio stream from the RX2 signal)
@@ -3929,29 +3929,29 @@ namespace PowerSDR
 
                 if (vac_bypass || !localmox) //if VAC ignores PTT in RX/TX, or in RX,  drain VAC Input ring buffer
                 {
-                    //   Debug.WriteLine("VAC RX");
+ 						//   Debug.WriteLine("VAC RX");
 
-                    if (console.setupForm.chkVACRXMon.Checked == false) //.318 turn this OFF is VACRXMON is ON since we will read the rb_vacIN futher down
+					if (console.setupForm.chkVACRXMon.Checked == false) //.318 turn this OFF is VACRXMON is ON since we will read the rb_vacIN futher down
                     {
-                        if ((rb_vacIN_l.ReadSpace() >= frameCount) && (rb_vacIN_r.ReadSpace() >= frameCount))
-                        {
-                            Win32.EnterCriticalSection(cs_vac);                // ke9ns I removed this section and everything still worked???
-                            rb_vacIN_l.ReadPtr(out_l_ptr2, frameCount);         // this code sends incoming VAC audio stream to the Output  stream
-                            rb_vacIN_r.ReadPtr(out_r_ptr2, frameCount);         // so you cannot hear this. Not sure what this does?
-                            Win32.LeaveCriticalSection(cs_vac);
-                                               
-                        }
-                        
-                    }
+	                    if ((rb_vacIN_l.ReadSpace() >= frameCount) && (rb_vacIN_r.ReadSpace() >= frameCount))
+	                    {
+	                        Win32.EnterCriticalSection(cs_vac);          // ke9ns I removed this section and everything still worked???
+	                        rb_vacIN_l.ReadPtr(out_l_ptr2, frameCount);  // this code sends incoming VAC audio stream to the Output  stream
+	                        rb_vacIN_r.ReadPtr(out_r_ptr2, frameCount);  // so you cannot hear this. Not sure what this does?
+	                        Win32.LeaveCriticalSection(cs_vac);
+	
+	                    }
+
+				    }
 
 
                     if (vox_enabled && !vac_bypass) // ke9ns: only stream PC MIC audio if VOX is enabled and not bypassing
                     {
-                        
+                        //  Debug.WriteLine("bad");
                         if (rb_vacIN_l.ReadSpace() >= frameCount)
                         {
-                            Win32.EnterCriticalSection(cs_vac);            // ke9ns used to make sure you have control
-                            rb_vacIN_l.ReadPtr(tx_in_l, frameCount);       //this code send incoming VAC audio stream to the output transmit stream
+                            Win32.EnterCriticalSection(cs_vac);       // ke9ns used to make sure you have control
+                            rb_vacIN_l.ReadPtr(tx_in_l, frameCount);  //this code send incoming VAC audio stream to the output transmit stream
                             rb_vacIN_r.ReadPtr(tx_in_r, frameCount);
                             Win32.LeaveCriticalSection(cs_vac);
 
@@ -4997,7 +4997,7 @@ namespace PowerSDR
 
                     if (console.setupForm.chkVACRXMon.Checked == true) //.318 vac ON
                     {
-                    
+
                         Win32.EnterCriticalSection(cs_vac);             // copy VACin steam to output buffer (left channel only)
                         rb_vacIN_l.ReadPtr(out_l1, frameCount);         // out_l1 and out_r1 ends up going to the headset
                         rb_vacIN_r.ReadPtr(out_l1, frameCount);         // leave the out_r1 alone (right channel), it has the receiver audio stream on it
@@ -5005,37 +5005,38 @@ namespace PowerSDR
 
                         ScaleBuffer(out_l1, out_l4, frameCount, (float)vac_rx_scale); // ke9ns: copy and scale the left channel to out4 VACout
                         ScaleBuffer(out_r1, out_r4, frameCount, (float)vac_rx_scale); // and keep the receiver audio steam on the right channel 
-                      
+
                     }
                     else // ke9ns: this is the default "Receive" audio stream sent out to headset and VAC1 output stream
                     {
-                        ScaleBuffer(out_l1, out_l4, frameCount, (float)vac_rx_scale); // ke9ns input is out1  output is out4
-                        ScaleBuffer(out_r1, out_r4, frameCount, (float)vac_rx_scale); // ke9ns: this sends RX audio out the VAC1 output channel
-                    }
+	                    ScaleBuffer(out_l1, out_l4, frameCount, (float)vac_rx_scale); // ke9ns input is out1  output is out4
+	                    ScaleBuffer(out_r1, out_r4, frameCount, (float)vac_rx_scale); // ke9ns: this sends RX audio out the VAC1 output channel
+					}
 
-                    //  Debug.WriteLine("VAC TESTING1");
+                    //   Debug.WriteLine("VAC TESTING1");
                     // }
 
-                    
-                  
+
+
                 }
                 else if ((console.MuteRX1OnVFOBTX == false))
                 {
                     ScaleBuffer(out_l1, out_l4, frameCount, (float)vac_rx_scale);
                     ScaleBuffer(out_r1, out_r4, frameCount, (float)vac_rx_scale);
-                  
+
+                    //  Debug.WriteLine("VAC TESTING2");
                 }
                 else if (mon)
                 {
 
                     if ((monpre == 1) || (tx_dsp_mode == DSPMode.AM || tx_dsp_mode == DSPMode.SAM || tx_dsp_mode == DSPMode.FM)) // ke9ns add  use pre-processed audio for MON function in these modes only
                     {
-                        ScaleBuffer(tx_in_l, out_l4, frameCount, (float)vac_rx_scale); // ke9ns add pre process MONpr
+                        ScaleBuffer(tx_in_l, out_l4, frameCount, (float)vac_rx_scale); // ke9ns add pre process MONpr 
                         ScaleBuffer(tx_in_r, out_r4, frameCount, (float)vac_rx_scale);
                     }
                     else
                     {
-                        ScaleBuffer(out_l2, out_l4, frameCount, (float)vac_rx_scale); // ke9ns  MONps post process so doesnt work (modulated AM here)
+                        ScaleBuffer(out_l2, out_l4, frameCount, (float)vac_rx_scale); // ke9ns MONps post process so doesnt work (modulated AM here)
                         ScaleBuffer(out_r2, out_r4, frameCount, (float)vac_rx_scale);
                     }
 
@@ -5257,6 +5258,9 @@ namespace PowerSDR
             }
             else // otherwise, scale using power/swr factors
             {
+
+                //   Debug.Write("testing------------");
+
                 ScaleBuffer(out_l2, out_l1, frameCount, (float)tx_vol);       // ke9ns transmit  (in, out)
                 ScaleBuffer(out_r2, out_r1, frameCount, (float)tx_vol);       // out_l2 = filtered Mic audio sent to out_l1 (QSE I Q) transmitter
             }
@@ -5275,7 +5279,7 @@ namespace PowerSDR
                         ClearBuffer(out_r4, frameCount);
                         Debug.WriteLine("clearbuffer");
                     }
-                    else if (console.setupForm.checkMicMonRx.Checked == true)  //.318
+                    else if (console.setupForm.checkMicMonRx.Checked == true)  //.318Z
                     {
                         if ((monpre == 1) || (tx_dsp_mode == DSPMode.AM || tx_dsp_mode == DSPMode.SAM || tx_dsp_mode == DSPMode.FM))
                         {
@@ -6913,7 +6917,20 @@ namespace PowerSDR
 
                 Debug.WriteLine("STARTAUDIO HERE 0");
                 retval = StartAudio(ref callback8, (uint)block_size1, sample_rate1, host1, input_dev1, output_dev1, 8, 0, latency1);    // ke9ns use primary input_dev1 device
-                
+                /*
+                                unsafe
+                                {
+                                    JanusAudio.SetNRx(nr); //set number of receivers
+                                    JanusAudio.SetDuplex(1); // set full duplex mode
+
+                                  //  retval = StartAudio(ref callback3port, (uint)block_size1, sample_rate1);
+                                    retval = StartAudioJanus(ref callback8, (uint)block_size1, sample_rate1);
+
+
+                                }
+
+                */
+
 
             }
             else if (console.hid_init && console.CurrentModel == Model.FLEX1500)
@@ -6923,7 +6940,7 @@ namespace PowerSDR
             }
             else
             {
-                /*
+
                 try
                 {
                     if (num_channels == 2)
@@ -6945,7 +6962,7 @@ namespace PowerSDR
                     return false;
                 }
 
-                */
+
             }
 
             if (!retval) return retval;
@@ -7313,7 +7330,7 @@ namespace PowerSDR
               
                 
               
-                if (temp < 0.0015f )
+                if (temp < 0.0015f)
                 {
                     AMMOD_NEG_COUNT++;
 

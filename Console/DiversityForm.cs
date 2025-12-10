@@ -68,7 +68,7 @@ namespace PowerSDR
             //.309
             if (console.VFOSync == true && console.RX2SpurReduction == false && console.SpurReduction == false &&
                (console.VFOAFreq == console.VFOBFreq) && (console.RX2DSPMode == console.RX1DSPMODE) && (console.RX2FilterHigh == console.RX1FilterHigh)
-               && (console.RX2FilterLow == console.RX1FilterLow) && (Nopresync == true || ((console.RX2PreampMode == console.RX1PreampMode) && (console.RX2RF == console.RF)))   )        //.246 check if the RX1-RX2 syned up
+               && (console.RX2FilterLow == console.RX1FilterLow) && (Nopresync == true || ((console.RX2PreampMode == console.RX1PreampMode) && (console.RX2RF == console.RF))))        //.246 check if the RX1-RX2 syned up
             {
                 console.ESCSYNC = true; // .249
             }
@@ -154,7 +154,7 @@ namespace PowerSDR
 
 
             g.DrawString("0°", Console.ff1, new SolidBrush(Color.LightGray), (int)(size) - 25, (int)(size / 2) - 10); //.247  was -17
-                                                                                                              //
+                                                                                                                      //
             g.DrawString("90°", Console.ff1, new SolidBrush(Color.LightGray), (int)(size / 2) - 10, 3);
             g.DrawString("180°", Console.ff1, new SolidBrush(Color.LightGray), -1, (int)(size / 2) - 10);
             g.DrawString("-90°", Console.ff1, new SolidBrush(Color.LightGray), (int)(size / 2) - 15, (int)(size) - 12);
@@ -176,7 +176,7 @@ namespace PowerSDR
             //p.Y = p.Y - 13;
             //g.DrawImage(crosshair, new Rectangle((p.X-(int)(crosshair.Width/2)), p.Y - (int)(crosshair.Height/2), 20, 20));
 
-          
+
 
         } //picradar paint
 
@@ -188,7 +188,7 @@ namespace PowerSDR
 
         private void picRadar_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-           
+
 
             if (!mouse_down) return;
 
@@ -276,7 +276,7 @@ namespace PowerSDR
 
         private void UpdateDiversity()
         {
-         
+
             if (chkESCRX2Gain.Checked && r != 0)
             {
                 //ke9ns scaler = gain * cos(radians) REAL , gain * sin(radians) IMG
@@ -304,7 +304,7 @@ namespace PowerSDR
         public void btnSync_Click(object sender, System.EventArgs e)
         {
             console.ESCSYNC = true; //.310
-            
+
             console.RX2SpurReduction = console.SpurReduction;
             console.RX2DSPMode = console.RX1DSPMode;
             console.RX2Filter = console.RX1Filter;
@@ -319,11 +319,11 @@ namespace PowerSDR
                 console.RX2PreampMode = console.RX1PreampMode;
 
             }
-           
+
             console.VFOSync = true;
 
             // console.RX2AGCMode = console.RX1AGCMode;    // no custom AGC mode for RX2 causes UHE
-         
+
             console.dsp.GetDSPRX(1, 0).Copy(console.dsp.GetDSPRX(0, 0));
 
             string buttonOnPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) +
@@ -344,7 +344,7 @@ namespace PowerSDR
 
         public void chkEnable_CheckedChanged(object sender, System.EventArgs e)
         {
-          
+
             if (console.RX2SpurReduction) console.RX2SpurReduction = false; // .309 turn off in order to activate ESC
             if (console.SpurReduction) console.SpurReduction = false;       //.309
 
@@ -368,7 +368,7 @@ namespace PowerSDR
             {
                 chkEnable.BackgroundImage = buttonOffImage;
                 btnSync.BackgroundImage = buttonOffImage;
-               
+
             }
 
             if (chkEnable.Checked)
@@ -376,7 +376,7 @@ namespace PowerSDR
                 if (!console.RX2Enabled) console.RX2Enabled = true;
             }
 
-           
+
             DttSP.SetDiversity(Convert.ToInt16(chkEnable.Checked));
 
         } // chkEnable_CheckedChange
@@ -390,7 +390,7 @@ namespace PowerSDR
                 else Nopresync = false;
 
             }
-           
+
 
 
         } //
@@ -506,7 +506,7 @@ namespace PowerSDR
 
         bool Nopresync = false; //.310
 
-       
+
 
         private void chkESCRX2Gain_CheckedChanged(object sender, EventArgs e)
         {

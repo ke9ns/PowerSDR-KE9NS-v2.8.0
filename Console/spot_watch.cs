@@ -27,7 +27,6 @@
 //=================================================================
 
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace PowerSDR
@@ -146,7 +145,7 @@ namespace PowerSDR
 
         private void SpotWatch_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-          
+
             this.Hide();
             e.Cancel = true;
             Common.SaveForm(this, "SpotWatch");
@@ -156,9 +155,9 @@ namespace PowerSDR
 
         #endregion
 
-       
-      
-      
+
+
+
 
 
         private void watchBox_TextChanged(object sender, EventArgs e) //.278 moved from SpotAge to new SpotWatch
