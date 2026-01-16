@@ -35,6 +35,7 @@ using System.Threading;
 using System.Windows.Forms;
 #if(!NO_MCL_PM)
 using mcl_pm;
+using TDxInput;
 #endif
 
 namespace PowerSDR

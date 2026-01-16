@@ -140,6 +140,7 @@
     <None Include="..\hiir\hiir.vcxproj" />
     <None Include="@(NativeLibs)" />
     <None Include="@(NativeLibs)" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="am_demod.h">

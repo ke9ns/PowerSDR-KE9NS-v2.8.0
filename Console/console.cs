@@ -29,7 +29,7 @@
 
 // ke9ns things to remember:
 
-
+// cWXToolStripMenuItem.PerformClick();
 
 //5000 PA has 6 LPF for transmit that switch at the following Frequencies:
 //K1K2 160m :0-2.099, K13K14 80M:2.1-4.099, K5K6 60-40M 4.1-7.399, K9K10 30-20m7.4- 14.449, K11K12 17-15M 14.450-21.549,K3K4 12-10m 21.550-29.799, K7K8 6m 29.8- ? mhz
@@ -252,7 +252,10 @@ using FlexCW; // .250
 using System.Linq; // ke9ns add
 using NAudio.Wave; // ke9ns add
 using NAudio.Lame; // ke9ns add
-
+using NAudio.Gui;
+using System.Security.Policy;
+using System.Web.UI.Design;
+using HidDevice;
 
 
 //using MahApps.Metro.Controls; // ke9ns add
@@ -262,6 +265,7 @@ using NAudio.Lame; // ke9ns add
 using Flex.TNF;
 #endif
 
+using Flex.Control; //.250
 
 //using CefSharp;            // ke9ns add to allow embedded chrome browser (for help videos)
 //using CefSharp.WinForms;
@@ -1757,6 +1761,7 @@ namespace PowerSDR
 
             // decide whether to present a choice of radios to the user
             Pal.Init();  // ke9ns: pal.dll currently at 4.1.3.17357 Flex Radio 1/30/2013
+            // pal.cs
 
             RadiosAvailable.ScanPal(); // gather info on Pal radios
 
@@ -4178,7 +4183,7 @@ namespace PowerSDR
 
             Debug.WriteLine("===END=== INITCONSOLE routine");
 
-        } //Initconsole (from inside Console()  )
+        } //Initconsole (from inside Console())
 
 
         //==================================================================
@@ -4352,6 +4357,7 @@ namespace PowerSDR
             try
             {
                 writer.WriteLine("6) Dispose cxw");
+                Debug.WriteLine("CWX dispose");
                 if (cwxForm != null) cwxForm.Dispose();
                 writer.WriteLine("6) Done");
             }
@@ -9613,6 +9619,322 @@ namespace PowerSDR
                 }
             }
         } // initfilterpresets
+
+
+        // ke9ns new clean reset with no offsets
+        private void InitFilterPresets1(FilterPreset[] preset)  //.323
+        {
+           
+            for (int m = (int)DSPMode.FIRST + 1; m < (int)DSPMode.LAST; m++)
+            {
+                preset[m] = new FilterPreset();
+                for (Filter f = Filter.F1; f != Filter.LAST; f++)
+                {
+                    switch (m)
+                    {
+                        case (int)DSPMode.LSB:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, -5000, 0, "5.0k"); // -5150  .262 change from -150 to 0 for better audio quality
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f, -4400, 0, "4.4k");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f, -3800, 0, "3.8k");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f, -3300, 0, "3.3k");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f, -2900, 0, "2.9k");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f, -2700, 0, "2.7k");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f, -2400, 0, "2.4k");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f, -2100, 0, "2.1k");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f, -1800, 0, "1.8k");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f, -1000, 0, "1.0k");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f, -2850, 0, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f, -2850, 0, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F6;
+                            break; // lsb
+                        case (int)DSPMode.USB:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, 0, 5000, "5.0k"); // .262 was 150, now 0 for better audio quality
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f, 0, 4400, "4.4k");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f, 0, 3800, "3.8k");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f, 0, 3300, "3.3k");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f, 0, 2900, "2.9k");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f, 0, 2700, "2.7k");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f, 0, 2400, "2.4k");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f, 0, 2100, "2.1k");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f, 0, 1800, "1.8k");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f, 0, 1000, "1.0k");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f, 0, 2850, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f, 0, 2850, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F6;
+                            break; //usb
+                        case (int)DSPMode.DIGL:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, - 3000,  0, "3.0k"); //.262  1500
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f, - 2500,  0, "2.5k");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f,  - 2000,  0, "2.0k");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f, - 1500,  0, "1.5k");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f,  - 1000, 0, "1.0k");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f,  - 800,  0, "800");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f, - 600,  0, "600");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f, - 300,  0, "300");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f,  - 150,  0, "150");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f,  - 75,  0, "75");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f,  - 800, 0, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f,  - 800,  0, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F5;
+                            break; //digl
+                        case (int)DSPMode.DIGU:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, 0,  3000, "3.0k"); //.262 low set to 0
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f,  0,  2500, "2.5k");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f,0,  2000, "2.0k");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f,  0,  1500, "1.5k");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f,  0,  1000, "1.0k");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f,  0, 800, "800");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f,  0,  600, "600");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f,  0,  300, "300");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f,  0,  150, "150");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f,  0,  75, "75");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f,  0,  800, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f,  0, 800, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F5;
+                            break;  // digu
+                        case (int)DSPMode.CWL:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f,- 1000,  0, "1.0k");
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f,- 800, 0, "800");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f, - 750,  0, "750");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f,  - 600,  0, "600");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f, - 500,0 , "500");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f,  - 400,  0, "400");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f,  - 250, 0, "250");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f,  - 100, 0, "100");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f,  - 50, 0, "50");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f, - 25, 0, "25");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f,  - 250, 0, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f,- 250,0, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F5;
+                            break; // cwl
+                        case (int)DSPMode.CWU:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, 0, 1000, "1.0k");
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f, 0, 800, "800");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f,0, 750, "750");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f, 0, 600, "600");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f, 0, 500, "500");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f, 0,400 , "400");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f, 0,250 , "250");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f, 0,100 , "100");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f, 0, 50, "50");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f, 0,25 , "25");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f, 0,500  , "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f, 0,  500, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F5;
+                            break; //cwu
+                        case (int)DSPMode.AM:
+                        case (int)DSPMode.SAM:
+                        case (int)DSPMode.DSB:
+                            switch (f)
+                            {
+                                case Filter.F1:
+                                    preset[m].SetFilter(f, -8000, 8000, "16k");
+                                    break;
+                                case Filter.F2:
+                                    preset[m].SetFilter(f, -6000, 6000, "12k");
+                                    break;
+                                case Filter.F3:
+                                    preset[m].SetFilter(f, -5000, 5000, "10k");
+                                    break;
+                                case Filter.F4:
+                                    preset[m].SetFilter(f, -4000, 4000, "8.0k");
+                                    break;
+                                case Filter.F5:
+                                    preset[m].SetFilter(f, -3300, 3300, "6.6k");
+                                    break;
+                                case Filter.F6:
+                                    preset[m].SetFilter(f, -2600, 2600, "5.2k");
+                                    break;
+                                case Filter.F7:
+                                    preset[m].SetFilter(f, -2000, 2000, "4.0k");
+                                    break;
+                                case Filter.F8:
+                                    preset[m].SetFilter(f, -1550, 1550, "3.1k");
+                                    break;
+                                case Filter.F9:
+                                    preset[m].SetFilter(f, -1450, 1450, "2.9k");
+                                    break;
+                                case Filter.F10:
+                                    preset[m].SetFilter(f, -1200, 1200, "2.4k");
+                                    break;
+                                case Filter.VAR1:
+                                    preset[m].SetFilter(f, -3300, 3300, "Var 1");
+                                    break;
+                                case Filter.VAR2:
+                                    preset[m].SetFilter(f, -3300, 3300, "Var 2");
+                                    break;
+                            }
+                            preset[m].LastFilter = Filter.F5;
+                            break; // am,dsb
+                        default:
+                            preset[m].LastFilter = Filter.NONE;
+                            break;
+                    }
+                }
+            }
+        } // initfilterpresets1 //.323
 
         private void InitDisplayModes()
         {
@@ -17762,7 +18084,7 @@ namespace PowerSDR
             {
                 if (RX1Band != b && !tuning)
                 {
-                    // if (chkVFOSplit.Checked )  chkVFOSplit.Checked = false;
+                    // if (chkVFOSplit.Checked)  chkVFOSplit.Checked = false;
                     if (chkVFOSplit.Checked && chkVFOBSplit.Checked == false) chkVFOSplit.Checked = false; // .271
                 }
             }
@@ -18960,17 +19282,17 @@ namespace PowerSDR
 
             return;
 
-            /*	if ( current_model != Model.SOFTROCK40)  // -- no aliasing going on 
+            /*	if (current_model != Model.SOFTROCK40)  // -- no aliasing going on 
                     return;   
 
-                if ( rx1_dsp_mode == DSPMode.DRM )  // for now don't worry about aliasing in DRM land 
+                if (rx1_dsp_mode == DSPMode.DRM)  // for now don't worry about aliasing in DRM land 
                 {
                     return; 
                 }
 
                 double hz_per_bin = sample_rate1/Display.BUFFER_SIZE; 
                 double data_center_freq = tuned_freq; 
-                if ( data_center_freq == 0 ) 
+                if (data_center_freq == 0) 
                 { 
                     return; 
                 } 
@@ -18978,11 +19300,11 @@ namespace PowerSDR
                 double data_high_edge_hz = (1e6 * data_center_freq) + sample_rate1/2; 
                 double alias_free_low_edge_hz = (1e6 * soft_rock_center_freq) - sample_rate1/2; 
                 double alias_free_high_edge_hz = (1e6 * soft_rock_center_freq) + sample_rate1/2; 
-                if ( data_low_edge_hz < alias_free_low_edge_hz )   // data we have goes below alias free region -- zero it 
+                if (data_low_edge_hz < alias_free_low_edge_hz)   // data we have goes below alias free region -- zero it 
                 {				
                     double hz_this_bin = data_low_edge_hz; 
                     int bin_num = 0; 
-                    while ( hz_this_bin < alias_free_low_edge_hz ) 
+                    while (hz_this_bin < alias_free_low_edge_hz) 
                     {
                         display_data[bin_num] = -200.0f; 
                         ++bin_num; 
@@ -18990,11 +19312,11 @@ namespace PowerSDR
                     }
                     // Debug.WriteLine("data_low: " + bin_num); 
                 } 
-                else if ( data_high_edge_hz > alias_free_high_edge_hz ) 
+                else if (data_high_edge_hz > alias_free_high_edge_hz) 
                 { 				
                     double hz_this_bin = data_high_edge_hz; 
                     int bin_num = Display.BUFFER_SIZE - 1; 
-                    while ( hz_this_bin > alias_free_high_edge_hz ) 
+                    while (hz_this_bin > alias_free_high_edge_hz) 
                     {
                         display_data[bin_num] = -200.0f; 
                         --bin_num; 
@@ -27125,20 +27447,31 @@ namespace PowerSDR
             get
             {
                 if (cwxForm == null || cwxForm.IsDisposed)
+                {
+                    Debug.WriteLine("get CWX status: NULL");
+
                     return false;
+                }
                 else
+                {
+                    Debug.WriteLine("get CWX status: active");
                     return true;
+                }
             }
             set
             {
                 if (value)
                 {
+                    Debug.WriteLine("set cwx value > 0 so performclick");
                     cWXToolStripMenuItem.PerformClick();
                 }
                 else
                     if (cwxForm != null)
+                {
+                    Debug.WriteLine("set CWX value = 0, so invoker");
                     this.Invoke(new MethodInvoker(cwxForm.Close));
-            }
+                }
+            } // set
         }
 
         public bool VFOATX
@@ -27475,7 +27808,7 @@ namespace PowerSDR
 
                 bool old = fwc_amp_tx1;
                 fwc_amp_tx1 = value;
-                //  if ( initializing) // if (old != value || initializing)
+                //  if (initializing) // if (old != value || initializing)
                 // {
 
                 if (setupForm != null && ((setupForm.chkBoxIIC.Checked && checkBoxIICPTT.Checked) || setupForm.chkBoxIIC.Checked == false))// .272 if IICPTT feature is ON, then AmpPTT must be active to use radio amp PTT
@@ -28990,6 +29323,8 @@ namespace PowerSDR
             {
                 if (!fwc_init || current_model != Model.FLEX5000) return;
                 Debug.WriteLine("SET TXAnt: " + tx_ant + " , " + value);
+               
+                FWCAnt old = 0;
                 tx_ant = value;
 
                 Debug.WriteLine("XVTR TXAnt: " + rx1_xvtr_index);
@@ -29203,6 +29538,8 @@ namespace PowerSDR
             {
                 if (!fwc_init || current_model != Model.FLEX5000) return;
                 Debug.WriteLine("SET TXAnt2: " + value + " 2: " + tx_ant2 + " , " + lblAntRX2a.Text + " , " + lblAntTX2a.Text);
+
+                FWCAnt old = 0;
                 tx_ant2 = value;
 
                 //  if (old != value || tx_ant_6m_reset || initializing || tx_cal || value != tx_ant) // ke9ns mod .205
@@ -33215,9 +33552,6 @@ namespace PowerSDR
 
                     Debug.WriteLine("RX2 NEW DDSFREQ");
 
-
-
-
                     uint tw = rx2_dds_freq_tw;
                     float freq = rx2_dds_freq_mhz;
                     rx2_dds_freq_updated = false; // 1 time flag
@@ -33303,7 +33637,7 @@ namespace PowerSDR
 
                     if (last_tw != sr_tw)
                     {
-                        //Debug.WriteLine("sr_tw: "+sr_tw.ToString("X")+" VFO: "+VFOAFreq.ToString("f6" ));
+                        //Debug.WriteLine("sr_tw: " + sr_tw.ToString("X") + " VFO: " + VFOAFreq.ToString("f6"));
 
                         if (fwc_init || hid_init) // ke9ns: always set to true (Unless SDR-1000)
                         {
@@ -33345,7 +33679,7 @@ namespace PowerSDR
                     last_tw = sr_tw;
                     UP1 = true; // .251 
 
-                    //Debug.WriteLine("sr_tw freq: "+TW2Freq(sr_tw).ToString("f6" )+" osc: "+(-dsp_osc_freq*1e-6).ToString("f6" )+" total: "+(TW2Freq(sr_tw)+dsp_osc_freq*1e-6).ToString("f6" ));
+                    //Debug.WriteLine("sr_tw freq: "+TW2Freq(sr_tw).ToString("f6")+" osc: "+(-dsp_osc_freq*1e-6).ToString("f6")+" total: "+(TW2Freq(sr_tw)+dsp_osc_freq*1e-6).ToString("f6"));
                 } // spur_reduction
                 else
                 {
@@ -33388,7 +33722,7 @@ namespace PowerSDR
                         dsp.GetDSPRX(0, 0).RXOsc = 0.0;
                     last_tw = 0;
 
-                    // Debug.WriteLine("dds: "+fwc_dds_freq.ToString("f6" )+" osc: "+(-if_freq*1e6).ToString("f6" )+" total: "+(fwc_dds_freq+if_freq).ToString("f6" ));
+                    // Debug.WriteLine("dds: "+fwc_dds_freq.ToString("f6")+" osc: "+(-if_freq*1e6).ToString("f6")+" total: "+(fwc_dds_freq+if_freq).ToString("f6"));
 
                 } // spur_reduction = no
 
@@ -33426,7 +33760,7 @@ namespace PowerSDR
                     else dsp.GetDSPRX(1, 0).RXOsc = -dsp_osc_freq + rx2_vfo_offset;
                     if (rx2_last_tw != sr_tw)
                     {
-                        //Debug.WriteLine("sr_tw: "+sr_tw.ToString("X")+" VFO: "+VFOAFreq.ToString("f6" ));
+                        //Debug.WriteLine("sr_tw: "+sr_tw.ToString("X")+" VFO: "+VFOAFreq.ToString("f6"));
                         if (fwc_init)
                         {
                             switch (current_model)
@@ -33446,7 +33780,7 @@ namespace PowerSDR
                         }
                     }
                     rx2_last_tw = sr_tw;
-                    //Debug.WriteLine("sr_tw freq: "+TW2Freq(sr_tw).ToString("f6" )+" osc: "+(-dsp_osc_freq*1e-6).ToString("f6" )+" total: "+(TW2Freq(sr_tw)+dsp_osc_freq*1e-6).ToString("f6" ));
+                    //Debug.WriteLine("sr_tw freq: "+TW2Freq(sr_tw).ToString("f6")+" osc: "+(-dsp_osc_freq*1e-6).ToString("f6")+" total: "+(TW2Freq(sr_tw)+dsp_osc_freq*1e-6).ToString("f6"));
                 }
                 else
                 {
@@ -33482,7 +33816,7 @@ namespace PowerSDR
                     else
                         dsp.GetDSPRX(1, 0).RXOsc = 0.0;
                     last_tw = 0;
-                    //Debug.WriteLine("dds: "+fwc_dds_freq.ToString("f6" )+" osc: "+(-if_freq*1e6).ToString("f6" )+" total: "+(fwc_dds_freq+if_freq).ToString("f6" ));
+                    //Debug.WriteLine("dds: "+fwc_dds_freq.ToString("f6")+" osc: "+(-if_freq*1e6).ToString("f6")+" total: "+(fwc_dds_freq+if_freq).ToString("f6"));
                 } // spur_reduction
 
                 UP2 = true;
@@ -33502,7 +33836,7 @@ namespace PowerSDR
                 Debug.WriteLine("DDSFreq");
 
                 dds_freq = value;
-                //Debug.WriteLine("dds_freq: "+dds_freq.ToString("f6" ));
+                //Debug.WriteLine("dds_freq: "+dds_freq.ToString("f6"));
 
                 double vfoFreq = value, f = value;
                 double dsp_osc_freq = 0;
@@ -36246,7 +36580,7 @@ namespace PowerSDR
                     } // chkboxhero
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Debug.WriteLine("========HEROFAIL=======");
                 }
@@ -39150,7 +39484,7 @@ namespace PowerSDR
                         break;
                 }
 
-                Debug.WriteLine("PREAMP_G " + PREAMP_G);
+                Debug.WriteLine("PREAMP_G: " + PREAMP_G);
 
                 switch (current_model)
                 {
@@ -39511,7 +39845,7 @@ namespace PowerSDR
             get { return vac2_enabled; }
             set
             {
-                // if ((current_model == Model.FLEX5000 && FWCEEPROM.RX2OK) )   // ke9ns mod to allow all models to use VAC2
+                // if ((current_model == Model.FLEX5000 && FWCEEPROM.RX2OK))   // ke9ns mod to allow all models to use VAC2
                 //  {
                 vac2_enabled = value;
                 Audio.VAC2Enabled = value;
@@ -41225,7 +41559,7 @@ namespace PowerSDR
             double num;
 
 
-            line_dark_pen = new Pen( // this causes a shadow color around the needle of the EDGE meters
+            line_dark_pen = new Pen(// this causes a shadow color around the needle of the EDGE meters
                          Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2, // red
                          (edge_avg_color.G + edge_meter_background_color.G) / 2, // green
                          (edge_avg_color.B + edge_meter_background_color.B) / 2)); // blue
@@ -42603,7 +42937,7 @@ namespace PowerSDR
                             (((current_meter_rx_mode == MeterRXMode.ADC2_R) || (current_meter_rx_mode == MeterRXMode.ADC2_L) ||
                             (current_meter_rx_mode == MeterRXMode.ADC_R) || (current_meter_rx_mode == MeterRXMode.ADC_L)) && (!mox && current_meter_rx_mode != MeterRXMode.OFF))
                         || ((mox && current_meter_tx_mode != MeterTXMode.OFF) && (current_meter_tx_mode != MeterTXMode.LVL_G) && (current_meter_tx_mode != MeterTXMode.ALC_G) && (current_meter_tx_mode != MeterTXMode.CPDR) && (current_meter_tx_mode != MeterTXMode.LEVELER) && (current_meter_tx_mode != MeterTXMode.EQ) && (current_meter_tx_mode != MeterTXMode.MIC) && (current_meter_tx_mode != MeterTXMode.ALC) && (current_meter_tx_mode != MeterTXMode.SWR) && (current_meter_tx_mode != MeterTXMode.FORWARD_POWER) && (current_meter_tx_mode != MeterTXMode.REVERSE_POWER))
-                         )
+                        )
                     // if meter is ON in RX or TX mode, then draw line
                     {
                         pixel_x = Math.Max(0, pixel_x);
@@ -42628,7 +42962,7 @@ namespace PowerSDR
                                  (current_meter_tx_mode == MeterTXMode.ALC_G) || (current_meter_tx_mode == MeterTXMode.EQ) ||
                                  (current_meter_tx_mode == MeterTXMode.MIC) || (current_meter_tx_mode == MeterTXMode.ALC) ||
                                  (current_meter_tx_mode == MeterTXMode.SWR)))
-                            )
+                           )
 
                     {
 
@@ -42674,7 +43008,7 @@ namespace PowerSDR
                     else if (
                         ((mox && current_meter_tx_mode != MeterTXMode.OFF) && ((current_meter_tx_mode == MeterTXMode.FORWARD_POWER) ||
                         (current_meter_tx_mode == MeterTXMode.REVERSE_POWER)))
-                        )
+                       )
                     {
 
                         pixel_x = Math.Max(0, pixel_x);
@@ -42713,7 +43047,7 @@ namespace PowerSDR
                     else if (
                                 (((current_meter_rx_mode == MeterRXMode.SIGNAL_STRENGTH) || (current_meter_rx_mode == MeterRXMode.SIGNAL_AVERAGE) ||
                                     (current_meter_rx_mode == MeterRXMode.SIGNAL_PEAK)) && (!mox && current_meter_rx_mode != MeterRXMode.OFF))
-                       )
+                      )
                     {
                         // SIGNAL ONLY
 
@@ -43581,7 +43915,7 @@ namespace PowerSDR
                                 // upper left corner x,y , width,height, start angle, sweep angle
 
                                 low_brush1.Width = arc_thick; // 3.0
-                                                              // g.DrawArc(low_brush1, 0, 37, W, W, -90, -47); // draw OUTER arc (original ke9ns)  ( pen, x, y, wid, hei, start ang, sweep ang )
+                                                              // g.DrawArc(low_brush1, 0, 37, W, W, -90, -47); // draw OUTER arc (original ke9ns)  (pen, x, y, wid, hei, start ang, sweep ang)
                                 g.DrawArc(low_brush1, -CirXH, CirY, W + CirX, W + CirX, -90, -35);
 
                                 low_brush1.Width = 7.0F;
@@ -44668,7 +45002,7 @@ namespace PowerSDR
                             (((current_meter_rx_mode == MeterRXMode.ADC2_R) || (current_meter_rx_mode == MeterRXMode.ADC2_L) ||
                             (current_meter_rx_mode == MeterRXMode.ADC_R) || (current_meter_rx_mode == MeterRXMode.ADC_L)) &&
                             (!mox && current_meter_rx_mode != MeterRXMode.OFF))
-                       )
+                      )
 
                     {
                         pixel_x = Math.Max(0, pixel_x);
@@ -44698,7 +45032,7 @@ namespace PowerSDR
                                  (current_meter_tx_mode == MeterTXMode.MIC) || (current_meter_tx_mode == MeterTXMode.ALC) ||
                                  (current_meter_tx_mode == MeterTXMode.SWR) || (current_meter_tx_mode == MeterTXMode.FORWARD_POWER) ||
                                  (current_meter_tx_mode == MeterTXMode.REVERSE_POWER)))
-                            )
+                           )
                     {
 
                         // pixel_x (i.e. signal) goes from 0 to W  Width 
@@ -44800,7 +45134,7 @@ namespace PowerSDR
                     else if (  // SIGNAL, AVG SIGNAL, SIGNAL PEAK rx1 ANALOG
                                  (((current_meter_rx_mode == MeterRXMode.SIGNAL_STRENGTH) || (current_meter_rx_mode == MeterRXMode.SIGNAL_AVERAGE) ||
                                      (current_meter_rx_mode == MeterRXMode.SIGNAL_PEAK)) && (!mox && current_meter_rx_mode != MeterRXMode.OFF))
-                        )
+                       )
                     {
                         // pixel_x (i.e. signal) goes from 0 to W  Width 
                         // posx = originx + (2 * D * cos (angle))
@@ -45126,7 +45460,7 @@ namespace PowerSDR
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            line_dark_pen = new Pen( // this causes a shadow color around the needle of the EDGE meters
+            line_dark_pen = new Pen(// this causes a shadow color around the needle of the EDGE meters
                         Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2, // red
                         (edge_avg_color.G + edge_meter_background_color.G) / 2, // green
                         (edge_avg_color.B + edge_meter_background_color.B) / 2)); // blue
@@ -45530,7 +45864,7 @@ namespace PowerSDR
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            line_dark_pen = new Pen( // this causes a shadow color around the needle of the EDGE meters
+            line_dark_pen = new Pen(// this causes a shadow color around the needle of the EDGE meters
                         Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2, // red
                         (edge_avg_color.G + edge_meter_background_color.G) / 2, // green
                         (edge_avg_color.B + edge_meter_background_color.B) / 2)); // blue
@@ -46965,7 +47299,7 @@ namespace PowerSDR
                         (current_meter_tx1_mode != MeterTXMode.MIC) && (current_meter_tx1_mode != MeterTXMode.ALC) &&
                         (current_meter_tx1_mode != MeterTXMode.SWR) && (current_meter_tx1_mode != MeterTXMode.FORWARD_POWER) &&
                         (current_meter_tx1_mode != MeterTXMode.REVERSE_POWER))
-                         )
+                        )
                     // if meter is ON in RX or TX mode, then draw line
                     {
                         pixel_x = Math.Max(0, pixel_x);
@@ -46989,7 +47323,7 @@ namespace PowerSDR
                                  (current_meter_tx1_mode == MeterTXMode.ALC_G) || (current_meter_tx1_mode == MeterTXMode.EQ) ||
                                  (current_meter_tx1_mode == MeterTXMode.MIC) || (current_meter_tx1_mode == MeterTXMode.ALC) ||
                                  (current_meter_tx1_mode == MeterTXMode.SWR)))
-                            )
+                           )
 
                     {
 
@@ -47038,7 +47372,7 @@ namespace PowerSDR
                     else if (
                         ((mox2 && current_meter_tx1_mode != MeterTXMode.OFF) && ((current_meter_tx1_mode == MeterTXMode.FORWARD_POWER) ||
                         (current_meter_tx1_mode == MeterTXMode.REVERSE_POWER)))
-                        )
+                       )
                     {
 
                         pixel_x = Math.Max(0, pixel_x);
@@ -47078,7 +47412,7 @@ namespace PowerSDR
                     else if (
                             (((rx2_meter_mode == MeterRXMode.SIGNAL_STRENGTH) || (rx2_meter_mode == MeterRXMode.SIGNAL_AVERAGE) ||
                             (rx2_meter_mode == MeterRXMode.SIGNAL_PEAK)) && (!mox2 && rx2_meter_mode != MeterRXMode.OFF))
-                       )
+                      )
                     {
                         // SIGNAL ONLY
 
@@ -47134,13 +47468,13 @@ namespace PowerSDR
                     // needle RX2 TR7
 
                     /*
-                    if ( // RX2 EDGE movement
+                    if (// RX2 EDGE movement
 
-                        ( (rx2_meter_mode == MeterRXMode.ADC2_R) || (rx2_meter_mode == MeterRXMode.ADC2_L) ||
+                        ((rx2_meter_mode == MeterRXMode.ADC2_R) || (rx2_meter_mode == MeterRXMode.ADC2_L) ||
                        (rx2_meter_mode == MeterRXMode.ADC_R) || (rx2_meter_mode == MeterRXMode.ADC_L)) && 
                        ((!mox && rx2_meter_mode != MeterRXMode.OFF) || (mox && current_meter_tx1_mode != MeterTXMode.OFF))
 
-                       )  
+                      )  
                         {
                         pixel_x = Math.Max(0, pixel_x);
                         pixel_x = Math.Min(W-3, pixel_x);
@@ -47161,12 +47495,12 @@ namespace PowerSDR
                     }
 
 
-                    else if ( // RX2 SIGNAL, AVG SIGNAL, PEAK SIGNAL tr7
+                    else if (// RX2 SIGNAL, AVG SIGNAL, PEAK SIGNAL tr7
 
                             ((rx2_meter_mode == MeterRXMode.SIGNAL_STRENGTH) || (rx2_meter_mode == MeterRXMode.SIGNAL_AVERAGE) ||
-                            (rx2_meter_mode == MeterRXMode.SIGNAL_PEAK)) && ( (!mox && rx2_meter_mode != MeterRXMode.OFF)
-                                      || (mox && current_meter_tx1_mode != MeterTXMode.OFF) )
-                        )
+                            (rx2_meter_mode == MeterRXMode.SIGNAL_PEAK)) && ((!mox && rx2_meter_mode != MeterRXMode.OFF)
+                                      || (mox && current_meter_tx1_mode != MeterTXMode.OFF))
+                      )
 
                     {
 
@@ -47190,7 +47524,7 @@ namespace PowerSDR
 
                         line_pen = new Pen(Color.Yellow); // rx 
                       //  line_dark_pen = 
-                      //  new Pen( Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2,(edge_avg_color.G + edge_meter_background_color.G) / 2,(edge_avg_color.B + edge_meter_background_color.B) / 2));
+                      //  new Pen(Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2,(edge_avg_color.G + edge_meter_background_color.G) / 2,(edge_avg_color.B + edge_meter_background_color.B) / 2));
 
 
 
@@ -47221,8 +47555,8 @@ namespace PowerSDR
                        angle =   signal = (angle_start + ((double)pixel_x * angle_span / (double)W));     // convert signal pixel span (0 to W) int angle span of 45deg to 135deg
                         signal = signal * CirA;                                                // convert angle to radians for cos/sin math
 
-                        int POSW = (int)( (double)(H*1.6) * Math.Cos(signal) );  // convert signal to arc
-                        int POSH = (int)( (double)(H*1.6) * Math.Sin(signal) );
+                        int POSW = (int)((double)(H*1.6) * Math.Cos(signal));  // convert signal to arc
+                        int POSH = (int)((double)(H*1.6) * Math.Sin(signal));
 
                         line_pen = new Pen(Color.Yellow);
                         line_pen.Width = 2.5F;
@@ -49092,12 +49426,12 @@ namespace PowerSDR
                     //=============================
 
 
-                    if ( // EDGE rx2 METER MOVEMENT
+                    if (// EDGE rx2 METER MOVEMENT
                          ((rx2_meter_mode == MeterRXMode.ADC2_R) || (rx2_meter_mode == MeterRXMode.ADC2_L) ||
                         (rx2_meter_mode == MeterRXMode.ADC_R) || (rx2_meter_mode == MeterRXMode.ADC_L))
                         && ((!mox2 && rx2_meter_mode != MeterRXMode.OFF) || (mox2 && current_meter_tx1_mode != MeterTXMode.OFF))
 
-                        )
+                      )
 
                     {
                         pixel_x = Math.Max(0, pixel_x);
@@ -49124,7 +49458,7 @@ namespace PowerSDR
                                (current_meter_tx1_mode == MeterTXMode.MIC) || (current_meter_tx1_mode == MeterTXMode.ALC) ||
                                (current_meter_tx1_mode == MeterTXMode.SWR) || (current_meter_tx1_mode == MeterTXMode.FORWARD_POWER) ||
                                (current_meter_tx1_mode == MeterTXMode.REVERSE_POWER)))
-                          )
+                        )
                     {
 
 
@@ -49221,12 +49555,12 @@ namespace PowerSDR
 
                     } // TX curved needle
 
-                    else if ( //RX2 ANALOG meter movement
+                    else if (//RX2 ANALOG meter movement
                          ((rx2_meter_mode == MeterRXMode.SIGNAL_STRENGTH) || (rx2_meter_mode == MeterRXMode.SIGNAL_PEAK) ||
                         (rx2_meter_mode == MeterRXMode.SIGNAL_AVERAGE)) && ((!mox2 && rx2_meter_mode != MeterRXMode.OFF) ||
                         (mox2 && current_meter_tx1_mode != MeterTXMode.OFF))
 
-                        )
+                      )
 
                     {
                         // pixel_x (i.e. signal) goes from 0 to W  Width 
@@ -49249,7 +49583,7 @@ namespace PowerSDR
                         line_pen = new Pen(analog_avg_color);
 
                         //  line_dark_pen1 = 
-                        //  new Pen( Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2,(edge_avg_color.G + edge_meter_background_color.G) / 2,(edge_avg_color.B + edge_meter_background_color.B) / 2));
+                        //  new Pen(Color.FromArgb((edge_avg_color.R + edge_meter_background_color.R) / 2,(edge_avg_color.G + edge_meter_background_color.G) / 2,(edge_avg_color.B + edge_meter_background_color.B) / 2));
 
 
                         //9990
@@ -49601,14 +49935,14 @@ namespace PowerSDR
                 // wjt added -- stop hosing the avg display when scrolling the vfo 
 
                 /*
-                  if ( (rx1_avg_last_ddsfreq != 0 && rx1_avg_last_ddsfreq != DDSFreq) ||  (current_model == Model.SOFTROCK40 && rx1_avg_last_dttsp_osc != dttsp_osc))   // vfo has changed, need to shift things around 
+                  if ((rx1_avg_last_ddsfreq != 0 && rx1_avg_last_ddsfreq != DDSFreq) ||  (current_model == Model.SOFTROCK40 && rx1_avg_last_dttsp_osc != dttsp_osc))   // vfo has changed, need to shift things around 
                   {
 
                     Debug.WriteLine("dttsp_osc: " + dttsp_osc + " , " + LASTVFOA + " , " + VFOAFreq + " , " + Display.WM1);
 
                      double delta_vfo;
 
-                         if ( current_model != Model.SOFTROCK40 ) 
+                         if (current_model != Model.SOFTROCK40) 
                          { 					
                              delta_vfo = DDSFreq - rx1_avg_last_ddsfreq; // ke9ns for Flex-5000
                              delta_vfo *= 1e6; // vfo in mhz moron!
@@ -49789,7 +50123,7 @@ namespace PowerSDR
                                 {
                                     //Debug.WriteLine("dttsp_osc: " + dttsp_osc); 
                                     double delta_vfo;
-                                    //	if ( current_model != Model.SOFTROCK40 ) 
+                                    //	if (current_model != Model.SOFTROCK40) 
                                     //	{ 					
                                     delta_vfo = DDSFreq - rx2_avg_last_ddsfreq;
                                     delta_vfo *= 1e6; // vfo in mhz moron!
@@ -52388,7 +52722,7 @@ namespace PowerSDR
                                         }
                                         else
                                         {
-                                            if (qndr_end == false) // && QuindarEnd == false && qndr_vac1 == true )
+                                            if (qndr_end == false) // && QuindarEnd == false && qndr_vac1 == true)
                                             {
                                                 chkMOX.Checked = false; // ke9ns mod: .190 switch to RX (comes here when end tone is done)
                                                 Debug.WriteLine("Quindar UNKEY QNDR");
@@ -52830,8 +53164,8 @@ namespace PowerSDR
 
                     labelTS3.Select(10, labelTS3.TextLength - 10);
 
-                    //  Debug.WriteLine("TEMPERTURE " + temperature.ToString("f6" ));
-                    //  Debug.WriteLine("volts " + volts.ToString("f6" ));
+                    //  Debug.WriteLine("TEMPERTURE " + temperature.ToString("f6"));
+                    //  Debug.WriteLine("volts " + volts.ToString("f6"));
 
 
                     if (temperature <= 0.4642F) labelTS3.SelectionColor = Color.Red;  // if temp >= 194F
@@ -52959,8 +53293,8 @@ namespace PowerSDR
                     Effective SSN# is a more accurate SSN# since it takes time for actual SunSpots to effect the ionoshere.
 
                     ALSO certain times of year the following are very important:
-                    Tropospheric Ducting Propagation (see http://www.dxinfocentre.com/tropo.html  )
-                    and/or Sporadic E propagation (see http://www.dxmaps.com/spots/mapg.php?Lan=E&Frec=MUF&ML=M&HF=N  )
+                    Tropospheric Ducting Propagation (see http://www.dxinfocentre.com/tropo.html)
+                    and/or Sporadic E propagation (see http://www.dxmaps.com/spots/mapg.php?Lan=E&Frec=MUF&ML=M&HF=N)
 
                     */
 
@@ -53603,7 +53937,7 @@ namespace PowerSDR
                             }
                             DttSP.SetCorrectIQMu(0, 0, 0.05 - (fast_count * 0.005));
                             DttSP.SetCorrectIQMu(0, 1, 0.05 - (fast_count * 0.005));
-                            //Debug.WriteLine(" WBIR Fast, Mu: " + (0.05 - (fast_count * 0.005)).ToString("f6" ));
+                            //Debug.WriteLine(" WBIR Fast, Mu: " + (0.05 - (fast_count * 0.005)).ToString("f6"));
                             fast_count++;
                             if (fast_count == 10)
                             {
@@ -53672,7 +54006,7 @@ namespace PowerSDR
                                 fast_count = 0;
                             }
                             DttSP.SetCorrectIQMu(2, 0, 0.05 - (fast_count * 0.005));
-                            //Debug.WriteLine("WBIR2 Fast, Mu: " + (0.05 - (fast_count * 0.005)).ToString("f6" ));
+                            //Debug.WriteLine("WBIR2 Fast, Mu: " + (0.05 - (fast_count * 0.005)).ToString("f6"));
                             fast_count++;
                             if (fast_count == 10)
                             {
@@ -54123,7 +54457,7 @@ namespace PowerSDR
                              "frameborder = \"0\" allow = \"autoplay; encrypted-media\" allowfullscreen></iframe>" +
                              "</body></html>", VideoID);
 
-                } //   else if ( ESCHOVER == true )
+                } //   else if (ESCHOVER == true)
 
                 else if ((MouseIsOverControl(chkTNF) == true) || (MouseIsOverControl(btnTNFAdd) == true))   // https://youtu.be/M8q30G_jKS8   (TNF tracking notch filter VIDEO HELP)
                 {
@@ -54610,7 +54944,7 @@ namespace PowerSDR
 
                         // .262 fix below so CTRL click works during a context with many contacts coming in quickly
 
-                        //  Debug.WriteLine("+ " + ii + " , " + SpotControl.DX_Station[Display.holderRX1[ii]] ); // spots that are visable on RX1
+                        //  Debug.WriteLine("+ " + ii + " , " + SpotControl.DX_Station[Display.holderRX1[ii]]); // spots that are visable on RX1
 
                         if ((x >= DXX[ii]) && (x <= (DXX[ii] + (DXW[ii]) * 3 / 4)) && (y >= DXY[ii]) && (y <= (DXY[ii] + DXH[ii])))
                         {
@@ -54623,7 +54957,7 @@ namespace PowerSDR
                                 CtrlSpotIndex = (byte)Display.holderRX1[ii]; //.268 mod because Display with (Bottom) RX2 on destroys the index for RX1
 
                                 //   Debug.WriteLine("+DX SELECTED " + ii + " , " + CtrlSpotIndex + " ,Call: " + DXS[ii] + " x " + x + " ,  " + y);
-                                //  Debug.WriteLine("+ " + SpotForm.textBox1.GetLineFromCharIndex(SpotForm.textBox1.Find(DXS[ii]) ) );
+                                //  Debug.WriteLine("+ " + SpotForm.textBox1.GetLineFromCharIndex(SpotForm.textBox1.Find(DXS[ii])));
                                 //   Debug.WriteLine("+ " + SpotControl.DX_Freq[CtrlSpotIndex] + " , " + SpotControl.DX_Station[CtrlSpotIndex] + " , " + SpotControl.DX_Mode[CtrlSpotIndex]);
 
 
@@ -58772,7 +59106,7 @@ namespace PowerSDR
             TXAF = ptbMON.Value;  // ke9ns update MON volume
 
 
-            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true))) // && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true)) )  // ke9ns add    (dont go into MON if in full duplex mode, leave as AF)
+            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true))) // && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true)))  // ke9ns add    (dont go into MON if in full duplex mode, leave as AF)
             {
                 lblMON.Text = "MON: " + ptbMON.Value.ToString(); // ke9ns add
                 ptbAF.Value = ptbMON.Value;
@@ -58813,7 +59147,7 @@ namespace PowerSDR
             //udAF.Value = ptbAF.Value;
 
             //  Debug.WriteLine("SCROLL here "+ mox + " , "+ ckQuickPlay.Checked);
-            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true))) // && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true)) )  // ke9ns add    (dont go into MON if in full duplex mode, leave as AF)
+            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true))) // && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true)))  // ke9ns add    (dont go into MON if in full duplex mode, leave as AF)
             {
                 lblMON.Text = "MON: " + ptbMON.Value.ToString(); // ke9ns add
                 lblAF.Text = "AF: " + ptbAF.Value.ToString();
@@ -58903,7 +59237,7 @@ namespace PowerSDR
 
             }
 
-            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true)))// && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true) ) )  // ke9ns MOD to prevent MON function when in full duplex (RX2 ON the VFOB TX)
+            if ((mox) && ((chkMON.Checked == true) || (ckQuickPlay.Checked == true)))// && ((setupForm.chkRX2AutoMuteRX2OnVFOATX.Checked == true && setupForm.chkRX2AutoMuteRX1OnVFOBTX.Checked == true)))  // ke9ns MOD to prevent MON function when in full duplex (RX2 ON the VFOB TX)
             {
 
                 TXAF = ptbAF.Value;   // if transmit
@@ -59481,19 +59815,14 @@ namespace PowerSDR
 
             //--------------------------------------------------------------------------
 
-
             if (chkMON.Checked)
             {
-
                 chkMON.BackColor = button_selected_color;
             }
             else
             {
                 chkMON.BackColor = SystemColors.Control;
-
-
             }
-
 
             //  Debug.WriteLine("num_channels " + num_channels);
 
@@ -59972,7 +60301,7 @@ namespace PowerSDR
             }
 
 
-            panelAntenna.Invalidate(); //ke9ns add (antenna flashes red on Transmit ant2 -> ant3 )
+            panelAntenna.Invalidate(); //ke9ns add (antenna flashes red on Transmit ant2 -> ant3)
             grpVFOA.Invalidate(); // ke9ns add to check for ring color during MOX
             grpVFOB.Invalidate();
 
@@ -59990,8 +60319,8 @@ namespace PowerSDR
             // only allow softrock style xmit  for cw and ssb for now
             //   if (rx1_dsp_mode != DSPMode.CWL && rx1_dsp_mode != DSPMode.CWU &&
             //       rx1_dsp_mode != DSPMode.USB && rx1_dsp_mode != DSPMode.LSB &&
-            //      ( /* current_model == Model.SDR1000_DDSLOCKED || */ current_model == Model.SOFTROCK40)
-            //      )
+            //      (/* current_model == Model.SDR1000_DDSLOCKED || */ current_model == Model.SOFTROCK40)
+            //    )
             //  {
             //    chkMOX.Checked = false;
             //     return;
@@ -60962,7 +61291,7 @@ namespace PowerSDR
 
 
         //==================================================================================================================
-        // ke9ns Tone Pulser routine for timing (setup tbDutyCycle 10 to 90% , and tbPulseRate = 20 to 40 pulses/second )
+        // ke9ns Tone Pulser routine for timing (setup tbDutyCycle 10 to 90% , and tbPulseRate = 20 to 40 pulses/second)
         //
 
         public bool PulseON = false; // Tone ON = true, Tone OFF = false
@@ -62024,7 +62353,7 @@ namespace PowerSDR
                     if (mult <= 1.0)
                     {
                         freq += mult * num_steps;
-                        //Debug.WriteLine("freq: "+freq.ToString("f6" ));
+                        //Debug.WriteLine("freq: "+freq.ToString("f6"));
                         VFOAFreq = freq;
                     }
                     //  Debug.WriteLine("MOUSEMOUSEROTATE2");
@@ -62383,7 +62712,7 @@ namespace PowerSDR
 
             //========================================================================
 
-            //txtVFOBFreq.Text = freq.ToString("f6" );
+            //txtVFOBFreq.Text = freq.ToString("f6");
 
             UpdateVFOBFreq(freq2.ToString("f6"));
 
@@ -62395,7 +62724,7 @@ namespace PowerSDR
 
 
 
-            //   Debug.WriteLine("MIDDLE LostFocus " + txtVFOAFreq.Text + " , " + saved_vfoa_freq + " , " + VFOAFreq + " , " + Display.VFOA + " , " + freq.ToString("f6" ) + " , " + FREQA);
+            //   Debug.WriteLine("MIDDLE LostFocus " + txtVFOAFreq.Text + " , " + saved_vfoa_freq + " , " + VFOAFreq + " , " + Display.VFOA + " , " + freq.ToString("f6") + " , " + FREQA);
 
             if (chkTUN.Checked && chkVFOATX.Checked && !chkVFOSplit.Checked)
             {
@@ -63095,13 +63424,13 @@ namespace PowerSDR
                             /*	case Model.SOFTROCK40:
                                     //!!!!drm patch
                                     double osc_freq = soft_rock_center_freq*1e6 - freq*1e6;
-                                    if ( rx1_dsp_mode  == DSPMode.DRM ) // if we're in DRM mode we need to be offset 12khz
+                                    if (rx1_dsp_mode  == DSPMode.DRM) // if we're in DRM mode we need to be offset 12khz
                                     {
                                         osc_freq = osc_freq + 12000; 
                                         // System.Console.WriteLine("setting osc_freq: " + osc_freq); 
                                     }
                                     tuned_freq = freq;
-                                    //Debug.WriteLine("osc_freq: "+osc_freq.ToString("f6" ));
+                                    //Debug.WriteLine("osc_freq: "+osc_freq.ToString("f6"));
                                     dsp.GetDSPRX(0, 0).RXOsc = osc_freq;
                                     break; */
                     }
@@ -63194,7 +63523,7 @@ namespace PowerSDR
 
                 //    Debug.WriteLine("==WIDTH: " + txtVFOAFreq.Width + " , pixeloffset: " + vfo_pixel_offset + " , X:"+x);
 
-                while (x < e.X) // ke9ns: while mouse is to the right side of (width of the box - width of the text )  pixel offset is the size in pixels of 9999.999999 in the font your currently using
+                while (x < e.X) // ke9ns: while mouse is to the right side of (width of the box - width of the text)  pixel offset is the size in pixels of 9999.999999 in the font your currently using
                 {
 
                     digit_index++; // ke9ns: x steps 24pixels per digit
@@ -63455,7 +63784,7 @@ namespace PowerSDR
                         break;
                 }
 
-                //Debug.WriteLine("freq: "+freq.ToString("f6" ));
+                //Debug.WriteLine("freq: "+freq.ToString("f6"));
                 if (!rx1_sub_drag)
                 {
                     uint tw = (uint)Freq2TW(freq);
@@ -63636,7 +63965,7 @@ namespace PowerSDR
                         break;
                 }
 
-                //Debug.WriteLine("freq: "+freq.ToString("f6" ));
+                //Debug.WriteLine("freq: "+freq.ToString("f6"));
                 if (!rx1_sub_drag)
                 {
                     uint tw = (uint)Freq2TW(freq);
@@ -63858,7 +64187,7 @@ namespace PowerSDR
             } // chkEnableMultiRX.Checked && !rx2_enabled
 
             //=================================================================
-            //txtVFOBFreq.Text = freq.ToString("f6" ); 
+            //txtVFOBFreq.Text = freq.ToString("f6"); 
 
 
             UpdateVFOBFreq(freq.ToString("f6"));
@@ -64120,7 +64449,7 @@ namespace PowerSDR
 
             /*if(!IsHamBand(current_band_plan, freq))	// out of band
 				{
-					MessageBox.Show(new Form { TopMost = true }, "The frequency "+freq.ToString("f6" )+"MHz is not within the "+
+					MessageBox.Show(new Form { TopMost = true }, "The frequency "+freq.ToString("f6")+"MHz is not within the "+
 						"IARU Band specifications.",
 						"Transmit Error: Out Of Band",
 						MessageBoxButtons.OK,
@@ -64187,7 +64516,7 @@ namespace PowerSDR
             else if (tx_mode == DSPMode.CWU)
                 tx_freq -= (double)cw_pitch * 0.0000010;
 
-            //Debug.WriteLine("freq: "+freq.ToString("f6" ));
+            //Debug.WriteLine("freq: "+freq.ToString("f6"));
             if (!rx1_sub_drag)
             {
                 if (!((fwc_init && (current_model == Model.FLEX5000 || current_model == Model.FLEX3000)) ||
@@ -64336,7 +64665,7 @@ namespace PowerSDR
 
 #if false
 				// wjtFIXME! sr xmit support 
-				else if ( current_model == Model.SOFTROCK40 )
+				else if (current_model == Model.SOFTROCK40)
 				{
 					SetSoftRockOscFreqs();
 				}
@@ -67487,7 +67816,7 @@ namespace PowerSDR
             string current_txprofile = comboTXProfile.Text;
 
             dsp.GetDSPRX(0, 0).DSPMode = new_mode;  // set new DSP mode
-            dsp.GetDSPRX(0, 1).DSPMode = new_mode; // ke9ns  ( 0,1) sets the multiRX receiver to the same DSP mode
+            dsp.GetDSPRX(0, 1).DSPMode = new_mode; // ke9ns  (0,1) sets the multiRX receiver to the same DSP mode
 
 
             //    if (disable_split_on_modechange & !initializing) // .227 moved to bottom 
@@ -70008,7 +70337,7 @@ namespace PowerSDR
 #if false
 			// wjtFIXME! 
 			// if we're doing soft rock stuff may need to update osc (tx mainly) when split is on
-			if ( current_model ==  Model.SOFTROCK40 )
+			if (current_model ==  Model.SOFTROCK40)
 			
 			{
 				SetSoftRockOscFreqs();
@@ -70031,7 +70360,7 @@ namespace PowerSDR
             }
 #if false
 			// wjtFIXME!
-			if ( current_model == Model.SOFTROCK40 )			
+			if (current_model == Model.SOFTROCK40)			
 			{
 				SetSoftRockOscFreqs();
 			}
@@ -70104,7 +70433,7 @@ namespace PowerSDR
             }
 #if false
 			//wjtFIXME
-			else if ( current_model == Model.SOFTROCK40 )			
+			else if (current_model == Model.SOFTROCK40)			
 			{
 				SetSoftRockOscFreqs();
 			}
@@ -70532,7 +70861,7 @@ namespace PowerSDR
                 new_lo = new_center - (current_width / 2);
                 new_hi = new_center + (current_width / 2);
             }
-            //			Debug.WriteLine("new vfo: " + new_vfo + " lo: " + new_lo + " hi: " + new_hi );
+            //			Debug.WriteLine("new vfo: " + new_vfo + " lo: " + new_lo + " hi: " + new_hi);
             if (VFOAFreq > new_vfo)  // need to change this in the right order!
             {
                 udFilterHigh.Value = new_hi;
@@ -71263,6 +71592,11 @@ namespace PowerSDR
         [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
+            const int WM_QUERYENDSESSION = 0x0011;
+            const int WM_320 = 0x320; // ke9ns: this occurs when you shutdown windows
+            const int WM_Quit = 18;
+            //  const int WM_Close = 16; // ke9ns triggered if you hit the X button
+            const int WM_EndSession = 0x0016; // ke9ns shutdown
             const int WM_DEVICECHANGE = 0x0219;
 
 
@@ -72027,7 +72361,7 @@ namespace PowerSDR
                     //   panelTSRadar.Size = new Size(panelFilter.Location.X - (panelModeSpecificPhone.Location.X + 356), panelRX2Filter.Location.Y + 97 - panelModeSpecificPhone.Location.Y); //.246 
 
 
-                } //  if ( (MeterTop == true)  && (this.Size.Width >= 850)) 
+                } //  if ((MeterTop == true)  && (this.Size.Width >= 850)) 
                 else
                 {
                     panelDisplay.Location = new Point(120, 105); // move down panafall area to allow meters 20pix in y direction
@@ -72102,7 +72436,7 @@ namespace PowerSDR
 
                     //------------------------
 
-                    //   panelTSRadar.Location = new Point(panelModeSpecificPhone.Location.X + 346, panelModeSpecificPhone.Location.Y ); // .246
+                    //   panelTSRadar.Location = new Point(panelModeSpecificPhone.Location.X + 346, panelModeSpecificPhone.Location.Y); // .246
                     //   panelTSRadar.Size = new Size(panelFilter.Location.X - (panelModeSpecificPhone.Location.X + 356), panelRX2Filter.Location.Y + 97 - panelModeSpecificPhone.Location.Y); //.246 
 
 
@@ -72278,8 +72612,8 @@ namespace PowerSDR
                             VFODialA.Location = new Point(((grpVFOA.Location.X - panelDisplay.Location.X) / 2 - 5) + panelDisplay.Location.X - (VFODialA.Size.Width / 2), 72);
                             VFODialB.Location = new Point((((panelDisplay.Location.X + panelDisplay.Size.Width - 5) - (grpVFOB.Location.X + grpVFOB.Size.Width)) / 2) + (grpVFOB.Location.X + grpVFOB.Size.Width) - (VFODialB.Size.Width / 2), 72);
 
-                            VFODialAA.Location = new Point(((grpVFOA.Location.X - panelDisplay.Location.X) / 2 ) + panelDisplay.Location.X - 5 - (VFODialAA.Size.Width/2), 45);
-                            VFODialBB.Location = new Point((((panelDisplay.Location.X + panelDisplay.Size.Width ) - (grpVFOB.Location.X + grpVFOB.Size.Width)) / 2) + (grpVFOB.Location.X + grpVFOB.Size.Width) -5 - (VFODialBB.Size.Width / 2), 45);
+                            VFODialAA.Location = new Point(((grpVFOA.Location.X - panelDisplay.Location.X) / 2) + panelDisplay.Location.X - 5 - (VFODialAA.Size.Width/2), 45);
+                            VFODialBB.Location = new Point((((panelDisplay.Location.X + panelDisplay.Size.Width) - (grpVFOB.Location.X + grpVFOB.Size.Width)) / 2) + (grpVFOB.Location.X + grpVFOB.Size.Width) -5 - (VFODialBB.Size.Width / 2), 45);
 
 */
 
@@ -75858,7 +76192,7 @@ namespace PowerSDR
         private void toolStripMenuItemRX1FilterReset_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show(
-                "Are you sure you want to reset all RX1 custom filter settings to the default?",
+                "Are you sure you want to reset all RX1 custom filter settings to the original default?",
                 "Reset Filters?",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -75886,6 +76220,39 @@ namespace PowerSDR
                 filterRX1Form.DSPMode = rx1_dsp_mode;
             }
         }
+
+
+        private void toolStripMenuItemRX1FilterReset1_Click(object sender, EventArgs e) //.323
+        {
+            DialogResult dr = MessageBox.Show(
+                "Are you sure you want to reset all RX1 custom filter settings to the new clean default?",
+                "Reset Filters?",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dr == DialogResult.No) return;
+
+            InitFilterPresets1(rx1_filters);
+
+            radFilter1.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F1);
+            radFilter2.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F2);
+            radFilter3.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F3);
+            radFilter4.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F4);
+            radFilter5.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F5);
+            radFilter6.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F6);
+            radFilter7.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F7);
+            radFilter8.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F8);
+            radFilter9.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F9);
+            radFilter10.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.F10);
+            radFilterVar1.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.VAR1);
+            radFilterVar2.Text = rx1_filters[(int)rx1_dsp_mode].GetName(Filter.VAR2);
+            RX1Filter = rx1_filter;
+
+            if (filterRX1Form != null && !filterRX1Form.IsDisposed)
+            {
+                filterRX1Form.DSPMode = rx1_dsp_mode;
+            }
+        } //.323
 
         private void toolStripMenuItemRX2FilterConfigure_Click(object sender, EventArgs e)
         {
@@ -75996,6 +76363,36 @@ namespace PowerSDR
                 filterRX2Form.DSPMode = rx2_dsp_mode;
             }
         }
+
+        private void toolStripMenuItemRX2FilterReset1_Click(object sender, EventArgs e) //.323
+        {
+            DialogResult dr = MessageBox.Show(
+                "Are you sure you want to reset all RX2 custom filter settings to the default?",
+                "Reset Filters?",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dr == DialogResult.No) return;
+
+            InitFilterPresets1(rx2_filters);
+
+            radRX2Filter1.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F1);
+            radRX2Filter2.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F2);
+            radRX2Filter3.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F3);
+            radRX2Filter4.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F4);
+            radRX2Filter5.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F5);
+            radRX2Filter6.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F6);
+            radRX2Filter7.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.F7);
+            radRX2FilterVar1.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.VAR1);
+            radRX2FilterVar2.Text = rx2_filters[(int)rx2_dsp_mode].GetName(Filter.VAR2);
+            RX2Filter = rx2_filter;
+
+            if (filterRX2Form != null && !filterRX2Form.IsDisposed)
+            {
+                filterRX2Form.DSPMode = rx2_dsp_mode;
+            }
+        } //.323
+
 
         private static bool TDxButtonState = false;
         private static bool TDxCurrentVFO = false; //VFOA
@@ -76422,7 +76819,7 @@ namespace PowerSDR
         private void addNotch(int thread, int subrx, uint count, double freq, double bw)
         {
 #if (!NO_TNF)
-            //Debug.WriteLine("addNotch( " + thread + "," + subrx + "," + count + "," + freq + "," + bw);
+            //Debug.WriteLine("addNotch(" + thread + "," + subrx + "," + count + "," + freq + "," + bw);
             if (count < MAX_NOTCHES_IN_PASSBAND)
             {
                 dsp.GetDSPRX(thread, subrx).SetNotchBW(count, bw);
@@ -80608,7 +81005,7 @@ namespace PowerSDR
             }
         }
 
-        // ke9ns add (right click )
+        // ke9ns add (right click)
         private void chkRXEQ_MouseDown(object sender, MouseEventArgs e)
         {
 
@@ -80627,7 +81024,7 @@ namespace PowerSDR
             } // right click
         }
 
-        // ke9ns add (right click )
+        // ke9ns add (right click)
         private void chkTXEQ_MouseDown(object sender, MouseEventArgs e)
         {
 
@@ -82892,16 +83289,34 @@ namespace PowerSDR
             {
                 using (WebClient client = new WebClient()) //.234
                 {
-                    client.DownloadFileAsync(new Uri("https://services.swpc.noaa.gov/images/drap_global.png"), AppDataPath + "DRAP.png");
-                }
+                   
+                    client.DownloadFileAsync(new Uri("https://services.swpc.noaa.gov/images/d-rap/global.png"), AppDataPath + "DRAP.png"); // new .322
 
+                }
 
             }
             catch (Exception g)
             {
-                Debug.WriteLine("Unable to get DRAP image from noaa: " + g);
+                Debug.WriteLine("Unable to get D-RAP image from noaa: " + g);
+
+                try
+                {
+                    using (WebClient client = new WebClient()) //.234
+                    {
+                        client.DownloadFileAsync(new Uri("https://services.swpc.noaa.gov/images/drap_global.png"), AppDataPath + "DRAP.png");
+                      
+                    }
+
+                }
+                catch (Exception g1)
+                {
+                    Debug.WriteLine("Unable to get DRAP image from noaa: " + g1);
+
+                }
 
             }
+
+           
 
             Debug.WriteLine("SWS F-Layer reflection image capture");
             try
@@ -84367,7 +84782,7 @@ namespace PowerSDR
 
                     rotor.Restart();
 
-                    for (; ; )
+                    for (; ;)
                     {
                         if ((rotor.ElapsedMilliseconds > 200) || (RotorAngleRdy == true)) break;
                     }
@@ -84434,7 +84849,7 @@ namespace PowerSDR
 
                     cxautotimer.Restart();
 
-                    for (; ; )
+                    for (; ;)
                     {
                         if ((cxautotimer.ElapsedMilliseconds > 700) || (CXAutoAntRdy == true)) break;
                     }
@@ -85487,7 +85902,7 @@ namespace PowerSDR
             CWXF4Replay.Reset();
 
             Debug.WriteLine("===========Start CWXF4 timer thread");
-            for (; ; )
+            for (; ;)
             {
                 Thread.Sleep(50);
 
@@ -85617,7 +86032,7 @@ namespace PowerSDR
             CQReplay.Reset();
 
             Debug.WriteLine("===========Start CQCQ timer thread");
-            for (; ; )
+            for (; ;)
             {
                 Thread.Sleep(50);
 
@@ -85859,6 +86274,8 @@ namespace PowerSDR
         public bool CW_POLL()
         {
             bool dot, dash, rca_ptt, mic_ptt;
+
+            Debug.WriteLine("CW POLL");
 
             if ((cwxForm != null) && (cwxForm.stopPoll == true))
             {
@@ -90051,8 +90468,7 @@ namespace PowerSDR
                 "\\FlexRadio Systems\\PowerSDR\\Skins\\" + CurrentSkin + "\\Console\\chkMON-1.png";  // RED background
 
             Bitmap buttonOffImage = new Bitmap(buttonOffPath); //Black
-            Bitmap buttonOnImage = new Bitmap(buttonOnPath);   // Red
-
+            Bitmap buttonOnImage = new Bitmap(buttonOnPath);   //Red
 
 
             if (RadarColorUpdate)
@@ -90804,7 +91220,6 @@ namespace PowerSDR
 
 
         } // chkMON_mousedown
-
 
         private void chkLockR_CheckedChanged(object sender, EventArgs e)
         {

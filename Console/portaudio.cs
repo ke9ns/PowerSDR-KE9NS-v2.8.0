@@ -1,6 +1,6 @@
 //=================================================================
 // portaudio.cs
-// ke9ns:  VAC audio streams between PowerSDR and the PC ?
+// ke9ns:  VAC audio streams between PowerSDR and the PC ? Requires PA19.dll
 //=================================================================
 // PowerSDR is a C# implementation of a Software Defined Radio.
 // Copyright (C) 2003-2013  FlexRadio Systems 

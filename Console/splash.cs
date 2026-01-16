@@ -32,6 +32,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -92,8 +93,35 @@ namespace PowerSDR
             this.Opacity = .00;
             timer1.Interval = TIMER_INTERVAL;
             timer1.Start();
-            this.ClientSize = this.BackgroundImage.Size;
+          //  this.ClientSize = this.BackgroundImage.Size;
             this.ShowInTaskbar = false;
+
+
+            Random random = new Random();  
+            bool randomBool = random.Next(2) == 0;  // Returns true or false randomly
+
+            if (randomBool) pictureBox1.Image = Properties.Resources.moonearth6;
+            else pictureBox1.Image = Properties.Resources.moonearth2;
+
+
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+           
+            var pos = this.PointToScreen(lblStatus.Location);
+            pos = pictureBox1.PointToClient(pos);
+
+            lblStatus.Parent = pictureBox1;
+            lblStatus.BackColor = Color.Transparent;
+            lblStatus.Location = pos;
+
+            lblTimeRemaining.Parent = pictureBox1;
+            lblTimeRemaining.BackColor = Color.Transparent;
+
+            pos = this.PointToScreen(lblTimeRemaining.Location);
+            pos = pictureBox1.PointToClient(pos);
+
+            lblTimeRemaining.Location = pos;
+
+
         }
 
         protected override void Dispose(bool disposing)
@@ -345,7 +373,7 @@ namespace PowerSDR
 					Color.Black,//Color.FromArgb(100, 100, 100),
 					Color.White,//Color.FromArgb(130, 255, 130), 
 					LinearGradientMode.Horizontal);*/
-                if (status_brush == null) status_brush = new SolidBrush(Color.White); // .286
+                if (status_brush == null)  status_brush = new SolidBrush(Color.White); // .286
 
                 e.Graphics.FillRectangle(status_brush, m_rProgress);
             }

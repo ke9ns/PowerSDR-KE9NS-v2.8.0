@@ -38,7 +38,9 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
+using static ICSharpCode.SharpZipLib.Zip.ExtendedUnixData;
 
 namespace PowerSDR
 {
@@ -1769,6 +1771,7 @@ namespace PowerSDR
 
                 if ((wave_record && !mox && record_rx_preprocessed) || (wave_record && mox && record_tx_preprocessed))
                 {
+
                     wave_file_writer.AddWriteBuffer(in_l_ptr1, in_r_ptr1); // ke9ns this is preprocessed audio
 
                 }
@@ -3576,6 +3579,51 @@ namespace PowerSDR
         //==============================================================================================================         
         unsafe public static int Callback2(void* input, void* output, int frameCount, PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
         {
+
+            if (input == null || output == null || frameCount == 0)  //.323
+                return (int)PA19.PaStreamCallbackResult.paAbort;  // Safety check
+
+
+           
+           // Check for buffer errors (critical for FireWire stability on Win11) //.323
+            if (statusFlags != 0)
+            {
+                bool hasError = false;
+                string errorMsg = "Callback2 FireWire buffer flags: ";
+
+                if ((statusFlags & 0x0001) != 0)  // paInputUnderflow
+                {
+                    errorMsg += "InputUnderflow ";
+                    hasError = true;
+                }
+                if ((statusFlags & 0x0002) != 0)  // paInputOverflow
+                {
+                    errorMsg += "InputOverflow ";
+                    hasError = true;
+                }
+                if ((statusFlags & 0x0004) != 0)  // paOutputUnderflow (if relevant)
+                {
+                    errorMsg += "OutputUnderflow ";
+                    hasError = true;
+                }
+                if ((statusFlags & 0x0008) != 0)  // paOutputOverflow
+                {
+                    errorMsg += "OutputOverflow ";
+                    hasError = true;
+                }
+                if ((statusFlags & 0x0010) != 0)  // paPrimingOutput
+                {
+                    errorMsg += "PrimingOutput ";
+                }
+                if (hasError)
+                {
+                    Debug.WriteLine(errorMsg + $" (frameCount: {frameCount} )");
+                    // Optional: On severe overflow, force restart to clear driver state
+                     if ((statusFlags & 0x0002) != 0) return (int)PA19.PaStreamCallbackResult.paAbort;
+                     if ((statusFlags & 0x0008) != 0) return (int)PA19.PaStreamCallbackResult.paAbort;
+                }
+            }
+
 #if (TIMER)
 			t1.Start();
 #endif
@@ -3715,6 +3763,7 @@ namespace PowerSDR
             }
 
 
+           
             //  Debug.Write(" in_rx1_l " + in_rx1_l);
             //  Debug.Write(" in_rx1_r " + in_rx1_r);
             //  Debug.Write(" in_tx_l " + in_tx_l);
@@ -3741,7 +3790,7 @@ namespace PowerSDR
             //------------------------------------------------------------------------------
             // PRE PROCESSED STREAMS (original input streams)
 
-           // RECEIVER1 INPUT Stream (as wide as your sample rate) and you will see it on the Panadapter and Waterfall and hear it
+            // RECEIVER1 INPUT Stream (as wide as your sample rate) and you will see it on the Panadapter and Waterfall and hear it
             // if receiving on RX1 (this is raw audio stream from the RX1 signal)
             rx1_in_l = (float*)array_ptr_input[0]; // = in_l_ptr1;  points to -> in_l
             rx1_in_r = (float*)array_ptr_input[1]; // = in_r_ptr1;  points to -> in_r
@@ -3755,8 +3804,6 @@ namespace PowerSDR
             // ke9ns add: for mixing audio .151
             tx_in1_l = (float*)array_ptr_input[4]; // = in_l_ptr4;  points to = in_l
             tx_in1_r = (float*)array_ptr_input[5]; // = in_r_ptr4;  points to = in_r
-
-
 
             //------------------------------------------------------------------------------
             // RECEIVER2 INPUT Stream (wide as your sample rate)
@@ -4586,7 +4633,6 @@ namespace PowerSDR
             }
 
 
-
 #if (MINMAX)
 			Debug.Write(MaxSample(out_l_ptr2, frameCount).ToString("f6")+",");
 			Debug.Write(MaxSample(out_r_ptr2, frameCount).ToString("f6")+"\n");
@@ -4940,13 +4986,11 @@ namespace PowerSDR
             out_l1 = rx1_out_l;   // ke9ns RX1 receive signal (from radio unless setup->test->receiver is changed) out_l_ptr1
             out_r1 = rx1_out_r;   // out_r_ptr1
 
-
             out_l2 = out_l_ptr2;  // ke9ns: transmit signal (from mic) tx_out_l (also sent out to headphones in MON mode)
             out_r2 = out_r_ptr2;  // tx_out_R (also sent out to headphones in MON mode)
 
             out_l3 = out_l_ptr3;  // ke9ns RX2 receive signal (also sent out to ext speaker in MON mode)as in out_l2 copied to out_l3
             out_r3 = out_r_ptr3;  // ke9ns (also sent out to ext speaker in MON mode)
-
 
             // ke9ns: it appears out_l4 is VAC1 output
             out_l4 = out_l_ptr4;  // ke9ns extra unused buffer  (used for LINE OUT channel as in out_l2 copied to out_l4 in MON mode)
@@ -5480,6 +5524,7 @@ namespace PowerSDR
 
                     if (!localmox) // --- ORA
                     {
+
                         if ((console.chkRX1MUTE.Checked == true)) // ke9ns add to allow MUTE of just RX1 only
                         {
                             ClearBuffer(out_l4, frameCount); // 
@@ -5719,6 +5764,11 @@ namespace PowerSDR
                 list.Clear();
                 Debug.WriteLine("avg: " + avg.ToString("f1") + "  stdev: " + stdev.ToString("f1"));
             }*/
+
+
+
+
+
 
             return callback_return;
 
@@ -6931,7 +6981,6 @@ namespace PowerSDR
 
                 */
 
-
             }
             else if (console.hid_init && console.CurrentModel == Model.FLEX1500)
             {
@@ -7058,7 +7107,8 @@ namespace PowerSDR
 
 
         //=================================================================================================
-        // ke9ns not called by flex1500
+        // FireWire Stream Opener for both main "Primary" IQ ASIO stream (both RX1 and RX2), VAC1 and VAC1 streams
+        // For both Flex-3000 and Flex-5000  (not called by flex1500 since it uses USB not FireWire)
         public unsafe static bool StartAudio(ref PA19.PaStreamCallback callback, uint block_size, double sample_rate, int host_api_index, int input_dev_index,
             int output_dev_index, int num_channels, int callback_num, int latency_ms)
         {
@@ -7066,20 +7116,26 @@ namespace PowerSDR
 
             // input_dev_index = 2; // ke9ns test
 
-            Debug.WriteLine("HOST INDEX " + host_api_index);
-            Debug.WriteLine("in_dev index " + input_dev_index); // VAC1 INPUT device selected
-            Debug.WriteLine("out_dev index " + output_dev_index); // VAC1 OUTPUT device selected
+            Debug.WriteLine("StartAudio entered");                   // ASIO=Primary (which is the receiver IQ stream)
+            Debug.WriteLine("callback " + callback);                // PowerSDR.PA19+PaStreamCallback
+            Debug.WriteLine("block size " + block_size);            // buffer size 1024 (whatever the setting is for Primary, VAC1, VAC2) 
+            Debug.WriteLine("sample rate " + sample_rate);          // whatever the sameplrate is for Primary, VAC1, VAC2
+            Debug.WriteLine("HOST INDEX " + host_api_index);        // 2= ASIO, 1 = VAC1, VAC2  
+            Debug.WriteLine("in_dev index " + input_dev_index);     // 0=ASIO, 0=VAC1 (primary sound capture WDS), 5=VAC2 (voicemeeter output)
+            Debug.WriteLine("out_dev index " + output_dev_index);   // 0=ASIO, 6=VAC1 (Primary sound driver WDS), 10=VAC2 (voicemeeter Aux input)
+            Debug.WriteLine("num channels " + num_channels);        // 8=ASIO (RX1 and RX2), 1=VAC1, VAC2
+            Debug.WriteLine("callback num " + callback_num);        // 0=ASIO, 1=vac1, 2=VAC2
+            Debug.WriteLine("latency ms " + latency_ms);            // 0=ASIO, 120=vac1, 120=vac2
 
             int in_dev = PA19.PA_HostApiDeviceIndexToDeviceIndex(host_api_index, input_dev_index);
             int out_dev = PA19.PA_HostApiDeviceIndexToDeviceIndex(host_api_index, output_dev_index);
 
-            Debug.WriteLine("in_dev " + in_dev);
-            Debug.WriteLine("out_dev " + out_dev);
+            Debug.WriteLine("in_dev " + in_dev);                     //30=ASIO, 15=vac1 (primary sound capture WDS), 20 VAC2
+            Debug.WriteLine("out_dev " + out_dev);                   //30=ASIO, 21=vac1 (primary sound driver WDS), 25 VAC2
 
 
             var inparam = new PA19.PaStreamParameters();
             var outparam = new PA19.PaStreamParameters();
-
 
 
             inparam.device = in_dev;
@@ -7113,33 +7169,54 @@ namespace PowerSDR
                 switch (callback_num) // ke9ns 1=vac1
                 {
                     case 1: // VAC1
-                        error = PA19.PA_OpenStream(out stream2, &inparam, &outparam, sample_rate, block_size, 0, callback, 1);
-                        Debug.WriteLine("VAC1CALL===== " + error);
+                        try
+                        {
+                            error = PA19.PA_OpenStream(out stream2, &inparam, &outparam, sample_rate, block_size, 0, callback, 1);
+                            Debug.WriteLine("PA_OPenStream VAC1 output flag> " + error);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("PA_OpenStream VAC1 Exception: " + ex.Message);
+                            error = -1; // set error to non-zero to indicate failure
+                        }   
                         break;
                     case 2: //VAC2
 
-                        error = PA19.PA_OpenStream(out stream3, &inparam, &outparam, sample_rate, block_size, 0, callback, 2);
-                        Debug.WriteLine("VAC2CALL===== " + error);
+                        try
+                        {
+                            error = PA19.PA_OpenStream(out stream3, &inparam, &outparam, sample_rate, block_size, 0, callback, 2);
+                            Debug.WriteLine("VAC2CALL===== " + error);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("PA_OpenStream VAC2 Exception: " + ex.Message);
+                            error = -1; // set error to non-zero to indicate failure
+                        }
                         break;
-                    default:
-                        error = PA19.PA_OpenStream(out stream1, &inparam, &outparam, sample_rate, block_size, 0, callback, 0); // ke9ns this is the default stream  callback = callback8 (which is callback2)
-                        Debug.WriteLine("startcallback 0===== " + error);
+                    default:  // ASIO Primary IQ main stream
+
+                        try
+                        {
+                            error = PA19.PA_OpenStream(out stream1, &inparam, &outparam, sample_rate, block_size, 0, callback, 0); // ke9ns this is the default stream  callback = callback8 (which is callback2)
+                            Debug.WriteLine("PA_OpenStream 0 ASIO output Flag> " + error);
+                        }
+                        catch(Exception ex)
+                        {
+                            Debug.WriteLine("PA_OpenStream Exception: " + ex.Message);
+                            error = -1; // set error to non-zero to indicate failure
+                        }
+
                         break;
                 }
-
 
                 if (error == 0) // ke9ns 0=good
                 {
                     break; // stop if no error
                 }
 
-
             } // for loop
 
-
             if (console.CurrentModel == Model.FLEX1500) Debug.WriteLine("audio start retry = " + i + " times");
-
-
 
             if (error != 0)
             {
@@ -7148,17 +7225,62 @@ namespace PowerSDR
                 return false;
             }
 
+
             switch (callback_num)
             {
 
-                case 1:
-                    error = PA19.PA_StartStream(stream2);
+                case 1: //VAC1
+                    try
+                    {
+                        error = PA19.PA_StartStream(stream2);
+                        int cnt = 0; //.323
+                        while (PA19.PA_IsStreamActive(stream2) == 0 && cnt < 20)  // Increase retries from 10 to 20
+                        {
+                            Thread.Sleep(100);  // Add 100ms delay per retry for driver stabilization
+                            cnt++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("PA_StartStream VAC1 Exception: " + ex.Message);
+                        error = -1; // set error to non-zero to indicate failure
+                    }
                     break;
-                case 2:
-                    error = PA19.PA_StartStream(stream3);
+                case 2: // VAC2
+                    try
+                    {
+                        error = PA19.PA_StartStream(stream3);
+                        int cnt = 0; //.323
+                        while (PA19.PA_IsStreamActive(stream3) == 0 && cnt < 20)  // Increase retries from 10 to 20
+                        {
+                            Thread.Sleep(100);  // Add 100ms delay per retry for driver stabilization
+                            cnt++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("PA_StartStream VAC2 Exception: " + ex.Message);
+                        error = -1; // set error to non-zero to indicate failure
+                    }
                     break;
-                default:
-                    error = PA19.PA_StartStream(stream1);
+                default: // Primary ASIO IQ stream
+
+                    try
+                    {
+                        error = PA19.PA_StartStream(stream1);
+                        int cnt = 0; //.323
+                        while (PA19.PA_IsStreamActive(stream1) == 0 && cnt < 20)  // Increase retries from 10 to 20
+                        {
+                            Thread.Sleep(200);  // Add 100ms delay per retry for driver stabilization
+                            cnt++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("PA_StartStream Exception: " + ex.Message);
+                        error = -1; // set error to non-zero to indicate failure
+                    }
+
                     break;
             }
             /*
@@ -7168,6 +7290,7 @@ namespace PowerSDR
                             error = PA19.PA_StartStream(stream2);
             */
 
+           
             if (error != 0)
             {
                 Debug.WriteLine("startaudio");
@@ -7202,22 +7325,52 @@ namespace PowerSDR
         } //  PortAudioErrorMessageBox
 
 
-
-        public unsafe static void StopAudio()
+        // FireWire Flex-3000, Flex-5000 Stop ASIO IQ stream 
+        public unsafe static void StopAudio() 
         {
             int error = 0;
-            Debug.WriteLine("STOPAUDIO"); // when windows kms started on vac1
+            Debug.WriteLine("STOP ASIO"); // when windows kms started on vac1
 
-            PA19.PA_AbortStream(stream1);
+            // PA19.PA_AbortStream(stream1);
+            int error1 = PA19.PA_StopStream(stream1); //.323a
+
+            if (error1 != 0)
+            {
+                Debug.WriteLine("PA_StopStream1 error: " + PA19.PA_GetErrorText(error));
+                PA19.PA_AbortStream(stream1);
+
+            }
+            Thread.Sleep(100);  // .323a
+            int cnt = 0;
+            while (PA19.PA_IsStreamActive(stream1) == 1 && cnt < 50)  // Increase retries from 10 to 20   //ke9ns .323
+            {
+                Thread.Sleep(200);  // Add 100ms delay per retry for driver stabilization
+                cnt++;
+            }
+
             error = PA19.PA_CloseStream(stream1);
+            stream1 = (void*)IntPtr.Zero;
             if (error != 0) PortAudioErrorMessageBox(error);
+            Thread.Sleep(200);  // give some time to settle //.323
         }
 
         public unsafe static void StopAudioVAC()
         {
             int error = 0;
             Debug.WriteLine("StopAudioVAC");
-            PA19.PA_AbortStream(stream2);
+          //  PA19.PA_AbortStream(stream2);
+
+            int error1 = PA19.PA_StopStream(stream2); //.323a
+
+            if (error1 != 0)
+            {
+                Debug.WriteLine("PA_StopStream2 error: " + PA19.PA_GetErrorText(error));
+                PA19.PA_AbortStream(stream2);
+
+            }
+
+            Thread.Sleep(100);  // .323a
+
             error = PA19.PA_CloseStream(stream2);
 
             if (error != 0) PortAudioErrorMessageBox(error);
@@ -7228,7 +7381,19 @@ namespace PowerSDR
             int error = 0;
             Debug.WriteLine("StopAudioVAC2");
 
-            PA19.PA_AbortStream(stream3);
+            //   PA19.PA_AbortStream(stream3);
+
+            int error1 = PA19.PA_StopStream(stream3); //.323a
+
+            if (error1 != 0)
+            {
+                Debug.WriteLine("PA_StopStream3 error: " + PA19.PA_GetErrorText(error));
+                PA19.PA_AbortStream(stream3);
+
+            }
+
+            Thread.Sleep(100);  // .323a
+
             error = PA19.PA_CloseStream(stream3);
             if (error != 0) PortAudioErrorMessageBox(error);
         }

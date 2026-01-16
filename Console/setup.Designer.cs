@@ -2222,8 +2222,7 @@ namespace PowerSDR
             this.udPTTHT.Name = "udPTTHT";
             this.udPTTHT.Size = new System.Drawing.Size(62, 20);
             this.udPTTHT.TabIndex = 31;
-            this.toolTip1.SetToolTip(this.udPTTHT, "The PTT delays release for set period of Time (in milliseconds) for the MIC, Rear" +
-        " PTT, or CAT commands.\r\nMOX and VOX are unaffected.");
+            this.toolTip1.SetToolTip(this.udPTTHT, resources.GetString("udPTTHT.ToolTip"));
             this.udPTTHT.Value = new decimal(new int[] {
             150,
             0,
@@ -2239,8 +2238,7 @@ namespace PowerSDR
             this.chkBoxPTTHT.Size = new System.Drawing.Size(118, 22);
             this.chkBoxPTTHT.TabIndex = 30;
             this.chkBoxPTTHT.Text = "PTT Hang Timer";
-            this.toolTip1.SetToolTip(this.chkBoxPTTHT, "When Checked:  The PTT delays release for set period of Time (in milliseconds) fo" +
-        "r the MIC, Rear PTT, or CAT commands.\r\nMOX and VOX are unaffected.");
+            this.toolTip1.SetToolTip(this.chkBoxPTTHT, resources.GetString("chkBoxPTTHT.ToolTip"));
             this.chkBoxPTTHT.CheckedChanged += new System.EventHandler(this.chkBoxPTTHT_CheckedChanged);
             // 
             // textBoxTOT

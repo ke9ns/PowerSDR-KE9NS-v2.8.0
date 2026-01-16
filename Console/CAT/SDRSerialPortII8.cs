@@ -154,7 +154,7 @@ namespace PowerSDR
                 //  answer = System.Text.Encoding.Default.GetString(test);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //  Debug.WriteLine("BEAM: " + e);
                 answer = "===";

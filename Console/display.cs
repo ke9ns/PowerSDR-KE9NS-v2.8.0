@@ -34,9 +34,13 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Diagnostics.Eventing.Reader;
+using stdole;
+using System.Reflection.Emit;
+using System.Windows.Forms.DataVisualization.Charting;
 using Font = System.Drawing.Font;
+using Microsoft.JScript;
 using Convert = System.Convert;
-
 
 
 
@@ -1585,7 +1589,6 @@ namespace PowerSDR
                 histogram_history[i] = 0;
             }
 
-
             //display_bmp = new Bitmap(W, H);
             //display_graphics = Graphics.FromImage(display_bmp);
 
@@ -3014,13 +3017,11 @@ namespace PowerSDR
                     {
                         spectrum_grid_step = 6; // 6
                         grid_step = 6;  // 6
-
                     }
                     else
                     {
                         spectrum_grid_step = 6;  // 6
                         grid_step = 12;  // 12
-
                     }
 
                 }
@@ -3040,7 +3041,6 @@ namespace PowerSDR
                     spectrum_grid_step = 6;
                     grid_step = 6;
 
-
                 } // just rx1
 
 
@@ -3056,7 +3056,6 @@ namespace PowerSDR
                 }
 
                 grid_step = spectrum_grid_step; // you maybe in TX mode here
-
 
                 if (split_display) grid_step = grid_step * 2; // increase grid_step since you have less space on screen
 
@@ -14166,6 +14165,8 @@ namespace PowerSDR
 
                     int CWPitch1 = 0;
 
+                    bool Pitch1 = false;
+                    bool Pitch2 = false;
 
 
                     if (bottom)
@@ -19348,7 +19349,7 @@ namespace PowerSDR
         public static float floor = 0; // ke9ns add: noise floor of panadapter (not the meter) 
         public static int[] IDENT_CountP = new int[3300]; // ke9ns add records time remaining for any detected peaks
         public static Point[] points1 = new Point[3300]; // ke9ns add X and Y of the peak
-        public static int[] IDENT_Flag = new int[3300]; // .321 dont display signal until its been here for some time
+
         public static int IDENT_Space = 0; // ke9ns add counter for spacing out the peaks (look for dead space after signal to know you are finished detecting this siganl)
         public static int IDENT_LastY = 0; // ke9ns add temp holder for finding peak
         public static int IDENT_Lasti = 0; // ke9ns add temp holder for i position of the peak you detected
@@ -19363,6 +19364,9 @@ namespace PowerSDR
         public static bool IDENT_Reset = true; // ke9ns add
         public static int floorB = 1000; // ke9ns add
         public static int countB = 0; // ke9ns add
+
+        public static int IDENT_CENTER = 0; // .321
+        public static int[] IDENT_Flag = new int[3300]; // .321 dont display signal until its been here for some time
 
 
 
@@ -19675,8 +19679,6 @@ namespace PowerSDR
                     PON = false;
 
                 }
-
-
 
             } // NO FILL
 
@@ -20136,14 +20138,12 @@ namespace PowerSDR
             int IDENT_Time = 90; // ke9ns add
             int IDENT_Thres = 6; // ke9ns add
 
-
             if (console.ScanForm != null)
             {
                 IDENT_Width = (int)console.ScanForm.udIDGap.Value; // ke9ns add max signal amount
                 IDENT_Time = (int)console.ScanForm.udIDTimer.Value; // ke9ns add persistance of Peak signal detected
                 IDENT_Thres = (int)console.ScanForm.udIDThres.Value; // ke9ns add dBm threshold
             }
-
 
             if (console.ptbDisplayZoom.Value != Zoom_last) // if zoom level changes then reset signal detection
             {
@@ -20606,6 +20606,8 @@ namespace PowerSDR
                         IDENT_CountP[i] = 0; // turn off all bins
                         IDENT_Begin[i] = 0;
                         IDENT_End[i] = 0;
+                        IDENT_Flag[i] = 0; //.321
+
                     }
                     else
                     {
@@ -20622,20 +20624,7 @@ namespace PowerSDR
                                     IDENT_LastY = points[i].Y; // temp holder
                                     IDENT_Peaki = i; // temp holder for the i bin that holds the peak of this current signal
 
-                                    /*
-                                    for (int x = i; x < IDENT_Width; x++) // reset the space counter since you found a higher peak
-                                    {
-                                        IDENT_CountP[x] = 0;// clear +/- around the new peak
-                                    }
-                                    for (int x = i; x > (i - IDENT_Width); x--)
-                                    {
-                                        if (x >= 0)
-                                        {
-                                            IDENT_CountP[x] = 0;// clear +/- around the new peak
-                                        }
-                                    }  
-                                    
-                                    */
+                                   
                                     IDENT_Space = IDENT_Width;
 
 
@@ -20652,8 +20641,8 @@ namespace PowerSDR
                                 IDENT_Lasti = i; // save this to find the Peak when the Space runs down to 0
                                 IDENT_Peaki = i;
                                 IDENT_Begini = i;
-
-                                IDENT_Space = IDENT_Width; // reset
+                                IDENT_Flag[i] = 0; //.321
+                               IDENT_Space = IDENT_Width; // reset
 
 
                             }
@@ -20688,8 +20677,6 @@ namespace PowerSDR
 
                         } // if (max < floor) no signal
 
-
-
                         //-----------------------------------------------------------------------------------------
                         // ke9ns: this is where we draw the box above the peak signal for SIG IDENT and label the dBm value
 
@@ -20701,14 +20688,26 @@ namespace PowerSDR
                             if ((i > 0) && (points1[i - 1].Y > points1[i].Y) && (points1[i].Y < points1[i + 1].Y)) // try to filter out nearby peaks and just display the best
                             {
 
-                                //  if (IDENT_Flag[i] > 50)
-                                //  {
-                                //   g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw  line showing begin and end of signal
+                                
+                               //   g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw  line showing begin and end of signal
+                                  g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw RED line showing begin and end of signal
 
-                                g.DrawLine(IDENT_pen3, IDENT_Begin[i], floorB + 15, IDENT_End[i], floorB + 15); // draw  line showing begin and end of signal
-                                g.DrawRectangle(IDENT_pen, points1[i].X - 2, points1[i].Y - 10, 5, 5); // draw box at peak of signal
+                                if (IDENT_Flag[i] == 0)  // XXXXXXX need to pick 1 center of the signal
+                                {
+                                    IDENT_Flag[i] = (IDENT_End[i] + IDENT_Begin[i]) / 2; // .321 use first center and hold it until signal is gone
 
-                                //    g.DrawRectangle(IDENT_pen, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 10, 4, 4); // draw box at peak of signal
+                                }
+
+                                IDENT_CENTER = IDENT_Flag[i]; //.321
+
+                                // YYYYYYY need to allow only 1 box and text per signal
+
+                               // int y = IDENT_End[i] - IDENT_Begin[i]; // .321 width of signal
+                              //  int ycent = (IDENT_End[i] + IDENT_Begin[i]) / 2;
+
+                            
+                                //  g.DrawRectangle(IDENT_pen, points1[i].X - 2, points1[i].Y - 10, 5, 5); // draw box at peak of signal
+                                g.DrawRectangle(IDENT_pen, IDENT_CENTER, points1[i].Y - 10, 4, 4); // draw box at peak of signal
 
                                 int num = (int)console.PixelToDb(points1[i].Y); //.321
                                 string SS = ""; //.321
@@ -20755,27 +20754,23 @@ namespace PowerSDR
                                 {
                                     if (console.ScanForm.chkIDdBM.Checked && console.ScanForm.chkIDSIG.Checked)
                                     {
-                                        g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm (" + SS + ")", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
-                                                                                                                                                                                              //   g.DrawString( (console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm (" + SS + ")", fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+                                     //   g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm (" + SS + ")", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                        g.DrawString( (console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm (" + SS + ")", fontID, grid_text_brushID, IDENT_CENTER + 5, points1[i].Y - 15); //.321
 
                                     }
                                     else if (console.ScanForm.chkIDdBM.Checked)
                                     {
-                                        g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
-                                                                                                                                                                                 //  g.DrawString((console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm", fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+                                     //   g.DrawString(((int)console.PixelToDb(points1[i].Y)).ToString() + "dBm", fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                           g.DrawString((console.PixelToDb(points1[i].Y)).ToString("f0") + "dBm", fontID, grid_text_brushID, IDENT_CENTER + 5, points1[i].Y - 15); //.321
 
                                     }
                                     else if (console.ScanForm.chkIDSIG.Checked)
                                     {
-                                        g.DrawString(SS, fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
-                                                                                                                          //   g.DrawString(SS, fontID, grid_text_brushID, (IDENT_End[i] + IDENT_Begin[i]) / 2, points1[i].Y - 15); //.321
+                                      //  g.DrawString(SS, fontID, grid_text_brushID, points1[i].X + 5, points1[i].Y - 15); //.321
+                                            g.DrawString(SS, fontID, grid_text_brushID, IDENT_CENTER + 5, points1[i].Y - 15); //.321
                                     }
                                 }
-                                //  } // IDENT_Flag
-                                //  else // IDENT_Flag <= 5
-                                //  {
-                                //     IDENT_Flag[i]++; //.321
-                                //  }
+                               
 
                             } // if ((i > 0) && (points1[i - 1].Y > points1[i].Y) && (points1[i].Y < points1[i + 1].Y))
                             else
@@ -21409,7 +21404,9 @@ namespace PowerSDR
                     SolidBrush grid_text_brush = new SolidBrush(grid_text_color);
 
                     //  int mid_w = W / 2;
-                    int[] step_list = { 10, 20, 25, 50 }; // 10, 20, 25, 50
+                    int[] step_list = { 10, 20, 25, 50}; // 10, 20, 25, 50
+                    int step_power = 1;
+                    int step_index = 0;
                     int freq_step_size = 50;
                     //  int inbetweenies = 5; // ke9ns number of lines from 1 freq label to the next (a line every 2khz)
 

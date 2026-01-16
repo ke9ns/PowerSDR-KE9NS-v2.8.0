@@ -1,5 +1,5 @@
 //=================================================================
-// fwc.cs
+// fwc.cs uses PAL.DLL to communicate with Flex Radios over Firewire
 //=================================================================
 // PowerSDR is a C# implementation of a Software Defined Radio.
 // Copyright (C) 2003-2013  FlexRadio Systems

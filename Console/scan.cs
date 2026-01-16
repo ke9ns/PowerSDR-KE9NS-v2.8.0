@@ -493,8 +493,7 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }
-                    ;
+                    };
 
                     pausebtn.BackColor = SystemColors.ControlLight;
 
@@ -1767,8 +1766,7 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }
-                    ; //  while (ScanPause == true)  // wait here in in pause
+                    }; //  while (ScanPause == true)  // wait here in in pause
 
 
                     pausebtn.BackColor = SystemColors.ControlLight;
@@ -2066,8 +2064,7 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }
-                    ; // while PAUSE
+                    }; // while PAUSE
 
                     if (scanstop == true) //.221
                     {
@@ -3255,8 +3252,7 @@ namespace PowerSDR
                         if (ScanPause == true) pausebtn.BackColor = Color.Yellow;
                         else pausebtn.BackColor = SystemColors.ControlLight;
 
-                    }
-                    ;
+                    };
 
                     pausebtn.BackColor = SystemColors.ControlLight;
 

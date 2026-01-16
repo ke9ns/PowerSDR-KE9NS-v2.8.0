@@ -42,17 +42,19 @@ namespace PowerSDR
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTimeRemaining = new System.Windows.Forms.LabelTS();
             this.lblStatus = new System.Windows.Forms.LabelTS();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlStatus
             // 
-            this.pnlStatus.BackColor = System.Drawing.Color.Transparent;
+            this.pnlStatus.BackColor = System.Drawing.Color.Black;
             this.pnlStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.pnlStatus.Location = new System.Drawing.Point(58, 207);
+            this.pnlStatus.Location = new System.Drawing.Point(64, 315);
             this.pnlStatus.Name = "pnlStatus";
-            this.pnlStatus.Size = new System.Drawing.Size(475, 17);
+            this.pnlStatus.Size = new System.Drawing.Size(475, 2);
             this.pnlStatus.TabIndex = 2;
             this.pnlStatus.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStatus_Paint);
             // 
@@ -66,7 +68,7 @@ namespace PowerSDR
             this.textBox1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.Yellow;
+            this.textBox1.ForeColor = System.Drawing.Color.DarkGoldenrod;
             this.textBox1.Location = new System.Drawing.Point(218, 155);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(133, 24);
@@ -74,6 +76,14 @@ namespace PowerSDR
             this.textBox1.TabStop = false;
             this.textBox1.Text = "v2.8.0.0";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(-2, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(604, 384);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // lblTimeRemaining
             // 
@@ -101,18 +111,20 @@ namespace PowerSDR
             // Splash
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(600, 384);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pnlStatus);
             this.Controls.Add(this.lblTimeRemaining);
             this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Splash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Splash";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,7 +137,7 @@ namespace PowerSDR
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.TextBox textBox1;
         private System.ComponentModel.IContainer components = null;
-
+        private System.Windows.Forms.PictureBox pictureBox1;
     } // class Splash 
 
     

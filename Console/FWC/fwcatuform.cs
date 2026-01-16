@@ -352,6 +352,7 @@ namespace PowerSDR
         public void READSWR()
         {
             SWRRUN = true;
+           int old_tun_pwr = 50;
 
             do
             {

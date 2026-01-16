@@ -37,8 +37,10 @@
 
 //using Microsoft.JScript;
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using Microsoft.JScript;
+//using OpenQA.Selenium;
+//using OpenQA.Selenium.BiDi.Modules.Script;
+//using OpenQA.Selenium.Chrome;
 using PdfiumViewer; //.314
 using RTF; // allows creating RTF strings just like you use stringbuilder. from Anton Rogue Trader (with RTF you can color the text of the LoTW call signs)
 using System;
@@ -54,15 +56,21 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 //using System.Runtime.Serialization.Json;
 
 //reference Nuget Package NAudio.Lame
 using System.Net.Sockets;                // ke9ns add for tcpip internet connections
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;                    // ke9ns add for stringbuilder
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Convert = System.Convert;
 using Keys = System.Windows.Forms.Keys;
 
@@ -601,10 +609,20 @@ namespace PowerSDR
 
 
         //=====================================================================================================================
-        // https://ns6t.net/azimuth/code/azimuth.fcgi?location=42.01,-88.19&distance=17500
+        // http://ns6t.net/azimuth/code/azimuth.fcgi?bw=off&bluefill=on&noheadingfooting=on&distance=17500&paper=LETTER&title=Title&location=42.01,-88.29
         // this URL above does not require a headless browser drivers
-        public void BeamMap_DOESNOTWORK()
+        // need to download Pdfiumviewer 2.13.0, and PdfiumViewer.Native.x86.v8-xfa to get the pdfium.dll, both from tools->nuget package
+        //  end up with AzimuthalMap.bmp 570 x 570 pixels
+
+        public void BeamMap()
         {
+
+            string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
+            string fullPath = Path.Combine(downloadPath1, "AzimuthalMap.pdf");
+            string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
+
+            Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
+
 
             string latlong = "42.01,-88.19";
             try
@@ -614,259 +632,332 @@ namespace PowerSDR
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine("no valid lat,long, so use en52 " + e);
-
             }
 
 
             textBox1.Text = textBox1.Text + "Lat and Long: " + latlong + "\r\n";
 
-            string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
-            string originalFile = Path.Combine(downloadPath1, "AzimuthalMap.pdf");
-            string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
+            // URL = "https://ns6t.net/azimuth/code/azimuth.fcgi?bw=off&bluefill=on&noheadingfooting=on&distance=17500&paper=LETTER&title=Title&location=42.01,-88.29";  //.322
+            string URL = "https://ns6t.net/azimuth/code/azimuth.fcgi?bw=off&bluefill=on&noheadingfooting=on&distance=17500&paper=LETTER&title=Title&location=" + latlong; //.322
+                      
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+            request.Timeout = 5000;                    // 30 seconds - adjust as needed
+            request.ReadWriteTimeout = 5000;           // Additional timeout for reading data
+            request.AllowAutoRedirect = true;
 
-            Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
-
-            // https://ns6t.net/azimuth/code/azimuth.fcgi?bw=checked&noheadingfooting=checked&location=42.01,-88.29&distance=17500&paper=LETTER&title=Titled
-
-
-
-            using (var client = new WebClient())
+            try
             {
-                try
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream responseStream = response.GetResponseStream())
+                using (FileStream fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write))
                 {
-                    // Prepare POST form values
-                    var values = new NameValueCollection
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    while ((bytesRead = responseStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        { "distance", "17500" },
-                        { "paper", "letter" },
-                        { "location", "EN52" },
-                        { "noheadingfooting", "on" } // include to ensure it's checked
-                        // DO NOT include "view" or "noheadingfooting" to uncheck them
-                    };
-
-                    // Send the POST request
-                    byte[] response = client.UploadValues("https://ns6t.net/azimuth/code/azimuth.fcgi", "POST", values);
-
-                    // Convert response to string
-                    string resultHtml = Encoding.UTF8.GetString(response);
-
-                    // Save or process the result as needed
-                    string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "azimuth_response.html");
-                    System.IO.File.WriteAllText(filePath, resultHtml);
-
-                    MessageBox.Show("Request sent successfully.\nResponse saved to:\n" + filePath);
+                        fileStream.Write(buffer, 0, bytesRead);
+                    }
                 }
-                catch (WebException ex)
+
+                Debug.WriteLine("AzimuthalMap.pdf saved ");
+            }
+            catch (WebException webEx)
+            {
+                if (webEx.Status == WebExceptionStatus.Timeout)
                 {
-                    MessageBox.Show("WebException: " + ex.Message);
+                   Debug.WriteLine("Download timed out. The server took too long to respond.");
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    Debug.WriteLine($"Download error: {webEx.Message}");
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error saving PDF: {ex.Message}");
+                
+            }
 
+            //--------------------------------------------------------------
 
+            textBox1.Text = textBox1.Text + "genereate map \r\n";
+            Debug.WriteLine("done click button ");
 
-        } // BeamMap1
+            var stopwatch = Stopwatch.StartNew(); // start timer
 
+            TimeSpan timeout = TimeSpan.FromSeconds(8);
+
+            textBox1.Text = textBox1.Text + "start timer \r\n";
+
+            while (stopwatch.Elapsed < timeout)
+            {
+                Thread.Sleep(100);
+
+                if (File.Exists(fullPath))
+                {
+                    Debug.WriteLine("AzimuthalMap.pdf saved ");
+
+                    Thread.Sleep(500);
+
+                    textBox1.Text = textBox1.Text + "got map \r\n";
+
+                    udDisplayLat.BackColor = Color.LightGreen;
+                    udDisplayLong.BackColor = Color.LightGreen;
+
+                    // need to expand %userprofile% before creating the actual path
+                    string pdfPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.pdf");
+                    string jpgFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.jpg");
+                    string bmpFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.bmp");
+                  
+                  
+                    if (File.Exists(BMPFile))
+                    {
+                        File.Delete(BMPFile);
+                    }
+
+                    using (var document = PdfDocument.Load(pdfPath))
+                    {
+
+                        using (var image = document.Render(0, 300, 300, true))
+                        {
+
+                            textBox1.Text = textBox1.Text + "convert map \r\n";
+                            Debug.WriteLine("render image ");
+                            using (var bmp = new Bitmap(image))
+                            {
+                                Rectangle cropArea = new Rectangle(20, 110, 570, 570);
+                                Debug.WriteLine("setup BMP for crop");
+
+                                using (var croppedImage = bmp.Clone(cropArea, bmp.PixelFormat))
+                                {
+                                    Debug.WriteLine("crop and save ");
+
+                                    croppedImage.Save(bmpFile, ImageFormat.Bmp);
+
+                                    Debug.WriteLine("crop is saved ");
+
+                                } // using croppedimage
+                            } // using bmp
+                        } // using image
+
+                    } // using document
+
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath); // get rid of PDF
+                    }
+                    textBox1.Text = textBox1.Text + "Done convert map \r\n";
+
+                    bMapFlag = false; // tell udDisplayLong your done
+
+                    if (File.Exists(BMPFile)) Beamheadingmap.Invalidate(); // bmp good, so update screen
+
+                    break; // break out of while loop now
+                }
+                else // not downloaded yet
+                {
+                    udDisplayLat.BackColor = SystemColors.Window;
+                    udDisplayLong.BackColor = SystemColors.Window;
+                }
+
+            } // while
+
+            Debug.WriteLine("shut down azimuth routine");
+          
+
+        } // BeamMap
+             
 
         //-------------------------------------------------------------------------------------------------------------------------------------------
         // This THREAD uses Selenium and chromedriver as a headless browser and NS6T maps, to download a PDF map (as though you went online and filled out the html form)
         // need to download Pdfiumviewer 2.13.0, and PdfiumViewer.Native.x86.v8-xfa to get the pdfium.dll, both from tools->nuget package
         //  end up with AzimuthalMap.bmp 570 x 570 pixels
 
-        public void BeamMap()  //.314  download a Beam heading map based on your lat/long from ns6t website
-        {
-            string latlong = "42.01,-88.19";
-            try
-            {
-                latlong = udDisplayLat.Value.ToString() + "," + udDisplayLong.Value.ToString();
-                Debug.WriteLine("PowerSDR station LAT and LONG: " + latlong);
-            }
-            catch (Exception e)
-            {
-
-                Debug.WriteLine("no valid lat,long, so use en52 " + e);
-
-            }
-
-
-            textBox1.Text = textBox1.Text + "Lat and Long: " + latlong + "\r\n";
-
-            string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
-            string originalFile = Path.Combine(downloadPath1, "AzimuthalMap.pdf");
-            string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
-
-            Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
-
-
-            try
-            {
-
-                ChromeDriverService service = ChromeDriverService.CreateDefaultService();
-                service.HideCommandPromptWindow = true; // <-- Hides the DOS window
-
-                ChromeOptions options = new ChromeOptions();
-
-                options.AddArgument("--no-sandbox"); // bypass OS security model
-                options.AddArgument("--disable-dev-shm-usage"); // overcome limited resource
-                options.AddArgument("--headless"); // Run in headless mode
-                options.AddArgument("--disable-gpu"); // Required for headless mode in some environments
-
-                options.AddUserProfilePreference("download.default_directory", downloadPath1); // Set download directory
-                options.AddUserProfilePreference("download.prompt_for_download", false); // Disable download prompt
-                options.AddUserProfilePreference("plugins.always_open_pdf_externally", true); // Download PDF instead of opening in browser
-
-                // chrome to auto download PDFS to specific dir
-                options.AddUserProfilePreference("download", new { defaultDirectory = downloadPath1, promptForDownload = false });
-                options.AddUserProfilePreference("plugins", new { alwaysOpenPdfExternally = true });
-
-
-                textBox1.Text = textBox1.Text + "chrome options \r\n";
-
-                // init chromedriver
-                using (IWebDriver driver = new ChromeDriver(service, options))
+        /*
+                public void BeamMap()  //.314  download a Beam heading map based on your lat/long from ns6t website
                 {
-
-                    textBox1.Text = textBox1.Text + "go to site now \r\n";
-
-                    Debug.WriteLine("Start using, go to url");
-                    //nav to webpage
-                    driver.Navigate().GoToUrl("https://ns6t.net/azimuth/azimuth.html");
-                    driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
-
-                    // wait for page to load
-                    Thread.Sleep(100);
-                    if (File.Exists(originalFile))
+                    string latlong = "42.01,-88.19";
+                    try
                     {
-                        File.Delete(originalFile);
+                        latlong = udDisplayLat.Value.ToString() + "," + udDisplayLong.Value.ToString();
+                        Debug.WriteLine("PowerSDR station LAT and LONG: " + latlong);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("no valid lat,long, so use en52 " + e);
                     }
 
-                    textBox1.Text = textBox1.Text + "find elements on URL \r\n";
-                    Debug.WriteLine("find STUFF NOW ");
-                    var viewCheckbox = driver.FindElement(By.Name("view"));
-                    var noHeadingCheckbox = driver.FindElement(By.Name("noheadingfooting"));
-                    var locationInput = driver.FindElement(By.Name("location"));
-                    var distanceInput = driver.FindElement(By.Name("distance"));
-                    var createMapButton = driver.FindElement(By.Name("submit")); // //  IWebElement createMapButton = driver.FindElement(By.CssSelector("input[type='submit']"));
+                    textBox1.Text = textBox1.Text + "Lat and Long: " + latlong + "\r\n";
 
-                    textBox1.Text = textBox1.Text + "elements done \r\n";
-                    Debug.WriteLine("done finding STUFF now ");
+                    string downloadPath1 = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),@"FlexRadio Systems\PowerSDR v2.8.0\");
+                    string originalFile = Path.Combine(downloadPath1, "AzimuthalMap.pdf");
+                    string BMPFile = Path.Combine(downloadPath1, "AzimuthalMap.bmp");
 
-                    locationInput.Clear();
-                    locationInput.SendKeys(latlong); // lat and long
+                    Debug.WriteLine("Download and modify Beam hading Map to path: " + downloadPath1);
 
-                    distanceInput.Clear();
-                    distanceInput.SendKeys("17500"); // distance out to the edge of the image
-
-                    if (viewCheckbox.Selected) viewCheckbox.Click(); // turn off view map directly
-                    if (!noHeadingCheckbox.Selected) noHeadingCheckbox.Click(); // turn off map headings
-
-
-                    createMapButton.Click();
-
-                    textBox1.Text = textBox1.Text + "genereate map \r\n";
-                    Debug.WriteLine("done click button ");
-
-                    //  Thread.Sleep(6000);
-                    var stopwatch = Stopwatch.StartNew(); // start timer
-
-                    TimeSpan timeout = TimeSpan.FromSeconds(8);
-
-                    textBox1.Text = textBox1.Text + "start timer \r\n";
-
-                    while (stopwatch.Elapsed < timeout)
+                    try
                     {
-                        Thread.Sleep(100);
+                        ChromeDriverService service = ChromeDriverService.CreateDefaultService();
+                        service.HideCommandPromptWindow = true; // <-- Hides the DOS window
 
-                        if (File.Exists(originalFile))
+                        ChromeOptions options = new ChromeOptions();
+
+                        options.AddArgument("--no-sandbox"); // bypass OS security model
+                        options.AddArgument("--disable-dev-shm-usage"); // overcome limited resource
+                        options.AddArgument("--headless"); // Run in headless mode
+                        options.AddArgument("--disable-gpu"); // Required for headless mode in some environments
+
+                        options.AddUserProfilePreference("download.default_directory", downloadPath1); // Set download directory
+                        options.AddUserProfilePreference("download.prompt_for_download", false); // Disable download prompt
+                        options.AddUserProfilePreference("plugins.always_open_pdf_externally", true); // Download PDF instead of opening in browser
+
+                        // chrome to auto download PDFS to specific dir
+                        options.AddUserProfilePreference("download", new { defaultDirectory = downloadPath1, promptForDownload = false });
+                        options.AddUserProfilePreference("plugins", new { alwaysOpenPdfExternally = true });
+
+                        textBox1.Text = textBox1.Text + "chrome options \r\n";
+
+                        // init chromedriver
+                        using (IWebDriver driver = new ChromeDriver(service, options))
                         {
-                            Debug.WriteLine("AzimuthalMap.pdf saved ");
 
-                            Thread.Sleep(500);
+                            textBox1.Text = textBox1.Text + "go to site now \r\n";
 
-                            textBox1.Text = textBox1.Text + "got map \r\n";
+                            Debug.WriteLine("Start using, go to url");
+                            //nav to webpage
+                            driver.Navigate().GoToUrl("https://ns6t.net/azimuth/azimuth.html");
+                            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
 
-                            udDisplayLat.BackColor = Color.LightGreen;
-                            udDisplayLong.BackColor = Color.LightGreen;
-
-                            // need to expand %userprofile% before creating the actual path
-                            string pdfPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.pdf");
-                            string jpgFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.jpg");
-                            string bmpFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.bmp");
-
-                            if (File.Exists(BMPFile))
-                            {
-                                File.Delete(BMPFile);
-                            }
-
-                            using (var document = PdfDocument.Load(pdfPath))
-                            {
-
-                                using (var image = document.Render(0, 300, 300, true))
-                                {
-
-                                    textBox1.Text = textBox1.Text + "convert map \r\n";
-                                    Debug.WriteLine("render image ");
-                                    using (var bmp = new Bitmap(image))
-                                    {
-                                        Rectangle cropArea = new Rectangle(20, 110, 570, 570);
-                                        Debug.WriteLine("setup BMP for crop");
-
-                                        using (var croppedImage = bmp.Clone(cropArea, bmp.PixelFormat))
-                                        {
-                                            Debug.WriteLine("crop and save ");
-
-                                            croppedImage.Save(bmpFile, ImageFormat.Bmp);
-
-                                            Debug.WriteLine("crop is saved ");
-
-                                        } // using croppedimage
-                                    } // using bmp
-                                } // using image
-
-                            } // using document
-
+                            // wait for page to load
+                            Thread.Sleep(100);
                             if (File.Exists(originalFile))
                             {
-                                File.Delete(originalFile); // get rid of PDF
+                                File.Delete(originalFile);
                             }
-                            textBox1.Text = textBox1.Text + "Done convert map \r\n";
 
-                            break; // break out of while loop now
-                        }
-                        else // not downloaded yet
-                        {
-                            udDisplayLat.BackColor = SystemColors.Window;
-                            udDisplayLong.BackColor = SystemColors.Window;
-                        }
+                            textBox1.Text = textBox1.Text + "find elements on URL \r\n";
+                            Debug.WriteLine("find STUFF NOW ");
+                            var viewCheckbox = driver.FindElement(By.Name("view"));
+                            var noHeadingCheckbox = driver.FindElement(By.Name("noheadingfooting"));
+                            var locationInput = driver.FindElement(By.Name("location"));
+                            var distanceInput = driver.FindElement(By.Name("distance"));
+                            var createMapButton = driver.FindElement(By.Name("submit")); // //  IWebElement createMapButton = driver.FindElement(By.CssSelector("input[type='submit']"));
 
-                    } // while
+                            textBox1.Text = textBox1.Text + "elements done \r\n";
+                            Debug.WriteLine("done finding STUFF now ");
 
-                    Debug.WriteLine("shut down azimuth routine");
-                    driver.Quit();
+                            locationInput.Clear();
+                            locationInput.SendKeys(latlong); // lat and long
 
-                } // using selenium and chromedriver
+                            distanceInput.Clear();
+                            distanceInput.SendKeys("17500"); // distance out to the edge of the image
 
-            }
-            catch (Exception ew)
-            {
-
-                textBox1.Text = textBox1.Text + "=================MAP CRASH=============== \r\n";
-                Debug.WriteLine("Exception " + ew);
-
-            }
-
-            bMapFlag = false; // tell udDisplayLong your done
-
-            if (File.Exists(BMPFile)) Beamheadingmap.Invalidate(); // bmp good, so update screen
-
-        } // beammap //.314
+                            if (viewCheckbox.Selected) viewCheckbox.Click(); // turn off view map directly
+                            if (!noHeadingCheckbox.Selected) noHeadingCheckbox.Click(); // turn off map headings
 
 
+                            createMapButton.Click();
+
+                            textBox1.Text = textBox1.Text + "genereate map \r\n";
+                            Debug.WriteLine("done click button ");
+
+                            //  Thread.Sleep(6000);
+                            var stopwatch = Stopwatch.StartNew(); // start timer
+
+                            TimeSpan timeout = TimeSpan.FromSeconds(8);
+
+                            textBox1.Text = textBox1.Text + "start timer \r\n";
+
+                            while (stopwatch.Elapsed < timeout)
+                            {
+                                Thread.Sleep(100);
+
+                                if (File.Exists(originalFile))
+                                {
+                                    Debug.WriteLine("AzimuthalMap.pdf saved ");
+
+                                    Thread.Sleep(500);
+
+                                    textBox1.Text = textBox1.Text + "got map \r\n";
+
+                                    udDisplayLat.BackColor = Color.LightGreen;
+                                    udDisplayLong.BackColor = Color.LightGreen;
+
+                                    // need to expand %userprofile% before creating the actual path
+                                    string pdfPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.pdf");
+                                    string jpgFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.jpg");
+                                    string bmpFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.bmp");
+
+                                    if (File.Exists(BMPFile))
+                                    {
+                                        File.Delete(BMPFile);
+                                    }
+
+                                    using (var document = PdfDocument.Load(pdfPath))
+                                    {
+
+                                        using (var image = document.Render(0, 300, 300, true))
+                                        {
+
+                                            textBox1.Text = textBox1.Text + "convert map \r\n";
+                                            Debug.WriteLine("render image ");
+                                            using (var bmp = new Bitmap(image))
+                                            {
+                                                Rectangle cropArea = new Rectangle(20, 110, 570, 570);
+                                                Debug.WriteLine("setup BMP for crop");
+
+                                                using (var croppedImage = bmp.Clone(cropArea, bmp.PixelFormat))
+                                                {
+                                                    Debug.WriteLine("crop and save ");
+
+                                                    croppedImage.Save(bmpFile, ImageFormat.Bmp);
+
+                                                    Debug.WriteLine("crop is saved ");
+
+                                                } // using croppedimage
+                                            } // using bmp
+                                        } // using image
+
+                                    } // using document
+
+                                    if (File.Exists(originalFile))
+                                    {
+                                        File.Delete(originalFile); // get rid of PDF
+                                    }
+                                    textBox1.Text = textBox1.Text + "Done convert map \r\n";
+
+                                    break; // break out of while loop now
+                                }
+                                else // not downloaded yet
+                                {
+                                    udDisplayLat.BackColor = SystemColors.Window;
+                                    udDisplayLong.BackColor = SystemColors.Window;
+                                }
+
+                            } // while
+
+                            Debug.WriteLine("shut down azimuth routine");
+                            driver.Quit();
+
+                        } // using selenium and chromedriver
+
+                    }
+                    catch (Exception ew)
+                    {
+
+                        textBox1.Text = textBox1.Text + "=================MAP CRASH=============== \r\n";
+                        Debug.WriteLine("Exception " + ew);
+
+                    }
+
+                    bMapFlag = false; // tell udDisplayLong your done
+
+                    if (File.Exists(BMPFile)) Beamheadingmap.Invalidate(); // bmp good, so update screen
+
+                } // beammap //.314
+
+        */
 
         public bool SP_SHOWDX = false; // .276 true = show/dx in process
         public bool SP_SPOTSTART = false; // .276 true = received your callsign to indicate the spotter is ready to send spots to you
@@ -6562,6 +6653,8 @@ namespace PowerSDR
             bool ListHide = false;
 
             Debug.WriteLine("SpotControl processTCPMessage() here");
+
+            string bigmessage = null;
             RTFBuilderbase BIGM = new RTFBuilder(RTFFont.CourierNew, 18f);
 
 
@@ -15253,6 +15346,8 @@ namespace PowerSDR
 
                 call = DX_Station[DX_SELECTED]; // use current selected call
 
+                double freq;
+
                 /*
                 try  // ke9ns add  the try to prevent a crash
                 {
@@ -16250,13 +16345,21 @@ namespace PowerSDR
             LetterElement[2, 2, 2, 2, 1] = "9";
             LetterElement[2, 2, 2, 2, 2] = "0";
 
+            int dit = 80; // msec time for a dit
+            int dah = 240; // msec time for a dah (3 dits)
+            int CWSpace = 0; // msec time between words (7 dits in length)
+
             int CWLow = 300; // tone signal level 
             int CWHigh = 0; // tone signal level
+            int CWAvg = 0;
             long RecordDITLength = 0;
             long RecordSpaceLength = 0;
 
             long TIMER1 = 0;
             long TIMER2 = 0;
+            long TIMER3 = 0;
+
+            bool IDENT = false; // Mark = true, Space = false
 
             ditLength.Reset();
             spaceLength.Reset();
@@ -16592,7 +16695,7 @@ namespace PowerSDR
                     System.Windows.Forms.Cursor.Current = CSR; // .242 change cursor back to normal
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     console.MapNOAA = true; //.243 update map
 
@@ -16665,7 +16768,7 @@ namespace PowerSDR
                     MAP = Lighten(result, MBG, MB);
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     console.MapNOAA = true; //.243 update map
 
@@ -16755,7 +16858,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
 
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -16798,7 +16901,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -16816,6 +16919,7 @@ namespace PowerSDR
                 chkLightningMap.Checked = false; //.316
 
                 Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
+                int x = 55;
 
                 var CSR = System.Windows.Forms.Cursor.Current; //.242
 
@@ -16915,7 +17019,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
 
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -17021,7 +17125,7 @@ namespace PowerSDR
                         MAP = Lighten(result, MBG, MB);
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         console.MapNOAA = true; //.243 update map
 
@@ -17155,7 +17259,7 @@ namespace PowerSDR
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                         MAP = Lighten(result3, MBG, MB);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                         console.MapNOAA = true; //.243 update map
@@ -17268,7 +17372,7 @@ namespace PowerSDR
 
                         MAP = Lighten(result, MBG, MB);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
 
                         console.MapNOAA = true; //.243 update map

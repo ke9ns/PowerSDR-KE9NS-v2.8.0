@@ -1,5 +1,5 @@
 //=================================================================
-// pal.cs
+// pal.cs   PAL.DLL      Protocol Abstraction Layer or Phased Array Layer
 //=================================================================
 // PowerSDR is a C# implementation of a Software Defined Radio.
 // Copyright (C) 2003-2013  FlexRadio Systems

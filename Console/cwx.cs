@@ -42,6 +42,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -1535,7 +1536,6 @@ namespace PowerSDR
         private void process_element()      // called at the element rate  (uses windows multimedia event timer) this is always called even when not transmitting
         {
             byte data;
-
 
 
             if (quit)       // if true shut 'er all down

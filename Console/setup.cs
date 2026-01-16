@@ -27,6 +27,7 @@
 //    USA
 //=================================================================
 
+using Flex.Control;     //.250  ke9ns add
 using FlexCW; // .250          //
 using System;
 using System.Collections;
@@ -38,10 +39,12 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 
 namespace PowerSDR
@@ -15848,7 +15851,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -15857,7 +15860,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16291,7 +16294,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -16299,7 +16302,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16316,7 +16319,7 @@ namespace PowerSDR
             {
                 txtCatURL.Text = GetLocalIPAddress();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL.Text = "no IP detected";
             }
@@ -16325,7 +16328,7 @@ namespace PowerSDR
             {
                 txtCatURL2.Text = GetLocalIPAddress2();
             }
-            catch (Exception)
+            catch (Exception e2)
             {
                 txtCatURL2.Text = "no IP detected";
                 chkCatURLALT.Checked = false;
@@ -16860,7 +16863,6 @@ namespace PowerSDR
                 CrashProtection = true;
             }
         }
-
 
 
 

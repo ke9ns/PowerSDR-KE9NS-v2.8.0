@@ -487,6 +487,7 @@
     <None Include="..\Console\svnrev.cs" />
     <None Include="..\Console\titlebar.cs" />
     <None Include="..\hiir\hiir.vcxproj" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="am_demod.h" />

@@ -137,7 +137,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\bin\Release\</OutputPath>
-    <DefineConstants>NO_WIDETX;NO_KE9NS;NO_DJ</DefineConstants>
+    <DefineConstants>NO_WIDETX;NO_KE9NS;NO_DJ;</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
@@ -177,6 +177,23 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <Reference Include="ADODB">
       <Name>adodb</Name>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\Microsoft.NET\Primary Interop Assemblies\adodb.dll</HintPath>
@@ -1043,7 +1060,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DJConsoleUI\Setup_MP3LE.resx">
       <DependentUpon>Setup_MP3LE.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GDF\GDFDisplayBox.resx">
       <DependentUpon>GDFDisplayBox.cs</DependentUpon>
@@ -1133,6 +1149,8 @@
     <Content Include="FlexCW.dll" />
     <Content Include="Resources\blue1.png" />
     <None Include="Resources\DRAP.bmp" />
+    <Content Include="Resources\moonearth2.gif" />
+    <Content Include="Resources\moonearth6.gif" />
     <Content Include="Resources\panGray.png" />
     <Content Include="Resources\PanRed.png" />
     <EmbeddedResource Include="Resources\radar.png" />

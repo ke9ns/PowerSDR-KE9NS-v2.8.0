@@ -397,9 +397,11 @@ namespace PowerSDR
             this.contextMenuStripFilterRX1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemRX1FilterConfigure = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRX1FilterReset = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRX1FilterReset1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripFilterRX2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemRX2FilterConfigure = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRX2FilterReset = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRX2FilterReset1 = new System.Windows.Forms.ToolStripMenuItem();
             this.timer_navigate = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStripNotch = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -4797,7 +4799,8 @@ namespace PowerSDR
             // 
             this.contextMenuStripFilterRX1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemRX1FilterConfigure,
-            this.toolStripMenuItemRX1FilterReset});
+            this.toolStripMenuItemRX1FilterReset,
+            this.toolStripMenuItemRX1FilterReset1});
             this.contextMenuStripFilterRX1.Name = "contextMenuStripFilterRX1";
             resources.ApplyResources(this.contextMenuStripFilterRX1, "contextMenuStripFilterRX1");
             // 
@@ -4813,11 +4816,18 @@ namespace PowerSDR
             resources.ApplyResources(this.toolStripMenuItemRX1FilterReset, "toolStripMenuItemRX1FilterReset");
             this.toolStripMenuItemRX1FilterReset.Click += new System.EventHandler(this.toolStripMenuItemRX1FilterReset_Click);
             // 
+            // toolStripMenuItemRX1FilterReset1
+            // 
+            this.toolStripMenuItemRX1FilterReset1.Name = "toolStripMenuItemRX1FilterReset1";
+            resources.ApplyResources(this.toolStripMenuItemRX1FilterReset1, "toolStripMenuItemRX1FilterReset1");
+            this.toolStripMenuItemRX1FilterReset1.Click += new System.EventHandler(this.toolStripMenuItemRX1FilterReset1_Click);
+            // 
             // contextMenuStripFilterRX2
             // 
             this.contextMenuStripFilterRX2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemRX2FilterConfigure,
-            this.toolStripMenuItemRX2FilterReset});
+            this.toolStripMenuItemRX2FilterReset,
+            this.toolStripMenuItemRX2FilterReset1});
             this.contextMenuStripFilterRX2.Name = "contextMenuStripFilterRX2";
             resources.ApplyResources(this.contextMenuStripFilterRX2, "contextMenuStripFilterRX2");
             // 
@@ -4832,6 +4842,12 @@ namespace PowerSDR
             this.toolStripMenuItemRX2FilterReset.Name = "toolStripMenuItemRX2FilterReset";
             resources.ApplyResources(this.toolStripMenuItemRX2FilterReset, "toolStripMenuItemRX2FilterReset");
             this.toolStripMenuItemRX2FilterReset.Click += new System.EventHandler(this.toolStripMenuItemRX2FilterReset_Click);
+            // 
+            // toolStripMenuItemRX2FilterReset1
+            // 
+            this.toolStripMenuItemRX2FilterReset1.Name = "toolStripMenuItemRX2FilterReset1";
+            resources.ApplyResources(this.toolStripMenuItemRX2FilterReset1, "toolStripMenuItemRX2FilterReset1");
+            this.toolStripMenuItemRX2FilterReset1.Click += new System.EventHandler(this.toolStripMenuItemRX2FilterReset1_Click);
             // 
             // timer_navigate
             // 
@@ -7528,6 +7544,8 @@ namespace PowerSDR
         private System.Windows.Forms.LabelTS lblRX2Gain;
         private System.Windows.Forms.LabelTS lblVACTX2Indicator;
         private System.Windows.Forms.LabelTS lblVACRX2Indicator;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX1FilterReset1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX2FilterReset1;
     } // class console
 
 

@@ -135,7 +135,7 @@ namespace PowerSDR
             {
                 commPort.Write("AI1;");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 answer = "===";
             }

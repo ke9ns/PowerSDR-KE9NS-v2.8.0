@@ -32,6 +32,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PowerSDR
 {
@@ -215,7 +216,7 @@ namespace PowerSDR
                                 0.283501, 0.414999, "Long Wave - Beacons",      false, // ke9ns add
                                 0.415000, 0.471999, "Maritime Band",            false,
 
-                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+                                0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow", true, // 630m ham ke9ns change
 
                                 0.479000, 0.526400, "Maritime Band",            false,
                                 0.526401, 0.529999, "Long Wave - Beacons",      false,   // ke9ns add
@@ -437,7 +438,7 @@ namespace PowerSDR
                                 0.283501, 0.414999, "Long Wave - Beacons",      false, // ke9ns add
                                 0.415000, 0.471999, "Maritime Band",            false,
 
-                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+                                0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow",    true, // 630m ham ke9ns change
 
                                 0.479000, 0.526400, "Maritime Band",            false,
 
@@ -2486,10 +2487,10 @@ namespace PowerSDR
             object[] data = {
                 //------------------------------------------------------------------
 
-                             //   0.4720000, 0.472000, "630M FST4/CW/FSTW/Narrow",            true, // ke9ns add  1.84
-                             //   0.4720001, 0.478999, "630M FST4/CW/FSTW/Narrow",            true, // ke9ns add
+                             //   0.4720000, 0.472000, "630M FST4/CW/WSPR/Narrow",            true, // ke9ns add  1.84
+                             //   0.4720001, 0.478999, "630M FST4/CW/WSPR/Narrow",            true, // ke9ns add
 
-                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+                             //   0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow",    true, // 630m ham ke9ns change  comment out becuase it in the SWB already
 
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
@@ -3194,7 +3195,7 @@ namespace PowerSDR
 
             object[] data = {
 
-                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+                              //  0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow",    true, // 630m ham ke9ns change
 
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
@@ -3744,7 +3745,7 @@ namespace PowerSDR
 
             object[] data = {
 
-                                0.472000, 0.478999, "630M FST4/CW/FSTW/Narrow",    true, // 630m ham ke9ns change
+                             //   0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow",    true, // 630m ham ke9ns change
 
                                 1.800000, 1.809999, "160M CW/Digital Modes",    true,
                                 1.810000, 1.810000, "160M CW QRP",              true,
@@ -5908,7 +5909,7 @@ namespace PowerSDR
             {
                 t.Columns.Add("TXEQ28Preamp", typeof(int)); // ke9ns add
             }
-            catch (Exception)
+            catch (Exception e1)
             {
                 //   Debug.WriteLine("ALEADY a TXEQ28Preamp " + e1);
             }
@@ -6085,7 +6086,7 @@ namespace PowerSDR
                 //  udTXDriveMax.Value = (int)dr["Drive_Max"]; //.279a
 
             }
-            catch (Exception)
+            catch (Exception )
             {
 
 
@@ -6115,7 +6116,7 @@ namespace PowerSDR
             {
                 t.Columns.Add("TXEQ28Preamp", typeof(int)); // ke9ns add
             }
-            catch (Exception)
+            catch (Exception e1)
             {
                 //  Debug.WriteLine("ALEADY a TXEQ28Preamp " + e1);
             }

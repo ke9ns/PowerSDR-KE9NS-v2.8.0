@@ -1087,6 +1087,7 @@ namespace PowerSDR
             if (radPEQ.Checked == true)
             {
                 int x1 = 0;
+                int x2 = 0;
                 double f = 0;
 
 

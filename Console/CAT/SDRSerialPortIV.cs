@@ -151,7 +151,7 @@ namespace PowerSDR
             {
 
                 byte[] data = { 0xFE, 0xFE, 0xB0, 0x00, 0x12 };
-                byte[] data1 = { (byte)int.Parse(s), 0xFD };
+                byte[] data1 = { (byte)int.Parse(s), 0xFD};
 
                 commPort.Write(data, 0, 5);
                 commPort.Write(data1, 0, 2);

@@ -1847,6 +1847,9 @@ namespace PowerSDR
             const short bitsPerSample = 16;                   // 16
             int data = 0x61746164;                            // (0x64617461 big-endian form). Spell out "data"
 
+
+            const int headerSize = 8;                         // 8 bytes (
+
             int waveSize = ym; // how tall is the images
 
             const int lowtx = 150; // lowest frequency to display
@@ -1949,6 +1952,7 @@ namespace PowerSDR
 
             Debug.WriteLine("PCM END================");
             double temp7 = 0.0;
+            double temp8 = 0.0;
 
             int i = 0;
 

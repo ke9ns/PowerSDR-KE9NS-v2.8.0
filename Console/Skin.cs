@@ -149,7 +149,7 @@ namespace PowerSDR
             //  Debug.WriteLine("SKIN RESTORE AFTER>" + f.Name + "<");
 
 
-            if (File.Exists(path + "\\" + f.Name + "\\" + f.Name + pic_file_ext)) // pic_file_ext = .png    C:\ProgramData\FlexRadio Systems\PowerSDR\Skins
+            if (File.Exists(path + "\\" + f.Name + "\\" + f.Name + pic_file_ext)) // pic_file_ext = .png  C:\ProgramData\FlexRadio Systems\PowerSDR\Skins
             {
                 f.BackgroundImage = Image.FromFile(path + "\\" + f.Name + "\\" + f.Name + pic_file_ext);
                 f.Invalidate(); // ke9ns add

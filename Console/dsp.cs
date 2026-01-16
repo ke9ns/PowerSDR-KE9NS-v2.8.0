@@ -28,9 +28,13 @@
 //=================================================================
 
 
+using EnvDTE;
+using Microsoft.JScript;
+using Microsoft.VisualBasic.Logging;
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 
 namespace PowerSDR
 {

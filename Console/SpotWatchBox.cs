@@ -26,6 +26,7 @@
 //    USA
 //=================================================================
 
+using EnvDTE;
 using System;
 using System.Diagnostics;
 using System.Threading;
