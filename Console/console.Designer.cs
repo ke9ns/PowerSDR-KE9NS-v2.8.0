@@ -6763,6 +6763,7 @@ namespace PowerSDR
             // 
             resources.ApplyResources(this, "$this");
             this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Controls.Add(this.panelRX2Mode);
             this.Controls.Add(this.panelModeSpecificDigital);
             this.Controls.Add(this.panelTSRadar);
             this.Controls.Add(this.panelBandVHFRX2);
@@ -6796,7 +6797,6 @@ namespace PowerSDR
             this.Controls.Add(this.panelAntenna);
             this.Controls.Add(this.panelFilter);
             this.Controls.Add(this.panelRX2Filter);
-            this.Controls.Add(this.panelRX2Mode);
             this.Controls.Add(this.panelRX2Display);
             this.Controls.Add(this.panelRX2DSP);
             this.Controls.Add(this.panelRX2Mixer);

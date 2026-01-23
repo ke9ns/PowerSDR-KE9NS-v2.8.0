@@ -16670,11 +16670,6 @@ namespace PowerSDR
             }
         }
 
-        private void chkBoxChannels_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void udRX2DSPAGCSlope_ValueChanged(object sender, EventArgs e) //.283
         {
             console.dsp.GetDSPRX(1, 0).RXAGCSlope = 10 * (int)(udRX2DSPAGCSlope.Value);

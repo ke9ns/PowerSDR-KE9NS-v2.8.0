@@ -13577,7 +13577,6 @@ namespace PowerSDR
             this.chkBoxChannels.Text = "Channel Display ON for 60m and 11m";
             this.toolTip1.SetToolTip(this.chkBoxChannels, "Check to show Channels (in Blue. Dark Blue when inside Channel).\r\n60m Channels 1-" +
         "5 (for USA only)\r\n11m Channels 1-40");
-            this.chkBoxChannels.CheckedChanged += new System.EventHandler(this.chkBoxChannels_CheckedChanged);
             // 
             // labelTS37
             // 

@@ -1,5 +1,6 @@
 ﻿//=================================================================
 // Channel.cs
+// ke9ns: used for determining channels (11m and 60m)
 //=================================================================
 // PowerSDR is a C# implementation of a Software Defined Radio.
 // Copyright (C) 2003-2013  FlexRadio Systems
@@ -94,9 +95,7 @@ namespace PowerSDR
             double channel_low = Freq - (BW / 2) * 1e-6;
             double channel_high = Freq + (BW / 2) * 1e-6;
 
-            return ((low > channel_low && low < channel_high) ||
-                (high > channel_low && high < channel_high) ||
-                (channel_low > low && channel_high < high));
+            return ((low > channel_low && low < channel_high) || (high > channel_low && high < channel_high) || (channel_low > low && channel_high < high));
         }
     }
 }

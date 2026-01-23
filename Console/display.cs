@@ -1694,7 +1694,7 @@ namespace PowerSDR
 
                     channels_60m.Add(new Channel(5.3320, 2800)); // channel 1   5.3305
                     channels_60m.Add(new Channel(5.3480, 2800)); // channel 2   5.3465
-                    channels_60m.Add(new Channel(5.3585, 2800)); // channel 3   5.3570 
+                   // channels_60m.Add(new Channel(5.3590, 15000));// channel 3 is now a segment 15khz wide  5.3515 to 5.3665 mhz // was this >  channels_60m.Add(new Channel(5.3585, 2800)); // channel 3   5.3570 
                     channels_60m.Add(new Channel(5.3730, 2800)); // channel 4   5.3715
                     channels_60m.Add(new Channel(5.4050, 2800)); // channel 5   5.4035
 
@@ -3564,7 +3564,8 @@ namespace PowerSDR
                         rf_freq = vfob_hz;
                     }
 
-                    if (c.InBW((rf_freq + Low) * 1e-6, (rf_freq + High) * 1e-6)) // is channel visible?
+                  
+                    if (c.InBW((rf_freq + Low) * 1e-6, (rf_freq + High) * 1e-6)  ) // is channel visible? or are you in the IARU1/2 segment
                     {
                         bool on_channel = console.RX1IsOn60mChannel(c); // only true if you are on channel and are in an acceptable mode
 
@@ -4354,11 +4355,22 @@ namespace PowerSDR
 
                     //---------------------------------------------------------------------------------------------------
                     //---------------------------------------------------------------------------------------------------
-                    // 60m edges (NOT FOR US), BUT FOR CANADA
+                    // 60m 15khz segment edges
 
                     if (vfo > 5000000 && vfo < 6000000)
                     {
-                        int[] band_edge_list_r14 = { 5351500, 5353999, 5354000, 5365999, 5366000, 5366500 }; //  5351.5 - 5366.5 kHz  
+                        // OLDint[] band_edge_list_r14 = { 5351500, 5353999, 5354000, 5365999, 5366000, 5366500 }; //  5351.5 - 5366.5 kHz
+
+                        // 5351.5 – 5366.5 segment
+                        // 5351500 to 5353999 = CW and narrowband digital modes (max 200hz bandwidth) lower edge of first segment
+                        // 5354000 ukCH7, 5357000 USAch3 now FT8, 5360000, 5362000 ukCH8, 5363000 to 5365999 = Phone and wideband digital modes (max 2.7khz bandwidth) middle segment (3khz spacing)
+                        // 5366000 to 5366500 = CW and narrowband digital modes (max 20hz bandwidth) upper edge of third segment
+
+                        // 5351500 200hz, 200hz 5353999, 5354000 uk7 all mode1, 5357000 us3 FT8 all mode 2, 5360000 all mode 3, 5363000 uk8 all mode 4, 5366000 20hz, 20 hz 5366500 
+
+                        int[] band_edge_list_r14 = { 5351500, 5354000,  5354000, 5357000, 5357000, 5360000, 5360000, 5363000,5363000, 5366000, 5366000, 5366500 }; //  5351.5 - 5366.5 kHz  
+
+
 
                         bool onetime = false;
                         bool onetime1 = false;
@@ -4376,18 +4388,21 @@ namespace PowerSDR
                                     _y = H + top;
                                     is_first = false;
 
-                                    StringFormat SF = new StringFormat();
-                                    SF.Alignment = StringAlignment.Near;
-                                    SF.FormatFlags = StringFormatFlags.DirectionVertical;
+                                   
 
-                                    if (onetime == false) g.DrawString("IARU1/2 only", font1, grid_text_brush, _x, _y + 10, SF); // draw bandtext vertically
-                                    onetime = true;
+                                   
+                                   
                                 }
                                 else
                                 {
                                     _width = ((int)((double)(band_edge_offset - Low) / (High - Low) * W)) - _x;
                                     _height = (H + H) - _y;
                                     g.DrawRectangle(new Pen(band_box_color, band_box_width), new Rectangle(_x, _y, _width, _height));
+                                    StringFormat SF = new StringFormat();
+                                    SF.Alignment = StringAlignment.Near;
+                                    SF.FormatFlags = StringFormatFlags.DirectionVertical;
+                                  //  if (i==3) g.DrawString("USA/IARU1/2 15khz", font1, grid_text_brush, _x + _width + 10, _y , SF); // draw bandtext vertically was IARU 1/2 Only
+                                  //  onetime = true;
                                     is_first = true;
                                 }
                             }
@@ -4400,18 +4415,21 @@ namespace PowerSDR
                                     _y = top;
                                     is_first = false;
 
-                                    StringFormat SF1 = new StringFormat();
-                                    SF1.Alignment = StringAlignment.Near;
-                                    SF1.FormatFlags = StringFormatFlags.DirectionVertical;
+                                   
 
-                                    if (onetime1 == false) g.DrawString("IARU1/2 only", font1, grid_text_brush, _x, _y + 10, SF1); // draw bandtext vertically
-                                    onetime1 = true;
+                                    
+                                 
                                 }
                                 else
                                 {
                                     _width = ((int)((double)(band_edge_offset - Low) / (High - Low) * W)) - _x;
                                     _height = H - _y;
                                     g.DrawRectangle(new Pen(band_box_color, band_box_width), new Rectangle(_x, _y, _width, _height));
+                                    StringFormat SF1 = new StringFormat();
+                                    SF1.Alignment = StringAlignment.Near;
+                                    SF1.FormatFlags = StringFormatFlags.DirectionVertical;
+                                  //  if (i==3) g.DrawString("USA/IARU1/2 15khz", font1, grid_text_brush, _x + _width + 10, _y , SF1); // draw bandtext vertically  was IARU 1/2 Only
+                                  //  onetime1 = true;
                                     is_first = true;
                                 }
 

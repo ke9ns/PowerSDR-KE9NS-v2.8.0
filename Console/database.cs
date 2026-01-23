@@ -32,6 +32,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using static PowerSDR.Flex1500USB;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PowerSDR
@@ -192,34 +193,25 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
 
             object[] data = {
-
+                                
+                                0.000000, 0.000030, "ELF Extreme Low Freq 3-30hz",    false,
+                                0.000031, 0.000300, "SLF Super Low Freq 0.03-0.3khz", false,
+                                0.000301, 0.003000, "ULF Ultra Low Freq 0.3-3khz",    false,
+                                0.003001, 0.030000, "VLF Very Low Freq 3-30khz",      false,
+                                0.030001, 0.059999, "LF/LW Low Freq 30-300khz",       false,
                                 0.060000, 0.060000, "WWVB Time",                false,  // ke9ns add
-                                2.500000, 2.500000, "WWV Night Time",           false,
-                                5.000000, 5.000000, "WWV Night Time",           false,
-                                10.000000, 10.000000, "WWV Day-Evening Time",   false,
-                                15.000000, 15.000000, "WWV Day Time",           false,
-                                20.000000, 20.000000, "WWV Day Time",           false,
-                                25.000000, 25.000000, "WWV Day Time",           false,  // ke9ns add
-                                3.330000, 3.330000, "CHU Night Time",           false,
-                                7.850000, 7.850000, "CHU Night Time",           false,
-                                14.670000, 14.670000, "CHU Day Time",           false,
-                                4.996000, 4.996000, "RWM Night Time",                      false,
-                                9.996000, 9.996000, "RWM Day-Evening Time",                      false,
-                                14.996000, 14.996000, "RWM Day Time",                    false,
-                                4.998000, 4.998000, "EBC Night Time",                      false,
-                                15.006000, 15.006000, "EBC Day Time",                    false,
-
-                                0.135700, 0.137799, "2.2kM CW & Narrow Band",   true, // 2200m ham ke9ns change
-
-                                0.137800, 0.148499, "Long Wave",                false, // ke9ns add
-                                0.148500, 0.283500, "International AM LW",      false, // ke9ns mod
-                                0.283501, 0.414999, "Long Wave - Beacons",      false, // ke9ns add
-                                0.415000, 0.471999, "Maritime Band",            false,
+                                0.060001, 0.135699, "LF/LW LongWave 30-300khz",       false,
+                                0.135700, 0.137799, "2.2kM CW & Narrow Band",         true, // 2200m ham ke9ns change
+                                0.137800, 0.148499, "LF/LW LongWave 30-300khz",       false, // ke9ns add
+                                0.148500, 0.283500, "International AM LW",            false, // ke9ns mod
+                                0.283501, 0.300000, "LongWave NDB Nav Beacons",       false, // ke9ns add
+                                0.300001, 0.414999, "MediumWave NDB Nav Beacons",     false, // ke9ns add
+                                0.415000, 0.471999, "MediumWave Maritime Band",       false,
 
                                 0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow", true, // 630m ham ke9ns change
 
-                                0.479000, 0.526400, "Maritime Band",            false,
-                                0.526401, 0.529999, "Long Wave - Beacons",      false,   // ke9ns add
+                                0.479000, 0.526400, "MediumWave Maritime Band",       false,
+                                0.526401, 0.529999, "LongWave - Beacons",      false,   // ke9ns add
 
                                 0.530000, 0.530000, "TIS Travelers info stat",  false, // ke9ns add
 								0.530001, 1.609999, "Broadcast AM Med Wave",    false,
@@ -228,19 +220,22 @@ namespace PowerSDR
                                 1.710001, 1.799999, "Medium Wave",              false, // ke9ns add
                                 // 160m ham
 								2.000000, 2.499999, "120M Tropical Short Wave", false,
-                                // wwv 2.5000 mhz
+                                2.500000, 2.500000, "WWV Night Time",           false,
                                 2.500001, 2.999999, "120M Tropical Short Wave", false, // ke9ns add
                                 3.000000, 3.199999, "90M Tropical Short Wave",  false, // ke9ns add
                                 3.200000, 3.329999, "90M Tropical Short Wave",  false,
-                                // chu 3.3
+                                3.330000, 3.330000, "CHU Night Time",           false,
                                 3.330001, 3.499999, "90M Tropical Short Wave",  false,
                                 // 3.5 - 4.0 80-75m ham
                                 4.000001, 4.745999, "61M Night Short Wave",     false, // ke9ns add
                                 4.750000, 4.995999, "61M Night Short Wave",     false,
+                                4.996000, 4.996000, "RWM Night Time",                      false,
                                 4.996001, 4.997999, "61M Night Short Wave",     false,
+                                4.998000, 4.998000, "EBC Night Time",                      false,
                                 4.998001, 4.999999, "61M Night Short Wave",     false,
-                                // wwv
-                               
+                              
+                                5.000000, 5.000000, "WWV Night Time",           false,
+
                                 5.000001, 5.167499, "61M Night Short Wave",     false, // ke9ns add
                                 5.167500, 5.167500, "61M USB Alaska Emergency",  true, // ke9ns add
                                 5.167501, 5.249999, "61M Night Short Wave",     false, // ke9ns add
@@ -253,15 +248,18 @@ namespace PowerSDR
                                 7.453500, 7.456500, "41M USB Caribbean Emergency",  true, // ke9ns mod
                              
                                 7.456501, 7.849999, "41M Night Short Wave",     false, // ke9ns mod
+                                7.850000, 7.850000, "CHU Night Time",           false,
                                
-                                // chu 7.85
                                 7.850001, 7.853000, "41M USB Caribbean Emergency",  true, // ke9ns mod
 
                                 7.853001, 8.999999, "41M Night Short Wave",     false, // ke9ns mod
 
                                 9.000000, 9.900000, "31M Evening Short Wave",   false, // ke9ns mod
-                                9.900001, 9.999999, "31M Evening Short Wave",   false, // ke9ns add
-                                // wwv
+                                9.900001, 9.995999, "31M Evening Short Wave",   false, // ke9ns add
+                                9.996000, 9.996000, "RWM Day-Evening Time",     false,
+                                9.996001, 9.999999, "31M Evening Short Wave",   false, // ke9ns add
+                                10.000000, 10.000000, "WWV Day-Evening Time",   false,
+
                                 10.000001, 10.099999, "31M Evening Short Wave", false, // ke9ns add
                                 // 30m 10.1 - 10.15 mhz
 	                            10.150001, 11.599999, "25M Evening Short Wave", false, // ke9ns add
@@ -280,24 +278,28 @@ namespace PowerSDR
                                 14.415000, 14.418000, "19M Caribbean Emergency",  true, // ke9ns mod
 
                                 14.418001, 14.669999, "19M Daytime Short Wave", false,
-                               // chu 14.67
-                                14.670001, 14.999999, "19M Daytime Short Wave", false,
-                       
-                                // wwv
-                                15.000001, 15.800000, "19M Daytime Short Wave", false,
+                                14.670000, 14.670000, "CHU Day Time",           false,
+                                14.670001, 14.995999, "19M Daytime Short Wave", false,
+                                14.996000, 14.996000, "RWM Day Time",                    false,
+                                14.996001, 14.999999, "19M Daytime Short Wave", false,
+                                15.000000, 15.000000, "WWV Day Time",           false,
+                                15.000001, 15.005999, "19M Daytime Short Wave", false,
+                                15.006000, 15.006000, "EBC Day Time",                    false,
+                                15.006001, 15.800000, "19M Daytime Short Wave", false,
                                 15.800001, 17.479999, "19M Daytime Short Wave", false, // ke9ns add
                                 17.480000, 18.067999, "16M Daytime Short Wave", false, // ke9ns mod
                                 // 17m 18.068-18.168
                                 18.168001, 18.899999, "16M Daytime Short Wave", false, // ke9ns add
                                 18.900000, 19.999999, "14M Daytime Short Wave", false, // ke9ns mod
-                                // wwv
+                                20.000000, 20.000000, "WWV Day Time",           false,
                                 20.000001, 20.999999, "13M Daytime Short Wave", false, // ke9ns mod
                               
                                 // 15m 21.000 - 21.450
                                 21.450001, 24.889999, "13M Daytime Short Wave",  false,
 
                                 // 12m 24.89 - 24.99 mhz
-                                // wwv
+                                25.000000, 25.000000, "WWV Day Time",           false,  // ke9ns add
+                               
                                 25.000001, 26.960000, "11M Day Short Wave",     false,
 
                                 26.960001, 26.969999, "11M CB ch 1",            false,
@@ -834,6 +836,7 @@ namespace PowerSDR
 
 
         // 5.250000, 5.351499, "60M RX Only"
+
         // 5.351500, 5.335999, "60M 200hz Narrow Band Modes
         // 5.354000, 5.356999, "60M USB Voice
         // 5.357000, 5.359999, "60M USB Voice (US CH 3)"
@@ -842,24 +845,25 @@ namespace PowerSDR
         // 5.366000, 5.366500, "60M 20hz Narrow Band Modes"    
         // 5.366501, 5.450000, "60M RX Only"          
 
+        // 5351500 200hz, 200hz 5353999, 5354000 uk7 all mode1, 5357000 us3 FT8 all mode 2, 5360000 all mode 3, 5363000 uk8 all mode 4, 5366000 20hz, 20 hz 5366500 
+
         // ke9ns modified
         private static void AddRegion1ABandText60m() // TX Germany, Luxembourg, Belgium, spain, switzerland, Finland
         {
             DataTable t = ds.Tables["BandText"];
             Debug.WriteLine("EUROPE==============");
 
-
             object[] data = {
-                                5.250000, 5.351499, "60M RX Only",                  false,
+                                5.250000, 5.351499, "60M RX Only",               false,
 
-                                5.351500, 5.353999, "60M 200hz Narrow Band Modes",  true,
-                                5.354000, 5.356999, "60M USB Voice (UK CH 7)",      true,
-                                5.357000, 5.359999, "60M USB Voice (US CH 3)",      true,
-                                5.360000, 5.362999, "60M USB Voice",                true,
-                                5.363000, 5.365999, "60M USB Voice (UK CH 8)",      true,
-                                5.366000, 5.366500, "60M 20hz Narrow Band Modes",   true,
+                                5.351500, 5.353999, "60M 200hz Nar Modes",       true,
+                                5.354000, 5.356999, "60M All Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All Mode3",             true,
+                                5.363000, 5.365999, "60M All Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar Modes",        true,
 
-                                5.366501, 5.450000, "60M RX Only",                  false,
+                                5.366501, 5.450000, "60M RX Only",               false,
                             };
 
 
@@ -1018,7 +1022,7 @@ namespace PowerSDR
 
 
 
-        // ke9ns parts of region 1 that dont get the new 60m plan
+        // ke9ns: parts of region 1 that dont get the new 60m plan
         private static void AddRegion1BandText60m() // RX only
         {
             DataTable t = ds.Tables["BandText"];
@@ -1026,16 +1030,19 @@ namespace PowerSDR
 
             object[] data = {
 
-                                5.250000, 5.351499, "60M RX Only",              false,
+                            
+                                5.250000, 5.351499, "60M RX Only",               false,
 
-                                5.351500, 5.335999, "60M 200hz RX Narrow Band Modes",    false,
-                                5.354000, 5.356999, "60M RX USB (UK CH 7)",            false,
-                                5.357000, 5.359999, "60M RX USB (US CH 3)",  false,
-                                5.360000, 5.362999, "60M RX USB",            false,
-                                5.363000, 5.365999, "60M RX USB (UK CH 8)",            false,
-                                5.366000, 5.366500, "60M 20hz RX Narrow Band Modes",    false,
+                                5.351500, 5.353999, "60M 200hz Nar Modes",       true,
+                                5.354000, 5.356999, "60M All Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All Mode3",             true,
+                                5.363000, 5.365999, "60M All Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar Modes",        true,
 
-                                5.366501, 5.450000, "60M RX Only",              false,
+                                5.366501, 5.450000, "60M RX Only",               false,
+
+
 
                            };
 
@@ -1926,7 +1933,7 @@ namespace PowerSDR
                                 5.338001, 5.353999, "60M Band",                 false,
                                 5.354000, 5.358000, "60M Band Seg 7 (IARU1)",   true,
 
-                                5.358001, 5.361999, "60M Band",                 false,
+                                5.358001, 5.361999, "60M Band FT8",                 false,
                                 5.362000, 5.362999, "60M Band Segment 8",       true,
                                 5.363000, 5.365999, "60M Band Seg 8 (IARU1)",       true,
                                 5.366000, 5.374500, "60M Band Segment 8",       true,
@@ -1963,9 +1970,18 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
 
             object[] data = {
-                                5.250000, 5.450000, "60M Amateur Service",      true,
+                             //   5.250000, 5.450000, "60M Amateur Service",      true,
+                             
+                                5.250000, 5.351499, "60M Amateur Service",      true,
+                              
+                                5.351500, 5.353999, "60M 200hz Nar Modes",       true,
+                                5.354000, 5.356999, "60M All Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All Mode3",             true,
+                                5.363000, 5.365999, "60M All Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar Modes",        true,
 
-
+                                5.366501, 5.450000, "60M RX Only",               true,
                             };
 
             for (int i = 0; i < data.Length / 4; i++)
@@ -2468,7 +2484,7 @@ namespace PowerSDR
         // ke9ns console.cs bandtextnumber needs to be incremented if you update database.cs file
 
 
-        private static void AddBandTextTable()  // Default bandtext -  // ke9ns for FRSRegion.US  AddBandTextSWB() is added in this function
+        private static void AddBandTextTable()  // Default bandtext -  // ke9ns: for FRSRegion.US  AddBandTextSWB() is added in this function
         {
             if (bandtextrefresh == false) ds.Tables.Add("BandText");
 
@@ -2560,28 +2576,27 @@ namespace PowerSDR
                              //------------------------------------------------------------------ US
                            
                               //  5.167500, 5.167500, "60M Emergency Channel",    true, // ke9ns add
-
-                                5.250000, 5.331999, "60M General",              false,
+                           // 5351500, 5351700, 5353999, 5354000, 5365999, 5366000, 5366500
+                                5.250000, 5.331999, "60M RX Only",              false,
                                 5.332000, 5.332000, "60M Channel 1",            true,
-                                5.332001, 5.347999, "60M General",              false,
+                                5.332001, 5.347999, "60M RX Only",              false,
                                 5.348000, 5.348000, "60M Channel 2",            true,
 
-                                5.348001, 5.351499, "60M General",              false,
+                                5.348001, 5.351499, "60M RX Only",              false,
+                             
+                                5.351500, 5.353999, "60M 200hz Nar-Mode",       true,
+                                5.354000, 5.356999, "60M All-Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All-Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All-Mode3",             true,
+                                5.363000, 5.365999, "60M All-Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar-Mode",        true,
 
-                                5.351500, 5.353999, "60M 200hz NBM IARU1/2 only",  false,
-                                5.354000, 5.358499, "60M USB Voice IARU1/2 only",  false,
-
-                                5.358500, 5.358500, "60M Channel 3 (IARU1/2)",  true,
-
-                                5.358501, 5.365999, "60M USB Voice IARU1/2 only",  false,
-                                5.366000, 5.366500, "60M 20hz NBM IARU1/2 only",  false,
-
-                                5.366501, 5.372999, "60M General",              false,
+                                5.366501, 5.372999, "60M RX Only",              false,
 
                                 5.373000, 5.373000, "60M Channel 4",            true,
-                                5.373001, 5.404999, "60M General",              false,
+                                5.373001, 5.404999, "60M RX Only",              false,
                                 5.405000, 5.405000, "60M Channel 5",            true,
-                                5.405001, 5.450000, "60M General",              false,
+                                5.405001, 5.450000, "60M RX Only",              false,
 
     
                                 //------------------------------------------------------------------
@@ -3252,13 +3267,12 @@ namespace PowerSDR
 
                                 5.348001, 5.351499, "60M General",              false,
 
-                                5.351500, 5.353999, "60M 200hz NBM (IARU1/2)",  true,
-                                5.354000, 5.358499, "60M USB Voice (IARU1/2)",  true,
-
-                                5.358500, 5.358500, "60M Channel 3 (IARU1/2)",  true,
-
-                                5.358501, 5.365999, "60M USB Voice (IARU1/2)",  true,
-                                5.366000, 5.366500, "60M 20hz  NBM (IARU1/2)",  true,
+                                5.351500, 5.353999, "60M 200hz Nar band mode",  true,
+                                5.354000, 5.358499, "60M USB Voice (UK Ch 7)",  true,
+                                5.358500, 5.358500, "60M USB FT8",    true, // was ch 3
+                                5.358501, 5.362999, "60M USB Voice IARU1/2",    true,
+                                5.363000, 5.365999, "60M USB Voice (UK CH 8)",  true,
+                                5.366000, 5.366500, "60M 20hz Nar band mode",   true,
 
                                 5.366501, 5.372999, "60M General",              false,
 
@@ -4340,18 +4354,16 @@ namespace PowerSDR
 
             object[] data = {
 
+                                5.250000, 5.351499, "60M RX Only",               false,
 
-                                5.250000, 5.351499, "60M RX Only",                     false,
+                                5.351500, 5.353999, "60M 200hz Nar Modes",       true,
+                                5.354000, 5.356999, "60M All Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All Mode3",             true,
+                                5.363000, 5.365999, "60M All Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar Modes",        true,
 
-                                5.351500, 5.335999, "60M 200hz RX Narrow Band Modes",  false,
-                                5.354000, 5.356999, "60M RX USB (UK CH 7)",            false,
-                                5.357000, 5.359999, "60M RX USB (US CH 3)",            false,
-                                5.360000, 5.362999, "60M RX USB",                      false,
-                                5.363000, 5.365999, "60M RX USB (UK CH 8)",            false,
-                                5.366000, 5.366500, "60M 20hz RX Narrow Band Modes",   false,
-
-                                5.366501, 5.450000, "60M RX Only",                    false,
-
+                                5.366501, 5.450000, "60M RX Only",               false,
 
 
                             };
@@ -4373,17 +4385,16 @@ namespace PowerSDR
 
             object[] data = {
 
+                                5.250000, 5.351499, "60M RX Only",               false,
 
-                                5.250000, 5.351499, "60M RX Only",                     false,
+                                5.351500, 5.353999, "60M 200hz Nar Modes",       true,
+                                5.354000, 5.356999, "60M All Mode1 (UK7)",       true,
+                                5.357000, 5.359999, "60M All Mode2 (FT8/US3)",   true, // old us ch 3
+                                5.360000, 5.362999, "60M All Mode3",             true,
+                                5.363000, 5.365999, "60M All Mode4 (UK8)",       true,
+                                5.366000, 5.366500, "60M 20hz Nar Modes",        true,
 
-                                5.351500, 5.335999, "60M 200hz RX Narrow Band Modes",  true,
-                                5.354000, 5.356999, "60M RX USB (UK CH 7)",            true,
-                                5.357000, 5.359999, "60M RX USB (US CH 3)",            true,
-                                5.360000, 5.362999, "60M RX USB",                      true,
-                                5.363000, 5.365999, "60M RX USB (UK CH 8)",            true,
-                                5.366000, 5.366500, "60M 20hz RX Narrow Band Modes",   true,
-
-                                5.366501, 5.450000, "60M RX Only",                    false,
+                                5.366501, 5.450000, "60M RX Only",               false,
 
                             };
 
@@ -5275,7 +5286,7 @@ namespace PowerSDR
 
                                 "60M", "DIGU", "F1", 5.351500, // DIGI
                                 "60M", "USB", "F6", 5.35400, // uk CHANNEL 7
-                                "60M", "USB", "F6", 5.35700, // us channel 3
+                                "60M", "USB", "F6", 5.35700, // was us channel 3
                                 "60M", "USB", "F6", 5.35000, // 
                                 "60M", "USB", "F6", 5.36300, // uK channel 8
                                 "60M", "CWU", "F6", 5.366525, // CW
@@ -5358,7 +5369,7 @@ namespace PowerSDR
 
                                 "60M", "DIGU", "F1", 5.351500, // DIGI
                                 "60M", "USB", "F6", 5.35400, // uk CHANNEL 7
-                                "60M", "USB", "F6", 5.35700, // us channel 3
+                                "60M", "USB", "F6", 5.35700, // was us channel 3
                                 "60M", "USB", "F6", 5.35000, // 
                                 "60M", "USB", "F6", 5.36300, // uK channel 8
                                 "60M", "CWU", "F6", 5.366525, // CW
@@ -5435,7 +5446,7 @@ namespace PowerSDR
 
                                 "60M", "DIGU", "F1", 5.351500, // DIGI
                                 "60M", "USB", "F6", 5.35400, // uk CHANNEL 7
-                                "60M", "USB", "F6", 5.35700, // us channel 3
+                                "60M", "USB", "F6", 5.35700, // was us channel 3
                                 "60M", "USB", "F6", 5.35000, // 
                                 "60M", "USB", "F6", 5.36300, // uK channel 8
                                 "60M", "CWU", "F6", 5.366525, // CW
@@ -5524,7 +5535,7 @@ namespace PowerSDR
 
                                 "60M", "DIGU", "F1", 5.351500, // DIGI
                                 "60M", "USB", "F6", 5.35400, // uk CHANNEL 7
-                                "60M", "USB", "F6", 5.35700, // us channel 3
+                                "60M", "USB", "F6", 5.35700, // was us channel 3
                                 "60M", "USB", "F6", 5.35000, // 
                                 "60M", "USB", "F6", 5.36300, // uK channel 8
                                 "60M", "CWU", "F6", 5.366525, // CW
@@ -5618,7 +5629,7 @@ namespace PowerSDR
 
                                 "60M", "DIGU", "F1", 5.351500, // DIGI
                                 "60M", "USB", "F6", 5.35400, // uk CHANNEL 7
-                                "60M", "USB", "F6", 5.35700, // us channel 3
+                                "60M", "USB", "F6", 5.35700, // was us channel 3
                                 "60M", "USB", "F6", 5.35000, // 
                                 "60M", "USB", "F6", 5.36300, // uK channel 8
                                 "60M", "CWU", "F6", 5.366525, // CW
