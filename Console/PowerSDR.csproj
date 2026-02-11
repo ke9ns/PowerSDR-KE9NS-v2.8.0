@@ -213,14 +213,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Release\Flex1500USB.dll</HintPath>
     </Reference>
-    <Reference Include="FlexControl, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Release\FlexControl.dll</HintPath>
-    </Reference>
-    <Reference Include="FlexCW, Version=1.0.2.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Release\FlexCW.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.1.9, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.3.1\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -487,9 +479,20 @@
     <Compile Include="cwedit.Designer.cs">
       <DependentUpon>cwedit.cs</DependentUpon>
     </Compile>
+    <Compile Include="cw\CWKeyer.cs" />
+    <Compile Include="cw\CWMuteItem.cs" />
+    <Compile Include="cw\CWPTT.cs" />
+    <Compile Include="cw\CWPTTItem.cs" />
+    <Compile Include="cw\CWSensorItem.cs" />
+    <Compile Include="cw\CWSynth.cs" />
+    <Compile Include="cw\CWToneItem.cs" />
     <Compile Include="cwx.Designer.cs">
       <DependentUpon>cwx.cs</DependentUpon>
     </Compile>
+    <Compile Include="cw\MMTimer.cs" />
+    <Compile Include="cw\TimerCaps.cs" />
+    <Compile Include="cw\TimerMode.cs" />
+    <Compile Include="cw\TimerStartException.cs" />
     <Compile Include="DiversityForm.Designer.cs">
       <DependentUpon>DiversityForm.cs</DependentUpon>
     </Compile>
@@ -572,6 +575,7 @@
     <Compile Include="helpbox1.Designer.cs">
       <DependentUpon>helpbox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="hid\flex1500.cs" />
     <Compile Include="hid\FLEX1500MixerForm.Designer.cs">
       <DependentUpon>FLEX1500MixerForm.cs</DependentUpon>
     </Compile>
@@ -756,7 +760,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="hid\CodecDebug.cs" />
-    <Compile Include="hid\flex1500.cs" />
     <Compile Include="hid\FLEX1500DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1145,7 +1148,6 @@
     <EmbeddedResource Include="Resources\bar2.png" />
     <Content Include="atu.dll" />
     <Content Include="Flex1500USB.dll" />
-    <Content Include="FlexControl.dll" />
     <Content Include="FlexCW.dll" />
     <Content Include="Resources\blue1.png" />
     <None Include="Resources\DRAP.bmp" />

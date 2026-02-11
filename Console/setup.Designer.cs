@@ -301,6 +301,7 @@ namespace PowerSDR
             this.grpAudioSampleRate1 = new System.Windows.Forms.GroupBoxTS();
             this.comboAudioSampleRate1 = new System.Windows.Forms.ComboBoxTS();
             this.tpVAC = new System.Windows.Forms.TabPage();
+            this.buttonRefreshAudioList = new System.Windows.Forms.ButtonTS();
             this.checkMicMonRx = new System.Windows.Forms.CheckBoxTS();
             this.chkVACReset = new System.Windows.Forms.CheckBoxTS();
             this.grpAudioVACAutoEnable = new System.Windows.Forms.GroupBoxTS();
@@ -1175,6 +1176,7 @@ namespace PowerSDR
             this.chkCATPTT_DTR = new System.Windows.Forms.CheckBoxTS();
             this.chkCATPTTEnabled = new System.Windows.Forms.CheckBoxTS();
             this.grpCatControlBox = new System.Windows.Forms.GroupBoxTS();
+            this.buttonRefeshComPorts = new System.Windows.Forms.ButtonTS();
             this.chkKWAI8 = new System.Windows.Forms.CheckBoxTS();
             this.chkCATEnable8 = new System.Windows.Forms.CheckBoxTS();
             this.comboCATPort8 = new System.Windows.Forms.ComboBoxTS();
@@ -5347,6 +5349,7 @@ namespace PowerSDR
             // 
             // tpVAC
             // 
+            this.tpVAC.Controls.Add(this.buttonRefreshAudioList);
             this.tpVAC.Controls.Add(this.checkMicMonRx);
             this.tpVAC.Controls.Add(this.chkVACReset);
             this.tpVAC.Controls.Add(this.grpAudioVACAutoEnable);
@@ -5371,6 +5374,20 @@ namespace PowerSDR
             this.tpVAC.TabIndex = 1;
             this.tpVAC.Text = "VAC 1";
             this.toolTip1.SetToolTip(this.tpVAC, resources.GetString("tpVAC.ToolTip"));
+            // 
+            // buttonRefreshAudioList
+            // 
+            this.buttonRefreshAudioList.Enabled = false;
+            this.buttonRefreshAudioList.Image = null;
+            this.buttonRefreshAudioList.Location = new System.Drawing.Point(251, 112);
+            this.buttonRefreshAudioList.Name = "buttonRefreshAudioList";
+            this.buttonRefreshAudioList.Size = new System.Drawing.Size(61, 40);
+            this.buttonRefreshAudioList.TabIndex = 130;
+            this.buttonRefreshAudioList.Text = "Refresh Audio list";
+            this.toolTip1.SetToolTip(this.buttonRefreshAudioList, "Click to Refresh the list of Audio input and output devices.\r\n\r\nThis allows you t" +
+        "o plug in a USB headset without having to restart PowerSDR");
+            this.buttonRefreshAudioList.Visible = false;
+            this.buttonRefreshAudioList.Click += new System.EventHandler(this.buttonRefreshAudioList_Click);
             // 
             // checkMicMonRx
             // 
@@ -17496,6 +17513,7 @@ namespace PowerSDR
             // 
             // grpCatControlBox
             // 
+            this.grpCatControlBox.Controls.Add(this.buttonRefeshComPorts);
             this.grpCatControlBox.Controls.Add(this.chkKWAI8);
             this.grpCatControlBox.Controls.Add(this.chkCATEnable8);
             this.grpCatControlBox.Controls.Add(this.comboCATPort8);
@@ -17547,6 +17565,18 @@ namespace PowerSDR
             this.grpCatControlBox.TabIndex = 90;
             this.grpCatControlBox.TabStop = false;
             this.grpCatControlBox.Text = "CAT Control";
+            // 
+            // buttonRefeshComPorts
+            // 
+            this.buttonRefeshComPorts.Image = null;
+            this.buttonRefeshComPorts.Location = new System.Drawing.Point(148, 225);
+            this.buttonRefeshComPorts.Name = "buttonRefeshComPorts";
+            this.buttonRefeshComPorts.Size = new System.Drawing.Size(61, 40);
+            this.buttonRefeshComPorts.TabIndex = 129;
+            this.buttonRefeshComPorts.Text = "Refresh Com list";
+            this.toolTip1.SetToolTip(this.buttonRefeshComPorts, "Click to Refresh COM (Serial) port listing\r\n\r\nThis allows you to create a new Vsp" +
+        "Mgr COM port pair without having to restart PowerSDR\r\n");
+            this.buttonRefeshComPorts.Click += new System.EventHandler(this.buttonTS3_Click);
             // 
             // chkKWAI8
             // 
@@ -17820,7 +17850,7 @@ namespace PowerSDR
             this.txtCATPort1.Name = "txtCATPort1";
             this.txtCATPort1.Size = new System.Drawing.Size(58, 20);
             this.txtCATPort1.TabIndex = 4;
-            this.txtCATPort1.Text = "DDUtil";
+            this.txtCATPort1.Text = "CWskimr";
             this.txtCATPort1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip1.SetToolTip(this.txtCATPort1, resources.GetString("txtCATPort1.ToolTip"));
             // 
@@ -17926,7 +17956,7 @@ namespace PowerSDR
             "38400",
             "57600",
             "115200"});
-            this.comboCATbaud.Location = new System.Drawing.Point(72, 220);
+            this.comboCATbaud.Location = new System.Drawing.Point(50, 223);
             this.comboCATbaud.Name = "comboCATbaud";
             this.comboCATbaud.Size = new System.Drawing.Size(72, 21);
             this.comboCATbaud.TabIndex = 93;
@@ -17938,7 +17968,7 @@ namespace PowerSDR
             // 
             this.lblCATBaud.BackColor = System.Drawing.SystemColors.Info;
             this.lblCATBaud.Image = null;
-            this.lblCATBaud.Location = new System.Drawing.Point(32, 222);
+            this.lblCATBaud.Location = new System.Drawing.Point(10, 225);
             this.lblCATBaud.Name = "lblCATBaud";
             this.lblCATBaud.Size = new System.Drawing.Size(34, 23);
             this.lblCATBaud.TabIndex = 5;
@@ -17970,7 +18000,7 @@ namespace PowerSDR
             // 
             this.lblCATParity.BackColor = System.Drawing.SystemColors.Info;
             this.lblCATParity.Image = null;
-            this.lblCATParity.Location = new System.Drawing.Point(32, 244);
+            this.lblCATParity.Location = new System.Drawing.Point(10, 247);
             this.lblCATParity.Name = "lblCATParity";
             this.lblCATParity.Size = new System.Drawing.Size(34, 23);
             this.lblCATParity.TabIndex = 92;
@@ -17980,7 +18010,7 @@ namespace PowerSDR
             // 
             this.lblCATData.BackColor = System.Drawing.SystemColors.Info;
             this.lblCATData.Image = null;
-            this.lblCATData.Location = new System.Drawing.Point(32, 269);
+            this.lblCATData.Location = new System.Drawing.Point(10, 272);
             this.lblCATData.Name = "lblCATData";
             this.lblCATData.Size = new System.Drawing.Size(34, 23);
             this.lblCATData.TabIndex = 92;
@@ -17990,7 +18020,7 @@ namespace PowerSDR
             // 
             this.lblCATStop.BackColor = System.Drawing.SystemColors.Info;
             this.lblCATStop.Image = null;
-            this.lblCATStop.Location = new System.Drawing.Point(32, 293);
+            this.lblCATStop.Location = new System.Drawing.Point(10, 296);
             this.lblCATStop.Name = "lblCATStop";
             this.lblCATStop.Size = new System.Drawing.Size(34, 23);
             this.lblCATStop.TabIndex = 92;
@@ -18007,7 +18037,7 @@ namespace PowerSDR
             "even",
             "mark",
             "space"});
-            this.comboCATparity.Location = new System.Drawing.Point(72, 243);
+            this.comboCATparity.Location = new System.Drawing.Point(50, 246);
             this.comboCATparity.Name = "comboCATparity";
             this.comboCATparity.Size = new System.Drawing.Size(72, 21);
             this.comboCATparity.TabIndex = 92;
@@ -18023,7 +18053,7 @@ namespace PowerSDR
             "8",
             "7",
             "6"});
-            this.comboCATdatabits.Location = new System.Drawing.Point(72, 267);
+            this.comboCATdatabits.Location = new System.Drawing.Point(50, 270);
             this.comboCATdatabits.Name = "comboCATdatabits";
             this.comboCATdatabits.Size = new System.Drawing.Size(72, 21);
             this.comboCATdatabits.TabIndex = 93;
@@ -18039,7 +18069,7 @@ namespace PowerSDR
             "1",
             "1.5",
             "2"});
-            this.comboCATstopbits.Location = new System.Drawing.Point(72, 291);
+            this.comboCATstopbits.Location = new System.Drawing.Point(50, 294);
             this.comboCATstopbits.Name = "comboCATstopbits";
             this.comboCATstopbits.Size = new System.Drawing.Size(72, 21);
             this.comboCATstopbits.TabIndex = 94;
@@ -20689,6 +20719,8 @@ namespace PowerSDR
         public System.Windows.Forms.CheckBoxTS chkKWAI7;
         public System.Windows.Forms.CheckBoxTS chkVACRXMon;
         public System.Windows.Forms.CheckBoxTS checkMicMonRx;
+        private System.Windows.Forms.ButtonTS buttonRefeshComPorts;
+        private System.Windows.Forms.ButtonTS buttonRefreshAudioList;
     } // class setup
 
 

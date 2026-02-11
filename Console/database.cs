@@ -2577,6 +2577,7 @@ namespace PowerSDR
                            
                               //  5.167500, 5.167500, "60M Emergency Channel",    true, // ke9ns add
                            // 5351500, 5351700, 5353999, 5354000, 5365999, 5366000, 5366500
+                           //.324
                                 5.250000, 5.331999, "60M RX Only",              false,
                                 5.332000, 5.332000, "60M Channel 1",            true,
                                 5.332001, 5.347999, "60M RX Only",              false,

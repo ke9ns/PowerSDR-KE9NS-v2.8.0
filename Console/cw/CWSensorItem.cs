@@ -1,11 +1,20 @@
-﻿#region Assembly FlexCW, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null
+﻿//=================================================================
+// CWSensorItem.cs
+//=================================================================
+// PowerSDR is a C# implementation of a Software Defined Radio.
+// KE9NS This was extracted from FlexCW.dll
+
+#region Assembly FlexCW, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null
 // C:\Users\RADIO\source\PowerSDR_v2.8.0\Source\bin\Release\FlexCW.dll
 // Decompiled with ICSharpCode.Decompiler 6.1.0.5902
 #endregion
 
-using Timing;
 
-namespace FlexCW
+//using Timing;
+using System;
+using System.Diagnostics;
+
+namespace PowerSDR  //FlexCW
 {
     public class CWSensorItem
     {

@@ -28,7 +28,7 @@
 
 //#define TIMING
 
-using FlexCW;
+//using FlexCW;
 using System;
 using System.Collections;
 using System.Diagnostics;

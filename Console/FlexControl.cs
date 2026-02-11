@@ -1,4 +1,8 @@
-﻿
+﻿//=================================================================
+// FLexControl.cs
+//=================================================================
+// PowerSDR is a C# implementation of a Software Defined Radio.
+// This was extracted from FlexControl.dll
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +13,7 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading;
 
-namespace PowerSDR //Flex.Control
+namespace PowerSDR //FlexControl.dll
 {
     public class FlexControl
     {

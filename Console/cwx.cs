@@ -36,7 +36,7 @@
 #define SAVERESTORE
 //#define CWX_DEBUG (Note: Please do not put all Debug.Writeline()under this. Leave them commented off.)
 
-using FlexCW;
+//using FlexCW;
 using System;
 using System.Diagnostics;
 using System.Drawing;

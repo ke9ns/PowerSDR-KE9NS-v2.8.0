@@ -248,7 +248,7 @@ using System.Windows.Forms;
 using System.Speech.Synthesis; // ke9ns add
 //using System.Object;
 //using System.Windows.Threading.DispatcherObject;
-using FlexCW; // .250
+//using FlexCW; // .250
 using System.Linq; // ke9ns add
 using NAudio.Wave; // ke9ns add
 using NAudio.Lame; // ke9ns add
@@ -265,7 +265,7 @@ using HidDevice;
 using Flex.TNF;
 #endif
 
-using Flex.Control; //.250
+//using Flex.Control; //.250
 
 //using CefSharp;            // ke9ns add to allow embedded chrome browser (for help videos)
 //using CefSharp.WinForms;
@@ -34888,12 +34888,12 @@ namespace PowerSDR
                         if (cat_enabled)
                         {
                             Siolisten.enableCAT();
-
+                          //  if (setupForm != null) setupForm.txtCATPort1.BackColor = Color.LightGreen;  //.325
                         }
                         else
                         {
                             Siolisten.disableCAT();
-
+                          //  if (setupForm != null) setupForm.txtCATPort1.BackColor = SystemColors.Window;
                         }
                     }
                 }
@@ -34944,11 +34944,12 @@ namespace PowerSDR
                         if (cat_enabled2)
                         {
                             Siolisten2.enableCAT2();
+                          // if (setupForm != null) setupForm.txtCATPort2.BackColor = Color.LightGreen;
                         }
                         else
                         {
                             Siolisten2.disableCAT2();
-
+                          //  if (setupForm != null) setupForm.txtCATPort2.BackColor = SystemColors.Window;
                         }
                     }
                 }

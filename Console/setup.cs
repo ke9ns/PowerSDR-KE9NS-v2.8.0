@@ -2,7 +2,6 @@
 // setup.cs
 //=================================================================
 // PowerSDR is a C# implementation of a Software Defined Radio.
-// PowerSDR is a C# implementation of a Software Defined Radio.
 // Copyright (C) 2003-2013  FlexRadio Systems
 //
 // This program is free software; you can redistribute it and/or
@@ -27,8 +26,8 @@
 //    USA
 //=================================================================
 
-using Flex.Control;     //.250  ke9ns add
-using FlexCW; // .250          //
+//using Flex.Control;     //.250  ke9ns add
+//using FlexCW; // .250          //
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -166,7 +165,7 @@ namespace PowerSDR
             if (comboCATPort5.Items.Count > 0) comboCATPort5.SelectedIndex = 0;
             if (comboCATPort6.Items.Count > 0) comboCATPort6.SelectedIndex = 0;
             if (comboCATPort8.Items.Count > 0) comboCATPort8.SelectedIndex = 0; //.311
-
+            
 
             if (comboROTORPort.Items.Count > 0) comboROTORPort.SelectedIndex = 0;  // ke9ns add
 
@@ -741,6 +740,7 @@ namespace PowerSDR
 
             comboCATPTTPort.Items.Add("None");
             comboCATPTTPort.Items.AddRange(com_ports);
+
         } // RefreshCOMPortsLists()
 
         private void RefreshSkinList()
@@ -808,18 +808,17 @@ namespace PowerSDR
             {
                 if (Audio.GetPAInputDevices(host_index).Count > 0 || Audio.GetPAOutputDevices(host_index).Count > 0)
                 {
-                    comboAudioDriver1.Items.Add(new PADeviceInfo(PAHostName, host_index));
+                    comboAudioDriver1.Items.Add(new PADeviceInfo(PAHostName, host_index)); // primary
 
 
-                    if (PAHostName != "Windows WASAPI" && PAHostName != "ASIO")
-                    //  if (PAHostName != "Windows WASAPI") // ke9ns mod  this is the HPSDR version
+                    if (PAHostName != "Windows WASAPI" && PAHostName != "ASIO")  // ASIO is used by the IQ stream so don't use for VAC
                     {
                         PADeviceInfo devinfo = new PADeviceInfo(PAHostName, host_index);
 
-                        comboAudioDriver2.Items.Add(new PADeviceInfo(PAHostName, host_index)); // ke9ns from hpsdr
+                        comboAudioDriver2.Items.Add(new PADeviceInfo(PAHostName, host_index)); // ke9ns 
                         comboAudioDriver2B.Items.Add(new PADeviceInfo(PAHostName, host_index)); // ke9ns .204
 
-                        comboAudioDriver3.Items.Add(new PADeviceInfo(PAHostName, host_index)); // ke9ns from hpsdr
+                        comboAudioDriver3.Items.Add(new PADeviceInfo(PAHostName, host_index)); // ke9ns 
 
                         //  comboAudioDriver2.Items.Add(devinfo); // vac1 populate lists
                         //  comboAudioDriver3.Items.Add(devinfo); // vac2
@@ -10144,25 +10143,30 @@ namespace PowerSDR
             chkCATEnable.Checked = console.CATEnabled;
 
             string port = "COM" + console.CATPort.ToString();
-
             if (comboCATPort.Items.Contains(port))
                 comboCATPort.Text = port;
 
+             port = "COM" + console.CATPort2.ToString();   //.325
             if (comboCATPort2.Items.Contains(port)) // ke9ns add .180
                 comboCATPort2.Text = port;
 
+            port = "COM" + console.CATPort3.ToString();
             if (comboCATPort3.Items.Contains(port)) // ke9ns add .180
                 comboCATPort3.Text = port;
 
+            port = "COM" + console.CATPort4.ToString();
             if (comboCATPort4.Items.Contains(port)) // ke9ns add .180
                 comboCATPort4.Text = port;
 
+            port = "COM" + console.CATPort5.ToString();
             if (comboCATPort5.Items.Contains(port)) // ke9ns add .180
                 comboCATPort5.Text = port;
 
+            port = "COM" + console.CATPort6.ToString();
             if (comboCATPort6.Items.Contains(port)) // ke9ns add .200
                 comboCATPort6.Text = port;
 
+            port = "COM" + console.CATPort8.ToString();
             if (comboCATPort8.Items.Contains(port)) // ke9ns add .311
                 comboCATPort8.Text = port;
 
@@ -10172,11 +10176,13 @@ namespace PowerSDR
             chkCATPTTEnabled.Checked = console.PTTBitBangEnabled;
 
             chkROTOREnable.Checked = console.ROTOREnabled; // ke9ns add
+
             port = "COM" + console.ROTORPort.ToString(); // ke9ns add
             if (comboROTORPort.Items.Contains(port)) // ke9ns add
                 comboROTORPort.Text = port;
 
             chkCXAuto.Checked = console.CXAutoEnabled; // ke9ns add
+
             port = "COM" + console.CXAutoPort;
             if (comboCXAuto.Items.Contains(port)) //.275
                 comboCXAuto.Text = port;
@@ -16857,6 +16863,125 @@ namespace PowerSDR
             {
                 CrashProtection = true;
             }
+        }
+
+        private void buttonTS3_Click(object sender, EventArgs e)
+        {
+            RefreshCOMPortLists();
+        //  initCATandPTTprops(); // this sends com port data back to console
+            copyCATPropsToDialogVars();  // this copies console COM data back to setup
+
+        } // buttonTS3_Click
+
+        private void buttonRefreshAudioList_Click(object sender, EventArgs e)
+        {
+            bool power = console.PowerOn;
+
+            if (power)
+            {
+                console.PowerOn = false;
+                Thread.Sleep(800);
+            }
+          
+
+            //  Audio.Input2 = new_input;
+
+         //   int vac1InA = console.AudioInputIndex2; // get current list of vac1,vac2 input and outputs
+         //  int vac1OutA = console.AudioOutputIndex2;
+
+        /*    string Vac1DvrA = comboAudioDriver2.SelectedItem.ToString();
+            string Vac1DvrB = comboAudioDriver2B.SelectedItem.ToString();
+            string Vac2DvrA = comboAudioDriver3.SelectedItem.ToString();
+            string PriDvrA = comboAudioDriver1.SelectedItem.ToString();
+
+            string Vac1OutA = comboAudioOutput2.SelectedItem.ToString();
+            string Vac1InA = comboAudioInput2.SelectedItem.ToString();
+            string Vac1OutB = comboAudioOutput2B.SelectedItem.ToString();
+            string Vac1InB = comboAudioInput2B.SelectedItem.ToString();
+
+            string Vac2OutA = comboAudioOutput3.SelectedItem.ToString();
+            string Vac2InA = comboAudioInput3.SelectedItem.ToString();
+
+            string PriOutA = comboAudioOutput1.SelectedItem.ToString();
+            string PriInA = comboAudioInput1.SelectedItem.ToString();
+        */
+            int Vac1DrvIndex = comboAudioDriver2.SelectedIndex;
+            int Vac1BDrvIndex = comboAudioDriver2B.SelectedIndex;
+            int Vac2DrvIndex = comboAudioDriver3.SelectedIndex;
+            int PriDrvIndex = comboAudioDriver1.SelectedIndex;
+            int Vac1InIndex = comboAudioInput2.SelectedIndex;
+            int Vac1OutIndex = comboAudioOutput2.SelectedIndex;
+            int Vac1BInIndex = comboAudioInput2B.SelectedIndex;
+            int Vac1BOutIndex = comboAudioOutput2B.SelectedIndex;
+            int Vac2InIndex = comboAudioInput3.SelectedIndex;
+            int Vac2OutIndex = comboAudioOutput3.SelectedIndex;
+            int PriInIndex = comboAudioInput1.SelectedIndex;
+            int PriOutIndex = comboAudioOutput1.SelectedIndex;
+
+
+            Debug.WriteLine("VAC1A " + comboAudioDriver2.Items.Count + " , " + comboAudioDriver2.SelectedIndex);
+
+            // Debug.WriteLine("Refreshing audio list..." + Vac1DvrA + " , " + Vac1DvrB + " , " + Vac2DvrA + " , " + PriDvrA + " , " + Vac1OutA + " , " + Vac1InA);
+
+           
+            
+            PA19.PA_Initialize();
+
+            GetHosts(); // refresh audio
+
+          //  Debug.WriteLine("VAC1B " + comboAudioDriver2.Items.Count +  " , " + comboAudioDriver2.SelectedIndex);
+         
+            if (comboAudioDriver2.Items.Count >= Vac1DrvIndex) comboAudioDriver2.SelectedIndex = Vac1DrvIndex;
+            if (comboAudioDriver2B.Items.Count >= Vac1BDrvIndex) comboAudioDriver2B.SelectedIndex = Vac1BDrvIndex;
+            if (comboAudioDriver3.Items.Count >= Vac2DrvIndex) comboAudioDriver3.SelectedIndex = Vac2DrvIndex;
+            if (comboAudioDriver1.Items.Count >= PriDrvIndex) comboAudioDriver1.SelectedIndex = PriDrvIndex;
+            if (comboAudioInput2.Items.Count >= Vac1InIndex) comboAudioInput2.SelectedIndex = Vac1InIndex;
+            if (comboAudioOutput2.Items.Count >= Vac1OutIndex) comboAudioOutput2.SelectedIndex = Vac1OutIndex;
+            if (comboAudioInput2B.Items.Count >= Vac1BInIndex) comboAudioInput2B.SelectedIndex = Vac1BInIndex;
+            if (comboAudioOutput2B.Items.Count >= Vac1BOutIndex) comboAudioOutput2B.SelectedIndex = Vac1BOutIndex;
+            if (comboAudioInput3.Items.Count >= Vac2InIndex) comboAudioInput3.SelectedIndex = Vac2InIndex;
+            if (comboAudioOutput3.Items.Count >= Vac2OutIndex) comboAudioOutput3.SelectedIndex = Vac2OutIndex;
+            if (comboAudioInput1.Items.Count >= PriInIndex) comboAudioInput1.SelectedIndex = PriInIndex;
+            if (comboAudioOutput1.Items.Count >= PriOutIndex) comboAudioOutput1.SelectedIndex = PriOutIndex;
+
+
+
+
+
+
+            /*
+            if (comboAudioDriver2.Items.Contains(Vac1DvrA))
+            {
+                comboAudioDriver2.Text = Vac1DvrA;
+                comboAudioDriver2.SelectedIndex = Vac1Index;
+                Debug.WriteLine("FOUND VAC1A " + Vac1Index);
+            }
+
+            if (comboAudioDriver2B.Items.Contains(Vac1DvrB))
+            {
+                comboAudioDriver2B.Text = Vac1DvrB;
+            }
+
+           
+            if (comboAudioDriver3.Items.Contains(Vac2DvrA)) comboAudioDriver3.Text = Vac2DvrA;
+            if (comboAudioDriver1.Items.Contains(PriDvrA)) comboAudioDriver1.Text = PriDvrA;
+
+            if (comboAudioInput2.Items.Contains(Vac1InA)) comboAudioInput2.Text = Vac1InA;
+            if (comboAudioOutput2.Items.Contains(Vac1OutA)) comboAudioOutput2.Text = Vac1OutA;
+            if (comboAudioInput2B.Items.Contains(Vac1InB)) comboAudioInput2B.Text = Vac1InB;
+            if (comboAudioOutput2B.Items.Contains(Vac1OutB)) comboAudioOutput2B.Text = Vac1OutB;
+            if (comboAudioInput3.Items.Contains(Vac2InA)) comboAudioInput3.Text = Vac2InA;
+            if (comboAudioOutput3.Items.Contains(Vac2OutA)) comboAudioOutput3.Text = Vac2OutA;
+            if (comboAudioInput1.Items.Contains(PriInA)) comboAudioInput1.Text = PriInA;
+            if (comboAudioOutput1.Items.Contains(PriOutA)) comboAudioOutput1.Text = PriOutA;
+
+            */
+            //  if (power)
+            //  {
+            //     Thread.Sleep(200);
+            //     console.PowerOn = true;
+            //  }
+
         }
 
 

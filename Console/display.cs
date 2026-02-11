@@ -4367,7 +4367,7 @@ namespace PowerSDR
                         // 5366000 to 5366500 = CW and narrowband digital modes (max 20hz bandwidth) upper edge of third segment
 
                         // 5351500 200hz, 200hz 5353999, 5354000 uk7 all mode1, 5357000 us3 FT8 all mode 2, 5360000 all mode 3, 5363000 uk8 all mode 4, 5366000 20hz, 20 hz 5366500 
-
+                        // .324
                         int[] band_edge_list_r14 = { 5351500, 5354000,  5354000, 5357000, 5357000, 5360000, 5360000, 5363000,5363000, 5366000, 5366000, 5366500 }; //  5351.5 - 5366.5 kHz  
 
 

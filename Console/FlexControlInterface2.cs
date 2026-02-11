@@ -28,7 +28,7 @@
 
 // For BASIC FC operation
 
-using Flex.Control;
+//using Flex.Control;
 namespace PowerSDR
 {
     public class FlexControlInterface2

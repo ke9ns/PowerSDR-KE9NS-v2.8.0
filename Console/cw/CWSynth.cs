@@ -1,9 +1,16 @@
-﻿
+﻿//=================================================================
+// CWSynth.cs
+//=================================================================
+// PowerSDR is a C# implementation of a Software Defined Radio.
+// ke9ns This was extracted from FlexCW.dll
 
+
+//using FlexCW;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace PowerSDR
+namespace PowerSDR //FlexCW
 {
     public class CWSynth
     {

@@ -23,7 +23,7 @@
 
 #define DBG_PRINT
 
-using FlexCW;
+//using FlexCW;
 using System;
 using System.Diagnostics;
 using System.IO.Ports;

@@ -33,7 +33,7 @@
 //#define SPLIT_INTERLEAVED
 
 
-using FlexCW;
+//using FlexCW;
 using System;
 using System.Collections;
 using System.Diagnostics;
@@ -6846,6 +6846,8 @@ namespace PowerSDR
             {
                 PA19.PaHostApiInfo info = PA19.PA_GetHostApiInfo(i);
                 a.Add(info.name);
+
+                Debug.WriteLine("host name " + info.name);
             }
             return a;
         }
@@ -6855,13 +6857,21 @@ namespace PowerSDR
             ArrayList a = new ArrayList();
 
             PA19.PaHostApiInfo hostInfo = PA19.PA_GetHostApiInfo(hostIndex);
+
+            Debug.WriteLine("Index: " + hostIndex);
+
             for (int i = 0; i < hostInfo.deviceCount; i++)
             {
                 int devIndex = PA19.PA_HostApiDeviceIndexToDeviceIndex(hostIndex, i);
                 PA19.PaDeviceInfo devInfo = PA19.PA_GetDeviceInfo(devIndex);
+
+                Debug.WriteLine("GETPAInputDevices: " + devInfo.name);
+
                 if (devInfo.maxInputChannels > 0)
                 {
                     string name = devInfo.name;
+
+                   
                     int index = name.IndexOf("- "); // find case for things like "Microphone (2- FLEX-1500)"
                     if (index > 0)
                     {
