@@ -888,7 +888,7 @@ namespace PowerSDR
             {
                 comboAudioInput2.Items.Add(p);
 
-                Debug.WriteLine("vac1 " + p + " in "); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
+                Debug.WriteLine("vac1a " + p + " in "); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
 
             }
 
@@ -897,7 +897,7 @@ namespace PowerSDR
             {
                 comboAudioOutput2.Items.Add(p);
 
-                Debug.WriteLine("vac1 " + p + " out "); // SOUND output: (Microsoft Sound Mapper - Output,Speakers (Realtek High Definiti,CABLE Input (VB-Audio Virtual C )
+                Debug.WriteLine("vac1a " + p + " out " ); // SOUND output: (Microsoft Sound Mapper - Output,Speakers (Realtek High Definiti,CABLE Input (VB-Audio Virtual C )
 
             }
         } // GetDevices2() VAC1
@@ -916,7 +916,7 @@ namespace PowerSDR
             {
                 comboAudioInput2B.Items.Add(p);
 
-                Debug.WriteLine("vac1 " + p + " in "); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
+                Debug.WriteLine("vac1b " + p + " in "); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
 
             }
 
@@ -925,7 +925,7 @@ namespace PowerSDR
             {
                 comboAudioOutput2B.Items.Add(p);
 
-                Debug.WriteLine("vac1 " + p + " out "); // SOUND output: (Microsoft Sound Mapper - Output,Speakers (Realtek High Definiti,CABLE Input (VB-Audio Virtual C )
+                Debug.WriteLine("vac1b " + p + " out "); // SOUND output: (Microsoft Sound Mapper - Output,Speakers (Realtek High Definiti,CABLE Input (VB-Audio Virtual C )
 
             }
         } // GetDevices2() VAC1
@@ -937,12 +937,21 @@ namespace PowerSDR
             int host = ((PADeviceInfo)comboAudioDriver3.SelectedItem).Index;
             ArrayList a = Audio.GetPAInputDevices(host);
             foreach (PADeviceInfo p in a)
+            {
                 comboAudioInput3.Items.Add(p);
+                Debug.WriteLine("vac2 " + p + " in " + a); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
+
+            }
 
             a = Audio.GetPAOutputDevices(host);
             foreach (PADeviceInfo p in a)
+            {
                 comboAudioOutput3.Items.Add(p);
+                Debug.WriteLine("vac2 " + p + " out " + a); // SOUND input: (Microsoft Sound Mapper - Input,CABLE Output (VB-Audio Virtual, Mic in at front panel (Pink) (R
+
+            }
         }
+
 
         private void ControlList(Control c, ref ArrayList a)
         {
@@ -2242,7 +2251,7 @@ namespace PowerSDR
             }
         }
 
-        public bool VACUseRX2
+        public bool VACUseRX2  //ke9ns: catcommand uses this to turn on/off IQ for RX2
         {
             get
             {
@@ -2255,7 +2264,7 @@ namespace PowerSDR
             }
         }
 
-        public bool VAC2UseRX2
+   /*     public bool VAC2UseRX2
         {
             get
             {
@@ -2267,7 +2276,7 @@ namespace PowerSDR
                 if (chkVAC2UseRX2 != null && IQOutToVAC) chkVAC2UseRX2.Checked = value;
             }
         }
-
+   */
 
         public bool CATEnabled
         {
@@ -3791,7 +3800,7 @@ namespace PowerSDR
 
         private void radGenModelFLEX5000_CheckedChanged(object sender, System.EventArgs e)
         {
-            if (radGenModelFLEX5000.Checked)
+            if (radGenModelFLEX5000.Checked) // is this a Flex5000
             {
                 if (!console.fwc_init)
                 {
@@ -4044,11 +4053,11 @@ namespace PowerSDR
                     comboAudioBuffer1_SelectedIndexChanged(this, EventArgs.Empty);
                 }
             }
-            else
+            else // come here is not a Flex5000 (because no RX2 available)
             {
                 console.PowerEnabled = true;
                 chkVAC2UseRX2.Visible = false;
-                chkVAC2UseRX2.Checked = false;
+                chkVAC2UseRX2.Checked = false; //ke9ns: hidden checkbox on vac2 panel is unchecked (default is checked)
             }
 
             bool b = radGenModelFLEX5000.Checked;
@@ -5274,14 +5283,15 @@ namespace PowerSDR
             bool val = chkVAC2Enable.Checked;
             bool old_val = console.VAC2Enabled;
 
-            /* ke9ns mod
+            /* ke9ns mod to allow all radios to use VAC2 feature
+              
                 if (!radGenModelFLEX5000.Checked || !FWCEEPROM.RX2OK)
                  {
                     if (chkVAC2Enable.Checked)   chkVAC2Enable.Checked = false;
                      console.VAC2Enabled = false;
                     return;
                 }
-     */
+           */
             if (val)
             {
                 if (comboAudioDriver3.SelectedIndex < 0 && comboAudioDriver3.Items.Count > 0)
@@ -5297,10 +5307,8 @@ namespace PowerSDR
 
             if (CrashProtection) //.281
             {
-
                 if (power && val != old_val)
                 {
-
                     console.PowerOn = false;
                     Thread.Sleep((int)udPFNDelay.Value); //.307  was 500
                 }
@@ -5613,6 +5621,7 @@ namespace PowerSDR
             int new_input = ((PADeviceInfo)comboAudioInput3.SelectedItem).Index;
             bool power = console.PowerOn;
 
+            Debug.WriteLine("setup VAC2 Input3: " + new_input);
 
             if (CrashProtection) //.281
             {
@@ -5622,6 +5631,8 @@ namespace PowerSDR
                     Thread.Sleep((int)udPFNDelay.Value); //.307
                 }
             }
+            Debug.WriteLine("setup VAC2 Input3: " + new_input);
+
 
             console.AudioInputIndex3 = new_input;
             Audio.Input3 = new_input;

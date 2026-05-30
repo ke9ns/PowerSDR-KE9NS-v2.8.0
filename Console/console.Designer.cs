@@ -5281,6 +5281,7 @@ namespace PowerSDR
             resources.ApplyResources(this.lblVACRXIndicator, "lblVACRXIndicator");
             this.lblVACRXIndicator.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblVACRXIndicator.Name = "lblVACRXIndicator";
+            this.lblVACRXIndicator.Click += new System.EventHandler(this.lblVACRXIndicator_Click);
             // 
             // lblDigTXProfile
             // 

@@ -20054,6 +20054,7 @@ namespace PowerSDR
 
 
         public bool SpoofAB = false; // .200     use special CAT port to spoof VFOB data as VFOA (to run 2 instances of a digitial mode program and use RX2 VFOB as VFOA
+                                        // set in SIOListenerII6.cs
         public bool LastVFOBTX = false; // .200  true = SpoofAB caused the TX on VFOB, so return TX to VFOA after TX is over.
         public bool SpoofTX = false; // 200       true=TX in spoof mode, false=not in TX with spoof
 
@@ -31154,14 +31155,14 @@ namespace PowerSDR
         }
 
         private bool vac2_rx2 = true;
-        public bool VAC2RX2
+        public bool VAC2RX2  // ke9ns: from setup vac2 chkVac2UseRx2 checkbox (hidden box)
         {
             get { return vac2_rx2; }
             set
             {
                 vac2_rx2 = value;
                 Audio.VAC2RX2 = value;
-                if (vac2_auto_enable)
+                if (vac2_auto_enable) // ke9ns: auto enable vac2 in digital mode checkbox
                 {
                     DSPMode dsp_mode = rx1_dsp_mode;
                     if (vac2_rx2) dsp_mode = rx2_dsp_mode;
@@ -31171,7 +31172,7 @@ namespace PowerSDR
                         case DSPMode.DIGL:
                         case DSPMode.DIGU:
                         case DSPMode.DRM:
-                            setupForm.VAC2Enable = true;
+                            setupForm.VAC2Enable = true; // ke9ns: turn on Vac2 from here
                             break;
                         default:
                             setupForm.VAC2Enable = false;
@@ -31180,8 +31181,6 @@ namespace PowerSDR
                 }
             }
         }
-
-
 
 
         private bool vac2_auto_enable = false;
@@ -39090,8 +39089,11 @@ namespace PowerSDR
         }
 
         private DSPMode saved_cw_auto_switch_dsp_mode = DSPMode.FIRST;
+
         private void SetConsoleMox(bool b)  // ke9ns: called by a PTT of the CW key
         {
+            Debug.WriteLine("SetConsoleMox: " + b.ToString() + " ,disable_ptt: " + disable_ptt);
+
             if (disable_ptt && b) return;
 
             DSPMode tx_mode = dsp.GetDSPTX(0).CurrentDSPMode;
@@ -39846,11 +39848,11 @@ namespace PowerSDR
             get { return vac2_enabled; }
             set
             {
-                // if ((current_model == Model.FLEX5000 && FWCEEPROM.RX2OK))   // ke9ns mod to allow all models to use VAC2
+                // if ((current_model == Model.FLEX5000 && FWCEEPROM.RX2OK))   // ke9ns: mod to allow all models to use VAC2
                 //  {
                 vac2_enabled = value;
                 Audio.VAC2Enabled = value;
-                if (chkVAC2 != null) chkVAC2.Checked = value;
+                if (chkVAC2 != null) chkVAC2.Checked = value; //ke9ns: update the VAC2 button on the console
                 //  }
             }
         }
@@ -61322,15 +61324,15 @@ namespace PowerSDR
         } //  setptt
 
         //==========================================================================================
-        // ke9ns add  key radio on/off
+        // ke9ns add:  key radio on/off
         private void setkey(bool state)                 // ke9ns   This is the CW key signal back to the flex radio itself
         {
-            if (setkey_memory != state)                                          // only allow this to happen 1 time if state stays the same (once to turn ON, once to turn OFF)
+            if (setkey_memory != state)                 // only allow this to happen 1 time if state stays the same (once to turn ON, once to turn OFF)
             {
                 // Debug.WriteLine("CW222");
                 CWSensorItem item = new CWSensorItem(CWSensorItem.InputType.StraightKey, state);
                 CWKeyer.SensorEnqueue(item);
-
+                Debug.WriteLine(">>>1 SENSOR ENQUEUE FIRED: " + item.ToString());
                 setkey_memory = state;
             }
         }  // setkey
@@ -86272,6 +86274,8 @@ namespace PowerSDR
 
         //=========================================================
         // ke9ns 
+
+        /*
         public bool CW_POLL()
         {
             bool dot, dash, rca_ptt, mic_ptt;
@@ -86318,7 +86322,7 @@ namespace PowerSDR
             return false;
         } // if cwx panel is running //.259
 
-
+        */
         public bool keydot = false;  // ke9ns add
 
         public bool CWP = false; // ke9ns add allows CWX panel usage while in SSB mode
@@ -91221,6 +91225,11 @@ namespace PowerSDR
 
 
         } // chkMON_mousedown
+
+        private void lblVACRXIndicator_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void chkLockR_CheckedChanged(object sender, EventArgs e)
         {

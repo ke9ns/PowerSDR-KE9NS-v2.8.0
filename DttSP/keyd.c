@@ -254,9 +254,11 @@ DttSP_EXP void sound_thread_keyd (void)
 BOOLEAN read_key (REAL del, BOOLEAN dot, BOOLEAN dash)
 {
 	extern BOOLEAN read_straight_key (KeyerState ks, BOOLEAN keyed);
-	extern BOOLEAN read_iambic_key (KeyerState ks, BOOLEAN dot,
-				  BOOLEAN dash, KeyerLogic kl, REAL ticklen);
-	fprintf(stdout, "Read key\n"); fflush(stdout);
+	extern BOOLEAN read_iambic_key (KeyerState ks, BOOLEAN dot, BOOLEAN dash, KeyerLogic kl, REAL ticklen);
+
+	fprintf(stdout, "Read key\n"); fflush(stdout); // fprintf(stdout, "Read key\n"); fflush(stdout);
+	//fprintf(stderr, "DttSP: SetSwchRiseThresh(%u, %f)\n", thread, val), fflush(stderr);
+
 	if (bug)
 	{
 		if (dash)
@@ -292,7 +294,7 @@ DttSP_EXP void key_thread_process (REAL del, BOOLEAN dash, BOOLEAN dot, BOOLEAN 
 {
 	BOOLEAN keydown;
 
-	fprintf(stdout, "key_thread\n"); fflush(stdout);
+	fprintf(stderr, "key_thread\n"); fflush(stderr); // stdout
 
 	extern BOOLEAN read_straight_key (KeyerState ks, BOOLEAN keyed);
 	// read key; tell keyer elapsed time since last call

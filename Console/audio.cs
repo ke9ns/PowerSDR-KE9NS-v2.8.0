@@ -528,11 +528,12 @@ namespace PowerSDR
         }
 
         private static bool vac2_enabled = false;
-        public static bool VAC2Enabled // called from console.cs
+        public static bool VAC2Enabled // called from console.cs when VAC2 button toggled
         {
             set
             {
                 vac2_enabled = value;
+
                 if (vac2_enabled) InitVAC2();
                 else CleanUpVAC2();
             }
@@ -540,7 +541,7 @@ namespace PowerSDR
         }
 
         private static bool vac2_rx2 = true;
-        public static bool VAC2RX2
+        public static bool VAC2RX2 // ke9ns: this will be Checked true by default, unless you do not have the RX2 option
         {
             get { return vac2_rx2; }
             set { vac2_rx2 = value; }
@@ -781,20 +782,20 @@ namespace PowerSDR
         }
 
         private static int host1 = 0;
-        public static int Host1
+        public static int Host1 // Primary audio host
         {
             get { return host1; }
             set { host1 = value; }
         }
 
-        private static int host2 = 0;  // VAC1 driver from setup
+        private static int host2 = 0;  // VAC1 driver from setup (MME=0, DirectSound = 1, WDM-KS = 2)
         public static int Host2
         {
             get { return host2; }
             set { host2 = value; }
         }
 
-        private static int host3 = 0; // VAC2 driver from setup
+        private static int host3 = 0; // VAC2 driver from setup (MME=0, DirectSound = 1, WDM-KS = 2)
         public static int Host3
         {
             get { return host3; }
@@ -805,34 +806,46 @@ namespace PowerSDR
         public static int Input1
         {
             get { return input_dev1; }
-            set { input_dev1 = value; } // ke9ns primary audio input to transmit with  setup int new_input = ((PADeviceInfo)comboAudioInput1.SelectedItem).Index;
+            set
+            { 
+                input_dev1 = value;
+              //  Debug.WriteLine("Primary Input1: " + input_dev1);
+            } // ke9ns: Primary audio input to transmit with  setup int new_input = ((PADeviceInfo)comboAudioInput1.SelectedItem).Index;
 
         }
 
-
-        //===========================================
-        // ke9ns input device from VAC1
-        //==========================================
-        private static int input_dev2 = 0;
+        private static int input_dev2 = 0;  // ke9ns: input device for VAC1
         public static int Input2
         {
             get { return input_dev2; }
-            set { input_dev2 = value; }        // ke9ns 	int new_input = ((PADeviceInfo)comboAudioInput2.SelectedItem).Index;  in setup form
+            set 
+            {
+                input_dev2 = value;
+              // Debug.WriteLine("VAC1 Input2: " + input_dev2);
+            }        // ke9ns 	int new_input = ((PADeviceInfo)comboAudioInput2.SelectedItem).Index;  in setup form
 
         }
 
-        private static int input_dev3 = 0;
+        private static int input_dev3 = 0; //ke9ns: input device for VAC2
         public static int Input3
         {
             get { return input_dev3; }
-            set { input_dev3 = value; }
+            set 
+            { 
+                input_dev3 = value;
+               // Debug.WriteLine("VAC2 Input3: " + input_dev3);
+            }
         }
 
         private static int output_dev1 = 0;
         public static int Output1
         {
             get { return output_dev1; }
-            set { output_dev1 = value; } // ke9ns primaary output device to receive to  setup 	int new_output = ((PADeviceInfo)comboAudioOutput1.SelectedItem).Index;
+            set 
+            {
+                output_dev1 = value;
+              //  Debug.WriteLine("Primary output: " + output_dev1);
+            } // ke9ns primary output device to receive to  setup 	int new_output = ((PADeviceInfo)comboAudioOutput1.SelectedItem).Index;
 
         }
 
@@ -840,14 +853,22 @@ namespace PowerSDR
         public static int Output2
         {
             get { return output_dev2; }
-            set { output_dev2 = value; }
+            set
+            { 
+                output_dev2 = value;
+              //  Debug.WriteLine("Vac1 output2: " + output_dev2);
+            }
         }
 
         private static int output_dev3 = 0;
         public static int Output3
         {
             get { return output_dev3; }
-            set { output_dev3 = value; }
+            set
+            {
+                output_dev3 = value;
+              //  Debug.WriteLine("Vac2 output3: " + output_dev3);
+            }
         }
 
         private static int latency1 = 0;
@@ -3364,10 +3385,9 @@ namespace PowerSDR
             }
 
             // scale output for VAC2
-            if (vac2_enabled &&
-                rb_vac2IN_l != null && rb_vac2IN_r != null &&
-                rb_vac2OUT_l != null && rb_vac2OUT_r != null)
+            if (vac2_enabled && rb_vac2IN_l != null && rb_vac2IN_r != null && rb_vac2OUT_l != null && rb_vac2OUT_r != null)
             {
+
                 if (!localmox)
                 {
                     ScaleBuffer(out_l1, out_l2, frameCount, (float)vac2_rx_scale);
@@ -5164,30 +5184,34 @@ namespace PowerSDR
 
             if (vac2_enabled && !vac2_output_iq && rb_vac2IN_l != null && rb_vac2IN_r != null && rb_vac2OUT_l != null && rb_vac2OUT_r != null)
             {
-                if (!localmox || (localmox && !vfob_tx))
+                if (!localmox || (localmox && !vfob_tx)) // if in RX mode
                 {
                     if (!vac2_rx2)
                     {
+                   //     Debug.WriteLine("VAC2RX2 false");
+
                         ScaleBuffer(out_l1, out_l4, frameCount, (float)vac2_rx_scale);
                         ScaleBuffer(out_r1, out_r4, frameCount, (float)vac2_rx_scale);
                     }
-                    else
+                    else //ke9ns: if you have RX2 option, but it does not need to be ON
                     {
+                       // Debug.WriteLine("VAC2RX2 true");
+
                         ScaleBuffer(out_l3, out_l4, frameCount, (float)vac2_rx_scale);
                         ScaleBuffer(out_r3, out_r4, frameCount, (float)vac2_rx_scale);
                     }
                 }
                 else if (mon)
                 {
-                    if ((monpre == 1) || (tx_dsp_mode == DSPMode.AM || tx_dsp_mode == DSPMode.SAM || tx_dsp_mode == DSPMode.FM))  // ke9ns add  use pre-processed audio for MON function in these modes only
+                    if ((monpre == 1) || (tx_dsp_mode == DSPMode.AM || tx_dsp_mode == DSPMode.SAM || tx_dsp_mode == DSPMode.FM))  // ke9ns: add  use pre-processed audio for MON function in these modes only
                     {
-                        ScaleBuffer(tx_in_l, out_l4, frameCount, (float)vac2_rx_scale); // ke9ns add pre process so AM is still PCM
+                        ScaleBuffer(tx_in_l, out_l4, frameCount, (float)vac2_rx_scale); // ke9ns: add pre process so AM is still PCM
                         ScaleBuffer(tx_in_r, out_r4, frameCount, (float)vac2_rx_scale);
                     }
                     else
                     {
 
-                        ScaleBuffer(out_l2, out_l4, frameCount, (float)vac2_rx_scale); // ke9ns post process so AM is modulated here
+                        ScaleBuffer(out_l2, out_l4, frameCount, (float)vac2_rx_scale); // ke9ns: post process so AM is modulated here
                         ScaleBuffer(out_r2, out_r4, frameCount, (float)vac2_rx_scale);
                     }
 
@@ -6688,8 +6712,11 @@ namespace PowerSDR
             }
         }
 
-        unsafe private static void InitVAC2()
+        unsafe private static void InitVAC2() // ke9ns: comes here when you click on the VAC2 button
         {
+
+            Debug.WriteLine("VAC2 ENABLED ON");
+
             int block_size = block_size_vac2;
             if (vac2_output_iq) block_size = block_size1;
 
@@ -6713,20 +6740,17 @@ namespace PowerSDR
                 if (res_vac2_inl == null) res_vac2_inl = new float[4 * 65536];
                 if (res_vac2_inr == null) res_vac2_inr = new float[4 * 65536];
 
-                if (resampVAC2PtrIn_l != null)
-                    DttSP.DelResamplerF(resampVAC2PtrIn_l);
+                if (resampVAC2PtrIn_l != null)  DttSP.DelResamplerF(resampVAC2PtrIn_l);
+
                 resampVAC2PtrIn_l = DttSP.NewResamplerF(sample_rate3, sample_rate1);
 
-                if (resampVAC2PtrIn_r != null)
-                    DttSP.DelResamplerF(resampVAC2PtrIn_r);
+                if (resampVAC2PtrIn_r != null) DttSP.DelResamplerF(resampVAC2PtrIn_r);
                 resampVAC2PtrIn_r = DttSP.NewResamplerF(sample_rate3, sample_rate1);
 
-                if (resampVAC2PtrOut_l != null)
-                    DttSP.DelResamplerF(resampVAC2PtrOut_l);
+                if (resampVAC2PtrOut_l != null) DttSP.DelResamplerF(resampVAC2PtrOut_l);
                 resampVAC2PtrOut_l = DttSP.NewResamplerF(sample_rate1, sample_rate3);
 
-                if (resampVAC2PtrOut_r != null)
-                    DttSP.DelResamplerF(resampVAC2PtrOut_r);
+                if (resampVAC2PtrOut_r != null) DttSP.DelResamplerF(resampVAC2PtrOut_r);
                 resampVAC2PtrOut_r = DttSP.NewResamplerF(sample_rate1, sample_rate3);
             }
             else
@@ -7026,7 +7050,7 @@ namespace PowerSDR
 
             if (!retval) return retval;
 
-            if (vac_enabled) // ke9ns  VAC1 only
+            if (vac_enabled) // ke9ns:  VAC1 only
             {
 
                 int num_chan = 1;
@@ -7047,14 +7071,15 @@ namespace PowerSDR
 
                 try   // ke9ns 	int new_input = ((PADeviceInfo)comboAudioInput2.SelectedItem).Index;
                 {
-                    Debug.WriteLine("VAC1 STARTING AUDIO STREAM:: INPUT: " + input_dev2 + ", Output: " + output_dev2 +
+                    Debug.WriteLine("STARTING VAC1 AUDIO STREAM:: INPUT: " + input_dev2 + ", Output: " + output_dev2 +
                         ", block size: " + block_size + ", sample rate: " + sample_rate + ", host: " + host2 + ", num_chan " + num_chan + ", latency: " + latency + ",callbackVAC: " + callbackVAC);
 
                     // host2 = type of audio driver
 
                     retval = StartAudio(ref callbackVAC, (uint)block_size, sample_rate, host2, input_dev2, output_dev2, num_chan, 1, latency);  // ke9ns use VAC1 input_dev2 device (was 1)
+                //  retval = StartAudio(ref callbackVAC2, (uint)block_size, sample_rate, host3, input_dev3, output_dev3, num_chan, 2, latency);  // ke9ns use VAC2 input_dev3 device
 
-                    Debug.WriteLine("VAC1 STARTING AUDIO STREAM:: RETVAL: " + retval);
+                  //  Debug.WriteLine("VAC1 STARTING AUDIO STREAM:: RETVAL: " + retval);
 
                 }
                 catch (Exception)
@@ -7092,12 +7117,14 @@ namespace PowerSDR
 
                 try
                 {
-                    Debug.WriteLine("VAC2 STARTING AUDIO STREAM:: INPUT: " + input_dev2 + ", Output: " + output_dev2 +
-                     ", block size: " + block_size + ", sample rate: " + sample_rate + ", host: " + host2 + ", num_chan " + num_chan + ", latency: " + latency + ",callbackVAC: " + callbackVAC);
+                    Debug.WriteLine("STARTING VAC2 AUDIO STREAM:: INPUT: " + input_dev3 + ", Output: " + output_dev3 +
+                     ", block size: " + block_size + ", sample rate: " + sample_rate + ", host: " + host3 + ", num_chan " + num_chan + ", latency: " + latency + ",callbackVAC: " + callbackVAC);
 
+               //   retval = StartAudio(ref callbackVAC, (uint)block_size, sample_rate, host2, input_dev2, output_dev2, num_chan, 1, latency);  // ke9ns use VAC1 input_dev2 device (was 1)
                     retval = StartAudio(ref callbackVAC2, (uint)block_size, sample_rate, host3, input_dev3, output_dev3, num_chan, 2, latency);  // ke9ns use VAC2 input_dev3 device
 
-                    Debug.WriteLine("VAC2 STARTING AUDIO STREAM:: RETVAL: " + retval);
+                
+                 //   Debug.WriteLine("VAC2 STARTING AUDIO STREAM:: RETVAL: " + retval);
 
                 }
                 catch (Exception)

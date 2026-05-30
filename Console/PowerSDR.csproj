@@ -479,6 +479,9 @@
     <Compile Include="cwedit.Designer.cs">
       <DependentUpon>cwedit.cs</DependentUpon>
     </Compile>
+    <Compile Include="cwx.Designer.cs">
+      <DependentUpon>cwx.cs</DependentUpon>
+    </Compile>
     <Compile Include="cw\CWKeyer.cs" />
     <Compile Include="cw\CWMuteItem.cs" />
     <Compile Include="cw\CWPTT.cs" />
@@ -486,9 +489,6 @@
     <Compile Include="cw\CWSensorItem.cs" />
     <Compile Include="cw\CWSynth.cs" />
     <Compile Include="cw\CWToneItem.cs" />
-    <Compile Include="cwx.Designer.cs">
-      <DependentUpon>cwx.cs</DependentUpon>
-    </Compile>
     <Compile Include="cw\MMTimer.cs" />
     <Compile Include="cw\TimerCaps.cs" />
     <Compile Include="cw\TimerMode.cs" />

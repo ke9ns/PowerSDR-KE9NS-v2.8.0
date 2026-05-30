@@ -394,7 +394,8 @@ namespace PowerSDR
                 // ke9ns this CWSensorItem and CWKeyer is for the TX out and MON tone 
                 CWSensorItem item = new CWSensorItem(CWSensorItem.InputType.StraightKey, state); // ke9ns state = TRUE / False  = ON / OFF pulses to be processes by FlexCW.dll
                 CWKeyer.SensorEnqueue(item); // ke9ns send on/off CW pulses to FlexCW.DLL code and it will process the proper speed & weight, etc. etc. and output to radio itself
-
+               
+                Debug.WriteLine(">>> SENSOR ENQUEUE FIRED: " + item.ToString());
 
                 if (state) keyLed.BackColor = System.Drawing.Color.Yellow;
                 else keyLed.BackColor = System.Drawing.Color.Black;
@@ -2134,9 +2135,11 @@ namespace PowerSDR
 
                         if (FWC.ReadPTT(out dot, out dash, out rca_ptt, out mic_ptt) != 0)   // ke9ns: read Flex radio TRS plug and PTT circuits
                         {
+                       //     Debug.WriteLine("dot= " + dot + " dash= " + dash + " rca_ptt= " + rca_ptt + " mic_ptt= " + mic_ptt);
 
                             if ((dot == true) || (dash == true))
                             {
+                               
                                 clear_show();
                                 quit = true;
                                 kquit = true;

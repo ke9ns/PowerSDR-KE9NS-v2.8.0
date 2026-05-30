@@ -13216,16 +13216,17 @@ namespace PowerSDR
                             temp9 = zz;
                             temp10 = VFO_bandtext;
 
-                            g.DrawLine(p2, VFO_bandtext, 20, VFO_bandtext, H1a);   // draw vertical line
+                            g.DrawLine(p2, VFO_bandtext, 20, VFO_bandtext, H1a/2);   //.327 was H1a draw vertical line
 
                             // draw after the fill rectangle so its easier to see the text
 
                             StringFormat SF = new StringFormat();
-                            SF.Alignment = StringAlignment.Near;
-                            SF.FormatFlags = StringFormatFlags.DirectionVertical;
-
-
-                            g.DrawString(bandtext[zz], font1, grid_text_brush, VFO_bandtext, 20, SF); // draw bandtext vertically
+                           
+  
+                                SF.Alignment = StringAlignment.Near;
+                                SF.FormatFlags = StringFormatFlags.DirectionVertical;
+                                g.DrawString(bandtext[zz], font1, grid_text_brush, VFO_bandtext, 20, SF); // draw bandtext vertically
+                        
 
                         }
                         else // draw a transparent box in the area of freq that the bandtext refers to.
@@ -13254,9 +13255,51 @@ namespace PowerSDR
 
 
                             //  Brush B9 = new SolidBrush(Color.FromArgb(42, grid_color));
-                            Brush B9 = new SolidBrush(BT_color);
+                            Brush B9 = new SolidBrush(Color.Purple); //.327 (BT_color);
 
-                            g.FillRectangle(B9, VFO_bandtext0, 20, VFO_bandtext1 - VFO_bandtext0, H1a / 2); // draw shaded rectangle area 
+                            int temp23 = console.setupForm.tbPanGrid.Value; //.327
+   
+                            if (bandtext[temp9] != null) //.327
+                            {
+                                if (bandtext[temp9].Contains("CW") || bandtext[temp9].Contains("RTTY") || bandtext[temp9].Contains("ft8")|| bandtext[temp9].Contains("DIG") ||
+                                    bandtext[temp9].Contains("PSK") || bandtext[temp9].Contains("FT4") || bandtext[temp9].Contains("JT65") || bandtext[temp9].Contains("Packet") ||
+                                    bandtext[temp9].Contains("Beacon") || bandtext[temp9].Contains("Nar"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Blue));
+                                }
+                                else if (bandtext[temp9].Contains("Extra") || bandtext[temp9].Contains("Ext"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.LimeGreen));
+                                }
+                                else if (bandtext[temp9].Contains("SSB") || bandtext[temp9].Contains("SSTV") || bandtext[temp9].Contains("Freedv") || bandtext[temp9].Contains("DV") || 
+                                    bandtext[temp9].Contains("Phone") || bandtext[temp9].Contains("All Mode") || bandtext[temp9].Contains("Easy"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Green));
+                                }
+                                else if (bandtext[temp9].Contains("Short Wave"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Red));
+                                }
+                                else if (bandtext[temp9].Contains("AM") || bandtext[temp9].Contains("FM") || bandtext[temp9].Contains("Repeater") || bandtext[temp9].Contains("wwv") ||
+                                    bandtext[temp9].Contains("Satellite") || bandtext[temp9].Contains("Down") || bandtext[temp9].Contains("Input"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Orange));
+                                }
+                                else if (bandtext[temp9].Contains("Dead") || bandtext[temp9].Contains("Out Of Band") )
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.DarkGray));
+                                }
+                                else if (bandtext[temp9].Contains("CB"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Violet));
+                                }
+                                else
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Purple));
+                                }
+
+                            }
+                            g.FillRectangle(B9, VFO_bandtext0, 20, VFO_bandtext1 - VFO_bandtext0, H1a / 4); //was 2 .327 draw shaded rectangle area 
 
 
                             StringFormat SF1 = new StringFormat();
@@ -13379,8 +13422,6 @@ namespace PowerSDR
                     for (int zz = 0; zz < bandtext_counter2; zz++) // scan through all the bandtext that appear
                     {
 
-
-
                         int VFO_bandtext = (int)(((XPOS) * (float)((int)(bandfreq2[zz] * 1000000) - VFOLow)));
 
                         if (bandhere2[zz] == true)
@@ -13389,7 +13430,7 @@ namespace PowerSDR
                             temp9 = zz;
                             temp10 = VFO_bandtext;
 
-                            g.DrawLine(p2, VFO_bandtext, H1b, VFO_bandtext, H1a);   // draw vertical line
+                            g.DrawLine(p2, VFO_bandtext, H1b, VFO_bandtext, H1a);   //  draw vertical line
 
                             StringFormat SF = new StringFormat();
                             SF.Alignment = StringAlignment.Near;
@@ -13424,15 +13465,58 @@ namespace PowerSDR
 
 
                             //   Brush B9 = new SolidBrush(Color.FromArgb(42, grid_color));
-                            Brush B9 = new SolidBrush(BT_color);
+                            Brush B9 = new SolidBrush(Color.Purple); //.327 (BT_color);
 
-                            g.FillRectangle(B9, VFO_bandtext0, H1b, VFO_bandtext1 - VFO_bandtext0, H1a / 8);
+                            int temp23 = console.setupForm.tbPanGrid.Value; //.327
+
+                            if (bandtext2[temp9] != null) //.327
+                            {
+                                if (bandtext2[temp9].Contains("CW") || bandtext2[temp9].Contains("RTTY") || bandtext2[temp9].Contains("ft8") || bandtext2[temp9].Contains("DIG") ||
+                                    bandtext2[temp9].Contains("PSK") || bandtext2[temp9].Contains("FT4") || bandtext2[temp9].Contains("JT65") || bandtext2[temp9].Contains("Packet") ||
+                                    bandtext2[temp9].Contains("Beacon") || bandtext2[temp9].Contains("Nar"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Blue));
+                                }
+                                else if (bandtext2[temp9].Contains("Extra") || bandtext2[temp9].Contains("Ext"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.LimeGreen));
+                                }
+                                else if (bandtext2[temp9].Contains("SSB") || bandtext2[temp9].Contains("SSTV") || bandtext2[temp9].Contains("Freedv") || bandtext2[temp9].Contains("DV") ||
+                                    bandtext2[temp9].Contains("Phone") || bandtext2[temp9].Contains("All Mode") || bandtext2[temp9].Contains("Easy"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Green));
+                                }
+                                else if (bandtext2[temp9].Contains("Short Wave"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Red));
+                                }
+                                else if (bandtext2[temp9].Contains("AM") || bandtext2[temp9].Contains("FM") || bandtext2[temp9].Contains("Repeater") || bandtext2[temp9].Contains("wwv") ||
+                                    bandtext2[temp9].Contains("Satellite") || bandtext2[temp9].Contains("Down") || bandtext2[temp9].Contains("Input"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Orange));
+                                }
+                                else if (bandtext2[temp9].Contains("Dead") || bandtext2[temp9].Contains("Out Of Band"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.DarkGray));
+                                }
+                                else if (bandtext2[temp9].Contains("CB"))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Violet));
+                                }
+                                else
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Purple));
+                                }
+
+                            } //  if (bandtext2[temp9] != null)
+
+                            g.FillRectangle(B9, VFO_bandtext0, H1b, VFO_bandtext1 - VFO_bandtext0, H1a / 16); // .327 was /8
 
                             StringFormat SF1 = new StringFormat();
                             SF1.Alignment = StringAlignment.Near;
                             SF1.FormatFlags = StringFormatFlags.DirectionVertical;
 
-                            //  g.DrawString(bandtext[temp9], font1, grid_text_brush, temp10, 20, SF1); // draw bandtext vertically
+                              g.DrawString(bandtext2[temp9], font1, grid_text_brush, temp10, H1b, SF1); // draw bandtext vertically
 
 
                             if (((zz1 - 1) > zz2))

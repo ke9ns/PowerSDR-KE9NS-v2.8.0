@@ -32,6 +32,8 @@ namespace PowerSDR //FlexCW;
 
         private static void OnMoxChanged(bool b)
         {
+            Debug.WriteLine("CWPTT.OnMoxChanged: " + b);
+
             CWPTT.MoxChanged?.Invoke(b);
         }
 
@@ -42,34 +44,49 @@ namespace PowerSDR //FlexCW;
 
         public static void Init()
         {
+            Debug.WriteLine("CWPTT.Init");
+
             timer.Mode = TimerMode.Periodic;
             timer.Period = 1;
             timer.Resolution = 0;
             timer.Tick += timer_Tick;
         }
 
-        public static void Start()
+        public static void Start() //ke9ns: console calls this after calling CWKeyer.Reset() from  chkPower_CheckedChanged.
         {
+            Debug.WriteLine("CWPTT.Start");
+
             timer.Start();
         }
 
         public static void Stop()
         {
+            Debug.WriteLine("CWPTT.Stop");
+
             timer.Stop();
         }
 
-        private static void timer_Tick(object sender, EventArgs e)
+        private static void timer_Tick(object sender, EventArgs e) // ke9ns: after start (above), this is called every 1 ms, and it checks the CWKeyer PTT and Mute queues to see if any items are due to be processed. 
         {
+
+         // Debug.WriteLine("CWPTT.timer_Tick"); //ke9ns: cannot use this as it stalls operation due to 1ms timer.
+
             double currentTime = CWSensorItem.GetCurrentTime();
             CWKeyer.Advance(currentTime);
+
             if (CWKeyer.PTTQueueCount() > 0)
             {
+
+                Debug.WriteLine("CWPTT.timer_Tick: PTTQueueCount=" + CWKeyer.PTTQueueCount());
+
                 CWPTTItem cWPTTItem = CWKeyer.PTTQueuePeek();
                 if (currentTime > cWPTTItem.Time)
                 {
                     CWKeyer.PTTDequeue();
                     if (!cWPTTItem.Ignore)
                     {
+                        Debug.WriteLine("CWPTT.timer_Tick: PTTDequeue: " + cWPTTItem);
+
                         OnMoxChanged(cWPTTItem.State);
                     }
                 }
@@ -77,6 +94,8 @@ namespace PowerSDR //FlexCW;
 
             if (CWKeyer.MuteQueueCount() > 0)
             {
+                Debug.WriteLine("CWPTT.timer_Tick: MuteQueueCount=" + CWKeyer.MuteQueueCount());
+
                 CWMuteItem cWMuteItem = CWKeyer.MuteQueuePeek();
                 if (currentTime > cWMuteItem.Time)
                 {

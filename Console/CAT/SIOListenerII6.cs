@@ -354,7 +354,7 @@ namespace PowerSDR
                         console.SpoofAB = true; // ke9ns add: .200 used by IF command in CATCommands.cs
 
 
-                        console.KWAI6 = true; // .214
+                        console.KWAI6 = true; // .214 AI ON
                         answer = parser.Get(m.Value);                                   //send the match to the parser
                         console.KWAI6 = false; // .214
 

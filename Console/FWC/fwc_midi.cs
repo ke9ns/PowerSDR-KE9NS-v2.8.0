@@ -686,11 +686,16 @@ namespace PowerSDR
 
             // ke9ns comes here when using keyer
 
+          //  Debug.WriteLine(">>>>MIDI");
+
+
             lock (in_lock_obj)
             {
+               //  Debug.WriteLine("Midi.InCallback(" + hMidiIn.ToString("X") + ", " + wMsg.ToString("X") + ", " + dwInstance.ToString("X") + ", " + dwParam1.ToString("X") + ", " + dwParam2.ToString("X") + ")");
                 switch (wMsg)
                 {
                     case Midi.MIM_DATA:
+                      
                         Command cmd = (Command)((byte)dwParam1);
                         byte byte1 = (byte)(dwParam1 >> 8);
                         byte byte2 = (byte)(dwParam1 >> 16);
@@ -707,6 +712,7 @@ namespace PowerSDR
 
                                         CWSensorItem item = new CWSensorItem(type, true);
                                         CWKeyer.SensorEnqueue(item);
+                                        Debug.WriteLine(">>>4 SENSOR ENQUEUE FIRED: " + item.ToString());
                                         break;
                                     case Note.Dash:
                                         //console.Keyer.FWCDash = true;
@@ -715,6 +721,7 @@ namespace PowerSDR
 
                                         item = new CWSensorItem(type, true);
                                         CWKeyer.SensorEnqueue(item);
+                                        Debug.WriteLine(">>>5 SENSOR ENQUEUE FIRED: " + item.ToString());
                                         break;
                                     case Note.MicDown:
                                         if (console == null) return 1;
@@ -740,6 +747,7 @@ namespace PowerSDR
 
                                         CWSensorItem item = new CWSensorItem(type, false);
                                         CWKeyer.SensorEnqueue(item);
+                                        Debug.WriteLine(">>>6 SENSOR ENQUEUE FIRED: " + item.ToString());
                                         break;
                                     case Note.Dash:
                                         //console.Keyer.FWCDash = false;
@@ -748,6 +756,7 @@ namespace PowerSDR
 
                                         item = new CWSensorItem(type, false);
                                         CWKeyer.SensorEnqueue(item);
+                                        Debug.WriteLine(">>>7 SENSOR ENQUEUE FIRED: " + item.ToString());
                                         break;
                                     case Note.MicDown:
                                         if (console == null) return 1;

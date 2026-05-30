@@ -1607,6 +1607,7 @@ namespace PowerSDR
 
                 CWSensorItem item = new CWSensorItem(type, temp);
                 CWKeyer.SensorEnqueue(item); // add to the queue?
+                Debug.WriteLine(">>>3 SENSOR ENQUEUE FIRED: " + item.ToString());
             }
             /*if (temp && !console.MOX && console.PowerOn)
             {
@@ -1629,6 +1630,7 @@ namespace PowerSDR
 
                 CWSensorItem item = new CWSensorItem(type, temp);
                 CWKeyer.SensorEnqueue(item);
+                Debug.WriteLine(">>>2 SENSOR ENQUEUE FIRED: " + item.ToString());
             }
             /*if (!ignore_dash && temp && !console.MOX && console.PowerOn)
             {

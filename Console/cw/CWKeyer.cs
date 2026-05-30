@@ -229,6 +229,8 @@ namespace PowerSDR //FlexCW
         {
             foreach (CWSensorItem item in sensor_queue)
             {
+                Debug.WriteLine("SensorQueuePrint: " + item.ToString());
+
                 _ = item;
             }
 
@@ -262,9 +264,14 @@ namespace PowerSDR //FlexCW
 
         public static void PTTQueuePrint()
         {
+            Debug.WriteLine("PTTQ");
+
+           
             foreach (CWPTTItem item in ptt_queue)
             {
-                _ = item;
+                Debug.WriteLine("PTTQueuePrint: " + item.ToString());
+
+                _ = item; // ke9ns: ignore the variable
             }
 
             ptt_queue.Clear();
@@ -272,6 +279,8 @@ namespace PowerSDR //FlexCW
 
         public static int PTTQueueCount()
         {
+          if (ptt_queue.Count > 0) Debug.WriteLine("PTTQueueCount: Current PTT queue count is " + ptt_queue.Count);
+
             return ptt_queue.Count;
         }
 
@@ -315,7 +324,7 @@ namespace PowerSDR //FlexCW
         {
         }
 
-        public static void Reset()
+        public static void Reset() // called by console from the  chkPower_CheckedChanged event
         {
             SensorQueueClear();
             ToneQueueClear();
@@ -331,27 +340,36 @@ namespace PowerSDR //FlexCW
 
         public static void SensorEnqueue(CWSensorItem item)
         {
+            Debug.WriteLine("SensorEnqueue: " + item.ToString()); // SensorEnqueue: 24458.9: Dot True
+
+            Debug.WriteLine("SensorEnqueue: Current queue count before enqueue: " + sensor_queue.Count);
+
             lock (sensor_queue)
             {
-                sensor_queue.Enqueue(item);
+                sensor_queue.Enqueue(item); // ke9ns: add item to the end of the queue   (Dequeue removes from the front of the queue)
+   
             }
         }
 
         private static CWSensorItem SensorDequeue()
         {
+           
             CWSensorItem cWSensorItem;
             lock (sensor_queue)
             {
-                cWSensorItem = sensor_queue.Dequeue();
+                cWSensorItem = sensor_queue.Dequeue(); //ke9ns: remove the item at the front of the queue and return it to cWSensorItem
             }
+            Debug.WriteLine("SensorDequeue: " + cWSensorItem.ToString());
 
             switch (cWSensorItem.Type)
             {
                 case CWSensorItem.InputType.Dot:
                     dot_state = cWSensorItem.State;
+                    Debug.WriteLine("SensorDequeue: Updated dot_state to " + dot_state);
                     break;
                 case CWSensorItem.InputType.Dash:
                     dash_state = cWSensorItem.State;
+                    Debug.WriteLine("SensorDequeue: Updated dash_state to " + dash_state);
                     break;
                 case CWSensorItem.InputType.StraightKey:
                     key_state = cWSensorItem.State;
@@ -373,6 +391,8 @@ namespace PowerSDR //FlexCW
 
         public static void PTTEnqueue(CWPTTItem item)
         {
+            Debug.WriteLine("PTTEnqueue: " + item.ToString());
+
             lock (ptt_queue)
             {
                 ptt_queue.Enqueue(item);
@@ -381,6 +401,8 @@ namespace PowerSDR //FlexCW
 
         public static CWPTTItem PTTDequeue()
         {
+            Debug.WriteLine("PTTDequeue: Dequeueing item...");
+                
             lock (ptt_queue)
             {
                 return ptt_queue.Dequeue();
@@ -405,6 +427,8 @@ namespace PowerSDR //FlexCW
 
         private static bool DotAtTime(double time)
         {
+            Debug.WriteLine("DotAtTime: Checking dot state at time " + time.ToString("F2") + " ms...");
+
             bool state = dot_state;
             lock (sensor_queue)
             {
@@ -415,6 +439,8 @@ namespace PowerSDR //FlexCW
                         if (item.Type == CWSensorItem.InputType.Dot)
                         {
                             state = item.State;
+                            Debug.WriteLine("DotAtTime: Found dot state change at time " + item.Time.ToString("F2") + " ms, new state: " + state);
+
                         }
 
                         continue;
@@ -429,9 +455,13 @@ namespace PowerSDR //FlexCW
 
         private static bool DotWasTrue(double start, double end)
         {
+
+            Debug.WriteLine("DotWasTrue: Checking if dot was true between " + start.ToString("F2") + " ms and " + end.ToString("F2") + " ms...");
+
             bool result = false;
             if (DotAtTime(start))
             {
+                Debug.WriteLine("DotWasTrue: Dot was true at start time " + start.ToString("F2") + " ms, returning true.");
                 return true;
             }
 
@@ -441,6 +471,7 @@ namespace PowerSDR //FlexCW
                 {
                     if (item.Time >= start && item.Time <= end && item.Type == CWSensorItem.InputType.Dot && item.State)
                     {
+                        Debug.WriteLine("DotWasTrue: Found dot state change to true at time " + item.Time.ToString("F2") + " ms, returning true.");
                         result = true;
                     }
                 }
@@ -451,6 +482,9 @@ namespace PowerSDR //FlexCW
 
         private static bool DashAtTime(double time)
         {
+
+            Debug.WriteLine("DashAtTime: Checking dash state at time " + time.ToString("F2") + " ms...");
+
             bool state = dash_state;
             lock (sensor_queue)
             {
@@ -461,6 +495,7 @@ namespace PowerSDR //FlexCW
                         if (item.Type == CWSensorItem.InputType.Dash)
                         {
                             state = item.State;
+                            Debug.WriteLine("DashAtTime: Found dash state change at time " + item.Time.ToString("F2") + " ms, new state: " + state);
                         }
 
                         continue;
@@ -475,6 +510,8 @@ namespace PowerSDR //FlexCW
 
         private static bool DashWasTrue(double start, double end)
         {
+            Debug.WriteLine("DashWasTrue: Checking if dash was true between " + start.ToString("F2") + " ms and " + end.ToString("F2") + " ms...");
+
             if (DashAtTime(start))
             {
                 return true;
@@ -541,6 +578,8 @@ namespace PowerSDR //FlexCW
 
         private static void GoToDot(double start_time)
         {
+            Debug.WriteLine("GoToDot: Transitioning to Dot state at time " + start_time.ToString("F2") + " ms...");
+
             current_state = CWKeyerState.Dot;
             current_state_timeout = start_time + space_length;
             current_token_begin_time = start_time;
@@ -584,24 +623,33 @@ namespace PowerSDR //FlexCW
 
         private static void GoToDash(double start_time)
         {
+
+            Debug.WriteLine("GoToDash: Transitioning to Dash state at time " + start_time.ToString("F2") + " ms...");
+
             current_state = CWKeyerState.Dash;
             current_state_timeout = start_time + space_length * 3.0;
             double num = Math.Max(hw_key_down_delay, audio_latency);
             ToneEnqueue(new CWToneItem(_state: true, start_time + num));
             ToneEnqueue(new CWToneItem(_state: false, start_time + dash_length + num));
             current_token_begin_time = start_time;
+
             if (!break_in)
             {
                 return;
             }
-
+           
             double num2 = Math.Max(0.0, audio_latency - hw_key_down_delay);
             double num3 = Math.Max(0.0, audio_latency + num - break_in_delay);
             double num4 = start_time - hw_key_down_delay + num2;
             double time = start_time + dash_length + break_in_delay + num3;
             bool flag = false;
+            Debug.WriteLine("GoToDash: made it past break_in");
+
+
             if (ptt_queue.Count > 0)
             {
+                Debug.WriteLine("GoToDash: Checking PTT queue for conflicts...");
+
                 lock (ptt_queue)
                 {
                     foreach (CWPTTItem item in ptt_queue)
@@ -617,9 +665,12 @@ namespace PowerSDR //FlexCW
 
             if (!flag)
             {
+                Debug.WriteLine("GoToDash: No conflicting PTT items found, enqueueing PTT ON at time " + num4.ToString("F2") + " ms...");
+
                 PTTEnqueue(new CWPTTItem(_state: true, num4));
             }
 
+            Debug.WriteLine("GoToDash: Enqueueing PTT OFF at time " + time.ToString("F2") + " ms...");
             PTTEnqueue(new CWPTTItem(_state: false, time));
         }
 
@@ -659,6 +710,8 @@ namespace PowerSDR //FlexCW
 
         public static void Advance(double time)
         {
+         //   Debug.WriteLine("Advance: Advancing state machine at time " + time.ToString("F2") + " ms...");
+
             callback_time = time;
             bool flag = false;
             while (!flag)
@@ -720,18 +773,23 @@ namespace PowerSDR //FlexCW
 
                         break;
                     case CWKeyerState.Dot:
+                        Debug.WriteLine("Advance: Current state is Dot, checking for timeout at time " + callback_time.ToString("F2") + " ms...");
                         if (callback_time >= current_state_timeout)
                         {
+
                             current_state = CWKeyerState.DotTimeout;
                             current_state_timeout += space_length;
+                            Debug.WriteLine("Advance: Dot state has timed out, transitioning to DotTimeout state at time " + callback_time.ToString("F2") + " ms...");
                         }
                         else
                         {
+                            Debug.WriteLine("Advance: Dot state has not timed out yet, remaining in Dot state.");
                             flag = true;
                         }
 
                         break;
                     case CWKeyerState.Dash:
+                        Debug.WriteLine("Advance: Current state is Dash, checking for timeout at time " + callback_time.ToString("F2") + " ms...");
                         if (callback_time >= current_state_timeout)
                         {
                             current_state = CWKeyerState.DashTimeout;
@@ -840,6 +898,7 @@ namespace PowerSDR //FlexCW
                             }
                             else if (flag2)
                             {
+                                Debug.WriteLine("Advance: Transitioning to Dot state from DotTimeout at time " + current_state_timeout.ToString("F2") + " ms...");
                                 GoToDot(current_state_timeout);
                             }
                             else if (auto_char_space)

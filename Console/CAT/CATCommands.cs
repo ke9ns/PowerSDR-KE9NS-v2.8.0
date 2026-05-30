@@ -963,7 +963,7 @@ namespace PowerSDR
         public string RX(string s)
         {
             console.CATPTT = false;
-
+/*  //.329
             if (console.SpoofTX == true)
             {
                 console.SpoofTX = false;
@@ -976,7 +976,7 @@ namespace PowerSDR
                 }
 
             }
-
+*/
 
             return "";
             //return ZZTX("0");
@@ -1125,6 +1125,8 @@ namespace PowerSDR
         // since it is not CAT compliant as it is
         public string TX(string s)
         {
+            Debug.WriteLine("ZZTX: " + s + "SpoofAB: " + console.SpoofAB);
+            
             if (console.SpoofAB == true) // ke9ns add .200
             {
                 // check which VFO is TX and save it here to return it back when done with TX
@@ -1132,8 +1134,14 @@ namespace PowerSDR
                 console.SwapVFOA_BTX = true; // VFOB is TX
                 console.SpoofTX = true;
             }
+            else //.329
+            {
+                console.SwapVFOA_BTX = false; // VFOB is TX
+                console.SpoofTX = false;
 
-            console.CATPTT = true;
+            }
+
+                console.CATPTT = true;
 
             return "";
             //return ZZTX("1");
@@ -2632,7 +2640,7 @@ namespace PowerSDR
 
             if (console.setupForm == null) return "";
 
-            if (console.SpoofAB == true) // get VFOB freq instead
+            if (console.SpoofAB == true) // ke9ns: get VFOB freq instead because command came in on SIOListenerII6 the RX2 CAT port
             {
                 if (s.Length == parser.nSet)
                 {
@@ -6624,9 +6632,9 @@ namespace PowerSDR
             if (s.Length == parser.nSet && (s == "0" || s == "1"))
             {
                 if (s == "0")
-                    console.SwapVFOA_BTX = false;
+                    console.SwapVFOA_BTX = false; //ke9ns: false = VFOA
                 else if (s == "1")
-                    console.SwapVFOA_BTX = true;
+                    console.SwapVFOA_BTX = true; //ke9ns: true = VFOB
 
                 return "";
             }
@@ -7055,7 +7063,7 @@ namespace PowerSDR
         //Sets or reads the MOX button status
         public string ZZTX(string s)
         {
-
+           
             if (s.Length == parser.nSet && (s == "0" || s == "1"))
             {
                 if (s == "0")
@@ -7084,8 +7092,13 @@ namespace PowerSDR
                         console.SwapVFOA_BTX = true; // VFOB is TX
                         console.SpoofTX = true;
                     }
+                    else
+                    {
+                        console.SwapVFOA_BTX = false; // VFOB is TX
+                        console.SpoofTX = false;
+                    }
 
-                    console.CATPTT = true;
+                        console.CATPTT = true;
                 }
 
                 return "";

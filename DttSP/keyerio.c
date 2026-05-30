@@ -1,7 +1,7 @@
 
 
 /* keyerio.c
-
+// serial port key reading and debouncing routines for straight and iambic keys
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY
@@ -79,7 +79,11 @@ BOOLEAN read_straight_key (KeyerState ks, BOOLEAN keyed)
 
 BOOLEAN read_iambic_key (KeyerState ks, BOOLEAN dash, BOOLEAN dot, KeyerLogic kl, REAL ticklen)
 {
-	fprintf(stdout, "KEYERSTATE_DIT1\n"), fflush(stdout);
+	fprintf(stdout, "KEYERSTATE_DIT1\n"), fflush(stdout); // fprintf(stdout, "KEYERSTATE_DIT1\n"), fflush(stdout);
+	
+	//fprintf(stderr, "Fall End: %d\n", count);
+
+	//fprintf(stderr, "DttSP: SetSwchRiseThresh(%u, %f)\n", thread, val), fflush(stderr);
 
 	int i, j;
 	static BOOLEAN dah_debounce_buf[DEBOUNCE_BUF_MAX_SIZE],	dit_debounce_buf[DEBOUNCE_BUF_MAX_SIZE];

@@ -13325,7 +13325,7 @@ namespace PowerSDR
             // 
             this.tbPanGrid.AutoSize = false;
             this.tbPanGrid.Location = new System.Drawing.Point(301, 41);
-            this.tbPanGrid.Maximum = 200;
+            this.tbPanGrid.Maximum = 250;
             this.tbPanGrid.Name = "tbPanGrid";
             this.tbPanGrid.Size = new System.Drawing.Size(66, 18);
             this.tbPanGrid.TabIndex = 96;
@@ -13333,7 +13333,7 @@ namespace PowerSDR
             this.toolTip1.SetToolTip(this.tbPanGrid, "Transparency of BandText background color overlayed on the Panadapter.\r\n\r\nRight C" +
         "lick on VFOA Band Text to Toggle ON/OFF Band Text at top\r\nof Panadapter screen.\r" +
         "\n");
-            this.tbPanGrid.Value = 130;
+            this.tbPanGrid.Value = 210;
             this.tbPanGrid.Scroll += new System.EventHandler(this.tbPanGrid_Scroll);
             // 
             // clrbtnText
@@ -13441,6 +13441,7 @@ namespace PowerSDR
             this.clrbtnGrid.TabIndex = 69;
             this.toolTip1.SetToolTip(this.clrbtnGrid, "BandText background color when overlayed on the Panadapter.\r\n\r\nRight Click on VFO" +
         "A Band Text to Toggle ON/OFF Band Text at top\r\nof Panadapter screen.\r\n");
+            this.clrbtnGrid.Visible = false;
             this.clrbtnGrid.Changed += new System.EventHandler(this.clrbtnGrid_Changed);
             // 
             // lblDisplayZeroLineColor
@@ -17718,7 +17719,7 @@ namespace PowerSDR
             this.comboROTORPort.Size = new System.Drawing.Size(72, 21);
             this.comboROTORPort.TabIndex = 97;
             this.toolTip1.SetToolTip(this.comboROTORPort, "This is one end of a Virtual COM port pair (see VspMgr).\r\n\r\nEnables Hygain Rotor " +
-        "control directly OR thru DDUtil for other types of Rotors\r\n\r\n");
+        "control directly, OR thru DDUtil for other types of Rotors\r\n\r\n");
             this.comboROTORPort.SelectedIndexChanged += new System.EventHandler(this.comboROTORPort_SelectedIndexChanged);
             // 
             // labelTS53
@@ -17916,7 +17917,7 @@ namespace PowerSDR
             this.labelTS20.TabIndex = 98;
             this.labelTS20.Text = "Rotor Control";
             this.toolTip1.SetToolTip(this.labelTS20, "This is one end of a Virtual COM port pair (see VspMgr).\r\n\r\nEnables Hygain Rotor " +
-        "control directly or thru DDUtil.\r\n");
+        "control directly, or thru DDUtil.\r\n");
             // 
             // chkROTOREnable
             // 

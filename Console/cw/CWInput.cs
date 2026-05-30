@@ -151,15 +151,18 @@ namespace PowerSDR
                 case "None":
                     if (primary_com_port != null)
                     {
-                        if (primary_com_port.IsOpen)
-                            primary_com_port.Close();
+                        if (primary_com_port.IsOpen) primary_com_port.Close();
                         primary_com_port = null;
                     }
                     primary_input = s;
+                    Debug.WriteLine("CWPRIMARY1 " + primary_input);
                     break;
             }
+
+            Debug.WriteLine("CWPRIMARY " + primary_input);
+
             return true;
-        }
+        } // SetPrimaryInput
 
         public static bool SetSecondaryInput(string s)
         {
@@ -213,6 +216,7 @@ namespace PowerSDR
                         secondary_com_port = null;
                     }
                     primary_input = s;
+                  
                     break;
             }
             return true;
