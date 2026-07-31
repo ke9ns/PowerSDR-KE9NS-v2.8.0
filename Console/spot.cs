@@ -12829,7 +12829,7 @@ namespace PowerSDR
 
             //Create a IPAddress object and port, create an IPEndPoint node:  
             int port = 13;
-            string[] whost = { "utcnist.colorado.edu", "utcnist2.colorado.edu", "time-c.nist.gov", "time-b.nist.gov", "time-a.nist.gov", "time-e-g.nist.gov", "time-b-wwv.nist.gov" };  //  
+            string[] whost = { "time-c.nist.gov", "time-b.nist.gov", "time-c.nist.gov", "time-b.nist.gov", "time-a.nist.gov", "time-e-g.nist.gov", "time-b-wwv.nist.gov" };  //  
             string strHost;
 
             IPHostEntry iphostinfo;
@@ -12869,7 +12869,7 @@ namespace PowerSDR
             else if (chkTimeServer5.Checked == true) strHost = whost[4];
             else if (chkTimeServer6.Checked == true) strHost = whost[5];
             else if (chkTimeServer7.Checked == true) strHost = whost[6];
-            else strHost = "utcnist.colorado.edu";
+            else strHost = "time-c.nist.gov";
 
             try
             {
