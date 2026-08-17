@@ -198,11 +198,11 @@ void FMDemod (FMD fm)
 			}
 		}
 
-		//if(count++ % 96000 == 0)
-		//{
-		//	fprintf(stderr, "filter: %f, thresh: %3f, muted: %d\n", fm->squelch_filter, fm->squelch_threshold_weak, fm->squelch_muted);
-		//	fflush(stderr);
-		//}
+//	if(count++ % 96000 == 0)
+	//	{
+	//		fprintf(stderr, "filter: %f, thresh: %3f, muted: %d\n", fm->squelch_filter, fm->squelch_threshold_weak, fm->squelch_muted);
+	//		fflush(stderr);
+	//	}
 
 	} // for (i = 0; i < CXBsize (fm->squelch_obuf); i++)
 

@@ -1095,7 +1095,7 @@ namespace PowerSDR
         //=====================================================================================
         private float fm_squelch_threshold = 1.0f;
         private float fm_squelch_threshold_dsp = 1.0f;
-        public float FMSquelchThreshold
+        public float FMSquelchThreshold  // send fm squelch leves to the fm modulator to check for squelch break
         {
             get { return fm_squelch_threshold; }
             set
@@ -1112,7 +1112,26 @@ namespace PowerSDR
             }
         }
 
+        static int count = 0;
+        static float holder = 0f;
 
+        public float SquelchLevel //.333 to relay FM squelch levels back to the console
+        {
+            get
+            {
+               // if (count-- == 0)
+              //  {
+                    holder = DttSP.SquelchLevel(thread, subrx);
+                  //  count = 2;
+              //  }
+               
+                    return holder;
+            }
+            set
+            {
+
+            }
+        }
 
         //=====================================================================================
         private bool rx_squelch_on_dsp = false;

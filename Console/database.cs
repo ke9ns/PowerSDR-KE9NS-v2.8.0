@@ -224,7 +224,7 @@ namespace PowerSDR
                                 2.500001, 2.999999, "120M Tropical Short Wave", false, // ke9ns add
                                 3.000000, 3.199999, "90M Tropical Short Wave",  false, // ke9ns add
                                 3.200000, 3.329999, "90M Tropical Short Wave",  false,
-                                3.330000, 3.330000, "CHU Night Time",           false,
+                                3.330000, 3.330000, "90M Tropical Short Wave",           false, // CHU
                                 3.330001, 3.499999, "90M Tropical Short Wave",  false,
                                 // 3.5 - 4.0 80-75m ham
                                 4.000001, 4.745999, "61M Night Short Wave",     false, // ke9ns add
@@ -248,7 +248,7 @@ namespace PowerSDR
                                 7.453500, 7.456500, "41M USB Caribbean Emergency",  true, // ke9ns mod
                              
                                 7.456501, 7.849999, "41M Night Short Wave",     false, // ke9ns mod
-                                7.850000, 7.850000, "CHU Night Time",           false,
+                                7.850000, 7.850000, "41M Night Short Wave",     false, // CHU
                                
                                 7.850001, 7.853000, "41M USB Caribbean Emergency",  true, // ke9ns mod
 
@@ -278,7 +278,7 @@ namespace PowerSDR
                                 14.415000, 14.418000, "19M Caribbean Emergency",  true, // ke9ns mod
 
                                 14.418001, 14.669999, "19M Daytime Short Wave", false,
-                                14.670000, 14.670000, "CHU Day Time",           false,
+                                14.670000, 14.670000, "19M Daytime Short Wave",           false, // chu
                                 14.670001, 14.995999, "19M Daytime Short Wave", false,
                                 14.996000, 14.996000, "RWM Day Time",                    false,
                                 14.996001, 14.999999, "19M Daytime Short Wave", false,
@@ -424,9 +424,9 @@ namespace PowerSDR
                                 15.000000, 15.000000, "WWV Day Time",       false,
                                 20.000000, 20.000000, "WWV Day Time",           false,
                                 25.000000, 25.000000, "WWV Day Time",           false,  // ke9ns add
-                                3.330000, 3.330000, "CHU Night Time",           false,
-                                7.850000, 7.850000, "CHU Night Time",           false,
-                                14.670000, 14.670000, "CHU Day Time",           false,
+                             //   3.330000, 3.330000, "CHU Night Time",           false,
+                              //  7.850000, 7.850000, "CHU Night Time",           false,
+                              //  14.670000, 14.670000, "CHU Day Time",           false,
                                 4.996000, 4.996000, "RWM Night Time",                      false,
                                 9.996000, 9.996000, "RWM Day-Evening Time",                      false,
                                 14.996000, 14.996000, "RWM Day Time",                    false,
@@ -1590,6 +1590,10 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
             object[] data = {
 								// 144 - 146 MHz
+                                128.000000, 136.999999, "Aircraft Airband", false,
+                                137.000000, 137.999999, "Space to Earth", false,
+                                138.000000, 143.999999, "Military MILAIR", false,
+
                                 144.000000, 144.034999, "2M CW & SSB EME",                true,
                                 144.035000, 144.049999, "2M CW",                        true,
                                 144.050000, 144.005000, "2M CW Calling",                true,
@@ -1618,8 +1622,78 @@ namespace PowerSDR
                                 145.800000, 146.000000, "2M All Mode Sat.",             true,
                                 146.000001, 146.899999, "2M WB Digital Ex NoV",         true, // ke9ns add
                                 146.900000, 147.000000, "2M NB Digital Ex NoV",         true, // ke9ns add
-                               
-                                
+                                147.000001, 148.999999, "2m Band",              true,
+
+                                149.000000, 149.999999, "Freenet Band",         true, // ke9ns add
+                                 150.000000, 151.819999, "VHF Business Band",           false, // ke9ns add
+                                151.820000, 151.820000, "MURS channel 1",               false,
+                                 151.820001, 151.879999,"VHF Business Band",           false, // ke9ns add
+                                151.880000, 151.880000, "MURS channel 2",               false,
+                                 151.880001, 151.939999,"VHF Business Band",           false, // ke9ns add
+                                151.940000, 151.940000, "MURS channel 3",               false,
+                                 151.940001, 154.569999,"VHF Business Band",           false, // ke9ns add
+                                154.570000, 154.570000, "MURS channel 4 Blue",          false,
+                                 154.570001, 154.599999,"VHF Business Band",           false, // ke9ns add
+                                154.600000, 154.600000, "MURS channel 5 Green",         false,
+                                 154.600001, 155.999999,"VHF Business Band",           false, // ke9ns add
+
+                                 156.000000, 156.049999, "VHF Marine Band",            false,
+                                156.050000, 156.050000, "Marine 01 Port Op",  false, // ke9ns add .217
+                                 156.050001, 156.249999, "VHF Marine Band",            false,
+                                156.250000, 156.250000, "Marine 05 Port Op",  false, // ke9ns add .217
+                                 156.250001, 156.299999, "VHF Marine Band",            false,
+                                156.300000, 156.300000, "Marine 06 Safety",  false, // ke9ns add .217
+                                 156.300001, 156.349999, "VHF Marine Band",            false,
+                                156.350000, 156.350000, "Marine 07 commercial",  false, // ke9ns add .217
+                                 156.350001, 156.399999, "VHF Marine Band",            false,
+                                156.400000, 156.400000, "Marine 08 commercial",  false, // ke9ns add .217
+                                 156.400001, 156.449999, "VHF Marine Band",            false,
+                                156.450000, 156.450000, "Marine 09 calling",  false, // ke9ns add .217
+                                 156.450001, 156.499999, "VHF Marine Band",            false,
+                                156.500000, 156.500000, "Marine 10 commercial",  false, // ke9ns add .217
+                                 156.500001, 156.549999, "VHF Marine Band",            false,
+                                156.550000, 156.550000, "Marine 11 commerical",  false, // ke9ns add .217
+                                 156.550001, 156.599999, "VHF Marine Band",            false,
+                                156.600000, 156.600000, "Marine 12 Port Op",  false, // ke9ns add .217
+                                 156.600001, 156.649999, "VHF Marine Band",            false,
+                                156.650000, 156.650000, "Marine 13 Nav Safety",  false, // ke9ns add .217
+                                 156.650001, 156.699999, "VHF Marine Band",            false,
+                                156.700000, 156.700000, "Marine 14 Port Op",  false, // ke9ns add .217
+                                 156.700001, 156.749999, "VHF Marine Band",            false,
+                                156.750000, 156.750000, "Marine 15 EPIRB",  false, // ke9ns add .217
+                                 156.750001, 156.799999, "VHF Marine Band",            false,
+                                156.800000, 156.800000, "Marine 16 int Distres",  false, // ke9ns add .217
+                                 156.800001, 156.849999, "VHF Marine Band",            false,
+                                156.850000, 156.850000, "Marine 17 State Ctrl",  false, // ke9ns add .217
+                                 156.850001, 156.899999, "VHF Marine Band",            false,
+                                156.900000, 156.900000, "Marine 18 commercial",  false, // ke9ns add .217
+                                 156.900001, 156.949999, "VHF Marine Band",            false,
+                                156.950000, 156.950000, "Marine 19 commercial",  false, // ke9ns add .217
+                                 156.950001, 156.999999, "VHF Marine Band",            false,
+                                157.000000, 157.000000, "Marine 20 Pt Op TX",  false, // ke9ns add .217
+                                 157.000001, 157.049999, "VHF Marine Band",            false,
+                                157.050000, 157.050000, "Marine 21 US Gov",  false, // ke9ns add .217
+                                 157.050001, 157.099999, "VHF Marine Band",            false,
+                                157.100000, 157.100000, "Marine 22 Cst Grd Saf",  false, // ke9ns add .217
+                                 157.100001, 157.149999, "VHF Marine Band",            false,
+                                157.150000, 157.150000, "Marine 23 US Gov",  false, // ke9ns add .217
+                                 157.150001, 157.199999, "VHF Marine Band",            false,
+                                157.200000, 157.200000, "Marine 24 public cor",  false, // ke9ns add .217
+                                 157.200001, 157.249999, "VHF Marine Band",            false,
+                                157.250000, 157.250000, "Marine 25 public cor",  false, // ke9ns add .217
+                                 157.250001, 157.299999, "VHF Marine Band",            false,
+                                157.300000, 157.300000, "Marine 26 public cor",  false, // ke9ns add .217
+                                 157.300001, 157.349999, "VHF Marine Band",            false,
+                                157.350000, 157.350000, "Marine 27 public cor",  false, // ke9ns add .217
+                                 157.350001, 157.399999, "VHF Marine Band",            false,
+                                157.400000, 157.400000, "Marine 28 public cor",  false, // ke9ns add .217
+                                 157.400001, 161.599999,"VHF Marine Band",           false, // ke9ns add
+
+                                161.600000, 161.600000, "Marine 20 Pt Op RX",  false, // ke9ns add .217
+
+                                161.600001, 162.399999,"VHF Marine Band",           false, // ke9ns add
+
+
                                 // 430 - 440 MHz
 								430.000000, 430.024999, "70cm Sub-Regional",          true,
                                 430.025000, 430.374999, "70cm Repeater Outputs",        true,
@@ -2925,12 +2999,15 @@ namespace PowerSDR
                                 70.500000, 72.800000, "4m ", true,
 
 
-
-                                137.100000, 137.100000, "NOAA19 Weather Sat",  false, // ke9ns add .217
-                                137.620000, 137.620000, "NOAA15 Weather Sat",  false,
-                                137.912500, 137.912500, "NOAA18 Weather Sat",  false,
-
-
+                                128.000000, 136.999999, "Aircraft Airband", false,
+                                137.000000, 137.999999, "Space to Earth", false,
+                                138.000000, 143.999999, "Military MILAIR", false,
+                           
+                                //  137.100000, 137.100000, "NOAA19 Weather Sat",  false, // ke9ns add .217
+                               // 137.620000, 137.620000, "NOAA15 Weather Sat",  false,
+                              //  137.912500, 137.912500, "NOAA18 Weather Sat",  false,
+                              
+                              
                                 144.000000, 144.099999, "2M CW",              true,
 
                                 144.100000, 144.169999, "2M CW/SSB",          true,
@@ -2953,50 +3030,93 @@ namespace PowerSDR
                                 146.610000, 147.389999, "2M FM Repeater",       true,
                                 147.390000, 147.599999, "2M FM Simplex",        true,
                                 147.600000, 147.999999, "2M FM Repeater",       true,
+                                148.000000, 148.999999, "2m Band",              true,
 
+                                149.000000, 149.999999, "Freenet Band",         true, // ke9ns add
+                                 150.000000, 151.819999, "VHF Business Band",           false, // ke9ns add
+                                151.820000, 151.820000, "MURS channel 1",               false,
+                                 151.820001, 151.879999,"VHF Business Band",           false, // ke9ns add
+                                151.880000, 151.880000, "MURS channel 2",               false,
+                                 151.880001, 151.939999,"VHF Business Band",           false, // ke9ns add
+                                151.940000, 151.940000, "MURS channel 3",               false,
+                                 151.940001, 154.569999,"VHF Business Band",           false, // ke9ns add
+                                154.570000, 154.570000, "MURS channel 4 Blue",          false,
+                                 154.570001, 154.599999,"VHF Business Band",           false, // ke9ns add
+                                154.600000, 154.600000, "MURS channel 5 Green",         false,
+                                 154.600001, 155.999999,"VHF Business Band",           false, // ke9ns add
 
+                                 156.000000, 156.049999, "VHF Marine Band",            false,
                                 156.050000, 156.050000, "Marine 01 Port Op",  false, // ke9ns add .217
+                                 156.050001, 156.249999, "VHF Marine Band",            false,
                                 156.250000, 156.250000, "Marine 05 Port Op",  false, // ke9ns add .217
+                                 156.250001, 156.299999, "VHF Marine Band",            false,
                                 156.300000, 156.300000, "Marine 06 Safety",  false, // ke9ns add .217
+                                 156.300001, 156.349999, "VHF Marine Band",            false,
                                 156.350000, 156.350000, "Marine 07 commercial",  false, // ke9ns add .217
+                                 156.350001, 156.399999, "VHF Marine Band",            false,
                                 156.400000, 156.400000, "Marine 08 commercial",  false, // ke9ns add .217
+                                 156.400001, 156.449999, "VHF Marine Band",            false,
                                 156.450000, 156.450000, "Marine 09 calling",  false, // ke9ns add .217
+                                 156.450001, 156.499999, "VHF Marine Band",            false,
                                 156.500000, 156.500000, "Marine 10 commercial",  false, // ke9ns add .217
+                                 156.500001, 156.549999, "VHF Marine Band",            false,
                                 156.550000, 156.550000, "Marine 11 commerical",  false, // ke9ns add .217
-                              
+                                 156.550001, 156.599999, "VHF Marine Band",            false,
                                 156.600000, 156.600000, "Marine 12 Port Op",  false, // ke9ns add .217
+                                 156.600001, 156.649999, "VHF Marine Band",            false,
                                 156.650000, 156.650000, "Marine 13 Nav Safety",  false, // ke9ns add .217
+                                 156.650001, 156.699999, "VHF Marine Band",            false,
                                 156.700000, 156.700000, "Marine 14 Port Op",  false, // ke9ns add .217
+                                 156.700001, 156.749999, "VHF Marine Band",            false,
                                 156.750000, 156.750000, "Marine 15 EPIRB",  false, // ke9ns add .217
+                                 156.750001, 156.799999, "VHF Marine Band",            false,
                                 156.800000, 156.800000, "Marine 16 int Distres",  false, // ke9ns add .217
+                                 156.800001, 156.849999, "VHF Marine Band",            false,
                                 156.850000, 156.850000, "Marine 17 State Ctrl",  false, // ke9ns add .217
-
+                                 156.850001, 156.899999, "VHF Marine Band",            false,
                                 156.900000, 156.900000, "Marine 18 commercial",  false, // ke9ns add .217
+                                 156.900001, 156.949999, "VHF Marine Band",            false,
                                 156.950000, 156.950000, "Marine 19 commercial",  false, // ke9ns add .217
+                                 156.950001, 156.999999, "VHF Marine Band",            false,
                                 157.000000, 157.000000, "Marine 20 Pt Op TX",  false, // ke9ns add .217
+                                 157.000001, 157.049999, "VHF Marine Band",            false,
                                 157.050000, 157.050000, "Marine 21 US Gov",  false, // ke9ns add .217
+                                 157.050001, 157.099999, "VHF Marine Band",            false,
                                 157.100000, 157.100000, "Marine 22 Cst Grd Saf",  false, // ke9ns add .217
-
+                                 157.100001, 157.149999, "VHF Marine Band",            false,
                                 157.150000, 157.150000, "Marine 23 US Gov",  false, // ke9ns add .217
+                                 157.150001, 157.199999, "VHF Marine Band",            false,
                                 157.200000, 157.200000, "Marine 24 public cor",  false, // ke9ns add .217
+                                 157.200001, 157.249999, "VHF Marine Band",            false,
                                 157.250000, 157.250000, "Marine 25 public cor",  false, // ke9ns add .217
+                                 157.250001, 157.299999, "VHF Marine Band",            false,
                                 157.300000, 157.300000, "Marine 26 public cor",  false, // ke9ns add .217
+                                 157.300001, 157.349999, "VHF Marine Band",            false,
                                 157.350000, 157.350000, "Marine 27 public cor",  false, // ke9ns add .217
+                                 157.350001, 157.399999, "VHF Marine Band",            false,
                                 157.400000, 157.400000, "Marine 28 public cor",  false, // ke9ns add .217
-                                
-
-
+                                 157.400001, 161.599999,"VHF Marine Band",           false, // ke9ns add
 
                                 161.600000, 161.600000, "Marine 20 Pt Op RX",  false, // ke9ns add .217
 
+                                161.600001, 162.399999,"VHF Marine Band",           false, // ke9ns add
+
                                 162.400000, 162.400000, "WX channel 2",  false, // ke9ns add .217
+                                 162.400001, 162.424999, "VHF Weather Band",            false,
                                 162.425000, 162.425000, "WX channel 4",  false, // ke9ns add .217
+                                 162.425001, 162.449999, "VHF Weather Band",            false,
                                 162.450000, 162.450000, "WX channel 5",  false, // ke9ns add .217
+                                 162.450001, 162.474999, "VHF Weather Band",            false,
                                 162.475000, 162.475000, "WX channel 3",  false, // ke9ns add .217
+                                 162.475001, 162.499999, "VHF Weather Band",            false,
                                 162.500000, 162.500000, "WX channel 6",  false, // ke9ns add .217
+                                 162.500001, 162.524999, "VHF Weather Band",            false,
                                 162.525000, 162.525000, "WX channel 7",  false, // ke9ns add .217
+                                 162.525001, 162.549999, "VHF Weather Band",            false,
                                 162.550000, 162.550000, "WX channel 1",  false, // ke9ns add .217
-                                
+                              
+                                162.550001, 174.999999, "VHF Business Band",           false, // ke9ns add
+   
 
                                 222.000000, 222.024999, "1.25M EME/Weak Signal",        true,
                                 222.025000, 222.049999, "1.25M Weak Signal",            true,
@@ -3570,6 +3690,9 @@ namespace PowerSDR
                                 70.105000, 70.499999, "4m ", true,
                                 70.500000, 72.800000, "4m ", true,
 
+                                128.000000, 136.999999, "Aircraft Airband", false,
+                                137.000000, 137.999999, "Space to Earth", false,
+                                138.000000, 143.999999, "Military MILAIR", false,
 
                                 144.000000, 144.099999, "2M CW",                true,
 
@@ -3593,6 +3716,80 @@ namespace PowerSDR
                                 146.610000, 147.389999, "2M FM Repeater",       true,
                                 147.390000, 147.599999, "2M FM Simplex",        true,
                                 147.600000, 147.999999, "2M FM Repeater",       true,
+                                148.000000, 148.999999, "2m Band",              true,
+                               
+                                149.000000, 149.999999, "Freenet Band",         true, // ke9ns add
+                                 150.000000, 151.819999, "VHF Business Band",           false, // ke9ns add
+                                151.820000, 151.820000, "MURS channel 1",               false,
+                                 151.820001, 151.879999,"VHF Business Band",           false, // ke9ns add
+                                151.880000, 151.880000, "MURS channel 2",               false,
+                                 151.880001, 151.939999,"VHF Business Band",           false, // ke9ns add
+                                151.940000, 151.940000, "MURS channel 3",               false,
+                                 151.940001, 154.569999,"VHF Business Band",           false, // ke9ns add
+                                154.570000, 154.570000, "MURS channel 4 Blue",          false,
+                                 154.570001, 154.599999,"VHF Business Band",           false, // ke9ns add
+                                154.600000, 154.600000, "MURS channel 5 Green",         false,
+                                 154.600001, 155.999999,"VHF Business Band",           false, // ke9ns add
+
+                                 156.000000, 156.049999, "VHF Marine Band",            false,
+                                156.050000, 156.050000, "Marine 01 Port Op",  false, // ke9ns add .217
+                                 156.050001, 156.249999, "VHF Marine Band",            false,
+                                156.250000, 156.250000, "Marine 05 Port Op",  false, // ke9ns add .217
+                                 156.250001, 156.299999, "VHF Marine Band",            false,
+                                156.300000, 156.300000, "Marine 06 Safety",  false, // ke9ns add .217
+                                 156.300001, 156.349999, "VHF Marine Band",            false,
+                                156.350000, 156.350000, "Marine 07 commercial",  false, // ke9ns add .217
+                                 156.350001, 156.399999, "VHF Marine Band",            false,
+                                156.400000, 156.400000, "Marine 08 commercial",  false, // ke9ns add .217
+                                 156.400001, 156.449999, "VHF Marine Band",            false,
+                                156.450000, 156.450000, "Marine 09 calling",  false, // ke9ns add .217
+                                 156.450001, 156.499999, "VHF Marine Band",            false,
+                                156.500000, 156.500000, "Marine 10 commercial",  false, // ke9ns add .217
+                                 156.500001, 156.549999, "VHF Marine Band",            false,
+                                156.550000, 156.550000, "Marine 11 commerical",  false, // ke9ns add .217
+                                 156.550001, 156.599999, "VHF Marine Band",            false,
+                                156.600000, 156.600000, "Marine 12 Port Op",  false, // ke9ns add .217
+                                 156.600001, 156.649999, "VHF Marine Band",            false,
+                                156.650000, 156.650000, "Marine 13 Nav Safety",  false, // ke9ns add .217
+                                 156.650001, 156.699999, "VHF Marine Band",            false,
+                                156.700000, 156.700000, "Marine 14 Port Op",  false, // ke9ns add .217
+                                 156.700001, 156.749999, "VHF Marine Band",            false,
+                                156.750000, 156.750000, "Marine 15 EPIRB",  false, // ke9ns add .217
+                                 156.750001, 156.799999, "VHF Marine Band",            false,
+                                156.800000, 156.800000, "Marine 16 int Distres",  false, // ke9ns add .217
+                                 156.800001, 156.849999, "VHF Marine Band",            false,
+                                156.850000, 156.850000, "Marine 17 State Ctrl",  false, // ke9ns add .217
+                                 156.850001, 156.899999, "VHF Marine Band",            false,
+                                156.900000, 156.900000, "Marine 18 commercial",  false, // ke9ns add .217
+                                 156.900001, 156.949999, "VHF Marine Band",            false,
+                                156.950000, 156.950000, "Marine 19 commercial",  false, // ke9ns add .217
+                                 156.950001, 156.999999, "VHF Marine Band",            false,
+                                157.000000, 157.000000, "Marine 20 Pt Op TX",  false, // ke9ns add .217
+                                 157.000001, 157.049999, "VHF Marine Band",            false,
+                                157.050000, 157.050000, "Marine 21 US Gov",  false, // ke9ns add .217
+                                 157.050001, 157.099999, "VHF Marine Band",            false,
+                                157.100000, 157.100000, "Marine 22 Cst Grd Saf",  false, // ke9ns add .217
+                                 157.100001, 157.149999, "VHF Marine Band",            false,
+                                157.150000, 157.150000, "Marine 23 US Gov",  false, // ke9ns add .217
+                                 157.150001, 157.199999, "VHF Marine Band",            false,
+                                157.200000, 157.200000, "Marine 24 public cor",  false, // ke9ns add .217
+                                 157.200001, 157.249999, "VHF Marine Band",            false,
+                                157.250000, 157.250000, "Marine 25 public cor",  false, // ke9ns add .217
+                                 157.250001, 157.299999, "VHF Marine Band",            false,
+                                157.300000, 157.300000, "Marine 26 public cor",  false, // ke9ns add .217
+                                 157.300001, 157.349999, "VHF Marine Band",            false,
+                                157.350000, 157.350000, "Marine 27 public cor",  false, // ke9ns add .217
+                                 157.350001, 157.399999, "VHF Marine Band",            false,
+                                157.400000, 157.400000, "Marine 28 public cor",  false, // ke9ns add .217
+                                 157.400001, 161.599999,"VHF Marine Band",           false, // ke9ns add
+
+                                161.600000, 161.600000, "Marine 20 Pt Op RX",  false, // ke9ns add .217
+
+                                161.600001, 162.399999,"VHF Marine Band",           false, // ke9ns add
+
+
+
+
 
                                 222.000000, 222.024999, "1.25M EME/Weak Signal",        true,
                                 222.025000, 222.049999, "1.25M Weak Signal",            true,
@@ -4105,6 +4302,10 @@ namespace PowerSDR
                                 70.105000, 70.499999, "4m ", true,
                                 70.500000, 72.800000, "4m ", true,
 
+                                128.000000, 136.999999, "Aircraft Airband", false,
+                                137.000000, 137.999999, "Space to Earth", false,
+                                138.000000, 143.999999, "Military MILAIR", false,
+
 
                                 144.000000, 144.099999, "2M CW",                true,
 
@@ -4128,6 +4329,80 @@ namespace PowerSDR
                                 146.610000, 147.389999, "2M FM Repeater",       true,
                                 147.390000, 147.599999, "2M FM Simplex",        true,
                                 147.600000, 147.999999, "2M FM Repeater",       true,
+
+                                148.000000, 148.999999, "2m Band",              true,
+
+                                149.000000, 149.999999, "Freenet Band",         true, // ke9ns add
+                                 150.000000, 151.819999, "VHF Business Band",           false, // ke9ns add
+                                151.820000, 151.820000, "MURS channel 1",               false,
+                                 151.820001, 151.879999,"VHF Business Band",           false, // ke9ns add
+                                151.880000, 151.880000, "MURS channel 2",               false,
+                                 151.880001, 151.939999,"VHF Business Band",           false, // ke9ns add
+                                151.940000, 151.940000, "MURS channel 3",               false,
+                                 151.940001, 154.569999,"VHF Business Band",           false, // ke9ns add
+                                154.570000, 154.570000, "MURS channel 4 Blue",          false,
+                                 154.570001, 154.599999,"VHF Business Band",           false, // ke9ns add
+                                154.600000, 154.600000, "MURS channel 5 Green",         false,
+                                 154.600001, 155.999999,"VHF Business Band",           false, // ke9ns add
+
+                                 156.000000, 156.049999, "VHF Marine Band",            false,
+                                156.050000, 156.050000, "Marine 01 Port Op",  false, // ke9ns add .217
+                                 156.050001, 156.249999, "VHF Marine Band",            false,
+                                156.250000, 156.250000, "Marine 05 Port Op",  false, // ke9ns add .217
+                                 156.250001, 156.299999, "VHF Marine Band",            false,
+                                156.300000, 156.300000, "Marine 06 Safety",  false, // ke9ns add .217
+                                 156.300001, 156.349999, "VHF Marine Band",            false,
+                                156.350000, 156.350000, "Marine 07 commercial",  false, // ke9ns add .217
+                                 156.350001, 156.399999, "VHF Marine Band",            false,
+                                156.400000, 156.400000, "Marine 08 commercial",  false, // ke9ns add .217
+                                 156.400001, 156.449999, "VHF Marine Band",            false,
+                                156.450000, 156.450000, "Marine 09 calling",  false, // ke9ns add .217
+                                 156.450001, 156.499999, "VHF Marine Band",            false,
+                                156.500000, 156.500000, "Marine 10 commercial",  false, // ke9ns add .217
+                                 156.500001, 156.549999, "VHF Marine Band",            false,
+                                156.550000, 156.550000, "Marine 11 commerical",  false, // ke9ns add .217
+                                 156.550001, 156.599999, "VHF Marine Band",            false,
+                                156.600000, 156.600000, "Marine 12 Port Op",  false, // ke9ns add .217
+                                 156.600001, 156.649999, "VHF Marine Band",            false,
+                                156.650000, 156.650000, "Marine 13 Nav Safety",  false, // ke9ns add .217
+                                 156.650001, 156.699999, "VHF Marine Band",            false,
+                                156.700000, 156.700000, "Marine 14 Port Op",  false, // ke9ns add .217
+                                 156.700001, 156.749999, "VHF Marine Band",            false,
+                                156.750000, 156.750000, "Marine 15 EPIRB",  false, // ke9ns add .217
+                                 156.750001, 156.799999, "VHF Marine Band",            false,
+                                156.800000, 156.800000, "Marine 16 int Distres",  false, // ke9ns add .217
+                                 156.800001, 156.849999, "VHF Marine Band",            false,
+                                156.850000, 156.850000, "Marine 17 State Ctrl",  false, // ke9ns add .217
+                                 156.850001, 156.899999, "VHF Marine Band",            false,
+                                156.900000, 156.900000, "Marine 18 commercial",  false, // ke9ns add .217
+                                 156.900001, 156.949999, "VHF Marine Band",            false,
+                                156.950000, 156.950000, "Marine 19 commercial",  false, // ke9ns add .217
+                                 156.950001, 156.999999, "VHF Marine Band",            false,
+                                157.000000, 157.000000, "Marine 20 Pt Op TX",  false, // ke9ns add .217
+                                 157.000001, 157.049999, "VHF Marine Band",            false,
+                                157.050000, 157.050000, "Marine 21 US Gov",  false, // ke9ns add .217
+                                 157.050001, 157.099999, "VHF Marine Band",            false,
+                                157.100000, 157.100000, "Marine 22 Cst Grd Saf",  false, // ke9ns add .217
+                                 157.100001, 157.149999, "VHF Marine Band",            false,
+                                157.150000, 157.150000, "Marine 23 US Gov",  false, // ke9ns add .217
+                                 157.150001, 157.199999, "VHF Marine Band",            false,
+                                157.200000, 157.200000, "Marine 24 public cor",  false, // ke9ns add .217
+                                 157.200001, 157.249999, "VHF Marine Band",            false,
+                                157.250000, 157.250000, "Marine 25 public cor",  false, // ke9ns add .217
+                                 157.250001, 157.299999, "VHF Marine Band",            false,
+                                157.300000, 157.300000, "Marine 26 public cor",  false, // ke9ns add .217
+                                 157.300001, 157.349999, "VHF Marine Band",            false,
+                                157.350000, 157.350000, "Marine 27 public cor",  false, // ke9ns add .217
+                                 157.350001, 157.399999, "VHF Marine Band",            false,
+                                157.400000, 157.400000, "Marine 28 public cor",  false, // ke9ns add .217
+                                 157.400001, 161.599999,"VHF Marine Band",           false, // ke9ns add
+
+                                161.600000, 161.600000, "Marine 20 Pt Op RX",  false, // ke9ns add .217
+
+                                161.600001, 162.399999,"VHF Marine Band",           false, // ke9ns add
+
+
+
 
                                 222.000000, 222.024999, "1.25M EME/Weak Signal",        true,
                                 222.025000, 222.049999, "1.25M Weak Signal",            true,
@@ -4770,6 +5045,10 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
             object[] data = {
 								// 144 - 146 MHz
+                                128.000000, 136.999999, "Aircraft Airband", false,
+                                137.000000, 137.999999, "Space to Earth", false,
+                                138.000000, 143.999999, "Military MILAIR", false,
+
                                 144.000000, 144.019999, "2M EME",                     true,
                                 144.020000, 144.099999, "2M CW & EME",                  true,
 
@@ -4786,6 +5065,84 @@ namespace PowerSDR
                                 145.650000, 145.799999, "2M All Modes",                 true,
                                 145.800000, 145.999999, "2M Satellite.",                true,
                                 146.000000, 147.999999, "2M All Modes",                 true,
+
+                                 148.000000, 148.999999, "2m Band",              true,
+
+                                149.000000, 149.999999, "Freenet Band",         true, // ke9ns add
+                                 150.000000, 151.819999, "VHF Business Band",           false, // ke9ns add
+                                151.820000, 151.820000, "MURS channel 1",               false,
+                                 151.820001, 151.879999,"VHF Business Band",           false, // ke9ns add
+                                151.880000, 151.880000, "MURS channel 2",               false,
+                                 151.880001, 151.939999,"VHF Business Band",           false, // ke9ns add
+                                151.940000, 151.940000, "MURS channel 3",               false,
+                                 151.940001, 154.569999,"VHF Business Band",           false, // ke9ns add
+                                154.570000, 154.570000, "MURS channel 4 Blue",          false,
+                                 154.570001, 154.599999,"VHF Business Band",           false, // ke9ns add
+                                154.600000, 154.600000, "MURS channel 5 Green",         false,
+                                 154.600001, 155.999999,"VHF Business Band",           false, // ke9ns add
+
+                                 156.000000, 156.049999, "VHF Marine Band",            false,
+                                156.050000, 156.050000, "Marine 01 Port Op",  false, // ke9ns add .217
+                                 156.050001, 156.249999, "VHF Marine Band",            false,
+                                156.250000, 156.250000, "Marine 05 Port Op",  false, // ke9ns add .217
+                                 156.250001, 156.299999, "VHF Marine Band",            false,
+                                156.300000, 156.300000, "Marine 06 Safety",  false, // ke9ns add .217
+                                 156.300001, 156.349999, "VHF Marine Band",            false,
+                                156.350000, 156.350000, "Marine 07 commercial",  false, // ke9ns add .217
+                                 156.350001, 156.399999, "VHF Marine Band",            false,
+                                156.400000, 156.400000, "Marine 08 commercial",  false, // ke9ns add .217
+                                 156.400001, 156.449999, "VHF Marine Band",            false,
+                                156.450000, 156.450000, "Marine 09 calling",  false, // ke9ns add .217
+                                 156.450001, 156.499999, "VHF Marine Band",            false,
+                                156.500000, 156.500000, "Marine 10 commercial",  false, // ke9ns add .217
+                                 156.500001, 156.549999, "VHF Marine Band",            false,
+                                156.550000, 156.550000, "Marine 11 commerical",  false, // ke9ns add .217
+                                 156.550001, 156.599999, "VHF Marine Band",            false,
+                                156.600000, 156.600000, "Marine 12 Port Op",  false, // ke9ns add .217
+                                 156.600001, 156.649999, "VHF Marine Band",            false,
+                                156.650000, 156.650000, "Marine 13 Nav Safety",  false, // ke9ns add .217
+                                 156.650001, 156.699999, "VHF Marine Band",            false,
+                                156.700000, 156.700000, "Marine 14 Port Op",  false, // ke9ns add .217
+                                 156.700001, 156.749999, "VHF Marine Band",            false,
+                                156.750000, 156.750000, "Marine 15 EPIRB",  false, // ke9ns add .217
+                                 156.750001, 156.799999, "VHF Marine Band",            false,
+                                156.800000, 156.800000, "Marine 16 int Distres",  false, // ke9ns add .217
+                                 156.800001, 156.849999, "VHF Marine Band",            false,
+                                156.850000, 156.850000, "Marine 17 State Ctrl",  false, // ke9ns add .217
+                                 156.850001, 156.899999, "VHF Marine Band",            false,
+                                156.900000, 156.900000, "Marine 18 commercial",  false, // ke9ns add .217
+                                 156.900001, 156.949999, "VHF Marine Band",            false,
+                                156.950000, 156.950000, "Marine 19 commercial",  false, // ke9ns add .217
+                                 156.950001, 156.999999, "VHF Marine Band",            false,
+                                157.000000, 157.000000, "Marine 20 Pt Op TX",  false, // ke9ns add .217
+                                 157.000001, 157.049999, "VHF Marine Band",            false,
+                                157.050000, 157.050000, "Marine 21 US Gov",  false, // ke9ns add .217
+                                 157.050001, 157.099999, "VHF Marine Band",            false,
+                                157.100000, 157.100000, "Marine 22 Cst Grd Saf",  false, // ke9ns add .217
+                                 157.100001, 157.149999, "VHF Marine Band",            false,
+                                157.150000, 157.150000, "Marine 23 US Gov",  false, // ke9ns add .217
+                                 157.150001, 157.199999, "VHF Marine Band",            false,
+                                157.200000, 157.200000, "Marine 24 public cor",  false, // ke9ns add .217
+                                 157.200001, 157.249999, "VHF Marine Band",            false,
+                                157.250000, 157.250000, "Marine 25 public cor",  false, // ke9ns add .217
+                                 157.250001, 157.299999, "VHF Marine Band",            false,
+                                157.300000, 157.300000, "Marine 26 public cor",  false, // ke9ns add .217
+                                 157.300001, 157.349999, "VHF Marine Band",            false,
+                                157.350000, 157.350000, "Marine 27 public cor",  false, // ke9ns add .217
+                                 157.350001, 157.399999, "VHF Marine Band",            false,
+                                157.400000, 157.400000, "Marine 28 public cor",  false, // ke9ns add .217
+                                 157.400001, 161.599999,"VHF Marine Band",           false, // ke9ns add
+
+                                161.600000, 161.600000, "Marine 20 Pt Op RX",  false, // ke9ns add .217
+
+                                161.600001, 162.399999,"VHF Marine Band",           false, // ke9ns add
+
+
+
+
+
+
+
                                 // 430 - 440 MHz
 								430.000000, 430.099999, "70cm CW",                        true,
                                 430.100000, 430.699999, "70cm CW/Phone & Image",        true,
@@ -5241,9 +5598,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
 
                                 "GEN", "SAM", "F5", 13.845000,
                                 "GEN", "SAM", "F5", 9.550000,
@@ -5325,9 +5682,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                               // "WWV", "USB", "F6", 3.330000,
+                               // "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
 
                                 "GEN", "SAM", "F5", 13.845000,
                                 "GEN", "SAM", "F5", 9.550000,
@@ -5408,9 +5765,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F5", 13.845000,
                                 "GEN", "SAM", "F5", 9.550000,
                                 "GEN", "SAM", "F5", 5.975000,
@@ -5485,9 +5842,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F6", 13.845000,
                                 "GEN", "SAM", "F7", 5.975000,
                                 "GEN", "SAM", "F7", 9.550000,
@@ -5583,9 +5940,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F6", 13.845000,
                                 "GEN", "SAM", "F7", 5.975000,
                                 "GEN", "SAM", "F7", 9.550000,
@@ -5668,9 +6025,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F6", 13.845000,
                                 "GEN", "SAM", "F7", 5.975000,
                                 "GEN", "SAM", "F7", 9.550000,
@@ -5749,9 +6106,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                             //   "WWV", "USB", "F6", 7.850000,
+                             //   "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F6", 13.845000,
                                 "GEN", "SAM", "F7", 5.975000,
                                 "GEN", "SAM", "F7", 9.550000,
@@ -5834,9 +6191,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F5", 15.000000,
                                 "WWV", "SAM", "F5", 20.000000,
                                 "WWV", "SAM", "F5", 25.000000, // ke9ns add
-                                "WWV", "USB", "F6", 3.330000,
-                                "WWV", "USB", "F6", 7.850000,
-                                "WWV", "USB", "F6", 14.670000,
+                              //  "WWV", "USB", "F6", 3.330000,
+                              //  "WWV", "USB", "F6", 7.850000,
+                              //  "WWV", "USB", "F6", 14.670000,
                                 "GEN", "SAM", "F6", 13.845000,
                                 "GEN", "SAM", "F7", 5.975000,
                                 "GEN", "SAM", "F7", 9.550000,

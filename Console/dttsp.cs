@@ -211,6 +211,10 @@ namespace PowerSDR
         [DllImport("DttSP.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SetFMSquelchThreshold")]///
         public static extern void SetFMSquelchThreshold(uint thread, uint subrx, float threshold);
 
+        [DllImport("DttSP.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SquelchLevel")]/// // .333
+		public static extern float SquelchLevel(uint thread, double low);
+
+
         [DllImport("DttSP.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "GetFMSquelchBreak")] // ke9ns add
         public static extern void GetFMSquelchBreak(uint thread, uint subrx, bool* fmsquelchbreak);
 

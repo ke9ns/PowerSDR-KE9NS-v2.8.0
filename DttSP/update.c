@@ -371,11 +371,26 @@ DttSP_EXP void SetFMSquelchThreshold(unsigned int thread, unsigned int k, REAL t
 	rx[thread][k].fm.gen->squelch_threshold_weak = threshold;
 	rx[thread][k].fm.gen->squelch_threshold_unmute = threshold*0.9f;
 	rx[thread][k].fm.gen->squelch_threshold_strong = threshold*0.5f;
-	//fprintf(stderr, "dttsp SetFMSquelchThreshold: %f\n", threshold);
+	//fprintf(stderr, "dttsp SetFMSquelchThreshold: %f, thread: %ud, K: %ud\n", threshold, thread, k);
 	//fflush(stderr);
 	sem_post(&top[thread].sync.upd.sem);
 }
 
+DttSP_EXP float SquelchLevel(unsigned int thread, unsigned int k) //.333
+{
+//	static int count = 0;
+	// return rx[thread][k].fm.gen->squelch_threshold_weak;
+	
+	sem_wait(&top[thread].sync.upd.sem);
+	 REAL temp = rx[thread][k].fm.gen->squelch_filter;
+	 sem_post(&top[thread].sync.upd.sem);
+
+//	fprintf(stderr, "squelchlevel filter: %f, thread: %ud, k: %ud\n", temp, thread, k);
+ //   fflush(stderr);
+		
+
+	return temp;
+}
 
 //======================================================================================================
 DttSP_EXP int SetTXFilter (unsigned int thread, double low_frequency, double high_frequency)
@@ -2415,8 +2430,7 @@ DttSP_EXP void DelPolyPhaseFIRF (ResSt resst)
 
 } // DelPolyPhaseFIRF
 
-DttSP_EXP int
-SetSubRXSt(unsigned int thread, unsigned int subrx, BOOLEAN setit)
+DttSP_EXP int SetSubRXSt(unsigned int thread, unsigned int subrx, BOOLEAN setit)
 {
 	int rtn = 0;
 	switch (setit)

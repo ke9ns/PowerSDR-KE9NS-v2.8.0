@@ -52,6 +52,18 @@ namespace PowerSDR
             this.labelMax = new System.Windows.Forms.Label();
             this.pwrMstWatts = new System.Windows.Forms.TextBox();
             this.pwrMstSWR = new System.Windows.Forms.TextBox();
+            this.radRX2ModeAM = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeLSB = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeSAM = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeCWL = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeDSB = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeUSB = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeCWU = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeFMN = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeDIGU = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeDRM = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeDIGL = new System.Windows.Forms.RadioButtonTS();
+            this.radRX2ModeSPEC = new System.Windows.Forms.RadioButtonTS();
             this.comboVACSampleRate = new System.Windows.Forms.ComboBoxTS();
             this.ptbVACTX2Gain = new PowerSDR.PrettyTrackBar();
             this.ptbVACRX2Gain = new PowerSDR.PrettyTrackBar();
@@ -242,18 +254,6 @@ namespace PowerSDR
             this.chkCWIambic = new System.Windows.Forms.CheckBoxTS();
             this.udRX2FilterHigh = new System.Windows.Forms.NumericUpDownTS();
             this.udRX2FilterLow = new System.Windows.Forms.NumericUpDownTS();
-            this.radRX2ModeAM = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeLSB = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeSAM = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeCWL = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeDSB = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeUSB = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeCWU = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeFMN = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeDIGU = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeDRM = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeDIGL = new System.Windows.Forms.RadioButtonTS();
-            this.radRX2ModeSPEC = new System.Windows.Forms.RadioButtonTS();
             this.chkRX2DisplayPeak = new System.Windows.Forms.CheckBoxTS();
             this.comboRX2DisplayMode = new System.Windows.Forms.ComboBoxTS();
             this.chkRX2Mute = new System.Windows.Forms.CheckBoxTS();
@@ -447,6 +447,7 @@ namespace PowerSDR
             this.VFODialAA = new System.Windows.Forms.PictureBox();
             this.VFODialBB = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.panelRX2Mode = new System.Windows.Forms.PanelTS();
             this.panelModeSpecificDigital = new System.Windows.Forms.PanelTS();
             this.grpDIGSampleRate = new System.Windows.Forms.GroupBoxTS();
             this.lblVACTX2Indicator = new System.Windows.Forms.LabelTS();
@@ -548,7 +549,6 @@ namespace PowerSDR
             this.radRX2Filter7 = new System.Windows.Forms.RadioButtonTS();
             this.radRX2Filter5 = new System.Windows.Forms.RadioButtonTS();
             this.radRX2Filter6 = new System.Windows.Forms.RadioButtonTS();
-            this.panelRX2Mode = new System.Windows.Forms.PanelTS();
             this.panelRX2Display = new System.Windows.Forms.PanelTS();
             this.label7 = new System.Windows.Forms.Label();
             this.panelRX2Mixer = new System.Windows.Forms.PanelTS();
@@ -658,6 +658,7 @@ namespace PowerSDR
             ((System.ComponentModel.ISupportInitialize)(this.VFODialB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VFODialAA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VFODialBB)).BeginInit();
+            this.panelRX2Mode.SuspendLayout();
             this.panelModeSpecificDigital.SuspendLayout();
             this.grpDIGSampleRate.SuspendLayout();
             this.grpVACStereo.SuspendLayout();
@@ -689,7 +690,6 @@ namespace PowerSDR
             this.grpSemiBreakIn.SuspendLayout();
             this.panelAntenna.SuspendLayout();
             this.panelRX2Filter.SuspendLayout();
-            this.panelRX2Mode.SuspendLayout();
             this.panelRX2Display.SuspendLayout();
             this.panelRX2Mixer.SuspendLayout();
             this.panelMultiRX.SuspendLayout();
@@ -779,6 +779,118 @@ namespace PowerSDR
             this.pwrMstSWR.Name = "pwrMstSWR";
             this.pwrMstSWR.TabStop = false;
             this.toolTip1.SetToolTip(this.pwrMstSWR, resources.GetString("pwrMstSWR.ToolTip"));
+            // 
+            // radRX2ModeAM
+            // 
+            resources.ApplyResources(this.radRX2ModeAM, "radRX2ModeAM");
+            this.radRX2ModeAM.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeAM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeAM.Name = "radRX2ModeAM";
+            this.toolTip1.SetToolTip(this.radRX2ModeAM, resources.GetString("radRX2ModeAM.ToolTip"));
+            this.radRX2ModeAM.CheckedChanged += new System.EventHandler(this.radRX2ModeAM_CheckedChanged);
+            // 
+            // radRX2ModeLSB
+            // 
+            resources.ApplyResources(this.radRX2ModeLSB, "radRX2ModeLSB");
+            this.radRX2ModeLSB.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeLSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeLSB.Name = "radRX2ModeLSB";
+            this.toolTip1.SetToolTip(this.radRX2ModeLSB, resources.GetString("radRX2ModeLSB.ToolTip"));
+            this.radRX2ModeLSB.CheckedChanged += new System.EventHandler(this.radRX2ModeLSB_CheckedChanged);
+            // 
+            // radRX2ModeSAM
+            // 
+            resources.ApplyResources(this.radRX2ModeSAM, "radRX2ModeSAM");
+            this.radRX2ModeSAM.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeSAM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeSAM.Name = "radRX2ModeSAM";
+            this.toolTip1.SetToolTip(this.radRX2ModeSAM, resources.GetString("radRX2ModeSAM.ToolTip"));
+            this.radRX2ModeSAM.CheckedChanged += new System.EventHandler(this.radRX2ModeSAM_CheckedChanged);
+            // 
+            // radRX2ModeCWL
+            // 
+            resources.ApplyResources(this.radRX2ModeCWL, "radRX2ModeCWL");
+            this.radRX2ModeCWL.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeCWL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeCWL.Name = "radRX2ModeCWL";
+            this.toolTip1.SetToolTip(this.radRX2ModeCWL, resources.GetString("radRX2ModeCWL.ToolTip"));
+            this.radRX2ModeCWL.CheckedChanged += new System.EventHandler(this.radRX2ModeCWL_CheckedChanged);
+            this.radRX2ModeCWL.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeCWL_MouseDown);
+            // 
+            // radRX2ModeDSB
+            // 
+            resources.ApplyResources(this.radRX2ModeDSB, "radRX2ModeDSB");
+            this.radRX2ModeDSB.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeDSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeDSB.Name = "radRX2ModeDSB";
+            this.toolTip1.SetToolTip(this.radRX2ModeDSB, resources.GetString("radRX2ModeDSB.ToolTip"));
+            this.radRX2ModeDSB.CheckedChanged += new System.EventHandler(this.radRX2ModeDSB_CheckedChanged);
+            // 
+            // radRX2ModeUSB
+            // 
+            resources.ApplyResources(this.radRX2ModeUSB, "radRX2ModeUSB");
+            this.radRX2ModeUSB.BackColor = System.Drawing.SystemColors.Control;
+            this.radRX2ModeUSB.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeUSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeUSB.Name = "radRX2ModeUSB";
+            this.toolTip1.SetToolTip(this.radRX2ModeUSB, resources.GetString("radRX2ModeUSB.ToolTip"));
+            this.radRX2ModeUSB.UseVisualStyleBackColor = false;
+            this.radRX2ModeUSB.CheckedChanged += new System.EventHandler(this.radRX2ModeUSB_CheckedChanged);
+            // 
+            // radRX2ModeCWU
+            // 
+            resources.ApplyResources(this.radRX2ModeCWU, "radRX2ModeCWU");
+            this.radRX2ModeCWU.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeCWU.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeCWU.Name = "radRX2ModeCWU";
+            this.toolTip1.SetToolTip(this.radRX2ModeCWU, resources.GetString("radRX2ModeCWU.ToolTip"));
+            this.radRX2ModeCWU.CheckedChanged += new System.EventHandler(this.radRX2ModeCWU_CheckedChanged);
+            this.radRX2ModeCWU.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeCWU_MouseDown);
+            // 
+            // radRX2ModeFMN
+            // 
+            resources.ApplyResources(this.radRX2ModeFMN, "radRX2ModeFMN");
+            this.radRX2ModeFMN.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeFMN.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeFMN.Name = "radRX2ModeFMN";
+            this.toolTip1.SetToolTip(this.radRX2ModeFMN, resources.GetString("radRX2ModeFMN.ToolTip"));
+            this.radRX2ModeFMN.CheckedChanged += new System.EventHandler(this.radRX2ModeFMN_CheckedChanged);
+            this.radRX2ModeFMN.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeFMN_MouseUp);
+            // 
+            // radRX2ModeDIGU
+            // 
+            resources.ApplyResources(this.radRX2ModeDIGU, "radRX2ModeDIGU");
+            this.radRX2ModeDIGU.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeDIGU.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeDIGU.Name = "radRX2ModeDIGU";
+            this.toolTip1.SetToolTip(this.radRX2ModeDIGU, resources.GetString("radRX2ModeDIGU.ToolTip"));
+            this.radRX2ModeDIGU.CheckedChanged += new System.EventHandler(this.radRX2ModeDIGU_CheckedChanged);
+            // 
+            // radRX2ModeDRM
+            // 
+            resources.ApplyResources(this.radRX2ModeDRM, "radRX2ModeDRM");
+            this.radRX2ModeDRM.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeDRM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeDRM.Name = "radRX2ModeDRM";
+            this.toolTip1.SetToolTip(this.radRX2ModeDRM, resources.GetString("radRX2ModeDRM.ToolTip"));
+            this.radRX2ModeDRM.CheckedChanged += new System.EventHandler(this.radRX2ModeDRM_CheckedChanged);
+            // 
+            // radRX2ModeDIGL
+            // 
+            resources.ApplyResources(this.radRX2ModeDIGL, "radRX2ModeDIGL");
+            this.radRX2ModeDIGL.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeDIGL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeDIGL.Name = "radRX2ModeDIGL";
+            this.toolTip1.SetToolTip(this.radRX2ModeDIGL, resources.GetString("radRX2ModeDIGL.ToolTip"));
+            this.radRX2ModeDIGL.CheckedChanged += new System.EventHandler(this.radRX2ModeDIGL_CheckedChanged);
+            // 
+            // radRX2ModeSPEC
+            // 
+            resources.ApplyResources(this.radRX2ModeSPEC, "radRX2ModeSPEC");
+            this.radRX2ModeSPEC.FlatAppearance.BorderSize = 0;
+            this.radRX2ModeSPEC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.radRX2ModeSPEC.Name = "radRX2ModeSPEC";
+            this.toolTip1.SetToolTip(this.radRX2ModeSPEC, resources.GetString("radRX2ModeSPEC.ToolTip"));
             // 
             // comboVACSampleRate
             // 
@@ -3065,118 +3177,6 @@ namespace PowerSDR
             this.udRX2FilterLow.ValueChanged += new System.EventHandler(this.udRX2FilterLow_ValueChanged);
             this.udRX2FilterLow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.udRX2FilterLow_MouseDown);
             // 
-            // radRX2ModeAM
-            // 
-            resources.ApplyResources(this.radRX2ModeAM, "radRX2ModeAM");
-            this.radRX2ModeAM.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeAM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeAM.Name = "radRX2ModeAM";
-            this.toolTip1.SetToolTip(this.radRX2ModeAM, resources.GetString("radRX2ModeAM.ToolTip"));
-            this.radRX2ModeAM.CheckedChanged += new System.EventHandler(this.radRX2ModeAM_CheckedChanged);
-            // 
-            // radRX2ModeLSB
-            // 
-            resources.ApplyResources(this.radRX2ModeLSB, "radRX2ModeLSB");
-            this.radRX2ModeLSB.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeLSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeLSB.Name = "radRX2ModeLSB";
-            this.toolTip1.SetToolTip(this.radRX2ModeLSB, resources.GetString("radRX2ModeLSB.ToolTip"));
-            this.radRX2ModeLSB.CheckedChanged += new System.EventHandler(this.radRX2ModeLSB_CheckedChanged);
-            // 
-            // radRX2ModeSAM
-            // 
-            resources.ApplyResources(this.radRX2ModeSAM, "radRX2ModeSAM");
-            this.radRX2ModeSAM.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeSAM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeSAM.Name = "radRX2ModeSAM";
-            this.toolTip1.SetToolTip(this.radRX2ModeSAM, resources.GetString("radRX2ModeSAM.ToolTip"));
-            this.radRX2ModeSAM.CheckedChanged += new System.EventHandler(this.radRX2ModeSAM_CheckedChanged);
-            // 
-            // radRX2ModeCWL
-            // 
-            resources.ApplyResources(this.radRX2ModeCWL, "radRX2ModeCWL");
-            this.radRX2ModeCWL.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeCWL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeCWL.Name = "radRX2ModeCWL";
-            this.toolTip1.SetToolTip(this.radRX2ModeCWL, resources.GetString("radRX2ModeCWL.ToolTip"));
-            this.radRX2ModeCWL.CheckedChanged += new System.EventHandler(this.radRX2ModeCWL_CheckedChanged);
-            this.radRX2ModeCWL.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeCWL_MouseDown);
-            // 
-            // radRX2ModeDSB
-            // 
-            resources.ApplyResources(this.radRX2ModeDSB, "radRX2ModeDSB");
-            this.radRX2ModeDSB.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeDSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeDSB.Name = "radRX2ModeDSB";
-            this.toolTip1.SetToolTip(this.radRX2ModeDSB, resources.GetString("radRX2ModeDSB.ToolTip"));
-            this.radRX2ModeDSB.CheckedChanged += new System.EventHandler(this.radRX2ModeDSB_CheckedChanged);
-            // 
-            // radRX2ModeUSB
-            // 
-            resources.ApplyResources(this.radRX2ModeUSB, "radRX2ModeUSB");
-            this.radRX2ModeUSB.BackColor = System.Drawing.SystemColors.Control;
-            this.radRX2ModeUSB.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeUSB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeUSB.Name = "radRX2ModeUSB";
-            this.toolTip1.SetToolTip(this.radRX2ModeUSB, resources.GetString("radRX2ModeUSB.ToolTip"));
-            this.radRX2ModeUSB.UseVisualStyleBackColor = false;
-            this.radRX2ModeUSB.CheckedChanged += new System.EventHandler(this.radRX2ModeUSB_CheckedChanged);
-            // 
-            // radRX2ModeCWU
-            // 
-            resources.ApplyResources(this.radRX2ModeCWU, "radRX2ModeCWU");
-            this.radRX2ModeCWU.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeCWU.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeCWU.Name = "radRX2ModeCWU";
-            this.toolTip1.SetToolTip(this.radRX2ModeCWU, resources.GetString("radRX2ModeCWU.ToolTip"));
-            this.radRX2ModeCWU.CheckedChanged += new System.EventHandler(this.radRX2ModeCWU_CheckedChanged);
-            this.radRX2ModeCWU.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeCWU_MouseDown);
-            // 
-            // radRX2ModeFMN
-            // 
-            resources.ApplyResources(this.radRX2ModeFMN, "radRX2ModeFMN");
-            this.radRX2ModeFMN.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeFMN.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeFMN.Name = "radRX2ModeFMN";
-            this.toolTip1.SetToolTip(this.radRX2ModeFMN, resources.GetString("radRX2ModeFMN.ToolTip"));
-            this.radRX2ModeFMN.CheckedChanged += new System.EventHandler(this.radRX2ModeFMN_CheckedChanged);
-            this.radRX2ModeFMN.MouseDown += new System.Windows.Forms.MouseEventHandler(this.radRX2ModeFMN_MouseUp);
-            // 
-            // radRX2ModeDIGU
-            // 
-            resources.ApplyResources(this.radRX2ModeDIGU, "radRX2ModeDIGU");
-            this.radRX2ModeDIGU.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeDIGU.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeDIGU.Name = "radRX2ModeDIGU";
-            this.toolTip1.SetToolTip(this.radRX2ModeDIGU, resources.GetString("radRX2ModeDIGU.ToolTip"));
-            this.radRX2ModeDIGU.CheckedChanged += new System.EventHandler(this.radRX2ModeDIGU_CheckedChanged);
-            // 
-            // radRX2ModeDRM
-            // 
-            resources.ApplyResources(this.radRX2ModeDRM, "radRX2ModeDRM");
-            this.radRX2ModeDRM.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeDRM.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeDRM.Name = "radRX2ModeDRM";
-            this.toolTip1.SetToolTip(this.radRX2ModeDRM, resources.GetString("radRX2ModeDRM.ToolTip"));
-            this.radRX2ModeDRM.CheckedChanged += new System.EventHandler(this.radRX2ModeDRM_CheckedChanged);
-            // 
-            // radRX2ModeDIGL
-            // 
-            resources.ApplyResources(this.radRX2ModeDIGL, "radRX2ModeDIGL");
-            this.radRX2ModeDIGL.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeDIGL.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeDIGL.Name = "radRX2ModeDIGL";
-            this.toolTip1.SetToolTip(this.radRX2ModeDIGL, resources.GetString("radRX2ModeDIGL.ToolTip"));
-            this.radRX2ModeDIGL.CheckedChanged += new System.EventHandler(this.radRX2ModeDIGL_CheckedChanged);
-            // 
-            // radRX2ModeSPEC
-            // 
-            resources.ApplyResources(this.radRX2ModeSPEC, "radRX2ModeSPEC");
-            this.radRX2ModeSPEC.FlatAppearance.BorderSize = 0;
-            this.radRX2ModeSPEC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.radRX2ModeSPEC.Name = "radRX2ModeSPEC";
-            this.toolTip1.SetToolTip(this.radRX2ModeSPEC, resources.GetString("radRX2ModeSPEC.ToolTip"));
-            // 
             // chkRX2DisplayPeak
             // 
             resources.ApplyResources(this.chkRX2DisplayPeak, "chkRX2DisplayPeak");
@@ -5203,6 +5203,26 @@ namespace PowerSDR
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
+            // panelRX2Mode
+            // 
+            resources.ApplyResources(this.panelRX2Mode, "panelRX2Mode");
+            this.panelRX2Mode.BackColor = System.Drawing.Color.Transparent;
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeAM);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeLSB);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeSAM);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeCWL);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeDSB);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeUSB);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeCWU);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeFMN);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeDIGU);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeDRM);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeDIGL);
+            this.panelRX2Mode.Controls.Add(this.radRX2ModeSPEC);
+            this.panelRX2Mode.Name = "panelRX2Mode";
+            this.panelRX2Mode.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRing_Paint);
+            this.panelRX2Mode.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelRX2Mode_MouseClick);
+            // 
             // panelModeSpecificDigital
             // 
             resources.ApplyResources(this.panelModeSpecificDigital, "panelModeSpecificDigital");
@@ -6307,26 +6327,6 @@ namespace PowerSDR
             this.radRX2Filter6.Name = "radRX2Filter6";
             this.radRX2Filter6.CheckedChanged += new System.EventHandler(this.radRX2Filter6_CheckedChanged);
             // 
-            // panelRX2Mode
-            // 
-            resources.ApplyResources(this.panelRX2Mode, "panelRX2Mode");
-            this.panelRX2Mode.BackColor = System.Drawing.Color.Transparent;
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeAM);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeLSB);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeSAM);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeCWL);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeDSB);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeUSB);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeCWU);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeFMN);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeDIGU);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeDRM);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeDIGL);
-            this.panelRX2Mode.Controls.Add(this.radRX2ModeSPEC);
-            this.panelRX2Mode.Name = "panelRX2Mode";
-            this.panelRX2Mode.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRing_Paint);
-            this.panelRX2Mode.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelRX2Mode_MouseClick);
-            // 
             // panelRX2Display
             // 
             resources.ApplyResources(this.panelRX2Display, "panelRX2Display");
@@ -6910,6 +6910,7 @@ namespace PowerSDR
             ((System.ComponentModel.ISupportInitialize)(this.VFODialB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VFODialAA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VFODialBB)).EndInit();
+            this.panelRX2Mode.ResumeLayout(false);
             this.panelModeSpecificDigital.ResumeLayout(false);
             this.grpDIGSampleRate.ResumeLayout(false);
             this.grpVACStereo.ResumeLayout(false);
@@ -6947,7 +6948,6 @@ namespace PowerSDR
             this.grpSemiBreakIn.ResumeLayout(false);
             this.panelAntenna.ResumeLayout(false);
             this.panelRX2Filter.ResumeLayout(false);
-            this.panelRX2Mode.ResumeLayout(false);
             this.panelRX2Display.ResumeLayout(false);
             this.panelRX2Mixer.ResumeLayout(false);
             this.panelMultiRX.ResumeLayout(false);
@@ -7079,7 +7079,6 @@ namespace PowerSDR
         public System.Windows.Forms.TextBoxTS autoBrightBox;
         private System.Windows.Forms.TextBoxTS txtDisplayCursorOffset;
         private System.Windows.Forms.TextBoxTS txtDisplayCursorPower;
-        private System.Windows.Forms.TextBoxTS txtDisplayCursorFreq;
         private System.Windows.Forms.TextBoxTS txtDisplayPeakOffset;
         private System.Windows.Forms.TextBoxTS txtDisplayPeakFreq;
         public System.Windows.Forms.TextBoxTS txtDisplayPeakPower;
@@ -7547,6 +7546,7 @@ namespace PowerSDR
         private System.Windows.Forms.LabelTS lblVACRX2Indicator;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX1FilterReset1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX2FilterReset1;
+        public System.Windows.Forms.TextBoxTS txtDisplayCursorFreq;
     } // class console
 
 

@@ -13293,6 +13293,18 @@ namespace PowerSDR
                                 {
                                     B9 = new SolidBrush(Color.FromArgb(temp23, Color.Violet));
                                 }
+                                else if ( (bandtext[temp9].Contains("Airband")) || (bandtext[temp9].Contains("Business")) )
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Coral));
+                                }
+                                else if (bandtext[temp9].Contains("Earth") || (bandtext[temp9].Contains("Marine")))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.Cyan));
+                                }
+                                else if ( bandtext[temp9].Contains("MILAIR") || (bandtext[temp9].Contains("Weather")))
+                                {
+                                    B9 = new SolidBrush(Color.FromArgb(temp23, Color.SeaGreen));
+                                }
                                 else
                                 {
                                     B9 = new SolidBrush(Color.FromArgb(temp23, Color.Purple));
@@ -21961,6 +21973,11 @@ namespace PowerSDR
             if (current_click_tune_mode != ClickTuneMode.Off)
             {
                 Pen p;
+
+                //.331
+                System.Drawing.Font font = new System.Drawing.Font("Swis721 BT",  (float)console.setupForm.udCursorSize.Value, FontStyle.Italic); // Arial size and style of freq text for waterfall
+                SolidBrush grid_text_brush = new SolidBrush(grid_text_color);
+
                 if (current_click_tune_mode == ClickTuneMode.VFOA)
                     p = new Pen(grid_text_color);
                 else p = new Pen(Color.Red);
@@ -21974,6 +21991,10 @@ namespace PowerSDR
                         {
                             g.DrawLine(p, display_cursor_x, H, display_cursor_x, H + H);
                             g.DrawLine(p, 0, display_cursor_y, W, display_cursor_y);
+                           
+                           if (console.setupForm.chkCursorFreq.Checked)
+                                g.DrawString(console.txtDisplayCursorFreq.Text, font, grid_text_brush, display_cursor_x + 3, display_cursor_y - 6 - (float)console.setupForm.udCursorSize.Value );  //.331
+
                         }
                     }
                     else // ke9ns: RX1 only
@@ -21984,6 +22005,10 @@ namespace PowerSDR
                             //  g.DrawLine(p, display_cursor_x, 0, display_cursor_x, H);
                             g.DrawLine(p, display_cursor_x, 0, display_cursor_x, console.picDisplay.Height); // ke9ns .193
                             g.DrawLine(p, 0, display_cursor_y, W, display_cursor_y);
+
+                            if (console.setupForm.chkCursorFreq.Checked)
+                                g.DrawString(console.txtDisplayCursorFreq.Text, font, grid_text_brush, display_cursor_x + 3, display_cursor_y - 6 - (float)console.setupForm.udCursorSize.Value);  //.331
+
                         }
                     }
                 } // cursors
@@ -23906,6 +23931,11 @@ namespace PowerSDR
             if (current_click_tune_mode != ClickTuneMode.Off)
             {
                 Pen p;
+
+                //.331
+                System.Drawing.Font font = new System.Drawing.Font("Swis721 BT", (float)console.setupForm.udCursorSize.Value, FontStyle.Italic); // Arial size and style of freq text for waterfall
+                SolidBrush grid_text_brush = new SolidBrush(grid_text_color);
+
                 if (current_click_tune_mode == ClickTuneMode.VFOA)
                     p = new Pen(grid_text_color);
                 else p = new Pen(Color.Red);
@@ -23921,6 +23951,9 @@ namespace PowerSDR
                         {
                             // g.DrawLine(p, display_cursor_x, 0, display_cursor_x, H + H);
                             g.DrawLine(p, 0, display_cursor_y, W, display_cursor_y);
+
+                            if (console.setupForm.chkCursorFreq.Checked)
+                                g.DrawString(console.txtDisplayCursorFreq.Text, font, grid_text_brush, display_cursor_x + 3, display_cursor_y - 6 - (float)console.setupForm.udCursorSize.Value );  //.331 
                         }
                         else
                         {
@@ -23933,6 +23966,9 @@ namespace PowerSDR
                         {
                             g.DrawLine(p, display_cursor_x, 0, display_cursor_x, H);
                             g.DrawLine(p, 0, display_cursor_y, W, display_cursor_y);
+
+                            if (console.setupForm.chkCursorFreq.Checked)
+                                g.DrawString(console.txtDisplayCursorFreq.Text, font, grid_text_brush, display_cursor_x + 3 , display_cursor_y - 6 - (float)console.setupForm.udCursorSize.Value );  //.331
                         }
                     }
                 } // cursors

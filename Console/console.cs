@@ -256,6 +256,12 @@ using NAudio.Gui;
 using System.Security.Policy;
 using System.Web.UI.Design;
 using HidDevice;
+using EnvDTE;
+using Thread = System.Threading.Thread;
+using Process = System.Diagnostics.Process;
+
+
+
 
 
 //using MahApps.Metro.Controls; // ke9ns add
@@ -52174,7 +52180,7 @@ namespace PowerSDR
                     if (RX1DSPMode == DSPMode.FM)
                     {
 
-                        int sql_x = (int)(((float)ptbSquelch.Value + 160.0) * (picSquelch.Width - 1) / 160.0);
+                      //  int sql_x = (int)(((float)ptbSquelch.Value + 160.0) * (picSquelch.Width - 1) / 160.0);  .333
 
                         ScanControl.SQL = (int)ptbSquelch.Value; // SQL slider value
                         ScanControl.SIG = (int)sql_data;  // -96
@@ -52192,6 +52198,10 @@ namespace PowerSDR
                         }
 
                         //   Debug.WriteLine("SQLFM MODE (squelch data, squelch setpoint) " + sql_data + " , " + sql_x);
+
+                    }
+                    else //.333 fix squelch break for the other modes
+                    {
 
                     }
 
@@ -52221,7 +52231,7 @@ namespace PowerSDR
                 if (RX2DSPMode == DSPMode.FM) //.244 for scanner routine
                 {
 
-                    int sql_x = (int)(((float)ptbRX2Squelch.Value + 160.0) * (picRX2Squelch.Width - 1) / 160.0);
+                  //  int sql_x = (int)(((float)ptbRX2Squelch.Value + 160.0) * (picRX2Squelch.Width - 1) / 160.0); .333
 
                     ScanControl.SQL2 = (int)ptbRX2Squelch.Value; // SQL slider value
                     ScanControl.SIG2 = (int)rx2_sql_data;  // -96
@@ -59420,6 +59430,8 @@ namespace PowerSDR
             {
                 dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
                 dsp.GetDSPRX(0, 1).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
+
+
             }
             else //non-FM Squelch
             {
@@ -59429,13 +59441,17 @@ namespace PowerSDR
                         rx1_meter_cal_offset -
                         rx1_preamp_offset[(int)rx1_preamp_mode] -
                         rx1_filter_size_cal_offset -
-                        rx1_path_offset;
+                        rx1_path_offset - //  .333 ;
+                        rx1_xvtr_gain_offset - // .333
+                        rx1_loop_offset;  //.333
 
                     dsp.GetDSPRX(0, 1).RXSquelchThreshold = (float)ptbSquelch.Value -
                         rx1_meter_cal_offset -
                         rx1_preamp_offset[(int)rx1_preamp_mode] -
                         rx1_filter_size_cal_offset -
-                        rx1_path_offset;
+                        rx1_path_offset - //.333  ;
+                       rx1_xvtr_gain_offset - // .333
+                       rx1_loop_offset;  //.333
                 }
                 else
                 {
@@ -59457,18 +59473,44 @@ namespace PowerSDR
 
         private void picSquelch_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            int signal_x = (int)((sql_data + 160.0) * (picSquelch.Width - 1) / 160.0);
-            int sql_x = (int)(((float)ptbSquelch.Value + 160.0) * (picSquelch.Width - 1) / 160.0);
-
-            if (mox) signal_x = sql_x = 0;
-
-            e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picSquelch.Height);
-
-            if (sql_x < signal_x)
+          
+            if (rx1_dsp_mode == DSPMode.FM) //.333
             {
-                e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picSquelch.Height);
-                ScanControl.ScanStop = 1; // ke9ns add
+                // ptbsquelch in FM is min=0 to max=100
+                 
+                int tempA = (int)(-50.0 * Math.Log10(dsp.GetDSPRX(0, 0).SquelchLevel * 0.5) );   //   dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
+               
+                //   Debug.WriteLine("SQUELCH FM MODE LEVEL : " + tempA + " raw = " + temp);
 
+                int   signal_x = tempA;
+                int   sql_x = (int)ptbSquelch.Value;
+             
+                if (mox) signal_x = sql_x = 0;
+
+                e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picSquelch.Height);
+
+                if (sql_x < signal_x)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picSquelch.Height);
+                    ScanControl.ScanStop = 1; // ke9ns add
+
+                }
+            }
+            else // ptbsquelch max = 0, min = -160 dbm
+            {
+                int signal_x = (int)((sql_data + 160.0) * (picSquelch.Width - 1) / 160.0);
+                int sql_x = (int)(((float)ptbSquelch.Value + 160.0) * (picSquelch.Width - 1) / 160.0);
+               
+                if (mox) signal_x = sql_x = 0;
+
+                e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picSquelch.Height);
+
+                if (sql_x < signal_x)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picSquelch.Height);
+                    ScanControl.ScanStop = 1; // ke9ns add
+
+                }
             }
 
             ScanControl.SQL = (int)ptbSquelch.Value;
@@ -66861,8 +66903,6 @@ namespace PowerSDR
 
             this.toolTip1.SetToolTip(this.picDisplay, ""); // ke9ns .195 turn off Spectrum Grid Min/Max tooltip values
 
-
-
             mousestart = false; // ke9ns add: .134 AGCT green line display. You let go mouse, so your no longer moving the line
             mousestartP = false; // ke9ns add: .141 grab pan side display. You let go mouse, so your no longer moving the line
             mousestartS = false; // ke9ns add: .193 grab pan bar between pan and water. You let go mouse, so your no longer resize the PanaFall8020
@@ -67957,7 +67997,7 @@ namespace PowerSDR
                     ptbSquelch.Minimum = -160;
                     ptbSquelch.Maximum = 0;
 
-                    picSquelch.Visible = true;
+                 //   picSquelch.Visible = true;
 
                     ptbSquelch.Value = rx1_squelch_threshold_scroll;
                     break;
@@ -68254,7 +68294,7 @@ namespace PowerSDR
 
                     ptbSquelch.Value = rx1_fm_squelch_threshold_scroll;
 
-                    picSquelch.Visible = false; //ke9ns: false
+                 //   picSquelch.Visible = true; //ke9ns: false .333
 
                     rx1_squelch_on = chkSquelch.Checked;    //save state of non-FM squelch
                     chkSquelch.Checked = true;
@@ -73471,7 +73511,7 @@ namespace PowerSDR
                     ptbRX2Squelch.Minimum = -160;
                     ptbRX2Squelch.Maximum = 0;
 
-                    picRX2Squelch.Visible = true;
+                  //  picRX2Squelch.Visible = true;
 
                     ptbRX2Squelch.Value = rx2_squelch_threshold_scroll;
                     break;
@@ -73656,7 +73696,7 @@ namespace PowerSDR
 
                     ptbRX2Squelch.Value = rx2_fm_squelch_threshold_scroll;
 
-                    picRX2Squelch.Visible = false;
+                 //   picRX2Squelch.Visible = true;   //.333 was false;
 
                     //chkRX2Squelch.Enabled = false;
                     rx2_squelch_on = chkRX2Squelch.Checked;    //save state of non-FM squelch
@@ -74378,24 +74418,32 @@ namespace PowerSDR
 
             chkRX2Squelch.Text = "SQL:  " + ptbRX2Squelch.Value.ToString();
 
-            if (rx2_dsp_mode == DSPMode.FM)
+            if (rx2_dsp_mode == DSPMode.FM) // squelch is based on demod signal (not dBm)
             {
-                dsp.GetDSPRX(1, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbRX2Squelch.Value / 100.0);
-                dsp.GetDSPRX(1, 1).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbRX2Squelch.Value / 100.0);
-            }
-            else
-            {
-                dsp.GetDSPRX(1, 0).RXSquelchThreshold = ((float)ptbRX2Squelch.Value -
-                    rx2_meter_cal_offset -
-                    rx2_preamp_offset[(int)rx2_preamp_mode] -
-                    rx2_filter_size_cal_offset -
-                    rx2_path_offset);
+                dsp.GetDSPRX(1, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbRX2Squelch.Value / 100.0); // 45 = .1259 
+                dsp.GetDSPRX(1, 1).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbRX2Squelch.Value / 100.0); // 46 = .1202
 
-                dsp.GetDSPRX(1, 1).RXSquelchThreshold = ((float)ptbRX2Squelch.Value -
+             //   float temp = dsp.GetDSPRX(1, 0).SquelchLevel; //.333
+              //  float temp2 = dsp.GetDSPRX(1, 1).SquelchLevel;
+
+            }
+            else // squelch is based on dBm
+            {
+                dsp.GetDSPRX(1, 0).RXSquelchThreshold = (float)ptbRX2Squelch.Value -
                     rx2_meter_cal_offset -
                     rx2_preamp_offset[(int)rx2_preamp_mode] -
                     rx2_filter_size_cal_offset -
-                    rx2_path_offset);
+                    rx2_path_offset - //.333 ;
+                    rx2_xvtr_gain_offset - // .333
+                    rx2_loop_offset;  //.333
+
+                dsp.GetDSPRX(1, 1).RXSquelchThreshold = (float)ptbRX2Squelch.Value -
+                    rx2_meter_cal_offset -
+                    rx2_preamp_offset[(int)rx2_preamp_mode] -
+                    rx2_filter_size_cal_offset -
+                    rx2_path_offset - // .333 ;
+                    rx2_xvtr_gain_offset - // .333
+                    rx2_loop_offset;  //.333
             }
 
             if (ptbRX2Squelch.Focused) btnHidden.Focus();
@@ -74404,16 +74452,44 @@ namespace PowerSDR
         private void picRX2Squelch_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             if (!FWCEEPROM.RX2OK) return;
-            int signal_x = (int)((rx2_sql_data + 160.0) * (picRX2Squelch.Width - 1) / 160.0);
-            int sql_x = (int)(((float)ptbRX2Squelch.Value + 160.0) * (picRX2Squelch.Width - 1) / 160.0);
 
-            e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picRX2Squelch.Height);
-            if (sql_x < signal_x)
+            if (rx2_dsp_mode == DSPMode.FM)
             {
-                e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picRX2Squelch.Height);
-                ScanControl.ScanStop2 = 1; // ke9ns add .244
-            }
+                    // ptbsquelch in FM is min=0 to max=100
+            
+                    int tempA = (int)(-50.0 * Math.Log10(dsp.GetDSPRX(1, 0).SquelchLevel * 0.5));   //   dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
 
+                    //     Debug.WriteLine("SQUELCH FM MODE LEVEL : " + tempA + " raw = " + temp);
+
+                    int signal_x = tempA;
+                    int sql_x = (int)ptbRX2Squelch.Value;
+
+                    if (mox) signal_x = sql_x = 0;
+
+                    e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picRX2Squelch.Height);
+
+                    if (sql_x < signal_x)
+                    {
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picRX2Squelch.Height);
+                        ScanControl.ScanStop2 = 1; // ke9ns add
+
+                    }
+            
+            }
+            else
+            {
+                int signal_x = (int)((rx2_sql_data + 160.0) * (picRX2Squelch.Width - 1) / 160.0);
+                int sql_x = (int)(((float)ptbRX2Squelch.Value + 160.0) * (picRX2Squelch.Width - 1) / 160.0);
+
+                if (mox) signal_x = sql_x = 0;
+
+                e.Graphics.FillRectangle(new SolidBrush(Color.LimeGreen), 0, 0, signal_x, picRX2Squelch.Height);
+                if (sql_x < signal_x)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), sql_x + 1, 0, signal_x - sql_x - 1, picRX2Squelch.Height);
+                    ScanControl.ScanStop2 = 1; // ke9ns add .244
+                }
+            }
 
             ScanControl.SQL2 = (int)ptbRX2Squelch.Value;
             ScanControl.SIG2 = (int)rx2_sql_data;
@@ -90889,7 +90965,7 @@ namespace PowerSDR
 
                 Bitmap buttonOnImage = new Bitmap(buttonOnPath);
 
-                Thread.Sleep(100);
+                System.Threading.Thread.Sleep(100);
 
                 btnSync.BackgroundImage = buttonOnImage;
                 ESCSYNC = true; // .249
