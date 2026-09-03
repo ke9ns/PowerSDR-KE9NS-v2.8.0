@@ -3659,7 +3659,7 @@ namespace PowerSDR
 
             //===============================================================
             // Draw TNF NOTCH
-            //===============================================================
+            //===============================================================4
 
 
             // draw notches if in RX
@@ -3985,7 +3985,9 @@ namespace PowerSDR
                                 actual_fgrid == 26.960 || actual_fgrid == 27.410 || // ke9ns add CB
                                 actual_fgrid == 28.0 || actual_fgrid == 29.7 ||
                                 actual_fgrid == 50.0 || actual_fgrid == 54.0 ||
-                                actual_fgrid == 144.0 || actual_fgrid == 148.0)
+                                actual_fgrid == 144.0 || actual_fgrid == 148.0 ||
+                                actual_fgrid == 420.0 || actual_fgrid == 450.0 
+                                )
                             {
 
                                 if (bottom) g.DrawLine(new Pen(band_edge_color, band_edge_width), vgrid, H + top, vgrid, H + H); // draw vertical scale lines
@@ -4338,7 +4340,7 @@ namespace PowerSDR
 
                     int[] band_edge_list_r2 = {  0135700, 0137800, 0472000, 0479000,  1800000, 2000000, 3500000, 4000000, 5250000,5450000,
                                                 7000000, 7300000, 10100000, 10150000, 14000000, 14350000, 18068000, 18168000, 21000000, 21450000,
-                                                24890000, 24990000, 26960000, 27410000, 28000000, 29700000, 50000000, 54000000, 144000000, 148000000 }; // ke9ns add CB
+                                                24890000, 24990000, 26960000, 27410000, 28000000, 29700000, 50000000, 54000000, 144000000, 148000000, 420000000, 450000000 }; // ke9ns add CB
 
                     for (int i = 0; i < band_edge_list_r2.Length; i++)
                     {
@@ -4475,7 +4477,8 @@ namespace PowerSDR
                                 actual_fgrid == 24.89 || actual_fgrid == 24.99 ||
                                 actual_fgrid == 28.0 || actual_fgrid == 29.7 ||
                                 actual_fgrid == 50.0 || actual_fgrid == 52.0 || // ke9ns fix from 50.08
-                                actual_fgrid == 144.0 || actual_fgrid == 147.0) // 147 is an experimental portion of 2m
+                                actual_fgrid == 144.0 || actual_fgrid == 147.0 // 147 is an experimental portion of 2m
+                                ||  actual_fgrid == 420.0 || actual_fgrid == 450.0)
                             {
 
                                 // BEGIN of FRSRegion common block
@@ -4821,7 +4824,7 @@ namespace PowerSDR
                     // draw band edge markers for bands not 60m
                     int[] band_edge_list_r3 = { 18068000, 18168000, 1810000, 2000000, 3500000, 3800000, 5250000,5450000,
                                                 7000000, 7200000, 10100000, 10150000, 14000000, 14350000, 21000000, 21450000,
-                                                24890000, 24990000, 28000000, 29700000, 50000000, 52000000, 144000000, 147000000 }; // ke9ns fix 50080000
+                                                24890000, 24990000, 28000000, 29700000, 50000000, 52000000, 144000000, 147000000, 420000000, 450000000 }; // ke9ns fix 50080000
 
                     for (int i = 0; i < band_edge_list_r3.Length; i++)
                     {
@@ -4912,7 +4915,9 @@ namespace PowerSDR
                                 actual_fgrid == 24.89 || actual_fgrid == 24.99 ||
                                 actual_fgrid == 28.0 || actual_fgrid == 29.7 ||
                                 actual_fgrid == 50.03 || actual_fgrid == 51.0 ||
-                                actual_fgrid == 144.0 || actual_fgrid == 146.0)
+                                actual_fgrid == 144.0 || actual_fgrid == 146.0
+                                ||
+                                actual_fgrid == 420.0 || actual_fgrid == 450.0)
                             {
 
                                 // BEGIN of FRSRegion common block
@@ -5259,7 +5264,7 @@ namespace PowerSDR
                     //---------------------------------------------------------------------------------------------------
                     int[] band_edge_list_r1 = { 1810000, 2000000,  3500000, 3800000, 5250000, 5450000,
                                                 7000000, 7200000, 10100000, 10150000, 14000000, 14350000, 18068000, 18168000, 21000000, 21450000,
-                                                24890000, 24990000, 28000000, 29700000, 50030000, 51000000, 144000000, 146000000 };
+                                                24890000, 24990000, 28000000, 29700000, 50030000, 51000000, 144000000, 146000000, 420000000, 450000000 };
 
                     for (int i = 0; i < band_edge_list_r1.Length; i++)
                     {
@@ -5361,7 +5366,9 @@ namespace PowerSDR
                                 actual_fgrid == 24.89 || actual_fgrid == 24.99 ||
                                 actual_fgrid == 28.0 || actual_fgrid == 29.7 ||
                                 actual_fgrid == 50.0 || actual_fgrid == 52.0 ||
-                                actual_fgrid == 144.0 || actual_fgrid == 146.0)
+                                actual_fgrid == 144.0 || actual_fgrid == 146.0
+                                ||
+                                actual_fgrid == 420.0 || actual_fgrid == 450.0)
                             {
 
                                 // BEGIN of FRSRegion common block

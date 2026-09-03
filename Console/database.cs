@@ -211,7 +211,7 @@ namespace PowerSDR
                                 0.472000, 0.478999, "630M FST4/CW/WSPR/Narrow", true, // 630m ham ke9ns change
 
                                 0.479000, 0.526400, "MediumWave Maritime Band",       false,
-                                0.526401, 0.529999, "LongWave - Beacons",      false,   // ke9ns add
+                                0.526401, 0.529999, "MediumWave - Beacons",      false,   // ke9ns add
 
                                 0.530000, 0.530000, "TIS Travelers info stat",  false, // ke9ns add
 								0.530001, 1.609999, "Broadcast AM Med Wave",    false,
@@ -286,18 +286,19 @@ namespace PowerSDR
                                 15.000001, 15.005999, "19M Daytime Short Wave", false,
                                 15.006000, 15.006000, "EBC Day Time",                    false,
                                 15.006001, 15.800000, "19M Daytime Short Wave", false,
-                                15.800001, 17.479999, "19M Daytime Short Wave", false, // ke9ns add
-                                17.480000, 18.067999, "16M Daytime Short Wave", false, // ke9ns mod
+                                15.800001, 16.999999, "19M Daytime Short Wave", false, // ke9ns add
+                                17.000000, 18.067999, "19M Daytime Short Wave", false, // ke9ns mod
                                 // 17m 18.068-18.168
                                 18.168001, 18.899999, "16M Daytime Short Wave", false, // ke9ns add
-                                18.900000, 19.999999, "14M Daytime Short Wave", false, // ke9ns mod
+                                18.900000, 19.999999, "16M Daytime Short Wave", false, // ke9ns mod
                                 20.000000, 20.000000, "WWV Day Time",           false,
-                                20.000001, 20.999999, "13M Daytime Short Wave", false, // ke9ns mod
-                              
+                                20.000001, 20.999999, "16M Daytime Short Wave", false, // ke9ns mod
                                 // 15m 21.000 - 21.450
-                                21.450001, 24.889999, "13M Daytime Short Wave",  false,
-
-                                // 12m 24.89 - 24.99 mhz
+                                21.450001, 22.999999, "14M Daytime Short Wave",  false,
+                                23.000000, 24.889999, "13M Daytime Short Wave",  false,
+                               // 12m 24.89 - 24.99 mhz
+                                24.990001, 24.999999, "11M Day Short Wave",     false,
+                              
                                 25.000000, 25.000000, "WWV Day Time",           false,  // ke9ns add
                                
                                 25.000001, 26.960000, "11M Day Short Wave",     false,
@@ -489,22 +490,21 @@ namespace PowerSDR
 								14.350001, 14.669999, "19M Daytime Short Wave", false,
                                 // chu 14.67
                                 14.670001, 14.999999, "19M Daytime Short Wave", false,
-                             
-                                
                                 // wwv
                                 15.000001, 15.800000, "19M Daytime Short Wave", false,
-                                15.800001, 17.479999, "19M Daytime Short Wave", false, // ke9ns add
-                                17.480000, 18.067999, "16M Daytime Short Wave", false, // ke9ns mod
+                                15.800001, 16.999999, "19M Daytime Short Wave", false, // ke9ns add
+                                17.000000, 18.067999, "19M Daytime Short Wave", false, // ke9ns mod
                                 // 17m 18.068-18.168
                                 18.168001, 18.899999, "16M Daytime Short Wave", false, // ke9ns add
-                                18.900000, 19.999999, "14M Daytime Short Wave", false, // ke9ns mod
+                                18.900000, 19.999999, "16M Daytime Short Wave", false, // ke9ns mod
                                 // wwv
-                                20.000001, 20.999999, "13M Daytime Short Wave", false, // ke9ns mod
-                              
+                                20.000001, 20.999999, "16M Daytime Short Wave", false, // ke9ns mod
                                 // 15m 21.000 - 21.450
-                                21.450001, 24.889999, "13M Daytime Short Wave", false,
-
+                                21.450001, 22.999999, "14M Daytime Short Wave", false,
+                                23.000000, 24.889999, "13M Daytime Short Wave", false,
                                 // 12m 24.89 - 24.99 mhz
+                                 24.990001, 24.999999, "11M Day Short Wave",     false,
+
                                 // wwv
                                 25.000001, 26.960000, "11M Day Short Wave",     false,
                                 26.960001, 26.969999, "11M CB ch 1",              true,
@@ -697,20 +697,20 @@ namespace PowerSDR
                                 "22M", "SAM", "F4", 13.800000,
 
                                 "19M", "SAM", "F4", 15.200000,
-                                "19M", "SAM", "F4", 15.300000,
-                                "19M", "SAM", "F4", 15.400000,
+                                "19M", "SAM", "F4", 16.300000,
+                                "19M", "SAM", "F4", 17.400000,
 
-                                "16M", "SAM", "F4", 17.500000,
-                                "16M", "SAM", "F4", 17.600000,
-                                "16M", "SAM", "F4", 17.700000,
+                                "16M", "SAM", "F4", 18.500000,
+                                "16M", "SAM", "F4", 19.600000,
+                                "16M", "SAM", "F4", 20.700000,
 
-                                "14M", "SAM", "F4", 18.900000,
-                                "14M", "SAM", "F4", 19.000000,
-                                "14M", "SAM", "F4", 19.100000,
+                                "14M", "SAM", "F4", 21.900000,
+                                "14M", "SAM", "F4", 22.000000,
+                                "14M", "SAM", "F4", 22.100000,
 
-                                "13M", "SAM", "F4", 21.500000,
-                                "13M", "SAM", "F4", 21.600000,
-                                "13M", "SAM", "F4", 21.700000,
+                                "13M", "SAM", "F4", 23.500000,
+                                "13M", "SAM", "F4", 23.600000,
+                                "13M", "SAM", "F4", 23.700000,
 
                                 "11M", "SAM", "F4", 25.700000,
                                 "11M", "SAM", "F4", 26.000000,
@@ -1590,7 +1590,7 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
             object[] data = {
 								// 144 - 146 MHz
-                                128.000000, 136.999999, "Aircraft Airband", false,
+                                120.000000, 136.999999, "Aircraft Airband", false,
                                 137.000000, 137.999999, "Space to Earth", false,
                                 138.000000, 143.999999, "Military MILAIR", false,
 
@@ -2999,7 +2999,7 @@ namespace PowerSDR
                                 70.500000, 72.800000, "4m ", true,
 
 
-                                128.000000, 136.999999, "Aircraft Airband", false,
+                                120.000000, 136.999999, "Aircraft Airband", false,
                                 137.000000, 137.999999, "Space to Earth", false,
                                 138.000000, 143.999999, "Military MILAIR", false,
                            
@@ -3690,7 +3690,7 @@ namespace PowerSDR
                                 70.105000, 70.499999, "4m ", true,
                                 70.500000, 72.800000, "4m ", true,
 
-                                128.000000, 136.999999, "Aircraft Airband", false,
+                                120.000000, 136.999999, "Aircraft Airband", false,
                                 137.000000, 137.999999, "Space to Earth", false,
                                 138.000000, 143.999999, "Military MILAIR", false,
 
@@ -4302,7 +4302,7 @@ namespace PowerSDR
                                 70.105000, 70.499999, "4m ", true,
                                 70.500000, 72.800000, "4m ", true,
 
-                                128.000000, 136.999999, "Aircraft Airband", false,
+                                120.000000, 136.999999, "Aircraft Airband", false,
                                 137.000000, 137.999999, "Space to Earth", false,
                                 138.000000, 143.999999, "Military MILAIR", false,
 
@@ -5045,7 +5045,7 @@ namespace PowerSDR
             DataTable t = ds.Tables["BandText"];
             object[] data = {
 								// 144 - 146 MHz
-                                128.000000, 136.999999, "Aircraft Airband", false,
+                                120.000000, 136.999999, "Aircraft Airband", false,
                                 137.000000, 137.999999, "Space to Earth", false,
                                 138.000000, 143.999999, "Military MILAIR", false,
 

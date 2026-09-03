@@ -5755,6 +5755,7 @@ namespace PowerSDR
             this.grpVFOB.ForeColor = System.Drawing.Color.White;
             this.grpVFOB.Name = "grpVFOB";
             this.grpVFOB.Paint += new System.Windows.Forms.PaintEventHandler(this.grpVFOB_Paint);
+            this.grpVFOB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grpVFOB_MouseDown);
             this.grpVFOB.MouseHover += new System.EventHandler(this.grpVFOB_MouseHover);
             // 
             // panelVFOBSubHover
@@ -5837,6 +5838,7 @@ namespace PowerSDR
             this.grpVFOA.ForeColor = System.Drawing.Color.White;
             this.grpVFOA.Name = "grpVFOA";
             this.grpVFOA.Paint += new System.Windows.Forms.PaintEventHandler(this.grpVFOA_Paint);
+            this.grpVFOA.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grpVFOA_MouseDown);
             this.grpVFOA.MouseHover += new System.EventHandler(this.grpVFOA_MouseHover);
             // 
             // panelVFOASubHover

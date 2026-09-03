@@ -120,6 +120,9 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="chkFlexWire.ToolTip" xml:space="preserve">
     <value>Open the FlexWire UCB (Universal Control Board) relay panel
 or use CTRL+ALT + U keys to open
@@ -160,8 +163,12 @@ UCB  = hold mouse over "FlexWire" button for info
 Button must be "Yellow" for UCB I^C to operate.
 
 Transverter conversion should fall
-between 28 mhz to 65mhz (F1500=54mhz)
+between 28 mhz to 65mhz 
+(Flex1500=54mhz limit)
 but can go down to 0.5mhz
+HF freq = xvtr freq - LO
+VU5K 2m uses 19mhz
+19mhzHF = 144mhzDesired - 125mhzLO
 
 Example of a 435/28mhz transverter:
 LO Offset = 407.0 mhz  (435 - 28 = 407)

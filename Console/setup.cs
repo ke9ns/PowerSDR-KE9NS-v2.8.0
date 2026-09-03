@@ -16995,6 +16995,53 @@ namespace PowerSDR
 
         }
 
+        private void clrbtnVFO1_Changed(object sender, EventArgs e)
+        {
+            if (chkVisualBandInd.Checked)
+            {
+                console.grpVFOA.Invalidate(new Rectangle(12, 80, console.grpVFOA.Width - 12, 99));
+
+            }
+        }
+
+        private void clrbtnVFO2_Changed(object sender, EventArgs e)
+        {
+            if (chkVisualBandInd.Checked)
+            {
+                console.grpVFOA.Invalidate(new Rectangle(12, 80, console.grpVFOA.Width - 12, 99));
+
+            }
+        }
+
+        private void chkVisualBandInd_CheckedChanged(object sender, EventArgs e) //.334
+        {
+          
+            if (chkVisualBandInd.Checked) // increase size of grpVFOA and grpVFOB to show the slide bar
+            {
+                console.grpVFOA.Height = 100; // taller to allow more room for slide vfo bar
+                console.grpVFOB.Height = 100;
+
+                // look for grpVFOA.Location and move up by 14 pixels
+
+            }
+            else
+            {
+                console.grpVFOA.Height = 86; // original size
+                console.grpVFOB.Height = 86;
+            }
+
+            console.grpVFOA.Invalidate(new Rectangle(12, 80, console.grpVFOA.Width - 12, 99)); // refresh slide bar either to turn it off or on
+            console.grpVFOB.Invalidate(new Rectangle(12, 80, console.grpVFOB.Width - 12, 99));
+
+            console.Invalidate();
+
+        }//  chkVisualBandInd_CheckedChanged
+
+        private void chkBoxConsoleRing_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 

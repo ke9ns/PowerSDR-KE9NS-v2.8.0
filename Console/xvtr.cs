@@ -140,12 +140,18 @@ namespace PowerSDR
                 chkVHFPAEnable_CheckedChanged(this, EventArgs.Empty);
                 chkUHFPAEnable_CheckedChanged(this, EventArgs.Empty);
 
+                //ke9ns: TranslateFreq: HF freq used = desired freq - LO.   19mhz = 144mhzFreq - 125mhzLO
+                // the VU5k 2m xvtr uses 19mhz as the base (not the standard 28mhz)
+                // 128mhzFreq = 3mhz on HF transverter. (128 - 125 = 3)
+                // 144mhzFreq = 19mhz on HF transverter. (144 - 125 = 19)   
+                // so the HF radio starts on B15M  19-23mhz for 2m band
+
                 //FWC.SetEN2M(true); //XVINT
                 udUCBAddr0.Value = 0;
                 txtButtonText0.Text = "2m";
                 udLOOffset0.Value = 125;              // cannot change this value
                                                       //   udLOError0.Value = 0;  // ke9ns: was not commented out
-                udFreqBegin0.Value = 128;            // ke9ns: was 144 .217
+                udFreqBegin0.Value = 126;            // ke9ns: was 144 .217
                 udFreqEnd0.Value = 180;              // ke9ns: was 148
                 //udRXGain0.Value = 32;
                 //chkRXOnly0.Checked = false;
@@ -285,6 +291,7 @@ namespace PowerSDR
                 }
             }
 
+            //ke9ns: TranslateFreq: HF freq used = desired freq - LO.   19mhz = 144mhzFreq - 125mhzLO
 
             return freq;
         }

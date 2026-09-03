@@ -1004,6 +1004,7 @@
     <Compile Include="TuneStep.cs" />
     <Compile Include="ucb.cs">
       <SubType>Code</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ucbform.cs">
       <SubType>Form</SubType>
