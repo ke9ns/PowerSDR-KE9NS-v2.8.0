@@ -59032,12 +59032,12 @@ namespace PowerSDR
         {
             chkSquelch.Text = "SQL:  " + ptbSquelch.Value.ToString();
 
-            if (rx1_dsp_mode == DSPMode.FM) //FM Squelch
+            if (rx1_dsp_mode == DSPMode.FM) //FM Squelch  min=0,  max = 100 or .01
             {
-                dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
+                dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0); // 0=1 and 100=0.01
                 dsp.GetDSPRX(0, 1).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
 
-
+            
             }
             else //non-FM Squelch
             {

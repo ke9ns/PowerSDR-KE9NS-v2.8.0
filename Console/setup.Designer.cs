@@ -7208,7 +7208,7 @@ namespace PowerSDR
             // udDisplayWaterfallRX2Level
             // 
             this.udDisplayWaterfallRX2Level.Increment = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});

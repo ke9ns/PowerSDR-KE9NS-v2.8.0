@@ -151,90 +151,13 @@ void FMDemod (FMD fm)
 	// FM squelch is from 0 to 100 (1 to .01 is threshold)
 	// buffer size is selected in setup (i.e. 4096)
 
-	int UNMUTE_COUNTER = 0;
-	int MUTE_COUNTER = 0;
-
-
-	// ke9ns modified from original .336
-	// this is a more stable squelch routine with hysteresis 
-	//=============================================
 	for (i = 0; i < CXBsize (fm->squelch_obuf); i++) // = 4096
 	{
 		/////Noise Squelch Detector
 		rectify = abs(CXBreal(fm->squelch_obuf, i));
 		fm->squelch_filter = fm->squelch_k * rectify + (1 - fm->squelch_k) * fm->squelch_filter; // ke9ns: approaches 0 with strong signals
 		
-		if (fm->squelch_muted)	//MUTED (NO SOUND)
-		{
-			MUTE_COUNTER = 0;
 
-			if (fm->squelch_filter < fm->squelch_threshold_unmute) //  if signal stronger than the middle squelch pos (unmute threshold), then do below
-			{
-				if (UNMUTE_COUNTER++ > 1000) // make sure its solidly stronger before unmuting
-				{
-					fm->squelch_muted = FALSE; // UNMUTE NOW
-					UNMUTE_COUNTER = 0;
-				}
-				else
-				{
-					// mute audio
-					CXBreal(fm->obuf, i) = (REAL)(rand() % 3 - 1) * 1e-16f; // rand() % 3  = 0,1,2; then -1 so output is -1,0,1 * 1e-16f, so -.0000000000000001, 0, or .0000000000000001
-					
-				}
-			}
-			else // signal is weaker than unmute threshold
-			{
-				UNMUTE_COUNTER = 0; // prevent MUTE/UNMUTE oscillation chatter
-				CXBreal(fm->obuf, i) = (REAL)(rand() % 3 - 1) * 1e-16f; // rand() % 3  = 0,1,2; then -1 so output is -1,0,1 * 1e-16f, so -.0000000000000001, 0, or .0000000000000001
-
-			}
-
-		}
-		else // UNMUTED (SOUND)
-		{
-			UNMUTE_COUNTER = 0;
-
-			if (fm->squelch_filter > fm->squelch_threshold_weak)	//if signal is weaker than the low squelch pos, then do below
-			{
-				if (MUTE_COUNTER++ > 1000) // make sure its solidly lower 
-				{
-					fm->squelch_muted = TRUE; // MUTE NOW
-					CXBreal(fm->obuf, i) = 0.0f; // silence audio 
-					MUTE_COUNTER = 0;
-				}
-				else
-				{
-
-				}
-
-			}
-			else // signal is stronger than weak threshold, but unmute threshold is what umuted in the first place (hysteresis)
-			{
-
-				MUTE_COUNTER = 0;
-			}
-
-
-		} // UNMUTED
-
-/*
-	    if (count++ % 96000 == 0)
-		{
-			fprintf(stderr, "Mute %d, SIGNAL: %f, ThresWeak: %3f, thresUnmute: %3f, thresStg: %3f, MUTECNT: %i, UNMUTE CNT: %i  \n",
-				fm->squelch_muted,
-				fm->squelch_filter,
-				fm->squelch_threshold_weak, // between 1 (lowest) and 0.01 (highest)
-				fm->squelch_threshold_unmute,
-				fm->squelch_threshold_strong,
-				MUTE_COUNTER,
-				UNMUTE_COUNTER);
-
-			fflush(stderr);
-		}
-		*/
-
-		/*
-		// ke9ns: not currently using this FM sqelch routine as its not stable
 		//===========================================
 		if(fm->squelch_muted)	//MUTED
 		{
@@ -247,7 +170,7 @@ void FMDemod (FMD fm)
 			else
 			{
 				CXBreal(fm->obuf, i) = (REAL)(rand() % 3 - 1) * 1e-16f; // rand() % 3  = 0,1,2; then -1 so output is -1,0,1 * 1e-16f, so -.0000000000000001, 0, or .0000000000000001
-			
+			//	CXBreal(fm->obuf, i) = 0; // clears out fm buffer while muted to keep audio silent
 			}
 
 			if(fm->squelch_strong_timer > 0)	fm->squelch_strong_timer--; // count down
@@ -290,7 +213,7 @@ void FMDemod (FMD fm)
 			
 		} // else sound
 
-	    */
+	
 
 		// optional debug (kept from original)
 

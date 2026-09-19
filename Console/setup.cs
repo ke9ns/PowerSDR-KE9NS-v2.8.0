@@ -7331,6 +7331,7 @@ namespace PowerSDR
 
         private void udDisplayGridMin_ValueChanged(object sender, System.EventArgs e)
         {
+          
             if (udDisplayGridMin.Value >= udDisplayGridMax.Value) udDisplayGridMin.Value = udDisplayGridMax.Value - 10;
 
             Display.SpectrumGridMin = (int)udDisplayGridMin.Value;
@@ -7343,6 +7344,8 @@ namespace PowerSDR
         // .295 add
         private void udDisplayGridRX2Min_ValueChanged(object sender, System.EventArgs e)
         {
+          
+
             if (udDisplayGridRX2Min.Value >= udDisplayGridMax.Value) udDisplayGridRX2Min.Value = udDisplayGridMax.Value - 10;
 
             Display.SpectrumGridRX2Min = (int)udDisplayGridRX2Min.Value;
@@ -7429,9 +7432,9 @@ namespace PowerSDR
 
         public void udDisplayWaterfallLowLevel_ValueChanged(object sender, System.EventArgs e)
         {
-
+         
             UpdateWaterfallBandInfo();
-
+ 
             switch (console.RX1Band)
             {
                 case Band.B160M:
@@ -7545,10 +7548,6 @@ namespace PowerSDR
                     Display.WaterfallLowThreshold = console.WaterfallLowThreshold11m;
                     break;
 
-
-
-
-
                 default:
                     console.WaterfallLowThresholdXVTR = (float)udDisplayWaterfallLowLevel.Value;
                     Display.WaterfallLowThreshold = console.WaterfallLowThresholdXVTR;
@@ -7563,6 +7562,7 @@ namespace PowerSDR
         public void udDisplayWaterfallHighLevel_ValueChanged(object sender, System.EventArgs e)
         {
             UpdateWaterfallBandInfo();
+
             switch (console.RX1Band)
             {
                 case Band.B160M:
@@ -13847,6 +13847,7 @@ namespace PowerSDR
         public void udDisplayWaterfallRX2Level_ValueChanged(object sender, EventArgs e) // ke9ns ADD
         {
 
+         
             switch (console.RX2Band)
             {
                 case Band.B160M:
@@ -13880,6 +13881,7 @@ namespace PowerSDR
                 case Band.B15M:
                     console.WaterfallLowRX2Threshold15m = (float)udDisplayWaterfallRX2Level.Value;
                     Display.WaterfallLowRX2Threshold = console.WaterfallLowRX2Threshold15m;
+                  
                     break;
                 case Band.B12M:
                     console.WaterfallLowRX2Threshold12m = (float)udDisplayWaterfallRX2Level.Value;
@@ -13973,9 +13975,22 @@ namespace PowerSDR
             // .295 add
             // decimal temp1 = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value;
 
+            // RX2 grid value = RX1 Grid value -
+            //  udDisplayGridRX2Min.Value = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value + udDisplayWaterfallRX2Level.Value;
 
-            udDisplayGridRX2Min.Value = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value + udDisplayWaterfallRX2Level.Value;
+            decimal temp1 = udDisplayGridMin.Value - udDisplayWaterfallLowLevel.Value + udDisplayWaterfallRX2Level.Value;
 
+          //  Debug.WriteLine("udDisplayGridRX2Min.Value " + temp1.ToString());
+
+            if (temp1 > udDisplayGridRX2Min.Maximum) temp1 = udDisplayGridRX2Min.Maximum; // .335
+            if (temp1 < udDisplayGridRX2Min.Minimum) temp1 = udDisplayGridRX2Min.Minimum;
+
+         //   Debug.WriteLine("udDisplayGridRX2Min.Value0 " + temp1.ToString());
+
+
+            udDisplayGridRX2Min.Value = temp1;
+
+         
 
 
         }// rx2 water level
