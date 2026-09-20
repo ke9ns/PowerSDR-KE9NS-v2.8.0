@@ -162,7 +162,10 @@ void FMDemod (FMD fm)
 	{
 		/////Noise Squelch Detector
 		rectify = abs(CXBreal(fm->squelch_obuf, i));
-		fm->squelch_filter = fm->squelch_k * rectify + (1 - fm->squelch_k) * fm->squelch_filter; // ke9ns: approaches 0 with strong signals
+		fm->squelch_filter = fm->squelch_k * rectify + (1 - fm->squelch_k) * fm->squelch_filter; 
+
+		// ke9ns: squelch_filter: goes from 1 weak to 0 strong signal (backwards from what you would expect)
+		//      this matches the squelch threshold values which are between 1 (weak) and 0.01 (strong)
 		
 		if (fm->squelch_muted)	//MUTED (NO SOUND)
 		{
@@ -179,14 +182,12 @@ void FMDemod (FMD fm)
 				{
 					// mute audio
 					CXBreal(fm->obuf, i) = (REAL)(rand() % 3 - 1) * 1e-16f; // rand() % 3  = 0,1,2; then -1 so output is -1,0,1 * 1e-16f, so -.0000000000000001, 0, or .0000000000000001
-					
 				}
 			}
 			else // signal is weaker than unmute threshold
 			{
 				UNMUTE_COUNTER = 0; // prevent MUTE/UNMUTE oscillation chatter
 				CXBreal(fm->obuf, i) = (REAL)(rand() % 3 - 1) * 1e-16f; // rand() % 3  = 0,1,2; then -1 so output is -1,0,1 * 1e-16f, so -.0000000000000001, 0, or .0000000000000001
-
 			}
 
 		}
@@ -202,18 +203,12 @@ void FMDemod (FMD fm)
 					CXBreal(fm->obuf, i) = 0.0f; // silence audio 
 					MUTE_COUNTER = 0;
 				}
-				else
-				{
-
-				}
-
+	
 			}
 			else // signal is stronger than weak threshold, but unmute threshold is what umuted in the first place (hysteresis)
 			{
-
 				MUTE_COUNTER = 0;
 			}
-
 
 		} // UNMUTED
 

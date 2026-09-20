@@ -59034,10 +59034,9 @@ namespace PowerSDR
 
             if (rx1_dsp_mode == DSPMode.FM) //FM Squelch  min=0,  max = 100 or .01
             {
+                //goes to update.c
                 dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0); // 0=1 and 100=0.01
                 dsp.GetDSPRX(0, 1).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
-
-            
             }
             else //non-FM Squelch
             {
@@ -59080,11 +59079,11 @@ namespace PowerSDR
         private void picSquelch_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
           
-            if (rx1_dsp_mode == DSPMode.FM) //.333
+            if (rx1_dsp_mode == DSPMode.FM) //.333 .336 to match new FM Squelch code in update.c
             {
                 // ptbsquelch in FM is min=0 to max=100
                  
-                int tempA = (int)(-50.0 * Math.Log10(dsp.GetDSPRX(0, 0).SquelchLevel * 0.5) );   //   dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
+                int tempA = (int)(-50.0 * Math.Log10(dsp.GetDSPRX(0, 0).SquelchLevel ) );   //   dsp.GetDSPRX(0, 0).FMSquelchThreshold = (float)Math.Pow(10.0, -2 * ptbSquelch.Value / 100.0);
                
                 //   Debug.WriteLine("SQUELCH FM MODE LEVEL : " + tempA + " raw = " + temp);
 

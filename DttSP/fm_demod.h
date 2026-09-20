@@ -32,7 +32,7 @@ typedef struct _fm_demod // RX
   REAL squelch_envelope;
   REAL squelch_filter;
   REAL squelch_threshold_weak;
-  REAL squelch_threshold_strong;
+  REAL squelch_threshold_strong; // ke9ns: .336 no longer used
   REAL squelch_threshold_unmute;
   int squelch_weak_timer;
   int squelch_strong_timer;

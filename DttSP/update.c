@@ -368,9 +368,9 @@ DttSP_EXP void SetCTCSSFlag(unsigned int thread, BOOLEAN flag)
 DttSP_EXP void SetFMSquelchThreshold(unsigned int thread, unsigned int k, REAL threshold)
 {
 	sem_wait(&top[thread].sync.upd.sem);
-	rx[thread][k].fm.gen->squelch_threshold_weak = threshold;   //               value between 1 (lowest) and 0.01 (highest)
-	rx[thread][k].fm.gen->squelch_threshold_unmute = threshold * 0.8f;   // .6 .9 //.336
-	rx[thread][k].fm.gen->squelch_threshold_strong = threshold * 0.2f;    // .2 .5
+	rx[thread][k].fm.gen->squelch_threshold_weak = threshold;   // ke9ns:  threshold value between 1 (lowest) and 0.01 (highest)
+	rx[thread][k].fm.gen->squelch_threshold_unmute = threshold * 0.8f;   // was .9 //.336
+	rx[thread][k].fm.gen->squelch_threshold_strong = threshold * 0.5f;    // was .5 .336 no longer used
 
 	//fprintf(stderr, "SetFMSquelchThreshold: %f\n",
 	//	threshold);
