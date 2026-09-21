@@ -42,6 +42,8 @@ namespace PowerSDR
             this.chkAlwaysOnTop = new System.Windows.Forms.CheckBoxTS();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonLock = new System.Windows.Forms.Button();
+            this.lblCATRigType = new System.Windows.Forms.LabelTS();
             this.SuspendLayout();
             // 
             // textBox1
@@ -70,47 +72,48 @@ namespace PowerSDR
             // 
             this.buttonSort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonSort.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonSort.Location = new System.Drawing.Point(55, 477);
+            this.buttonSort.Location = new System.Drawing.Point(43, 487);
             this.buttonSort.Name = "buttonSort";
-            this.buttonSort.Size = new System.Drawing.Size(45, 23);
+            this.buttonSort.Size = new System.Drawing.Size(38, 23);
             this.buttonSort.TabIndex = 61;
             this.buttonSort.Text = "Sort";
             this.buttonSort.UseVisualStyleBackColor = false;
-            this.buttonSort.Click += new System.EventHandler(this.buttonSort_Click);
+            this.buttonSort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonSort_MouseUp);
             // 
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAdd.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonAdd.Location = new System.Drawing.Point(3, 477);
+            this.buttonAdd.Location = new System.Drawing.Point(3, 487);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(46, 23);
+            this.buttonAdd.Size = new System.Drawing.Size(37, 23);
             this.buttonAdd.TabIndex = 62;
             this.buttonAdd.Text = "Add";
             this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.Click += new System.EventHandler(this.button1_Click);
+            this.buttonAdd.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonAdd_MouseUp);
             // 
             // buttonDel
             // 
             this.buttonDel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDel.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.buttonDel.Location = new System.Drawing.Point(106, 477);
+            this.buttonDel.Location = new System.Drawing.Point(85, 487);
             this.buttonDel.Name = "buttonDel";
-            this.buttonDel.Size = new System.Drawing.Size(45, 23);
+            this.buttonDel.Size = new System.Drawing.Size(37, 23);
             this.buttonDel.TabIndex = 63;
             this.buttonDel.Text = "Del";
             this.buttonDel.UseVisualStyleBackColor = false;
-            this.buttonDel.Click += new System.EventHandler(this.buttonDel_Click);
+            this.buttonDel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonDel_MouseUp);
             // 
             // chkAlwaysOnTop
             // 
             this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkAlwaysOnTop.Image = null;
-            this.chkAlwaysOnTop.Location = new System.Drawing.Point(154, 472);
+            this.chkAlwaysOnTop.Location = new System.Drawing.Point(177, 487);
             this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
-            this.chkAlwaysOnTop.Size = new System.Drawing.Size(47, 35);
+            this.chkAlwaysOnTop.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.chkAlwaysOnTop.Size = new System.Drawing.Size(33, 30);
             this.chkAlwaysOnTop.TabIndex = 59;
-            this.chkAlwaysOnTop.Text = "Top";
+            this.chkAlwaysOnTop.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.chkAlwaysOnTop.CheckedChanged += new System.EventHandler(this.chkAlwaysOnTop_CheckedChanged);
             // 
             // textBox3
@@ -142,13 +145,35 @@ namespace PowerSDR
             this.textBox2.Size = new System.Drawing.Size(176, 174);
             this.textBox2.TabIndex = 64;
             this.textBox2.TabStop = false;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.textBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.textBox2_MouseUp);
+            // 
+            // buttonLock
+            // 
+            this.buttonLock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonLock.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonLock.Location = new System.Drawing.Point(125, 487);
+            this.buttonLock.Name = "buttonLock";
+            this.buttonLock.Size = new System.Drawing.Size(37, 23);
+            this.buttonLock.TabIndex = 65;
+            this.buttonLock.Text = "lck";
+            this.buttonLock.UseVisualStyleBackColor = false;
+            this.buttonLock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonLock_MouseUp);
+            // 
+            // lblCATRigType
+            // 
+            this.lblCATRigType.Image = null;
+            this.lblCATRigType.Location = new System.Drawing.Point(171, 478);
+            this.lblCATRigType.Name = "lblCATRigType";
+            this.lblCATRigType.Size = new System.Drawing.Size(36, 18);
+            this.lblCATRigType.TabIndex = 96;
+            this.lblCATRigType.Text = "Top";
             // 
             // StackControl
             // 
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(200, 505);
+            this.ClientSize = new System.Drawing.Size(200, 515);
+            this.Controls.Add(this.lblCATRigType);
+            this.Controls.Add(this.buttonLock);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.buttonAdd);
@@ -157,8 +182,8 @@ namespace PowerSDR
             this.Controls.Add(this.chkAlwaysOnTop);
             this.Controls.Add(this.textBox3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(216, 544);
-            this.MinimumSize = new System.Drawing.Size(216, 544);
+            this.MaximumSize = new System.Drawing.Size(216, 554);
+            this.MinimumSize = new System.Drawing.Size(216, 554);
             this.Name = "StackControl";
             this.Text = "Band Stack";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StackControl_FormClosing);
@@ -185,8 +210,8 @@ namespace PowerSDR
         private System.Windows.Forms.TextBox textBox3;
         public System.Windows.Forms.TextBox textBox2;
         private System.ComponentModel.IContainer components;
-
-
+        public System.Windows.Forms.Button buttonLock;
+        private System.Windows.Forms.LabelTS lblCATRigType;
     } // stackcontrol
 
 } // powersdr

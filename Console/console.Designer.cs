@@ -393,6 +393,7 @@ namespace PowerSDR
             this.chkVFOBSplit = new System.Windows.Forms.CheckBoxTS();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnTNFAdd2 = new System.Windows.Forms.ButtonTS();
+            this.buttonLock = new System.Windows.Forms.Button();
             this.timer_clock = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStripFilterRX1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemRX1FilterConfigure = new System.Windows.Forms.ToolStripMenuItem();
@@ -4790,6 +4791,16 @@ namespace PowerSDR
             this.toolTip1.SetToolTip(this.btnTNFAdd2, resources.GetString("btnTNFAdd2.ToolTip"));
             this.btnTNFAdd2.Click += new System.EventHandler(this.btnTNFRX2Add_Click);
             // 
+            // buttonLock
+            // 
+            resources.ApplyResources(this.buttonLock, "buttonLock");
+            this.buttonLock.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonLock.ForeColor = System.Drawing.Color.Black;
+            this.buttonLock.Name = "buttonLock";
+            this.toolTip1.SetToolTip(this.buttonLock, resources.GetString("buttonLock.ToolTip"));
+            this.buttonLock.UseVisualStyleBackColor = false;
+            this.buttonLock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonLock_MouseUp);
+            // 
             // timer_clock
             // 
             this.timer_clock.Enabled = true;
@@ -6171,6 +6182,7 @@ namespace PowerSDR
             // 
             resources.ApplyResources(this.panelTSBandStack, "panelTSBandStack");
             this.panelTSBandStack.BackColor = System.Drawing.Color.Transparent;
+            this.panelTSBandStack.Controls.Add(this.buttonLock);
             this.panelTSBandStack.Controls.Add(this.textBox1);
             this.panelTSBandStack.Controls.Add(this.textBox2);
             this.panelTSBandStack.Controls.Add(this.buttonAdd);
@@ -7549,6 +7561,7 @@ namespace PowerSDR
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX1FilterReset1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRX2FilterReset1;
         public System.Windows.Forms.TextBoxTS txtDisplayCursorFreq;
+        private System.Windows.Forms.Button buttonLock;
     } // class console
 
 

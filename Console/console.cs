@@ -89876,7 +89876,6 @@ namespace PowerSDR
 
                     }
 
-
                     dupfound = false;
                 }
 
@@ -90135,7 +90134,83 @@ namespace PowerSDR
                 }
             }
 
-        } // buttondel_mouseup
+        } // buttonDel_mouseup
+
+
+        private void buttonLock_MouseUp(object sender, MouseEventArgs e) //.337
+        {
+
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                try
+                {
+                    if (StackForm.xxx >= band_stacks[StackForm.nnn]) return;    // if you click past the last index freq, then do nothing.
+
+                    iii = StackForm.xxx;                                       // update new position in bandstack for checking if its locked
+
+
+                    if (StackForm.filter1[StackForm.xxx].Contains("@"))
+                    {
+                        StackForm.filter1[StackForm.xxx] = StackForm.filter1[StackForm.xxx].Substring(0, (StackForm.filter1[StackForm.xxx].Length) - 1); // toggle LOCK OFF
+                    }
+                    else
+                    {
+                        StackForm.filter1[StackForm.xxx] = StackForm.filter1[StackForm.xxx] + "@"; // toggle LOCK ON
+                    }
+
+
+                    DB.SaveBandStack(last_band, StackForm.xxx, StackForm.mode1[StackForm.xxx], StackForm.filter1[StackForm.xxx], StackForm.freq1[StackForm.xxx]);
+
+
+                    StackForm.bandstackupdate(); // update bandstack screen
+
+                    //  StackForm.updateindex();
+
+                }
+                catch
+                {
+                    Debug.WriteLine("Bad location RX1 bandstack");
+
+                }
+
+            } //  
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // RX2 Lock 
+            {
+
+                try
+                {
+                    if (StackForm.xxx2 >= band_stacks[StackForm.nnn2]) return;    // if you click past the last index freq, then do nothing.
+
+                    iii2 = StackForm.xxx2;                                       // update new position in bandstack for checking if its locked
+
+
+                    if (StackForm.xxx2 >= band_stacks[StackForm.nnn2]) return; // if you click past the last index freq, then do nothing.
+
+                    if (StackForm.filter12[StackForm.xxx2].Contains("@"))
+                    {
+                        StackForm.filter12[StackForm.xxx2] = StackForm.filter12[StackForm.xxx2].Substring(0, (StackForm.filter12[StackForm.xxx2].Length) - 1); // toggle LOCK OFF
+                    }
+                    else
+                    {
+                        StackForm.filter12[StackForm.xxx2] = StackForm.filter12[StackForm.xxx2] + "@"; // toggle LOCK ON
+                    }
+
+                    DB.SaveBandStack2(last_band2, StackForm.xxx2, StackForm.mode12[StackForm.xxx2], StackForm.filter12[StackForm.xxx2], StackForm.freq12[StackForm.xxx2]);
+
+                    StackForm.bandstackupdate(); // update bandstack screen
+
+                }
+                catch
+                {
+                    Debug.WriteLine("Bad location RX2 backstack ");
+
+                }
+
+            } // 
+
+        } // buttonLock_MouseUp  bandstack LOCK button
 
         private void lblAntTX_Click_1(object sender, EventArgs e) // ke9ns: click on TX1: in ant panel
         {

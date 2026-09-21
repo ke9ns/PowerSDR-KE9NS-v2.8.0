@@ -1060,38 +1060,10 @@ namespace PowerSDR
         // ke9ns DEL button on Bandstack screen
         public void buttonDel_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (console.band_stacks[nnn] < 3) return;    // dont allow removing all the bandstacks
-
-                if (xxx >= console.band_stacks[nnn]) return;    // if you click past the last index freq, then do nothing.
-
-                console.iii = xxx;                            // update new position in bandstack for checking if its locked
-
-                if (filter1[xxx].Contains("@") == false)      // can only delete an unlocked entry in the bandstack
-                {
-                    DialogResult dr = MessageBox.Show("Are you sure you want to Delete the selected BandStack Entry?",
-                            "Delete?",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question);
-
-                    if (dr == DialogResult.No) return;
-
-
-                    console.PurgeBandStack(xxx, mode1[xxx], filter1[xxx], freq1[xxx].ToString());
-
-                    console.BandStackUpdate();
-                    bandstackupdate();
-                    updateindex();
-                }
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Bad location2");
-
-            }
 
         } //  buttonDel_Click
+
+
 
 
 
@@ -1099,49 +1071,6 @@ namespace PowerSDR
         // ke9ns ADD button
         public void button1_Click(object sender, EventArgs e)
         {
-            bool dupfound = false;
-
-            updateindex();
-            if (console.band_stacks[nnn] < 12) // allow 12 bandstack entries each band
-            {
-
-                for (int ii = 0; ii < console.band_stacks[nnn]; ii++)  // check for freq dups, so dont add if a dup in freq
-                {
-                    if (freq1[ii] == Math.Round(console.VFOAFreq, 6))
-                    {
-                        Debug.WriteLine("BANDSTACK DUP FOUND");
-
-                        dupfound = true;
-                        break;
-                    }
-
-                }
-                if (dupfound == false)
-                {
-                    DB.AddBandStack(band_list[nnn], console.RX1DSPMode.ToString(), console.RX1Filter.ToString(), Math.Round(console.VFOAFreq, 6)); // take current band, DSP mode, filter, and freq
-
-                    Debug.WriteLine("BANDSTACK add: " + console.RX1DSPMode.ToString());
-
-                    console.BandStackUpdate();
-                    bandstackupdate();
-
-                    Debug.WriteLine("BANDSTACK done");
-
-                    xxx = console.band_stacks[nnn] - 1; // go to end of list and highlight it
-
-                    textBox1.SelectionStart = (xxx * BSLength);
-                    textBox1.SelectionLength = BSLength;
-                    updateindex();
-                    //  console.iii = xxx;                            // update new position in bandstack for checking if its locked
-
-                }
-
-
-                dupfound = false;
-
-            } //  if (xxx < 12)
-
-
 
         } // button1_Click(
 
@@ -1151,65 +1080,7 @@ namespace PowerSDR
         // ke9ns SORT the bandstack for just the band your on
         public void buttonSort_Click(object sender, EventArgs e)
         {
-            int index = console.band_stacks[nnn];
 
-            //   Debug.WriteLine("buttonsort0000");
-
-            try
-            {
-                if (index < 2) return; // nothing to sort
-
-
-                // bubble sort
-                for (int d = 0; d < index;)
-                {
-
-                    for (int f = index - 1; f > d; f--)  // check end of list first and work back to front
-                    {
-                        if (freq1[d] > freq1[f])
-                        {
-
-                            string tempmode = mode1[d];
-                            string tempfilter = filter1[d];
-                            double tempfreq = freq1[d];
-
-
-                            freq1[d] = freq1[f];
-                            mode1[d] = mode1[f];
-                            filter1[d] = filter1[f];
-
-                            freq1[f] = tempfreq;
-                            mode1[f] = tempmode;
-                            filter1[f] = tempfilter;
-
-                            bubble = true;
-                        }
-
-
-                    } // for f
-
-                    if (bubble == false) d++;
-                    else bubble = false;  // reset
-
-                } // for d
-
-                for (int g = 0; g < index; g++)  // update database with new sorted bandstack
-                {
-
-                    console.SortBandStack(g, mode1[g], filter1[g], freq1[g]);     //   DB.SaveBandStack(console.last_band, g, mode1[g], filter1[g], freq1[g]);
-
-                }
-
-                console.BandStackUpdate();  // update the console with the new database sorted bandstack
-
-                bandstackupdate();
-
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Bad location3");
-
-            }
         } // buttonSort_Click
 
         private void StackControl_MouseEnter(object sender, EventArgs e)
@@ -1217,10 +1088,382 @@ namespace PowerSDR
             if (console.setupForm.chkBoxAutoFocus.Checked == true && chkAlwaysOnTop.Checked == true) this.Activate();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void buttonLock_MouseUp(object sender, MouseEventArgs e) //.336
         {
 
-        }
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                try
+                {
+                    if (console.StackForm.xxx >= console.band_stacks[console.StackForm.nnn]) return;    // if you click past the last index freq, then do nothing.
+
+                    console.iii = console.StackForm.xxx;                                       // update new position in bandstack for checking if its locked
+
+
+                    if (console.StackForm.filter1[console.StackForm.xxx].Contains("@"))
+                    {
+                        console.StackForm.filter1[console.StackForm.xxx] = console.StackForm.filter1[console.StackForm.xxx].Substring(0, (console.StackForm.filter1[console.StackForm.xxx].Length) - 1); // toggle LOCK OFF
+                    }
+                    else
+                    {
+                        console.StackForm.filter1[console.StackForm.xxx] = console.StackForm.filter1[console.StackForm.xxx] + "@"; // toggle LOCK ON
+                    }
+
+
+                    DB.SaveBandStack(console.last_band, console.StackForm.xxx, console.StackForm.mode1[console.StackForm.xxx], console.StackForm.filter1[console.StackForm.xxx], console.StackForm.freq1[console.StackForm.xxx]);
+
+
+                    console.StackForm.bandstackupdate(); // update bandstack screen
+
+                    //  StackForm.updateindex();
+
+                }
+                catch
+                {
+                    Debug.WriteLine("Bad location RX1 bandstack");
+
+                }
+
+            } //  
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // RX2 Lock 
+            {
+
+                try
+                {
+                    if (console.StackForm.xxx2 >= console.band_stacks[console.StackForm.nnn2]) return;    // if you click past the last index freq, then do nothing.
+
+                    console.iii2 = console.StackForm.xxx2;                                       // update new position in bandstack for checking if its locked
+
+
+                    if (console.StackForm.xxx2 >= console.band_stacks[console.StackForm.nnn2]) return; // if you click past the last index freq, then do nothing.
+
+                    if (console.StackForm.filter12[console.StackForm.xxx2].Contains("@"))
+                    {
+                        console.StackForm.filter12[console.StackForm.xxx2] = console.StackForm.filter12[console.StackForm.xxx2].Substring(0, (console.StackForm.filter12[console.StackForm.xxx2].Length) - 1); // toggle LOCK OFF
+                    }
+                    else
+                    {
+                        console.StackForm.filter12[console.StackForm.xxx2] = console.StackForm.filter12[console.StackForm.xxx2] + "@"; // toggle LOCK ON
+                    }
+
+                    DB.SaveBandStack2(console.last_band2, console.StackForm.xxx2, console.StackForm.mode12[console.StackForm.xxx2], console.StackForm.filter12[console.StackForm.xxx2], console.StackForm.freq12[console.StackForm.xxx2]);
+
+                    console.StackForm.bandstackupdate(); // update bandstack screen
+
+                }
+                catch
+                {
+                    Debug.WriteLine("Bad location RX2 backstack ");
+
+                }
+
+            } // 
+
+
+        } // buttonLock_MouseUp
+
+        private void buttonDel_MouseUp(object sender, MouseEventArgs e) //.337 added RX2 right click 
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+
+                try
+                {
+                    if (console.band_stacks[nnn] < 3) return;    // dont allow removing all the bandstacks
+
+                    if (xxx >= console.band_stacks[nnn]) return;    // if you click past the last index freq, then do nothing.
+
+                    console.iii = xxx;                            // update new position in bandstack for checking if its locked
+
+                    if (filter1[xxx].Contains("@") == false)      // can only delete an unlocked entry in the bandstack
+                    {
+                        DialogResult dr = MessageBox.Show("Are you sure you want to Delete the selected BandStack Entry?",
+                                "Delete?",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+
+                        if (dr == DialogResult.No) return;
+
+                        console.PurgeBandStack(xxx, mode1[xxx], filter1[xxx], freq1[xxx].ToString());
+
+                        console.BandStackUpdate();
+                        bandstackupdate();
+                        updateindex();
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Bad location2");
+
+                }
+            }
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // RX2 DEL right click    
+            {
+                try
+                {
+                    if (console.band_stacks[nnn2] < 3) return;    // dont allow removing all the bandstacks
+
+                    if (xxx2 >= console.band_stacks[nnn2]) return;    // if you click past the last index freq, then do nothing.
+
+                    console.iii2 = xxx2;                            // update new position in bandstack for checking if its locked
+
+                    if (filter1[xxx2].Contains("@") == false)      // can only delete an unlocked entry in the bandstack
+                    {
+                        DialogResult dr = MessageBox.Show("Are you sure you want to Delete the selected BandStack Entry?",
+                                "Delete?",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+
+                        if (dr == DialogResult.No) return;
+
+
+                        console.PurgeBandStack2(xxx2, mode12[xxx2], filter12[xxx2], freq12[xxx2].ToString());
+
+                        console.BandStackUpdate();
+                        bandstackupdate();
+                        updateindex2();
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Bad location2");
+
+                }
+
+            }
+
+        } // buttonDel_MouseUp
+
+        private void buttonSort_MouseUp(object sender, MouseEventArgs e) //.337
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                int index = console.band_stacks[nnn];
+
+                //   Debug.WriteLine("buttonsort0000");
+
+                try
+                {
+                    if (index < 2) return; // nothing to sort
+
+
+                    // bubble sort
+                    for (int d = 0; d < index;)
+                    {
+
+                        for (int f = index - 1; f > d; f--)  // check end of list first and work back to front
+                        {
+                            if (freq1[d] > freq1[f])
+                            {
+
+                                string tempmode = mode1[d];
+                                string tempfilter = filter1[d];
+                                double tempfreq = freq1[d];
+
+
+                                freq1[d] = freq1[f];
+                                mode1[d] = mode1[f];
+                                filter1[d] = filter1[f];
+
+                                freq1[f] = tempfreq;
+                                mode1[f] = tempmode;
+                                filter1[f] = tempfilter;
+
+                                bubble = true;
+                            }
+
+
+                        } // for f
+
+                        if (bubble == false) d++;
+                        else bubble = false;  // reset
+
+                    } // for d
+
+                    for (int g = 0; g < index; g++)  // update database with new sorted bandstack
+                    {
+                        console.SortBandStack(g, mode1[g], filter1[g], freq1[g]);     //   DB.SaveBandStack(console.last_band, g, mode1[g], filter1[g], freq1[g]);
+                    }
+
+                    console.BandStackUpdate();  // update the console with the new database sorted bandstack
+
+                    bandstackupdate();
+
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Bad location3");
+                }
+
+            }
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // RX2 Sort right click 
+            {
+
+                int index2 = console.band_stacks[nnn2];
+
+                //   Debug.WriteLine("buttonsort0000");
+
+                try
+                {
+                    if (index2 < 2) return; // nothing to sort
+
+
+                    // bubble sort
+                    for (int d = 0; d < index2;)
+                    {
+
+                        for (int f = index2 - 1; f > d; f--)  // check end of list first and work back to front
+                        {
+                            if (freq12[d] > freq12[f])
+                            {
+
+                                string tempmode = mode12[d];
+                                string tempfilter = filter12[d];
+                                double tempfreq = freq12[d];
+
+
+                                freq12[d] = freq12[f];
+                                mode12[d] = mode12[f];
+                                filter12[d] = filter12[f];
+
+                                freq12[f] = tempfreq;
+                                mode12[f] = tempmode;
+                                filter12[f] = tempfilter;
+
+                                bubble = true;
+                            }
+
+
+                        } // for f
+
+                        if (bubble == false) d++;
+                        else bubble = false;  // reset
+
+                    } // for d
+
+                    for (int g = 0; g < index2; g++)  // update database with new sorted bandstack
+                    {
+                        console.SortBandStack2(g, mode12[g], filter12[g], freq12[g]);     //   DB.SaveBandStack(console.last_band, g, mode1[g], filter1[g], freq1[g]);
+                    }
+
+                    console.BandStackUpdate();  // update the console with the new database sorted bandstack
+
+                    bandstackupdate();
+
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Bad location3");
+
+                }
+
+            }
+        } // buttonSort_MouseUp
+
+        private void buttonAdd_MouseUp(object sender, MouseEventArgs e) //.337
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                bool dupfound = false;
+
+                updateindex();
+                if (console.band_stacks[nnn] < 12) // allow 12 bandstack entries each band
+                {
+
+                    for (int ii = 0; ii < console.band_stacks[nnn]; ii++)  // check for freq dups, so dont add if a dup in freq
+                    {
+                        if (freq1[ii] == Math.Round(console.VFOAFreq, 6))
+                        {
+                            Debug.WriteLine("BANDSTACK DUP FOUND");
+
+                            dupfound = true;
+                            break;
+                        }
+
+                    }
+                    if (dupfound == false)
+                    {
+                        DB.AddBandStack(band_list[nnn], console.RX1DSPMode.ToString(), console.RX1Filter.ToString(), Math.Round(console.VFOAFreq, 6)); // take current band, DSP mode, filter, and freq
+
+                        Debug.WriteLine("BANDSTACK add: " + console.RX1DSPMode.ToString());
+
+                        console.BandStackUpdate();
+                        bandstackupdate();
+
+                        Debug.WriteLine("BANDSTACK done");
+
+                        xxx = console.band_stacks[nnn] - 1; // go to end of list and highlight it
+
+                        textBox1.SelectionStart = (xxx * BSLength);
+                        textBox1.SelectionLength = BSLength;
+                        updateindex();
+                        //  console.iii = xxx;                            // update new position in bandstack for checking if its locked
+
+                    }
+
+                    dupfound = false;
+
+                } //  if (xxx < 12)
+
+            }
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK) && console.chkRX2.Checked) // RX2 Add right click
+            {
+
+                bool dupfound = false;
+
+                updateindex2();
+                if (console.band_stacks[nnn2] < 12) // allow 12 bandstack entries each band
+                {
+
+                    for (int ii = 0; ii < console.band_stacks[nnn2]; ii++)  // check for freq dups, so dont add if a dup in freq
+                    {
+                        if (freq12[ii] == Math.Round(console.VFOBFreq, 6))
+                        {
+                            Debug.WriteLine("BANDSTACK DUP FOUND RX2");
+
+                            dupfound = true;
+                            break;
+                        }
+
+                    }
+                    if (dupfound == false)
+                    {
+                        DB.AddBandStack(band_list[nnn2], console.RX2DSPMode.ToString(), console.RX2Filter.ToString(), Math.Round(console.VFOBFreq, 6)); // take current band, DSP mode, filter, and freq
+
+                        Debug.WriteLine("BANDSTACK add: " + console.RX2DSPMode.ToString());
+
+                        console.BandStackUpdate();
+                        bandstackupdate();
+
+                        Debug.WriteLine("BANDSTACK done");
+
+                        xxx2 = console.band_stacks[nnn2] - 1; // go to end of list and highlight it
+
+                        textBox1.SelectionStart = (xxx2 * BSLength);
+                        textBox1.SelectionLength = BSLength;
+                        updateindex2();
+                        //  console.iii = xxx;                            // update new position in bandstack for checking if its locked
+
+                    }
+
+
+                    dupfound = false;
+
+                } //  if (xxx < 12)
+
+
+            }
+        } // buttonAdd_MouseUp
+           
+
 
         public static int RIndex1 = 0;
 

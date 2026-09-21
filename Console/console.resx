@@ -14085,10 +14085,13 @@ Right Click on Frequency: toggle "Lock" so it cannot be overridden
     <value>panelTSBandStack</value>
   </data>
   <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="buttonAdd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="buttonAdd.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
   <data name="buttonAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Off</value>
@@ -14097,7 +14100,7 @@ Right Click on Frequency: toggle "Lock" so it cannot be overridden
     <value>6, 223</value>
   </data>
   <data name="buttonAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 23</value>
+    <value>37, 23</value>
   </data>
   <data name="buttonAdd.TabIndex" type="System.Int32, mscorlib">
     <value>119</value>
@@ -14106,10 +14109,10 @@ Right Click on Frequency: toggle "Lock" so it cannot be overridden
     <value>Add</value>
   </data>
   <data name="buttonAdd.ToolTip" xml:space="preserve">
-    <value>Left Click to Add new entry to VFOA BandStack List
+    <value>Left Click to Add new entry to RX1 BandStack List
 
 Flex-5000 RX2 only:
-Right Click to ADD new entry to VFOB Bandstack list
+Right Click to ADD new entry to RX2 Bandstack list
 
 </value>
   </data>
@@ -14123,7 +14126,7 @@ Right Click to ADD new entry to VFOB Bandstack list
     <value>panelTSBandStack</value>
   </data>
   <data name="&gt;&gt;buttonAdd.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="buttonSort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -14132,10 +14135,10 @@ Right Click to ADD new entry to VFOB Bandstack list
     <value>Off</value>
   </data>
   <data name="buttonSort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>61, 224</value>
+    <value>46, 223</value>
   </data>
   <data name="buttonSort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 23</value>
+    <value>38, 23</value>
   </data>
   <data name="buttonSort.TabIndex" type="System.Int32, mscorlib">
     <value>118</value>
@@ -14144,10 +14147,10 @@ Right Click to ADD new entry to VFOB Bandstack list
     <value>Sort</value>
   </data>
   <data name="buttonSort.ToolTip" xml:space="preserve">
-    <value>Click to Sort VFOA BandStack entires Low to High Freq.
+    <value>Click to Sort RX1 BandStack entires Low to High Freq.
 
 Flex-5000 RX2 only:
-Right Click to sort VFOB Bandstack list Low to High
+Right Click to sort RX2 Bandstack list Low to High
 </value>
   </data>
   <data name="&gt;&gt;buttonSort.Name" xml:space="preserve">
@@ -14160,7 +14163,7 @@ Right Click to sort VFOB Bandstack list Low to High
     <value>panelTSBandStack</value>
   </data>
   <data name="&gt;&gt;buttonSort.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="buttonDel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -14169,10 +14172,10 @@ Right Click to sort VFOB Bandstack list Low to High
     <value>Off</value>
   </data>
   <data name="buttonDel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 223</value>
+    <value>87, 223</value>
   </data>
   <data name="buttonDel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 23</value>
+    <value>35, 23</value>
   </data>
   <data name="buttonDel.TabIndex" type="System.Int32, mscorlib">
     <value>120</value>
@@ -14181,10 +14184,10 @@ Right Click to sort VFOB Bandstack list Low to High
     <value>Del</value>
   </data>
   <data name="buttonDel.ToolTip" xml:space="preserve">
-    <value>Click to Remove a Highlighted VFOA BandStack Entry
+    <value>Click to Remove a Highlighted RX1 BandStack Entry
 
 Flex-5000 RX2 only:
-Right Click to remove Highlighted VFOB Bandstack Entry
+Right Click to remove Highlighted RX2 Bandstack Entry
 </value>
   </data>
   <data name="&gt;&gt;buttonDel.Name" xml:space="preserve">
@@ -14197,7 +14200,7 @@ Right Click to remove Highlighted VFOB Bandstack Entry
     <value>panelTSBandStack</value>
   </data>
   <data name="&gt;&gt;buttonDel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="txtTimer.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9pt</value>
@@ -16318,7 +16321,7 @@ Right Click on Frequency: toggle "Lock" so it cannot be overridden
     <value>panelTSBandStack</value>
   </data>
   <data name="&gt;&gt;textBox2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="lblAntTX2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
@@ -16739,6 +16742,43 @@ Drag (Up/Down) to +/- Width (HZ) of the Notch
     <value>panelRX2Display</value>
   </data>
   <data name="&gt;&gt;btnTNFAdd2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="buttonLock.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="buttonLock.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Off</value>
+  </data>
+  <data name="buttonLock.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 223</value>
+  </data>
+  <data name="buttonLock.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 23</value>
+  </data>
+  <data name="buttonLock.TabIndex" type="System.Int32, mscorlib">
+    <value>122</value>
+  </data>
+  <data name="buttonLock.Text" xml:space="preserve">
+    <value>lck</value>
+  </data>
+  <data name="buttonLock.ToolTip" xml:space="preserve">
+    <value>Click to Lock a highlighted BandStack entry to prevent overwriting.
+
+Flex-5000 RX2 only:
+Right Click to Lock a Highlighted RX2 Bandstack Entry
+</value>
+  </data>
+  <data name="&gt;&gt;buttonLock.Name" xml:space="preserve">
+    <value>buttonLock</value>
+  </data>
+  <data name="&gt;&gt;buttonLock.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonLock.Parent" xml:space="preserve">
+    <value>panelTSBandStack</value>
+  </data>
+  <data name="&gt;&gt;buttonLock.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="timer_clock.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
