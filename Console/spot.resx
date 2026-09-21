@@ -122,8 +122,8 @@
   </metadata>
   <data name="SWLbutton.ToolTip" xml:space="preserve">
     <value>Click to turn On/Off Shortwave Spotting to the Panadapter.
-
-See Spotter Settings at the Top of this Window for more settings
+(This is similar to the same as the "SWL Search" menu item on the Console 
+except the List Search window does not open)
 
 This list includes Short Wave AM Broadcast, Maritime, Military, Beacons
 and Digital signals: ALE, HFDL, Digital Audio (DRM), Stanag, Fax, DSC, Navtex</value>
@@ -175,7 +175,7 @@ This list includes Short Wave AM Broadcast, Maritime, Military, Beacons
 and Digital signals: ALE, HFDL, Digital Audio (DRM), Stanag, Fax, DSC, Navtex
 
 RIGHT CLICK:
-Download the latest SWL.csv file from EIBISPACE.com
+Download the latest SWL.csv file from EIBISPACE.de
 Reboot after Download complete to use the new SWL file</value>
   </data>
   <data name="btnBeacon.ToolTip" xml:space="preserve">
