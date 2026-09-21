@@ -34,6 +34,7 @@ namespace PowerSDR
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StackControl));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonSort = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@ namespace PowerSDR
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.buttonLock = new System.Windows.Forms.Button();
             this.lblCATRigType = new System.Windows.Forms.LabelTS();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // textBox1
@@ -77,6 +79,8 @@ namespace PowerSDR
             this.buttonSort.Size = new System.Drawing.Size(38, 23);
             this.buttonSort.TabIndex = 61;
             this.buttonSort.Text = "Sort";
+            this.toolTip1.SetToolTip(this.buttonSort, "Click to Sort RX1 VFOA BandStack entires Low to High Freq.\r\n\r\nFlex-5000 RX2 only:" +
+        "\r\nRight Click to sort RX2 VFOB Bandstack list Low to High\r\n");
             this.buttonSort.UseVisualStyleBackColor = false;
             this.buttonSort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonSort_MouseUp);
             // 
@@ -89,6 +93,8 @@ namespace PowerSDR
             this.buttonAdd.Size = new System.Drawing.Size(37, 23);
             this.buttonAdd.TabIndex = 62;
             this.buttonAdd.Text = "Add";
+            this.toolTip1.SetToolTip(this.buttonAdd, "Left Click to Add new entry to RX1 VFOA BandStack List\r\n\r\nFlex-5000 RX2 only:\r\nRi" +
+        "ght Click to ADD new entry to RX2 VFOB Bandstack list\r\n");
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonAdd_MouseUp);
             // 
@@ -101,6 +107,8 @@ namespace PowerSDR
             this.buttonDel.Size = new System.Drawing.Size(37, 23);
             this.buttonDel.TabIndex = 63;
             this.buttonDel.Text = "Del";
+            this.toolTip1.SetToolTip(this.buttonDel, "Click to Remove a Highlighted RX1 VFOA BandStack Entry\r\n\r\nFlex-5000 RX2 only:\r\nRi" +
+        "ght Click to remove Highlighted RX2 VFOB Bandstack Entry\r\n");
             this.buttonDel.UseVisualStyleBackColor = false;
             this.buttonDel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonDel_MouseUp);
             // 
@@ -155,7 +163,10 @@ namespace PowerSDR
             this.buttonLock.Name = "buttonLock";
             this.buttonLock.Size = new System.Drawing.Size(37, 23);
             this.buttonLock.TabIndex = 65;
-            this.buttonLock.Text = "lck";
+            this.buttonLock.Text = "Lck";
+            this.toolTip1.SetToolTip(this.buttonLock, "Click to toggle \"Lock\" of a highlighted RX1 VFOA BandStack entry, to prevent over" +
+        "writing.\r\n\r\nFlex-5000 RX2 only:\r\nRight Click to toggle Lock of a Highlighted RX2" +
+        " VFOB Bandstack Entry\r\n");
             this.buttonLock.UseVisualStyleBackColor = false;
             this.buttonLock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonLock_MouseUp);
             // 
@@ -212,6 +223,7 @@ namespace PowerSDR
         private System.ComponentModel.IContainer components;
         public System.Windows.Forms.Button buttonLock;
         private System.Windows.Forms.LabelTS lblCATRigType;
+        private System.Windows.Forms.ToolTip toolTip1;
     } // stackcontrol
 
 } // powersdr

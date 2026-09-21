@@ -640,7 +640,7 @@ namespace PowerSDR
 
             // URL = "https://ns6t.net/azimuth/code/azimuth.fcgi?bw=off&bluefill=on&noheadingfooting=on&distance=17500&paper=LETTER&title=Title&location=42.01,-88.29";  //.322
             string URL = "https://ns6t.net/azimuth/code/azimuth.fcgi?bw=off&bluefill=on&noheadingfooting=on&distance=17500&paper=LETTER&title=Title&location=" + latlong; //.322
-                      
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Timeout = 5000;                    // 30 seconds - adjust as needed
             request.ReadWriteTimeout = 5000;           // Additional timeout for reading data
@@ -666,7 +666,7 @@ namespace PowerSDR
             {
                 if (webEx.Status == WebExceptionStatus.Timeout)
                 {
-                   Debug.WriteLine("Download timed out. The server took too long to respond.");
+                    Debug.WriteLine("Download timed out. The server took too long to respond.");
                 }
                 else
                 {
@@ -676,7 +676,7 @@ namespace PowerSDR
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving PDF: {ex.Message}");
-                
+
             }
 
             //--------------------------------------------------------------
@@ -709,8 +709,8 @@ namespace PowerSDR
                     string pdfPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.pdf");
                     string jpgFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.jpg");
                     string bmpFile = Environment.ExpandEnvironmentVariables(@"%userprofile%\AppData\Roaming\FlexRadio Systems\PowerSDR v2.8.0\AzimuthalMap.bmp");
-                  
-                  
+
+
                     if (File.Exists(BMPFile))
                     {
                         File.Delete(BMPFile);
@@ -764,10 +764,12 @@ namespace PowerSDR
             } // while
 
             Debug.WriteLine("shut down azimuth routine");
-          
+
 
         } // BeamMap
-             
+
+
+
 
         //-------------------------------------------------------------------------------------------------------------------------------------------
         // This THREAD uses Selenium and chromedriver as a headless browser and NS6T maps, to download a PDF map (as though you went online and filled out the html form)
@@ -11375,18 +11377,6 @@ namespace PowerSDR
 
 
 
-        //=====================================================
-        private void SWLbutton2_Click(object sender, EventArgs e)
-        {
-            console.SWLFORM = true; // open up SWL search window
-            if (SP_Active == 0)
-            {
-                console.spotterMenu.BackColor = Color.Yellow;
-                console.spotterMenu.Text = "SWL Spot";
-                SP1_Active = 1;
-            }
-
-        }
 
 
         //=====================================================
@@ -19678,25 +19668,112 @@ namespace PowerSDR
 
         } // chkWaterTempMap
 
+        private void SWLbutton2_MouseUp(object sender, MouseEventArgs e) //.337 mod
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+
+            if ((me.Button == System.Windows.Forms.MouseButtons.Left))
+            {
+                console.SWLFORM = true; // open up SWL search window
+                if (SP_Active == 0)
+                {
+                    console.spotterMenu.BackColor = Color.Yellow;
+                    console.spotterMenu.Text = "SWL Spot";
+                    SP1_Active = 1;
+                }
+            }
+            else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // go and download the new SWL file 
+            {
+
+                Thread t = new Thread(new ThreadStart(EibispaceSWL)); //.337
+
+                t.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+                t.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
+                t.Name = "Download latest SWL file Thread";
+                t.IsBackground = true;
+                t.Priority = ThreadPriority.BelowNormal;
+                t.Start();
+
+                textBox1.Text = textBox1.Text + "EIBISPACE SWL Download Thread start \r\n";
+
+            }
+
+
+        } //SPOTCONTROL
+
+
+        //=======================================================================================================================
+        // ke9ns: .337 to auto download a new SWL File from EIBISPACE, and save it to the PowerSDR v2.8.0 folder, so SWL can use it
+        public void EibispaceSWL()
+        {
+            string url = "http://eibispace.de/dx/sked-a26.csv";
+
+
+            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
+            string destinationFile = Path.Combine(targetDirectory, "SWL.csv");
+            string backupFile = Path.Combine(targetDirectory, "swl_old.csv");
+
+            try
+            {
+
+                // If an existing swl.csv file is already there, rename it before downloading the new one
+                if (File.Exists(destinationFile))
+                {
+                    if (File.Exists(backupFile))
+                    {
+                        File.Delete(backupFile); // Remove any older backup file first
+                    }
+                    File.Move(destinationFile, backupFile);
+                }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    // Safe to use GetAwaiter().GetResult() here because we are off the UI thread
+                    byte[] fileBytes = client.GetByteArrayAsync(url).GetAwaiter().GetResult();
+
+                    // Write/overwrite the file synchronously
+                    File.WriteAllBytes(destinationFile, fileBytes);
+                }
+
+                // Marshal back to the UI thread to show success and re-enable the button
+                this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    textBox1.Text = textBox1.Text + "EIBISPACE SWL Download Thread COMPLETE \r\n";
+                  
+                    MessageBox.Show("EIBISPACE ShortWaveList SWL.csv File successfully downloaded and saved.\n" +
+                        "Reboot PowerSDR to apply new SWL.csv file.\n" +
+                        "The Current SWL file was renamed swl_old.csv as a backup\n"
+                        ,"Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                  //  MessageBox.Show($"File successfully downloaded and saved as:\n{destinationFile}",
+                    //                    "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
+            }
+            catch (Exception ex)
+            {
+                // Marshal back to the UI thread to show the error
+                this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    textBox1.Text = textBox1.Text + "EIBISPACE SWL Download Thread FAILURE \r\n";
+                });
+            }
+
+        } // Eibispace SWL FILE
 
 
 
+        //============================================================
+        // ke9ns used to set PC system time, but PowerSDR needs to be in ADMIn mode for it to take
+        public class Win32API
+        {
+            [DllImport("Kernel32.dll")]
+            public static extern bool SetLocalTime(ref SystemTime Time);
+            [DllImport("Kernel32.dll")]
+            public static extern void GetLocalTime(ref SystemTime Time);
+        }
 
-    } //SPOTCONTROL
 
 
-
-
-    //============================================================
-    // ke9ns used to set PC system time, but PowerSDR needs to be in ADMIn mode for it to take
-    public class Win32API
-    {
-        [DllImport("Kernel32.dll")]
-        public static extern bool SetLocalTime(ref SystemTime Time);
-        [DllImport("Kernel32.dll")]
-        public static extern void GetLocalTime(ref SystemTime Time);
     }
-
-
-
-} // powersdr
+}// powersdr
