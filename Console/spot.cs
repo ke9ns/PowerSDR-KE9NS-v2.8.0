@@ -37,6 +37,7 @@
 
 //using Microsoft.JScript;
 
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.JScript;
 //using OpenQA.Selenium;
 //using OpenQA.Selenium.BiDi.Modules.Script;
@@ -74,7 +75,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Convert = System.Convert;
 using Keys = System.Windows.Forms.Keys;
 
-
+using System.IO.Compression;
 
 //using Syncfusion.Windows.Forms.Tools;
 
@@ -18375,6 +18376,30 @@ namespace PowerSDR
             {
                 textBox1.Text = "Left click to turn OFF LoTW first, then Right Click to Download.\r\n";
             }
+            else if (me.Button == MouseButtons.Middle)
+            {
+
+                if (runLoTW == true) // dont download the FCC file if your currently downloading your LoTW file
+                {
+                    LoTW_timer = false;
+                    return;
+                }
+
+                // download the latest FCC l_amat.zip file from the FCC website and extract it to the Database folder
+                Thread t = new Thread(new ThreadStart(FCC_l_amat)); //.337
+
+                t.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+                t.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
+                t.Name = "Download latest FCC l_amat.zip file Thread";
+                t.IsBackground = true;
+                t.Priority = ThreadPriority.BelowNormal;
+                t.Start();
+
+                textBox1.Text = textBox1.Text + "FCC l_amat.zip Thread start \r\n";
+
+
+            }
 
         } //  button4_MouseDown
 
@@ -19760,6 +19785,123 @@ namespace PowerSDR
             }
 
         } // Eibispace SWL FILE
+
+
+        //=======================================================================================================================
+        // ke9ns: .337 to auto download a new FCC callsign database file EN.dat, and save it to the PowerSDR v2.8.0 folder, so SWL can use it
+        // PowerSDR will generate FCCDATA.dat from EN.dat
+        public void FCC_l_amat()
+        {
+            string url = "https://data.fcc.gov/download/pub/uls/complete/l_amat.zip";
+
+            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\");
+            string destinationFile = Path.Combine(targetDirectory, "l_amat.zip");
+            string backupFile = Path.Combine(targetDirectory, "l_amat_old.zip");
+            string destinationFile1 = Path.Combine(targetDirectory, "FCCDATA.dat");
+            string backupFile1 = Path.Combine(targetDirectory, "FCCDATA_old.dat");
+
+
+            try
+            {
+
+                // If an existing swl.csv file is already there, rename it before downloading the new one
+                if (File.Exists(destinationFile))
+                {
+                    if (File.Exists(backupFile))
+                    {
+                        File.Delete(backupFile); // Remove any older backup file first
+                    }
+                    File.Move(destinationFile, backupFile);
+                }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    // Safe to use GetAwaiter().GetResult() here because we are off the UI thread
+                    byte[] fileBytes = client.GetByteArrayAsync(url).GetAwaiter().GetResult();
+
+                    // Write/overwrite the file synchronously
+                    File.WriteAllBytes(destinationFile, fileBytes);
+                }
+
+                string zipPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\l_amat.zip");
+
+                string destinationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"FlexRadio Systems\PowerSDR v2.8.0\EN.dat");
+
+               
+                using (ZipArchive archive = System.IO.Compression.ZipFile.OpenRead(zipPath))
+                {
+                    ZipArchiveEntry targetEntry = null;
+
+                    // Search for EN.dat inside the archive (case-insensitive)
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (entry.Name.Equals("EN.dat", StringComparison.OrdinalIgnoreCase))
+                        {
+                            targetEntry = entry;
+                            break;
+                        }
+                    }
+
+                    if (targetEntry != null)
+                    {
+
+                        this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            textBox1.Text = textBox1.Text + "Downloaded l_amat.zip, Extracting EN.dat\n";
+                        });
+                        // Extract only this specific file, overwriting if it already exists
+                        targetEntry.ExtractToFile(destinationPath, overwrite: true);
+
+                        this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            textBox1.Text = textBox1.Text + "EN.dat file extracted.\n";
+                        });
+                    }
+                    else
+                    {
+                        this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                        {
+                            textBox1.Text = textBox1.Text + "FCC l_amat.zip file extraction FAILURE \n";
+                        });
+                    }
+                } //using zip
+
+                if (File.Exists(destinationFile1)) // check if FCCDATA.dat file is already there
+                {
+                    if (File.Exists(backupFile1))
+                    {
+                        File.Delete(backupFile1); // Remove any older backup file first
+                    }
+                    File.Move(destinationFile1, backupFile1); // rename FCCDATA.dat to FCCDATA_old.dat
+                    textBox1.Text = textBox1.Text + "Old FCCDATA Renamed to FCCATA_old \n";
+                }
+
+                // Marshal back to the UI thread to show success and re-enable the button
+                this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    textBox1.Text = textBox1.Text + "FCC l_amat.zip Thread COMPLETE. Restart LoTW (left click) to generate new FCCDATA.dat file. \n";
+
+                 //   MessageBox.Show("FCC l_amat.zip File successfully downloaded and saved.\n" +
+                  //      "EN.data file extracted.\n" +
+                    //    "FCCDATA.dat renamed to make way for a new FCCDATA when you restart LoTW\n"
+                    //    , "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                
+                });
+            }
+            catch (Exception ex)
+            {
+                // Marshal back to the UI thread to show the error
+                this.Invoke((System.Windows.Forms.MethodInvoker)delegate
+                {
+                    textBox1.Text = textBox1.Text + "FCC l_amat.zip Download Thread FAILURE \n" +
+                        "Error: " + ex.Message + "\n";
+                });
+            }
+
+
+        } // FCC l_amat.zip SWL FILE
+
 
 
 

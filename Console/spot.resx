@@ -247,24 +247,28 @@ DX Spotter Screen:
 1) You must have your Callsign entered in the box in the bottom Right corner
 2) Right click on the Callsign box and enter in your LoTW password.
 This is the password that you use to login to: &lt;https://lotw.arrl.org/lotw/login&gt;
----------------------------------------------------------------------------------------
-[Left Click] LoTW Button = (On/Off):
-PowerSDR will check to see if you have a “LoTW_LOG.adi” file, and “FCCDATA.dat” file in your database folder.
-
-Files YES= Open/Read “LoTW_LOG.adi” and “FCCDATA.dat” files, and start checking DX Spots for Dups, DXCC Countries list, and US States.
-
-Files NO= PowerSDR will go to ARRL and download your FULL LoTW Log file. (This may take a few minutes to download) 
-If you don’t have a “FCCDATA.dat” file, PowerSDR will attempt to find EN.dat and convert it to “FCCDATA.dat”
------------------------------------------------------------------------------------------------------
-[Right Click]   LoTW Button = incremental Log file update:
-PowerSDR will go to ARRL and download incremental QSO/QSL updates to your LoTW Log file (based on the Date of the Last Update). 
-This requires only a few seconds to update.
 
 GREEN LoTW  when running.
 YELLOW LoTW  when downloading a LoTW Log QSO/QSLfile
 RED LoTW  when a fault occured.
 
-To download a new fcc database: ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip</value>
+---------------------------------------------------------------------------------------
+LEFT CLICK:
+Toggle LoTW Button = (On/Off):
+PowerSDR will check to see if you have a “LoTW_LOG.adi” file, and “FCCDATA.dat” file in your database folder.
+
+Files YES= Open/Read “LoTW_LOG.adi” and “FCCDATA.dat” files, and start checking DX Spots for Dups, DXCC Countries list, and US States.
+Files NO= Click the Middle button (click down on your mouse wheel) to download these files
+-----------------------------------------------------------------------------------------------------
+RIGHT CLICK:
+LoTW Button = incremental Log file update:
+PowerSDR will go to ARRL and download incremental QSO/QSL updates to your LoTW Log file (based on the Date of the Last Update). 
+This requires only a few seconds to update.
+
+---------------------------------------------------------------------------------------------------------
+MIDDLE MOUSE WHEEL CLICK
+Download a new fcc database file from: ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip
+</value>
   </data>
   <data name="button5.ToolTip" xml:space="preserve">
     <value>Click to send SHOW/DX command to the DX Cluster.
