@@ -508,12 +508,14 @@ namespace PowerSDR
             this.MemoryRecordImport.AllowDrop = true;
             this.MemoryRecordImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.MemoryRecordImport.Image = null;
-            this.MemoryRecordImport.Location = new System.Drawing.Point(12, 489);
+            this.MemoryRecordImport.Location = new System.Drawing.Point(12, 492);
             this.MemoryRecordImport.Name = "MemoryRecordImport";
             this.MemoryRecordImport.Size = new System.Drawing.Size(75, 23);
             this.MemoryRecordImport.TabIndex = 75;
-            this.MemoryRecordImport.Text = "Import CSV";
-            this.toolTip1.SetToolTip(this.MemoryRecordImport, resources.GetString("MemoryRecordImport.ToolTip"));
+            this.MemoryRecordImport.Text = "ImportCSV";
+            this.toolTip1.SetToolTip(this.MemoryRecordImport, "Add memories from a CHiRP exported CSV file\r\n\r\nWith CHiRP you can get Repeater da" +
+        "ta from RepeaterBook.com for free\r\nThen use CHiRP to export to a CSV which can b" +
+        "e imported here.\r\n");
             this.MemoryRecordImport.UseVisualStyleBackColor = true;
             this.MemoryRecordImport.Click += new System.EventHandler(this.MemoryRecordImport_Click);
             // 

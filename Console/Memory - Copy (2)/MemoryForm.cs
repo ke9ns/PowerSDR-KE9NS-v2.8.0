@@ -30,8 +30,6 @@ using Microsoft.VisualBasic.FileIO;
 using NAudio.Lame;
 //reference Nuget Package NAudio.Lame
 using NAudio.Wave;
-using OpenQA.Selenium.DevTools.V135.Storage;
-using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -1670,21 +1668,11 @@ namespace PowerSDR
             //console.RecallMemory(MemoryList.List[index]);
         }
 
-        //====================================================================================================
-        // ke9ns: .338 import CSV into memory of PowerSDR (mainly for repeater import)
+      //====================================================================================================
+      // ke9ns: .338 import CSV into memory of PowerSDR (mainly for repeater import)
 
-        bool inUse = false;
         private void MemoryRecordImport_Click(object sender, EventArgs e) //.338
         {
-
-            if (inUse)
-            {
-                return;
-            }
-            inUse = true;
-
-            MemoryRecordImport.BackColor = Color.Yellow;
-
             // ke9ns add import memory records from a file
             // Download CHirP and connect to RepeaterBook for free, download the memory records and save as a .csv file. Then import into PowerSDR memory list.
 
@@ -1713,20 +1701,17 @@ namespace PowerSDR
 
         } // Import Memory Records
 
-
-        string[,] repeaterArray = new string[1000,20]; // place to store imported memories
-
         private void ReadCsvThreadWorker(string filePath) //.338
         {
             try
             {
                 // Process file on background thread
-                repeaterArray = ReadRepeaterCsv(filePath);
+                string[,] dataArray = ReadRepeaterCsv(filePath);
 
                 // Send 2D array back to main UI thread
                 this.BeginInvoke(new Action(() =>
                 {
-                    OnCsvLoadedSuccess(repeaterArray, filePath);
+                    OnCsvLoadedSuccess(dataArray, filePath);
                     //  btnLoadCsv.Enabled = true;
                 }));
             }
@@ -1737,30 +1722,17 @@ namespace PowerSDR
                 {
                     MessageBox.Show($"Error reading CSV: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     //  btnLoadCsv.Enabled = true;
-
-                    inUse = false;
                 }));
             }
         }
 
-        bool includeOnlySpecificFrequencies = false;
-        bool AllorNothing = false;
-
-        int totalRows5 = 0;
-       
-
         private void OnCsvLoadedSuccess(string[,] repeaterArray, string filePath)  //.338
         {
-             totalRows5 = repeaterArray.GetLength(0);
-            //  totalCols5 = repeaterArray.GetLength(1);
-
-
-            MemoryRecordImport.BackColor = Color.GreenYellow;
+            int totalRows = repeaterArray.GetLength(0);
+            int totalCols = repeaterArray.GetLength(1);
 
             string fileName = Path.GetFileName(filePath);
-            MessageBox.Show($"Successfully loaded {totalRows5} records from '{fileName}'!", "File Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-           
+            MessageBox.Show($"Successfully loaded {totalRows} records from '{fileName}'!", "File Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Accessing array data safely back on UI thread
             // Structure: array[rowIndex, colIndex]
@@ -1773,10 +1745,11 @@ namespace PowerSDR
             // repeaterArray[x, 6] = Mode,
             // repeaterArray[x, 7] = Comment
 
+            bool includeOnlySpecificFrequencies = false;
 
-            if (totalRows5 > 0)
+            if (totalRows > 0)
             {
-                DialogResult result = MessageBox.Show("YES: to only add records within 0-54mhz and 126-165mhz and 420-470mhz, NO: to inlude all records", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("Do you want to only include 0-54mhz and 126-165mhz and 420-470mhz?", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1786,33 +1759,184 @@ namespace PowerSDR
                 {
                     includeOnlySpecificFrequencies = false;
                 }
-          
-                result = MessageBox.Show("Do you want to import ALL records into the memory list? This will add existing records to your Memory file", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                result = MessageBox.Show("Do you want to import all records into the memory list? This will add existing records to your Memory file", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    AllorNothing = true;
-                    MemoryRecordImport.BackColor = Color.LightBlue;
+
+
 
                 }
                 else // import only selected records
                 {
-                    AllorNothing = false;
 
-                    MemoryRecordImport.BackColor = Color.LightSalmon;
+
+                    for (int i = 0; i < totalRows; i++)
+                    {
+                        if (includeOnlySpecificFrequencies)
+                        {
+                            double freq;
+                            if (!double.TryParse(repeaterArray[i, 1], out freq))
+                            {
+                                MessageBox.Show($"Invalid frequency format for record {i + 1}: {repeaterArray[i, 1]}. Skipping this record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                continue; // Skip this record
+                            }
+                            if (!((freq >= 0 && freq <= 54) || (freq >= 126 && freq <= 165) || (freq >= 420 && freq <= 470)))
+                            {
+                                Debug.WriteLine($"Skipping record {i + 1} due to frequency {freq} not in specified ranges.");
+                                continue; // Skip this record
+                            }
+                        }
+
+                        result = MessageBox.Show("Import this record: " + repeaterArray[i, 0] + ",  " + repeaterArray[i, 1] + ",  " + repeaterArray[i, 2] + ",  "
+                            + repeaterArray[i, 3] + ", " + repeaterArray[i, 4] + ",  " + repeaterArray[i, 5] + ",  " + repeaterArray[i, 6] + ",  " + repeaterArray[i, 7], "Confirm Import", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+                        if (result == DialogResult.Yes)
+                        {
+
+
+                            string group = ""; // repeaterArray[i,
+
+                            double freq;
+                            if (!double.TryParse(repeaterArray[i, 1], out freq))
+                            {
+                                if (!((freq >= 0 && freq <= 28)))
+                                {
+                                    group = "HF Utility Repeater";
+                                }
+                                else if (!((freq >= 30 && freq <= 50)))
+                                {
+                                    group = "VHF Utility Repeater";
+                                }
+                                else if (!((freq >= 28 && freq <= 30)))
+                                {
+                                    group = "10m Repeater";
+                                }
+                                else if (!((freq >= 50 && freq <= 54)))
+                                {
+                                    group = "6m Repeater";
+                                }
+                                else if (!((freq >= 144 && freq <= 148)))
+                                {
+                                    group = "2m Repeater";
+                                }
+                                else if (!((freq >= 440 && freq <= 460)))
+                                {
+                                    group = "70cm Repeater";
+                                }
+                                else if (!((freq >= 148 && freq <= 160)))
+                                {
+                                    group = "VHF Utility Repeater";
+                                }
+                                else if (!((freq >= 400 && freq <= 420)))
+                                {
+                                    group = "UHF Utility Repeater";
+                                }
+                                else if (!((freq >= 460 && freq <= 470)))
+                                {
+                                    group = "UHF Utility Repeater";
+                                }
+                                else
+                                {
+                                    group = "Other Repeater";
+                                }
+                            }
+
+                            DSPMode mode = DSPMode.FM; // default to FM mode
+
+                            int deviation = 0; // default to 5kHz deviation for FM
+                            int deviationneg = 0; // default to 5kHz deviation for FM
+
+                            if (repeaterArray[i, 6] == "NFM")
+                            {
+                                mode = DSPMode.FM;
+                                deviation = 5000; // 5kHz deviation for NFM
+                                deviationneg = -5000; // 5kHz deviation for NFM
+                            }
+                            else if (repeaterArray[i, 6] == "FM")
+                            {
+                                mode = DSPMode.FM;
+                                deviation = 8000; // 8kHz deviation for FM
+                                deviationneg = -8000; // 8kHz deviation for FM
+                            }
+                            else if (repeaterArray[i, 6] == "AM")
+                            {
+                                mode = DSPMode.AM;
+                                deviation = 0; // 5kHz deviation for AM=
+                                deviationneg = 0; // 5kHz deviation for AM
+                            }
+
+
+
+
+                            // repeaterArray[x, 0] = Callsign,
+                            // repeaterArray[x, 1] = Frequency,
+                            // repeaterArray[x, 2] = Duplex,
+                            // repeaterArray[x, 3] = Offset,
+                            // repeaterArray[x, 4] = Tone,
+                            // repeaterArray[x, 5] = cToneFreq,
+                            // repeaterArray[x, 6] = Mode,
+                            // repeaterArray[x, 7] = Comment
+
+
+                            console.MemoryList.List.Add(new MemoryRecord(
+                                group,                                      //group = rec.group; group name (usually the type of repeater, like 2m, 70cm, etc. + location
+                                double.Parse(repeaterArray[i, 1]),          //rx_freq = rec.rx_freq;  frequency
+                                repeaterArray[i, 0],                        //name = rec.name; name (usually a callsign of the repeater)
+                                mode,                                       //dsp_mode = rec.dsp_mode; DSPmode
+                                true,                                       //scan = rec.scan;  true/false if this memory is part of a scan list
+                                console.TuneStepList[console.TuneStepIndex].Name, //tune_step = rec.tune_step;    tune step (usually the current tune step when the memory was created)
+                                console.CurrentFMTXMode,                    //repeater_mode = rec.repeater_mode;  FMTXMode (simplex, High, Low)
+                                console.FMTXOffsetMHz,                      //rptr_offset = rec.rptr_offset;
+                                console.dsp.GetDSPTX(0).CTCSSFlag,          //ctcss_on = rec.ctcss_on;
+                                console.dsp.GetDSPTX(0).CTCSSFreqHz,        //ctcss_freq = rec.ctcss_freq;
+                                console.PWR,                                //power = rec.power;
+                                (int)console.dsp.GetDSPTX(0).TXFMDeviation, //deviation = rec.deviation;
+                                console.VFOSplit,                           //split = rec.split;
+                                console.TXFreq,                             //tx_freq = rec.tx_freq;
+                                console.RX1Filter,                          //rx_filter = rec.rx_filter;
+                                console.RX1FilterLow,                       //rx_filter_low = rec.rx_filter_low;
+                                console.RX1FilterHigh,                      //rx_filter_high = rec.rx_filter_high;
+                                repeaterArray[i, 7],                        //comments = rec.comments;
+                                console.dsp.GetDSPRX(0, 0).RXAGCMode,       //agc_mode = rec.agc_mode;
+                                console.RF,                                 //agct = rec.agct;
+                                DateTime.Now,                               //startdate = rec.startdate; // ke9ns add  for scheduled freq change and optional recording 
+                                ScheduleOn.Checked,                         //scheduleon = rec.scheduleon; // ke9ns add  for scheduled freq change and optional recording 
+                                (int)ScheduleDurationTime.Value,            //duration = rec.duration; // ke9ns add  for scheduled freq change and optional recording
+                                ScheduleRepeat.Checked,                     //repeating = rec.repeating;// ke9ns add  for scheduled freq change and optional recording
+                                ScheduleRecord.Checked,                     //recording = rec.recording;// ke9ns add  for scheduled freq change and optional recording
+                                ScheduleRepeatm.Checked,                    //repeatingm = rec.repeatingm;// ke9ns add  for scheduled freq change and optional recording    
+                                (int)ScheduleExtra.Value                    //extra = rec.extra;// ke9ns add  for scheduled freq change and optional recording
+
+                            ));
+
+                            ScheduleUpdate(); // ke9ns add update schedule boxes from selected memory
+
+
+                            Common.SaveForm(this, "MemoryForm");    // w4tme
+                            console.MemoryList.Save();              // w4tme 
+
+                        }
+                        else if (result == DialogResult.No)
+                        {
+                            continue; // skip this record and go to next one
+                        }
+                        else if (result == DialogResult.Cancel)
+                        {
+                            break; // exit the loop and stop importing
+                        }
+
+                    } // for loop through all records
 
                 } // no to importing all records
-
-               
-
-                ImportMemoryHerek(); // add imported records
 
 
             } // if (totalRows > 0)
         } // OnCsvLoadedSuccess
 
 
-//=======================================================================================
+
         private string[,] ReadRepeaterCsv(string filePath) //.338
         {
             string[] targetColumns = { "Name", "Frequency", "Duplex", "Offset", "Tone", "cToneFreq", "Mode", "Comment" };
@@ -1846,7 +1970,7 @@ namespace PowerSDR
 
                     filteredRows.Add(extractedRow);
                 }
-            } // using
+            }
 
             // Convert to 2D array [rowCount, 8]
             string[,] resultArray = new string[filteredRows.Count, targetColumns.Length];
@@ -1862,568 +1986,11 @@ namespace PowerSDR
             }
 
             return resultArray;
-        } //ReadRepeaterCsv
+        }
 
 
-        
-       //=======================================================================
-       // Parse out the CSV entry and add it to memory here
-        public void ImportMemoryHerek( )  //  .338
-        {
-
-            for (int i = 0; i < totalRows5; i++)
-            {
-                if (includeOnlySpecificFrequencies)
-                {
-                    
-                    if (!double.TryParse(repeaterArray[i, 1], out double freq1))
-                    {
-                        MessageBox.Show($"Invalid frequency format for record {i + 1}: {repeaterArray[i, 1]}. Skipping this record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue; // Skip this record
-                    }
-                    if (!((freq1 >= 0 && freq1 <= 54) || (freq1 >= 126 && freq1 <= 165) || (freq1 >= 420 && freq1 <= 470)))
-                    {
-                        Debug.WriteLine($"Skipping record {i + 1} due to frequency {freq1} not in specified ranges.");
-                        continue; // Skip this record
-                    }
-                }
-              
-                if (AllorNothing == false)
-                {
-                    DialogResult result = MessageBox.Show("Import this record: " + repeaterArray[i, 0] + ",  " + repeaterArray[i, 1] + ",  " + repeaterArray[i, 2] + ",  "
-                         + repeaterArray[i, 3] + ", " + repeaterArray[i, 4] + ",  " + repeaterArray[i, 5] + ",  " + repeaterArray[i, 6] + ",  " + repeaterArray[i, 7], "Confirm Import", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        // add this to memory
-                    }
-                    else if (result == DialogResult.No)
-                    {
-                        continue; // skip this record and go to next one
-                    }
-                    else if (result == DialogResult.Cancel)
-                    {
-                        return; // break; // exit the loop and stop importing
-                    }
-
-                }
-                else
-                {
-                    // true = import all records
-                }
-
-                // repeaterArray[x, 0] = Callsign,
-                // repeaterArray[x, 1] = Frequency,
-                // repeaterArray[x, 2] = Duplex,
-                // repeaterArray[x, 3] = Offset,  // thsi becomes txfreq when in split for satellite work
-                // repeaterArray[x, 4] = Tone,
-                // repeaterArray[x, 5] = cToneFreq,
-                // repeaterArray[x, 6] = Mode,
-                // repeaterArray[x, 7] = Comment
-
-                DSPMode mode = DSPMode.FM; // default to FM mode
-
-                int deviation = 2500; // default to 5kHz deviation for FM
-                int RXFILTERLOW = 0; // 
-                int RXFILTERHIGH = 0;
-                Filter Fltr = Filter.NONE;
 
 
-                if (repeaterArray[i, 6] == "NFM")
-                {
-                    mode = DSPMode.FM;
-                    deviation = 2500; // 5kHz deviation for NFM
-                    RXFILTERLOW = -5000; // 5kHz deviation for NFM
-                    RXFILTERHIGH = 5000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "NFM: " + repeaterArray[i, 7];
-
-                }
-                else if (repeaterArray[i, 6] == "FM")
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "FM: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "DMR") // digital mobile radio
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "DMR: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "DV") // digital voice D-Star
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "DV: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "DN") // digital narrow Yaesu Fusion
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "DN: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "VW") // digital wide Yaesu Fusion
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "VW: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "P25") // public safety digital
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "P25: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "NXDN") // digital icom,kenwood
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "NXDN: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "ATV") // amateur TV
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "ATV: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "APRS") // 
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "APRS: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "D-RATZ") // 
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "D-RATZ: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "VARA") // digital 
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "VARA: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "WINMOR") // digital narrow Yaesu Fusion
-                {
-                    mode = DSPMode.FM;
-                    deviation = 5000; // 8kHz deviation for FM
-                    RXFILTERLOW = -8000; // 8kHz deviation for FM
-                    RXFILTERHIGH = 8000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "WINMOR: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "AM")
-                {
-                    mode = DSPMode.AM;
-                    deviation = 2500;   //  deviation for AM=
-                    RXFILTERLOW = -6000; // 
-                    RXFILTERHIGH = 6000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "AM: " + repeaterArray[i, 7];
-                }
-                else if (repeaterArray[i, 6] == "USB")
-                {
-
-                    mode = DSPMode.USB;
-                    deviation = 2500; //
-                    RXFILTERLOW = 0; // 
-                    RXFILTERHIGH = 6000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "USB: " + repeaterArray[i, 7];
-
-                }
-                else if (repeaterArray[i, 6] == "CW")
-                {
-
-                    mode = DSPMode.CWU;
-                    deviation = 2500; //
-                    RXFILTERLOW = 0; // 
-                    RXFILTERHIGH = 6000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "CWU: " + repeaterArray[i, 7];
-
-                }
-                else if (repeaterArray[i, 6] == "SSB")
-                {
-
-                    mode = DSPMode.USB;
-                    deviation = 2500; //
-                    RXFILTERLOW = 0; // 
-                    RXFILTERHIGH = 6000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "SSB: " + repeaterArray[i, 7];
-
-                }
-                else if (repeaterArray[i, 6] == "LSB")
-                {
-
-                    mode = DSPMode.LSB;
-                    deviation = 2500; // 
-                    RXFILTERLOW = -6000; // 
-                    RXFILTERHIGH = 0;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "LSB: " + repeaterArray[i, 7];
-                }
-
-                else
-                {
-
-                    mode = DSPMode.FM;
-                    deviation = 2500; //
-                    RXFILTERLOW = -5000; // 
-                    RXFILTERHIGH = 5000;
-                    Fltr = Filter.NONE;
-                    repeaterArray[i, 7] = "NA: " + repeaterArray[i, 7];
-                }
-
-                FMTXMode repeaterMode = FMTXMode.Simplex; // default to Simplex
-                bool split = false;
-                double txfreq = 0;
-
-                txfreq = double.Parse(repeaterArray[i, 1]); // normally RX and TX are listed as the same execpt in split mode
-
-                if (repeaterArray[i, 2] == "-")
-                {
-                    repeaterMode = FMTXMode.Low;
-                }
-                else if (repeaterArray[i, 2] == "+")
-                {
-                    repeaterMode = FMTXMode.High;
-                }
-                else if (repeaterArray[i, 2] == "split") // satellite
-                {
-                        repeaterMode = FMTXMode.Simplex;
-                        split = true;
-                       txfreq = double.Parse(repeaterArray[i, 1]);
-                }
-                else // "" empty
-                {
-                    repeaterMode = FMTXMode.Simplex;
-                }
-
-                bool tone = false;
-
-                if (repeaterArray[i, 4] == "Tone")
-                {
-                    tone = true;
-                }
-                else if (repeaterArray[i, 4] == "TSQL")
-                {
-                    tone = true;
-                }
-                else if (repeaterArray[i, 4] == "DTCS")
-                {
-                    tone = false;
-                }
-                else
-                {
-                    tone = false;
-                }
-              
-                string group = ""; // repeaterArray[i,
-    
-                if (double.TryParse(repeaterArray[i, 1], out double freq))
-                {
-                    if (((freq >= 0 && freq <= 28)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "HF Utility Repeater";
-                        }
-                        else
-                        {
-                            group = "HF Utility";
-                        }
-                    }
-                    else if (((freq >= 29.3 && freq <= 29.510)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 144 && freq <= 146)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 435 && freq <= 438)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 1240 && freq <= 1300)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 30 && freq <= 50)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "VHF Utility Repeater";
-                        }
-                        else
-                        {
-                            group = "VHF Utility";
-                        }
-                    }
-                    else if (((freq >= 28 && freq <= 30)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "10m Repeater";
-                        }
-                        else
-                        {
-                            group = "10m";
-                        }
-                    }
-                    else if (((freq >= 50 && freq <= 54)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "6m Repeater";
-                        }
-                        else
-                        {
-                            group = "6m";
-                        }
-                    }
-                    else if (((freq >= 144 && freq <= 148)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "2m Repeater";
-                        }
-                        else
-                        {
-                            group = "2m Utility";
-                        }
-                    }
-                    else if (((freq >= 440 && freq <= 460)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "70cm Repeater";
-                        }
-                        else
-                        {
-                            group = "70cm";
-                        }
-                    }
-                    else if (((freq >= 148 && freq <= 160)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "VHF Utility Repeater";
-                        }
-                        else
-                        {
-                            group = "VHF Utility";
-                        }
-                    }
-                    else if (((freq >= 400 && freq <= 420)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "UHF Utility Repeater";
-                        }
-                        else
-                        {
-                            group = "UHF Utility";
-                        }
-                    }
-                    else if (((freq >= 450 && freq <= 470)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "UHF Utility Repeater";
-                        }
-                        else
-                        {
-                            group = "UHF Utility";
-                        }
-                    }
-                    else
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = double.Parse(repeaterArray[i, 1]) + " Repeater";
-                        }
-                        else
-                        {
-                            group = double.Parse(repeaterArray[i, 1]) + "Other";
-                        }
-                    }
-
-                } // parse freq
-
-                group = group + "(" + ExtractTextAfterNear(repeaterArray[i, 7]) + ")";
-
-                if (split)
-                {
-                    // duplex is now txfreq
-                    txfreq = double.Parse(repeaterArray[i, 3]); // sat work
-                    repeaterArray[i, 3] = "0.0";
-                }
-                else
-                {
-                    txfreq = double.Parse(repeaterArray[i, 1]); // normal
-                }
-
-                    Debug.WriteLine("THIS IS THE RECORD: ");
-
-                Debug.WriteLine("Group: " + group);
-                Debug.WriteLine("Freq: " + double.Parse(repeaterArray[i, 1]));
-                Debug.WriteLine("name: " + repeaterArray[i, 0]);
-                Debug.WriteLine("DSP Mode: " + mode);
-                Debug.WriteLine("Repeater mode: " + repeaterMode);
-                Debug.WriteLine("Offset: " + double.Parse(repeaterArray[i, 3]));
-                Debug.WriteLine("Tone: " + tone);
-                Debug.WriteLine("CTCSS: " + double.Parse(repeaterArray[i, 5]));
-                Debug.WriteLine("Dev: " + deviation);
-                Debug.WriteLine("Filter " + Fltr);
-                Debug.WriteLine("filterlow " + RXFILTERLOW);
-                Debug.WriteLine("filterhigh " + RXFILTERHIGH);
-                Debug.WriteLine("comments" + repeaterArray[i, 7]);
-
-
-                console.MemoryList.List.Add(new MemoryRecord(
-                    group,                                      //group = rec.group; group name (usually the type of repeater, like 2m, 70cm, etc. + location
-                    double.Parse(repeaterArray[i, 1]),          //rx_freq = rec.rx_freq;  frequency
-                    repeaterArray[i, 0],                        //name = rec.name; name (usually a callsign of the repeater)
-                    mode,                                       //dsp_mode = rec.dsp_mode; DSPmode
-                    true,                                       //scan = rec.scan;  true/false if this memory is part of a scan list
-                    console.TuneStepList[console.TuneStepIndex].Name, //tune_step = rec.tune_step;    tune step (usually the current tune step when the memory was created)
-                    repeaterMode,                               // console.CurrentFMTXMode,  repeater_mode = rec.repeater_mode;  FMTXMode (simplex, High, Low)
-                    double.Parse(repeaterArray[i, 3]),          // console.FMTXOffsetMHz,                      //rptr_offset = rec.rptr_offset;
-                    tone,                                       // console.dsp.GetDSPTX(0).CTCSSFlag,          //ctcss_on = rec.ctcss_on;
-                    double.Parse(repeaterArray[i, 5]),            //console.dsp.GetDSPTX(0).CTCSSFreqHz,        //ctcss_freq = rec.ctcss_freq;
-                    console.PWR,                                //power = rec.power;
-                    deviation,                                  //(int)console.dsp.GetDSPTX(0).TXFMDeviation, //deviation = rec.deviation;
-                    split,                                      //console.VFOSplit,                           //split = rec.split;
-                    txfreq,                                     //console.TXFreq,                             //tx_freq = rec.tx_freq;
-                    Fltr,                                       //console.RX1Filter,                          //rx_filter = rec.rx_filter;
-                    RXFILTERLOW,                                //console.RX1FilterLow,                       //rx_filter_low = rec.rx_filter_low;
-                    RXFILTERHIGH,                               //console.RX1FilterHigh,                      //rx_filter_high = rec.rx_filter_high;
-                    repeaterArray[i, 7],                        //comments = rec.comments;
-                    console.dsp.GetDSPRX(0, 0).RXAGCMode,       //agc_mode = rec.agc_mode;
-                    console.RF,                                 //agct = rec.agct;
-                    DateTime.Now,                               //startdate = rec.startdate; // ke9ns add  for scheduled freq change and optional recording 
-                    ScheduleOn.Checked,                         //scheduleon = rec.scheduleon; // ke9ns add  for scheduled freq change and optional recording 
-                    (int)ScheduleDurationTime.Value,            //duration = rec.duration; // ke9ns add  for scheduled freq change and optional recording
-                    ScheduleRepeat.Checked,                     //repeating = rec.repeating;// ke9ns add  for scheduled freq change and optional recording
-                    ScheduleRecord.Checked,                     //recording = rec.recording;// ke9ns add  for scheduled freq change and optional recording
-                    ScheduleRepeatm.Checked,                    //repeatingm = rec.repeatingm;// ke9ns add  for scheduled freq change and optional recording    
-                    (int)ScheduleExtra.Value                    //extra = rec.extra;// ke9ns add  for scheduled freq change and optional recording
-
-                ));
-
-                ScheduleUpdate(); // ke9ns add update schedule boxes from selected memory
-
-
-                Common.SaveForm(this, "MemoryForm");    // w4tme
-                console.MemoryList.Save();              // w4tme 
-
-            
-            } // for loop through all records
-
-            inUse = false;
-            MemoryRecordImport.BackColor = SystemColors.Control;  // SystemColors.ButtonFace
-
-        } // import memory here
-
-        //===================================================================================
-        public static string ExtractTextAfterNear(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return string.Empty;
-            }
-
-            // Find "near" (case-insensitive)
-            int nearIndex = input.IndexOf("near", StringComparison.OrdinalIgnoreCase);
-
-            if (nearIndex != -1)
-            {
-                // Move past the word "near" (4 characters)
-                int startIndex = nearIndex + 4;
-
-                // Find the next comma after "near"
-                int commaIndex = input.IndexOf(',', startIndex);
-
-                if (commaIndex != -1)
-                {
-                    // Extract text between "near" and the comma, then clean up whitespace
-                    return input.Substring(startIndex, commaIndex - startIndex).Trim();
-                }
-                else
-                {
-                    // Fallback: if no comma exists, grab everything after "near"
-                    return input.Substring(startIndex).Trim();
-                }
-            }
-
-            return string.Empty; // Return empty string if "near" isn't found
-        } // extracttext
 
 
     } // memoryform

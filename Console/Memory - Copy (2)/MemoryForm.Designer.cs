@@ -513,7 +513,7 @@ namespace PowerSDR
             this.MemoryRecordImport.Size = new System.Drawing.Size(75, 23);
             this.MemoryRecordImport.TabIndex = 75;
             this.MemoryRecordImport.Text = "Import CSV";
-            this.toolTip1.SetToolTip(this.MemoryRecordImport, resources.GetString("MemoryRecordImport.ToolTip"));
+            this.toolTip1.SetToolTip(this.MemoryRecordImport, "Use CHirP to create a list of Frequecies to import into PowerSDR via CSV\r\n");
             this.MemoryRecordImport.UseVisualStyleBackColor = true;
             this.MemoryRecordImport.Click += new System.EventHandler(this.MemoryRecordImport_Click);
             // 
