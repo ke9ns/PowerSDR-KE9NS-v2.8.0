@@ -733,6 +733,8 @@ namespace PowerSDR
         /// <param name="e"></param>
         private void MemoryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveColumnLayout(); //.338
+
             this.Hide();
             e.Cancel = true;
             Common.SaveForm(this, "MemoryForm");
@@ -824,7 +826,12 @@ namespace PowerSDR
 
         private void MemoryForm_Load(object sender, EventArgs e)
         {
+            LoadColumnLayout(); //.338
+        }
 
+        private void MemoryForm_Save(object sender, EventArgs e)
+        {
+            SaveColumnLayout();//.338
         }
 
 
@@ -2429,6 +2436,92 @@ namespace PowerSDR
             return string.Empty; // Return empty string if "near" isn't found
         } // extracttext
 
+
+        //====================================================================================
+        // ke9ns: .338 Look under PowerSDR properties->Settings->Columnlayout,string,User was added
+        private void SaveColumnLayout()
+        {
+            try
+            {
+                // Format per column: Name:Width:DisplayIndex;
+                var settings = new StringBuilder();
+
+                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                {
+                    settings.Append($"{col.Name}:{col.Width}:{col.DisplayIndex};");
+                }
+
+                Properties.Settings.Default.ColumnLayout = settings.ToString();
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                // Handle or log exceptions if needed
+            }
+        } //Savecolumnlayout
+
+        private void LoadColumnLayout()
+        {
+            try
+            {
+                string savedLayout = Properties.Settings.Default.ColumnLayout;
+
+                if (string.IsNullOrWhiteSpace(savedLayout))
+                    return;
+
+                string[] pairs = savedLayout.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // IMPORTANT: Apply DisplayIndex in ascending order to prevent index conflict errors
+                var columnDataList = new System.Collections.Generic.List<ColumnState>();
+
+                foreach (string pair in pairs)
+                {
+                    string[] parts = pair.Split(':');
+                    if (parts.Length == 3)
+                    {
+                        string colName = parts[0];
+                        if (int.TryParse(parts[1], out int width) &&
+                            int.TryParse(parts[2], out int displayIndex) &&
+                            dataGridView1.Columns.Contains(colName))
+                        {
+                            columnDataList.Add(new ColumnState
+                            {
+                                Name = colName,
+                                Width = width,
+                                DisplayIndex = displayIndex
+                            });
+                        }
+                    }
+                }
+
+                // Sort by target DisplayIndex low-to-high before applying
+                columnDataList.Sort((a, b) => a.DisplayIndex.CompareTo(b.DisplayIndex));
+
+                foreach (var state in columnDataList)
+                {
+                    var col = dataGridView1.Columns[state.Name];
+                    col.Width = state.Width;
+
+                    // Ensure the DisplayIndex stays within valid bounds
+                    if (state.DisplayIndex < dataGridView1.Columns.Count)
+                    {
+                        col.DisplayIndex = state.DisplayIndex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle or log exceptions if needed
+            }
+
+        } //LOADCOLUMNLAYOUT
+
+        private class ColumnState
+        {
+            public string Name { get; set; }
+            public int Width { get; set; }
+            public int DisplayIndex { get; set; }
+        }
 
     } // memoryform
 
