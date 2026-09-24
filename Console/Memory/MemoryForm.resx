@@ -134,17 +134,6 @@ Mouse Wheel Click: Send Memory to VFOB (TX VFOB if RX2 ON)
 
 </value>
   </data>
-  <data name="MemoryRecordAdd.ToolTip" xml:space="preserve">
-    <value>TO ADD A URL OR FILE HYPERLINK TO A MEMORY:
-Select a Memory (Row) with your mouse
-Drag &amp; Drop a File, or URL onto the Selected Row
-or Drag &amp; Drop directly to the Add button to create new Memory
-
-TO USE THE HYPERLINK:
-RIGHT CLICK mouse on the Memory (Row)
-
-</value>
-  </data>
   <data name="textBox1.Text" xml:space="preserve">
     <value>Highlight a memory by a single Left Click on a Row.
 You can Drag a file or URL directy onto the highlighted Row to save a Hyperlink.
@@ -174,6 +163,17 @@ Then:  Click on this "Import CSV" button
 
 NOTE: This will not currently check for duplicates. 
 And you should make a backup copy of memory.xlr (found in your PC folder: %userprofile%\AppData\Roaming\FlexRadio Systems\)</value>
+  </data>
+  <data name="MemoryRecordAdd.ToolTip" xml:space="preserve">
+    <value>TO ADD A URL OR FILE HYPERLINK TO A MEMORY:
+Select a Memory (Row) with your mouse
+Drag &amp; Drop a File, or URL onto the Selected Row
+or Drag &amp; Drop directly to the Add button to create new Memory
+
+TO USE THE HYPERLINK:
+RIGHT CLICK mouse on the Memory (Row)
+
+</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>47</value>

@@ -72,9 +72,19 @@ namespace PowerSDR
             this.MemName = new System.Windows.Forms.TextBox();
             this.ScheduleStartTimeUTC = new System.Windows.Forms.DateTimePicker();
             this.textBox9 = new System.Windows.Forms.TextBox();
-            this.buttonTS1 = new System.Windows.Forms.ButtonTS();
-            this.ScheduleRepeatm = new System.Windows.Forms.CheckBoxTS();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.MemoryRecordImport = new System.Windows.Forms.ButtonTS();
             this.ScheduleOn = new System.Windows.Forms.CheckBoxTS();
+            this.buttonTS1 = new System.Windows.Forms.ButtonTS();
+            this.ScheduleExtra = new System.Windows.Forms.NumericUpDownTS();
+            this.ScheduleRepeatm = new System.Windows.Forms.CheckBoxTS();
+            this.chkAlwaysOnTop = new System.Windows.Forms.CheckBoxTS();
             this.ScheduleDurationTime = new System.Windows.Forms.NumericUpDownTS();
             this.ScheduleRecord = new System.Windows.Forms.CheckBoxTS();
             this.ScheduleRepeat = new System.Windows.Forms.CheckBoxTS();
@@ -83,19 +93,9 @@ namespace PowerSDR
             this.btnMemoryRecordDelete = new System.Windows.Forms.ButtonTS();
             this.btnMemoryRecordCopy = new System.Windows.Forms.ButtonTS();
             this.MemoryRecordAdd = new System.Windows.Forms.ButtonTS();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ScheduleExtra = new System.Windows.Forms.NumericUpDownTS();
-            this.chkAlwaysOnTop = new System.Windows.Forms.CheckBoxTS();
-            this.MemoryRecordImport = new System.Windows.Forms.ButtonTS();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ScheduleDurationTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScheduleExtra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScheduleDurationTime)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -103,8 +103,7 @@ namespace PowerSDR
             this.dataGridView1.AllowDrop = true;
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -245,31 +244,75 @@ namespace PowerSDR
             this.textBox9.Text = "Start Time (UTC)";
             this.toolTip1.SetToolTip(this.textBox9, "Schedule Start Time to change Frequency and optionally record");
             // 
-            // buttonTS1
+            // textBox1
             // 
-            this.buttonTS1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonTS1.Image = null;
-            this.buttonTS1.Location = new System.Drawing.Point(347, 465);
-            this.buttonTS1.Name = "buttonTS1";
-            this.buttonTS1.Size = new System.Drawing.Size(131, 23);
-            this.buttonTS1.TabIndex = 72;
-            this.buttonTS1.Text = "Open Rec Folder";
-            this.toolTip1.SetToolTip(this.buttonTS1, "Make the selected memory active ");
-            this.buttonTS1.UseVisualStyleBackColor = true;
-            this.buttonTS1.Click += new System.EventHandler(this.buttonTS1_Click);
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox1.Location = new System.Drawing.Point(516, 480);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(435, 68);
+            this.textBox1.TabIndex = 13;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
-            // ScheduleRepeatm
+            // textBox3
             // 
-            this.ScheduleRepeatm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ScheduleRepeatm.Image = null;
-            this.ScheduleRepeatm.Location = new System.Drawing.Point(124, 438);
-            this.ScheduleRepeatm.Name = "ScheduleRepeatm";
-            this.ScheduleRepeatm.Size = new System.Drawing.Size(116, 23);
-            this.ScheduleRepeatm.TabIndex = 70;
-            this.ScheduleRepeatm.Text = "Schedule Monthly";
-            this.toolTip1.SetToolTip(this.ScheduleRepeatm, "Check to Schedule every Month. \r\nWill auto check for Last Week of the month. \r\n\r\n" +
-        "Turn Both off to turn of Memory Schedule.");
-            this.ScheduleRepeatm.CheckedChanged += new System.EventHandler(this.ScheduleRepeatm_CheckedChanged);
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Location = new System.Drawing.Point(516, 440);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(435, 13);
+            this.textBox3.TabIndex = 15;
+            this.textBox3.Text = "Comments:";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Location = new System.Drawing.Point(516, 395);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(133, 13);
+            this.textBox2.TabIndex = 64;
+            this.textBox2.Text = "Frequency: (mhz)";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox5.Location = new System.Drawing.Point(655, 395);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(163, 13);
+            this.textBox5.TabIndex = 65;
+            this.textBox5.Text = "Group:";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox7.Location = new System.Drawing.Point(824, 395);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(127, 13);
+            this.textBox7.TabIndex = 66;
+            this.textBox7.Text = "Name:";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "WAV files (*.wav)|*.wav|All files (*.*)|*.*";
+            this.openFileDialog1.Multiselect = true;
+            // 
+            // MemoryRecordImport
+            // 
+            this.MemoryRecordImport.AllowDrop = true;
+            this.MemoryRecordImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.MemoryRecordImport.Image = null;
+            this.MemoryRecordImport.Location = new System.Drawing.Point(12, 489);
+            this.MemoryRecordImport.Name = "MemoryRecordImport";
+            this.MemoryRecordImport.Size = new System.Drawing.Size(75, 23);
+            this.MemoryRecordImport.TabIndex = 75;
+            this.MemoryRecordImport.Text = "Import CSV";
+            this.toolTip1.SetToolTip(this.MemoryRecordImport, resources.GetString("MemoryRecordImport.ToolTip"));
+            this.MemoryRecordImport.UseVisualStyleBackColor = true;
+            this.MemoryRecordImport.Click += new System.EventHandler(this.MemoryRecordImport_Click);
             // 
             // ScheduleOn
             // 
@@ -284,6 +327,72 @@ namespace PowerSDR
             this.ScheduleOn.UseCompatibleTextRendering = true;
             this.ScheduleOn.Visible = false;
             this.ScheduleOn.CheckedChanged += new System.EventHandler(this.ScheduleOn_CheckedChanged);
+            // 
+            // buttonTS1
+            // 
+            this.buttonTS1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonTS1.Image = null;
+            this.buttonTS1.Location = new System.Drawing.Point(347, 465);
+            this.buttonTS1.Name = "buttonTS1";
+            this.buttonTS1.Size = new System.Drawing.Size(131, 23);
+            this.buttonTS1.TabIndex = 72;
+            this.buttonTS1.Text = "Open Rec Folder";
+            this.toolTip1.SetToolTip(this.buttonTS1, "Make the selected memory active ");
+            this.buttonTS1.UseVisualStyleBackColor = true;
+            this.buttonTS1.Click += new System.EventHandler(this.buttonTS1_Click);
+            // 
+            // ScheduleExtra
+            // 
+            this.ScheduleExtra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ScheduleExtra.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.ScheduleExtra.Location = new System.Drawing.Point(447, 492);
+            this.ScheduleExtra.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.ScheduleExtra.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.ScheduleExtra.Name = "ScheduleExtra";
+            this.ScheduleExtra.Size = new System.Drawing.Size(56, 20);
+            this.ScheduleExtra.TabIndex = 71;
+            this.ScheduleExtra.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.ScheduleExtra.Visible = false;
+            // 
+            // ScheduleRepeatm
+            // 
+            this.ScheduleRepeatm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ScheduleRepeatm.Image = null;
+            this.ScheduleRepeatm.Location = new System.Drawing.Point(124, 438);
+            this.ScheduleRepeatm.Name = "ScheduleRepeatm";
+            this.ScheduleRepeatm.Size = new System.Drawing.Size(116, 23);
+            this.ScheduleRepeatm.TabIndex = 70;
+            this.ScheduleRepeatm.Text = "Schedule Monthly";
+            this.toolTip1.SetToolTip(this.ScheduleRepeatm, "Check to Schedule every Month. \r\nWill auto check for Last Week of the month. \r\n\r\n" +
+        "Turn Both off to turn of Memory Schedule.");
+            this.ScheduleRepeatm.CheckedChanged += new System.EventHandler(this.ScheduleRepeatm_CheckedChanged);
+            // 
+            // chkAlwaysOnTop
+            // 
+            this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkAlwaysOnTop.Image = null;
+            this.chkAlwaysOnTop.Location = new System.Drawing.Point(347, 516);
+            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
+            this.chkAlwaysOnTop.Size = new System.Drawing.Size(79, 36);
+            this.chkAlwaysOnTop.TabIndex = 59;
+            this.chkAlwaysOnTop.Text = "Always On Top";
+            this.chkAlwaysOnTop.CheckedChanged += new System.EventHandler(this.chkAlwaysOnTop_CheckedChanged);
             // 
             // ScheduleDurationTime
             // 
@@ -407,116 +516,6 @@ namespace PowerSDR
             this.MemoryRecordAdd.DragDrop += new System.Windows.Forms.DragEventHandler(this.MemoryRecordAdd_DragDrop);
             this.MemoryRecordAdd.DragEnter += new System.Windows.Forms.DragEventHandler(this.MemoryRecordAdd_DragEnter);
             // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox1.Location = new System.Drawing.Point(516, 480);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(435, 68);
-            this.textBox1.TabIndex = 13;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
-            // 
-            // textBox3
-            // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Location = new System.Drawing.Point(516, 440);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(435, 13);
-            this.textBox3.TabIndex = 15;
-            this.textBox3.Text = "Comments:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(516, 395);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(133, 13);
-            this.textBox2.TabIndex = 64;
-            this.textBox2.Text = "Frequency: (mhz)";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox5.Location = new System.Drawing.Point(655, 395);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(163, 13);
-            this.textBox5.TabIndex = 65;
-            this.textBox5.Text = "Group:";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox7.Location = new System.Drawing.Point(824, 395);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(127, 13);
-            this.textBox7.TabIndex = 66;
-            this.textBox7.Text = "Name:";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.Filter = "WAV files (*.wav)|*.wav|All files (*.*)|*.*";
-            this.openFileDialog1.Multiselect = true;
-            // 
-            // ScheduleExtra
-            // 
-            this.ScheduleExtra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ScheduleExtra.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.ScheduleExtra.Location = new System.Drawing.Point(447, 492);
-            this.ScheduleExtra.Maximum = new decimal(new int[] {
-            120,
-            0,
-            0,
-            0});
-            this.ScheduleExtra.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.ScheduleExtra.Name = "ScheduleExtra";
-            this.ScheduleExtra.Size = new System.Drawing.Size(56, 20);
-            this.ScheduleExtra.TabIndex = 71;
-            this.ScheduleExtra.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.ScheduleExtra.Visible = false;
-            // 
-            // chkAlwaysOnTop
-            // 
-            this.chkAlwaysOnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkAlwaysOnTop.Image = null;
-            this.chkAlwaysOnTop.Location = new System.Drawing.Point(347, 516);
-            this.chkAlwaysOnTop.Name = "chkAlwaysOnTop";
-            this.chkAlwaysOnTop.Size = new System.Drawing.Size(79, 36);
-            this.chkAlwaysOnTop.TabIndex = 59;
-            this.chkAlwaysOnTop.Text = "Always On Top";
-            this.chkAlwaysOnTop.CheckedChanged += new System.EventHandler(this.chkAlwaysOnTop_CheckedChanged);
-            // 
-            // MemoryRecordImport
-            // 
-            this.MemoryRecordImport.AllowDrop = true;
-            this.MemoryRecordImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.MemoryRecordImport.Image = null;
-            this.MemoryRecordImport.Location = new System.Drawing.Point(12, 489);
-            this.MemoryRecordImport.Name = "MemoryRecordImport";
-            this.MemoryRecordImport.Size = new System.Drawing.Size(75, 23);
-            this.MemoryRecordImport.TabIndex = 75;
-            this.MemoryRecordImport.Text = "Import CSV";
-            this.toolTip1.SetToolTip(this.MemoryRecordImport, resources.GetString("MemoryRecordImport.ToolTip"));
-            this.MemoryRecordImport.UseVisualStyleBackColor = true;
-            this.MemoryRecordImport.Click += new System.EventHandler(this.MemoryRecordImport_Click);
-            // 
             // MemoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -563,8 +562,8 @@ namespace PowerSDR
             this.Load += new System.EventHandler(this.MemoryForm_Load);
             this.MouseEnter += new System.EventHandler(this.MemoryForm_MouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ScheduleDurationTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScheduleExtra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScheduleDurationTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

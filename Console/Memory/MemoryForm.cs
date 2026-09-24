@@ -126,23 +126,28 @@ namespace PowerSDR
             console = c;
             Common.RestoreForm(this, "MemoryForm", true); // ke9ns bring up memory window in place you left it last time
 
+
+           
             dataGridView1.RowHeadersVisible = true;
 
             dataGridView1.DataSource = console.MemoryList.List; // ke9ns get list of memories from memorylist.cs is where the file is opened and saved
 
-            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;  //.338          //AutoSizeToAllHeaders;
 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;              //AutoSize;
 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            // dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            dataGridView1.AllowUserToResizeColumns = true; //.338
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AutoGenerateColumns = false;
 
-            // Create ComboBox Column
-            // DSPMode
-            DataGridViewComboBoxColumn comboboxColumnDSPMode = new DataGridViewComboBoxColumn();
+           
+           // Create ComboBox Column
+           // DSPMode
+           DataGridViewComboBoxColumn comboboxColumnDSPMode = new DataGridViewComboBoxColumn();
             comboboxColumnDSPMode.DataPropertyName = "DSPMode";
             comboboxColumnDSPMode.Name = "DSPMode";
             comboboxColumnDSPMode.HeaderText = "DSP Mode";
@@ -1776,7 +1781,7 @@ namespace PowerSDR
 
             if (totalRows5 > 0)
             {
-                DialogResult result = MessageBox.Show("YES: to only add records within 0-54mhz and 126-165mhz and 420-470mhz, NO: to inlude all records", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("YES: Only add records within 0-54mhz and 126-165mhz and 420-470mhz, NO: All Frequencies", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
@@ -1787,23 +1792,24 @@ namespace PowerSDR
                     includeOnlySpecificFrequencies = false;
                 }
           
-                result = MessageBox.Show("Do you want to import ALL records into the memory list? This will add existing records to your Memory file", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                result = MessageBox.Show("YES:Import ALL remaining records into the memory list, NO: you select records one at a time.", "Confirm Import", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
                     AllorNothing = true;
-                    MemoryRecordImport.BackColor = Color.LightBlue;
+                   
 
                 }
                 else // import only selected records
                 {
                     AllorNothing = false;
 
-                    MemoryRecordImport.BackColor = Color.LightSalmon;
+                   
 
                 } // no to importing all records
 
-               
+
+                MemoryRecordImport.BackColor = Color.LightBlue;
 
                 ImportMemoryHerek(); // add imported records
 
@@ -1915,7 +1921,7 @@ namespace PowerSDR
                 // repeaterArray[x, 0] = Callsign,
                 // repeaterArray[x, 1] = Frequency,
                 // repeaterArray[x, 2] = Duplex,
-                // repeaterArray[x, 3] = Offset,  // thsi becomes txfreq when in split for satellite work
+                // repeaterArray[x, 3] = Offset,  // repeater offset or this becomes txfreq when in split for satellite work
                 // repeaterArray[x, 4] = Tone,
                 // repeaterArray[x, 5] = cToneFreq,
                 // repeaterArray[x, 6] = Mode,
@@ -2114,8 +2120,19 @@ namespace PowerSDR
                 FMTXMode repeaterMode = FMTXMode.Simplex; // default to Simplex
                 bool split = false;
                 double txfreq = 0;
+                bool satmode = false;
 
                 txfreq = double.Parse(repeaterArray[i, 1]); // normally RX and TX are listed as the same execpt in split mode
+
+                
+                if (repeaterArray[i,7].Contains("Mode:")) // only satellites get a mode in the description
+                {
+                    satmode = true;
+                }
+                else
+                {
+                    satmode = false;
+                }
 
                 if (repeaterArray[i, 2] == "-")
                 {
@@ -2127,12 +2144,14 @@ namespace PowerSDR
                 }
                 else if (repeaterArray[i, 2] == "split") // satellite
                 {
-                        repeaterMode = FMTXMode.Simplex;
-                        split = true;
-                       txfreq = double.Parse(repeaterArray[i, 1]);
+                    repeaterMode = FMTXMode.Simplex;
+                    split = true;
+                    txfreq = double.Parse(repeaterArray[i, 1]);
+
                 }
-                else // "" empty
+                else // "" empty satellite
                 {
+
                     repeaterMode = FMTXMode.Simplex;
                 }
 
@@ -2161,7 +2180,7 @@ namespace PowerSDR
                 {
                     if (((freq >= 0 && freq <= 28)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "HF Utility Repeater";
                         }
@@ -2170,53 +2189,9 @@ namespace PowerSDR
                             group = "HF Utility";
                         }
                     }
-                    else if (((freq >= 29.3 && freq <= 29.510)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 144 && freq <= 146)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 435 && freq <= 438)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
-                    else if (((freq >= 1240 && freq <= 1300)))
-                    {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
-                        {
-                            group = "SAT Repeater";
-                        }
-                        else
-                        {
-                            group = "Satellite";
-                        }
-                    }
                     else if (((freq >= 30 && freq <= 50)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "VHF Utility Repeater";
                         }
@@ -2227,7 +2202,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 28 && freq <= 30)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "10m Repeater";
                         }
@@ -2238,7 +2213,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 50 && freq <= 54)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "6m Repeater";
                         }
@@ -2247,9 +2222,9 @@ namespace PowerSDR
                             group = "6m";
                         }
                     }
-                    else if (((freq >= 144 && freq <= 148)))
+                    else if (((freq >= 144.0 && freq <= 148)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "2m Repeater";
                         }
@@ -2260,7 +2235,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 440 && freq <= 460)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "70cm Repeater";
                         }
@@ -2271,7 +2246,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 148 && freq <= 160)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "VHF Utility Repeater";
                         }
@@ -2282,7 +2257,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 400 && freq <= 420)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "UHF Utility Repeater";
                         }
@@ -2293,7 +2268,7 @@ namespace PowerSDR
                     }
                     else if (((freq >= 450 && freq <= 470)))
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = "UHF Utility Repeater";
                         }
@@ -2302,9 +2277,38 @@ namespace PowerSDR
                             group = "UHF Utility";
                         }
                     }
+                    else if (((freq >= 29.3 && freq <= 29.510)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "HF Satellite";
+                        }
+
+                    }
+                    else if (((freq >= 144 && freq <= 146)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "2m Satellite";
+                        }
+                    }
+                    else if (((freq >= 435 && freq <= 438)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "70cm Satellite";
+                        }
+                    }
+                    else if (((freq >= 1240 && freq <= 1300)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "Satellite";
+                        }
+                    }
                     else
                     {
-                        if (double.TryParse(repeaterArray[i, 3], out double tmep))
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
                             group = double.Parse(repeaterArray[i, 1]) + " Repeater";
                         }
