@@ -1804,19 +1804,16 @@ namespace PowerSDR
                 if (result == DialogResult.Yes)
                 {
                     AllorNothing = true;
-                   
-
                 }
                 else // import only selected records
                 {
                     AllorNothing = false;
-
-                   
-
                 } // no to importing all records
 
 
-                MemoryRecordImport.BackColor = Color.LightBlue;
+                MemoryRecordImport.BackColor = Color.AliceBlue;
+
+                Invalidate(); // redraw with new color
 
                 ImportMemoryHerek(); // add imported records
 
@@ -1916,6 +1913,10 @@ namespace PowerSDR
                     }
                     else if (result == DialogResult.Cancel)
                     {
+
+                        inUse = false;
+                        MemoryRecordImport.BackColor = SystemColors.Control;  // SystemColors.ButtonFace
+
                         return; // break; // exit the loop and stop importing
                     }
 
@@ -2438,7 +2439,7 @@ namespace PowerSDR
 
 
         //====================================================================================
-        // ke9ns: .338 Look under PowerSDR properties->Settings->Columnlayout,string,User was added
+        // ke9ns: .338 Look under PowerSDR properties->Settings->ColumnLayout,string,User was added
         private void SaveColumnLayout()
         {
             try

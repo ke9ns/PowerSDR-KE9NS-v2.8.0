@@ -134,6 +134,36 @@ Mouse Wheel Click: Send Memory to VFOB (TX VFOB if RX2 ON)
 
 </value>
   </data>
+  <data name="MemoryRecordImport.ToolTip" xml:space="preserve">
+    <value>Allows you to import and save Radio frequency information (like Repeaters, Satellites, Utilities) into the Memory program of PowerSDR.
+Then go to PowerSDR-&gt;Spotter-&gt;Memories to Pan, to display directly onto the Panadapter 
+
+Use CHIRP to create a list of Frequecies to import into PowerSDR via its "Export CSV" file feature
+Download CHIRP at https://chirpmyradio.com/projects/chirp/wiki/Download#
+
+In CHIRP go to Radio-&gt;Query Source-&gt;
+CHIRP can lookup data from RepeaterBook (for free), RadioReference.com (for a preminum)
+Then:  File-&gt;export CSV to your PC. 
+Then:  Click on this "Import CSV" button 
+
+NOTE: This will not currently check for duplicates. 
+And you should make a backup copy of memory.xlr (found in your PC folder: %userprofile%\AppData\Roaming\FlexRadio Systems\)
+
+Yellow: Reading CSV file
+Green:  Done Reading
+Blue:    Importing</value>
+  </data>
+  <data name="MemoryRecordAdd.ToolTip" xml:space="preserve">
+    <value>TO ADD A URL OR FILE HYPERLINK TO A MEMORY:
+Select a Memory (Row) with your mouse
+Drag &amp; Drop a File, or URL onto the Selected Row
+or Drag &amp; Drop directly to the Add button to create new Memory
+
+TO USE THE HYPERLINK:
+RIGHT CLICK mouse on the Memory (Row)
+
+</value>
+  </data>
   <data name="textBox1.Text" xml:space="preserve">
     <value>Highlight a memory by a single Left Click on a Row.
 You can Drag a file or URL directy onto the highlighted Row to save a Hyperlink.
@@ -149,32 +179,6 @@ Spotter can Display all your Memories (in Blue on the Panadapter)</value>
   <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>297, 17</value>
   </metadata>
-  <data name="MemoryRecordImport.ToolTip" xml:space="preserve">
-    <value>Allows you to import and save Radio frequency information (like Repeaters, Satellites, Utilities) into the Memory program of PowerSDR.
-Then go to PowerSDR-&gt;Spotter-&gt;Memories to Pan, to display directly onto the Panadapter 
-
-Use CHIRP to create a list of Frequecies to import into PowerSDR via its "Export CSV" file feature
-Download CHIRP at https://chirpmyradio.com/projects/chirp/wiki/Download#
-
-In CHIRP go to Radio-&gt;Query Source-&gt;
-CHIRP can lookup data from RepeaterBook (for free), RadioReference.com (for a preminum)
-Then:  File-&gt;export CSV to your PC. 
-Then:  Click on this "Import CSV" button 
-
-NOTE: This will not currently check for duplicates. 
-And you should make a backup copy of memory.xlr (found in your PC folder: %userprofile%\AppData\Roaming\FlexRadio Systems\)</value>
-  </data>
-  <data name="MemoryRecordAdd.ToolTip" xml:space="preserve">
-    <value>TO ADD A URL OR FILE HYPERLINK TO A MEMORY:
-Select a Memory (Row) with your mouse
-Drag &amp; Drop a File, or URL onto the Selected Row
-or Drag &amp; Drop directly to the Add button to create new Memory
-
-TO USE THE HYPERLINK:
-RIGHT CLICK mouse on the Memory (Row)
-
-</value>
-  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>47</value>
   </metadata>
