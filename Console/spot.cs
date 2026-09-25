@@ -18385,6 +18385,72 @@ namespace PowerSDR
                     return;
                 }
 
+
+                SP2_Active = 0;   // turn off Spot checker 
+                SP_Active = 0;
+
+                dxon = false;
+                chkDXOn.Checked = false;
+
+                button5.BackColor = SystemColors.ButtonFace; //.279b
+                SP_SPOTSTART = false; //.279b
+                SP_SHOWDX = false;
+
+               
+                    try
+                    {
+                        SP_writer.Close();
+                        SP_reader.Close();
+                    }
+                    catch (Exception)
+                    {
+                        Debug.Write("writer/reader was not open to close");
+                    }
+
+                    try
+                    {
+
+                        networkStream.Close();
+                        client.Close();
+                    }
+                    catch (Exception)
+                    {
+                        Debug.Write("networkstream was never open to close");
+                    }
+
+                    SP_Active = 0; // turn off DX Spotter
+                    SP2_Active = 0; // turn off DX Spotter
+
+
+
+                DX_Index = 0; // 
+                DX_Index1 = 0; //
+                DX_Last = 0; // 
+
+                DXt_Index = 0; //
+                DXt_Index1 = 0; //
+                DXt_Last = 0; //
+                Map_Last = 0; //
+                DXK_Last = 0; //
+
+
+                LoTW_timer = false; // turn off LoTW
+                LoTW_GET = false;
+                LoTWResult = 0;
+                LoTWDone = false;
+                runLoTW = false;
+                runFCC = false;
+                FCCSTATE_NUM = 0;
+                lotw_records = 0;
+                lotw_records1 = 0;
+                lotw_records2 = 0;
+                lotw_records3 = 0;
+                runLoTW = false;
+                lotwon = false;
+                chkLoTWOn.Checked = false;
+
+                button4.BackColor = Color.Ivory; 
+
                 // download the latest FCC l_amat.zip file from the FCC website and extract it to the Database folder
                 Thread t = new Thread(new ThreadStart(FCC_l_amat)); //.337
 
@@ -18396,10 +18462,10 @@ namespace PowerSDR
                 t.Priority = ThreadPriority.BelowNormal;
                 t.Start();
 
-                textBox1.Text = textBox1.Text + "FCC l_amat.zip Thread start \r\n";
+                textBox1.Text = textBox1.Text + "Downloading FCC l_amat.zip file.... Please wait....  \r\n";
 
 
-            }
+            } // middle button
 
         } //  button4_MouseDown
 
@@ -19847,14 +19913,14 @@ namespace PowerSDR
 
                         this.Invoke((System.Windows.Forms.MethodInvoker)delegate
                         {
-                            textBox1.Text = textBox1.Text + "Downloaded l_amat.zip, Extracting EN.dat\n";
+                            textBox1.Text = textBox1.Text + "Download l_amat.zip Completed.... , Extracting EN.dat....\n";
                         });
                         // Extract only this specific file, overwriting if it already exists
                         targetEntry.ExtractToFile(destinationPath, overwrite: true);
 
                         this.Invoke((System.Windows.Forms.MethodInvoker)delegate
                         {
-                            textBox1.Text = textBox1.Text + "EN.dat file extracted.\n";
+                            textBox1.Text = textBox1.Text + "....EN.dat file extraction....Done....\n";
                         });
                     }
                     else
@@ -19873,13 +19939,33 @@ namespace PowerSDR
                         File.Delete(backupFile1); // Remove any older backup file first
                     }
                     File.Move(destinationFile1, backupFile1); // rename FCCDATA.dat to FCCDATA_old.dat
-                    textBox1.Text = textBox1.Text + "Old FCCDATA Renamed to FCCATA_old \n";
+                    textBox1.Text = textBox1.Text + "Backup Old FCCDATA...... Renamed to FCCATA_old \n";
                 }
+
+          
 
                 // Marshal back to the UI thread to show success and re-enable the button
                 this.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
-                    textBox1.Text = textBox1.Text + "FCC l_amat.zip Thread COMPLETE. Restart LoTW (left click) to generate new FCCDATA.dat file. \n";
+
+
+                    LoTW_timer = false; // turn off LoTW
+                    LoTW_GET = false;
+                    LoTWResult = 0;
+                    LoTWDone = false;
+                    runLoTW = false;
+                    runFCC = false;
+                    FCCSTATE_NUM = 0;
+                    lotw_records = 0;
+                    lotw_records1 = 0;
+                    lotw_records2 = 0;
+                    lotw_records3 = 0;
+                    runLoTW = false;
+                    lotwon = false;
+                    chkLoTWOn.Checked = false;
+                    button4.BackColor = SystemColors.ButtonFace;
+
+                    textBox1.Text = textBox1.Text + "Now Restart LoTW (left click) to generate new FCCDATA.dat file. \n";
 
                  //   MessageBox.Show("FCC l_amat.zip File successfully downloaded and saved.\n" +
                   //      "EN.data file extracted.\n" +
