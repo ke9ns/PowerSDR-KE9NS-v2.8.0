@@ -1185,7 +1185,7 @@ namespace PowerSDR
                 File.AppendAllText(file_name, "469999;0000-2400;;Wld;VHF;;Wld;;1;;" + Environment.NewLine); //.275
 
 
-            file_name1 = console.AppDataPath + "SWL2.csv"; // ke9ns extra swl freq that eibispace.de wont add
+            file_name1 = console.AppDataPath + "SWL2.csv"; // ke9ns extra swl freq that eibispace.de does not contain
 
 
 
@@ -19776,6 +19776,10 @@ namespace PowerSDR
             else if ((me.Button == System.Windows.Forms.MouseButtons.Right) && (FWCEEPROM.RX2OK)) // go and download the new SWL file 
             {
 
+               
+                 SP1_Active = 0;
+                 SP3_Active = 0; // force a reload when done downloading new swl file
+
                 Thread t = new Thread(new ThreadStart(EibispaceSWL)); //.337
 
                 t.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
@@ -19786,7 +19790,7 @@ namespace PowerSDR
                 t.Priority = ThreadPriority.BelowNormal;
                 t.Start();
 
-                textBox1.Text = textBox1.Text + "EIBISPACE SWL Download Thread start \r\n";
+                textBox1.Text = textBox1.Text + "Eibispace.de SWL Download started....Please Wait..... \r\n";
 
             }
 
@@ -19830,11 +19834,11 @@ namespace PowerSDR
                 // Marshal back to the UI thread to show success and re-enable the button
                 this.Invoke((System.Windows.Forms.MethodInvoker)delegate
                 {
-                    textBox1.Text = textBox1.Text + "EIBISPACE SWL Download Thread COMPLETE \r\n";
+                    textBox1.Text = textBox1.Text + "Eibispace.de SWL file Download COMPLETE \r\n";
                   
-                    MessageBox.Show("EIBISPACE ShortWaveList SWL.csv File successfully downloaded and saved.\n" +
-                        "Reboot PowerSDR to apply new SWL.csv file.\n" +
-                        "The Current SWL file was renamed swl_old.csv as a backup\n"
+                    MessageBox.Show("Eibispace.de ShortWaveList SWL.csv File successfully downloaded and saved.\n" +
+                        "The old SWL file was renamed swl_old.csv as a backup\n"+
+                        "You may now restart the SWL listing"
                         ,"Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                   //  MessageBox.Show($"File successfully downloaded and saved as:\n{destinationFile}",
