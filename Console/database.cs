@@ -1753,6 +1753,7 @@ namespace PowerSDR
                                 439.425000, 439.799999, "70cm ATV & Sub-Regional",      true,
                                 439.800000, 439.974999, "70cm Digital Comm. Link",      true,
                                 439.975000, 440.000000, "70cm ATV & Sub-Regional",      true,
+
                                 // 1240 - 1300 MHz
 								1240.000000, 1240.999999, "23cm All Modes, Digital",   true,
                                 1241.000000, 1242.024999, "23cm All Modes",             true,
@@ -2658,7 +2659,7 @@ namespace PowerSDR
                                 5.348000, 5.348000, "60M Channel 2",            true,
 
                                 5.348001, 5.351499, "60M RX Only",              false,
-                             
+
                                 5.351500, 5.353999, "60M 200hz Nar-Mode",       true,
                                 5.354000, 5.356999, "60M All-Mode1 (UK7)",       true,
                                 5.357000, 5.359999, "60M All-Mode2 (FT8/US3)",   true, // old us ch 3
@@ -3154,6 +3155,7 @@ namespace PowerSDR
                                 446.000000, 446.000000, "70cm Simplex",         true,
                                 446.000001, 446.999999, "70cm Local Option",    true,
                                 447.000000, 450.000000, "70cm Local Repeaters", true,
+                                450.000001, 462.543750, "UHF Business Band", false,  //.338
 
                                 462.543751, 462.556250, "Ch15 FRS/GMRS RPTout", true,   //   462550;   .275
                                 462.556251, 462.568750, "Ch1 FRS/GMRS low", true,       //   462562.5;
@@ -3186,6 +3188,8 @@ namespace PowerSDR
                                 467.693751, 467.706250, "Ch21R FRS/GMRS RPTin", true,      //   467700; 
                                 467.706251, 467.718750, "Ch14 FRS LP", true,            //   467712.5; 
                                 467.718751, 467.731250, "Ch22R FRS/GMRS RPTin", true,      //   467725; 
+
+                                467.731251, 470.000000, "UHF Business Band", false, // .338
 
 
                                 902.000000, 902.099999, "33cm Weak Signal SSTV/FAX/ACSSB", true,
@@ -3827,6 +3831,7 @@ namespace PowerSDR
                                 446.000000, 446.000000, "70cm Simplex",         true,
                                 446.000001, 446.999999, "70cm Local Option",    true,
                                 447.000000, 450.000000, "70cm Local Repeaters", true,
+                                450.000001, 470.000000, "UHF Business Band", false,  //.338
 
                                 902.000000, 902.099999, "33cm Weak Signal SSTV/FAX/ACSSB", true,
                                 902.100000, 902.100000, "33cm Weak Signal Calling", true,
@@ -4440,6 +4445,7 @@ namespace PowerSDR
                                 446.000000, 446.000000, "70cm Simplex",         true,
                                 446.000001, 446.999999, "70cm Local Option",    true,
                                 447.000000, 450.000000, "70cm Local Repeaters", true,
+                                450.000001, 470.000000, "UHF Business Band", false,  //.338
 
                                 902.000000, 902.099999, "33cm Weak Signal SSTV/FAX/ACSSB", true,
                                 902.100000, 902.100000, "33cm Weak Signal Calling", true,
@@ -5139,10 +5145,6 @@ namespace PowerSDR
 
 
 
-
-
-
-
                                 // 430 - 440 MHz
 								430.000000, 430.099999, "70cm CW",                        true,
                                 430.100000, 430.699999, "70cm CW/Phone & Image",        true,
@@ -5164,6 +5166,7 @@ namespace PowerSDR
                                 438.000000, 438.999999, "70cm All Modes",               true,
                                 439.000000, 439.999999, "70cm Repeaters",               true,
                                 440.000000, 449.999999, "70cm All Modes",               true,
+
                                 // 1240 - 1300 MHz
 								1240.000000, 1259.999999, "23cm All Modes",                true,
                                 1260.000000, 1269.999999, "23cm Satellite",             true,

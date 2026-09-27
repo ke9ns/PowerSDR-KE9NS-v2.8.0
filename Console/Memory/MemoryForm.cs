@@ -2063,7 +2063,7 @@ namespace PowerSDR
                 }
                 else if (repeaterArray[i, 6] == "AM")
                 {
-                    mode = DSPMode.AM;
+                    mode = DSPMode.SAM;
                     deviation = 2500;   //  deviation for AM=
                     RXFILTERLOW = -6000; // 
                     RXFILTERHIGH = 6000;
@@ -2241,7 +2241,7 @@ namespace PowerSDR
                             group = "2m Utility";
                         }
                     }
-                    else if (((freq >= 440 && freq <= 460)))
+                    else if (((freq >= 440 && freq <= 450)))
                     {
                         if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
@@ -2252,7 +2252,7 @@ namespace PowerSDR
                             group = "70cm";
                         }
                     }
-                    else if (((freq >= 148 && freq <= 160)))
+                    else if (((freq >= 148 && freq <= 149)))
                     {
                         if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
                         {
@@ -2261,6 +2261,17 @@ namespace PowerSDR
                         else
                         {
                             group = "VHF Utility";
+                        }
+                    }
+                    else if (((freq >= 148 && freq <= 174)))
+                    {
+                        if (repeaterMode == FMTXMode.High || repeaterMode == FMTXMode.Low)
+                        {
+                            group = "VHF Business Repeater";
+                        }
+                        else
+                        {
+                            group = "VHF Business Band";
                         }
                     }
                     else if (((freq >= 400 && freq <= 420)))
@@ -2282,7 +2293,7 @@ namespace PowerSDR
                         }
                         else
                         {
-                            group = "UHF Utility";
+                            group = "UHF Business Band";
                         }
                     }
                     else if (((freq >= 29.3 && freq <= 29.510)))
@@ -2298,6 +2309,27 @@ namespace PowerSDR
                         if (satmode == true)
                         {
                             group = "2m Satellite";
+                        }
+                    }
+                    else if (((freq >= 120 && freq <= 136)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "Air Band";
+                        }
+                    }
+                    else if (((freq >= 137 && freq <= 138)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "Air to Space Band";
+                        }
+                    }
+                    else if (((freq >= 138 && freq <= 144)))
+                    {
+                        if (satmode == true)
+                        {
+                            group = "Military Air Band";
                         }
                     }
                     else if (((freq >= 435 && freq <= 438)))
@@ -2322,7 +2354,7 @@ namespace PowerSDR
                         }
                         else
                         {
-                            group = double.Parse(repeaterArray[i, 1]) + "Other";
+                            group = double.Parse(repeaterArray[i, 1]) + " Other";
                         }
                     }
 
