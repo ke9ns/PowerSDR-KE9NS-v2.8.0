@@ -1,4 +1,7 @@
 /* filter.c
+ 
+Provides general FIR (Finite Impulse Response) and IIR (Infinite Impulse Response) filtering routines, including windowed sinc filter design and convolution.
+ 
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

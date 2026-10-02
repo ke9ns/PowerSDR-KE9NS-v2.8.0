@@ -1,6 +1,9 @@
 /* spottone.c */
 
 /*
+
+Generates a spot tone signal for tuning and aligning CW signals precisely on frequency.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

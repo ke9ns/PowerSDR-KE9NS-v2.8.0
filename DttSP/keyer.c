@@ -1,5 +1,9 @@
 /* keyer.c */
 /*
+
+Hardware-level keying timing and state integration for external straight keys, bug keyers, and paddles.
+
+
 This file is part of a program that implements a Software-Defined Radio.
 
 The code in this file is derived from routines originally written by

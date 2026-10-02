@@ -1,4 +1,6 @@
 /*  dttspagc.c
+ 
+Handles Automatic Gain Control (AGC) algorithms (Off, Long, Slow, Med, Fast), managing decay times, attack times, and hang thresholds to maintain steady audio output levels.
 
 This file is part of a program that implements a Software-Defined Radio.
 

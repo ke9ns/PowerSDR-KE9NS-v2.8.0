@@ -1,9 +1,15 @@
 
+// fastrig.c
+
 /****************************************************************
  *   Fast Trigonometric Routines Used for Embedded Systems      *
  *   Programmer:  Bob McGwier, IDA CCR-P, June, 2000            *
  ***************************************************************/
-/* This file is part of a program that implements a Software-Defined Radio.
+/* 
+
+Optimized math routines for fast trigonometric calculations (e.g., lookup tables or approximations for sin, cos, atan2).
+
+This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Bob McGwier, N4HY
 

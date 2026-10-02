@@ -1,6 +1,11 @@
 // wscompand.c
+ 
 // waveshaping compander, mostly for speech
+
 /*
+ 
+Provides Wavelet-based or wideband Companding (Compressor/Expander) routines to control dynamic range
+ 
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

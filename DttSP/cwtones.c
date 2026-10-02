@@ -1,5 +1,8 @@
 /* cwtones.c */
 /*
+
+Generates sidetone frequencies and smooth keying envelopes for CW (Continuous Wave) operation to prevent key clicks.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2005 by Frank Brickle, AB2KT and Bob McGwier, N4HY

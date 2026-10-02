@@ -1,6 +1,12 @@
 /* spectrum.c */
 
+ 
 /*
+ 
+Computes the FFT data for the Panadapter adn waterfall displays, returning spectrum points back to the C# GUI layer
+Performs FFT-based spectrum calculations and converts raw spectral data into visual data arrays used by PowerSDR to render the Panadapter and Waterfall displays.
+
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

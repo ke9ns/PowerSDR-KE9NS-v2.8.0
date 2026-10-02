@@ -1,4 +1,6 @@
 /* noiseblanker.c
+ 
+Implements Noise Blanking algorithms (NB, NB2, WNB) to detect and mute short-duration impulse noise spikes (like ignition noise).
 
 This file is part of a program that implements a Software-Defined Radio.
 

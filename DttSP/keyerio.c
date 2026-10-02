@@ -2,6 +2,9 @@
 
 /* keyerio.c
 // serial port key reading and debouncing routines for straight and iambic keys
+
+Handles low-level I/O communication between hardware control pins (LPT, COM port, or USB interface) and the internal keyer module.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

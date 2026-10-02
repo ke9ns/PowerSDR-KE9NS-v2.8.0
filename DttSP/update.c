@@ -1,5 +1,7 @@
 /* update.c
 
+Handles dynamic runtime configuration updates (such as updating filter cuts, mode shifts, or gain parameters mid-stream without interrupting audio flow).
+
 common defs and code for parm update
 
 KE9NS: from PowerSDR....

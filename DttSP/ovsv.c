@@ -1,5 +1,7 @@
 /* ovsv.c
 
+Implements Overlap-Save / Overlap-Add FFT convolution algorithms for efficient filtering of continuous audio streams.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006, 2007 by Frank Brickle, AB2KT and Bob McGwier, N4HY

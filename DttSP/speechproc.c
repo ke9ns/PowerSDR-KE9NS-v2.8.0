@@ -1,6 +1,8 @@
 /* speechproc.c
  
-  This file is part of a program that implements a Software-Defined Radio.
+Transmit audio processing stack, including compression, peak limiting, and pre-emphasis to maximize average power without clipping.
+ 
+This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY, Phil Harman, VK6APH
 Based on Visual Basic code for SDR by Phil Harman

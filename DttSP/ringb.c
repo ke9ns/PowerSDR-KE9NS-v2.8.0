@@ -1,6 +1,9 @@
 /*
-  Memory-mapped ringbuffer
-  Derived from jack/ringbuffer.h
+ 
+Implements thread-safe ring buffers for inter-process and inter-thread data transfer.
+Memory-mapped ringbuffer  Derived from jack/ringbuffer.h
+
+
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by

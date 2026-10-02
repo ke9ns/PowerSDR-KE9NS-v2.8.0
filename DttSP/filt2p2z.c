@@ -1,3 +1,15 @@
+/* filt2p2z.c
+ 
+Implements a 2-pole, 2-zero IIR filter structure used for targeted frequency shaping or notch filtering.
+
+
+
+
+
+
+*/
+
+
 #include <common.h>
 #include <math.h>
 

@@ -1,7 +1,9 @@
 /* graphiceq.c
- * 
- *   PCM frequency domain equalizer
- *
+ 
+Implements a multi-band graphic equalizer for shaping receive and transmit audio response.
+
+PCM frequency domain equalizer
+ 
  This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

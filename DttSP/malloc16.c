@@ -1,8 +1,13 @@
-/* Wrapper functions for malloc/free that force 16-byte alignment
- * See http://perso.club-internet.fr/matmac/sourcesc.htm
+/* malloc16.c
 
- * Copyright 2001 Phil Karn, KA9Q
- * May be used under the terms of the GNU Public License (GPL)
+  Wrapper functions for malloc/free that force 16-byte alignment
+  See http://perso.club-internet.fr/matmac/sourcesc.htm
+
+Provides 16-byte aligned memory allocation routines required for SIMD (SSE/MMX) vector instructions to accelerate math calculations.
+
+
+  Copyright 2001 Phil Karn, KA9Q
+  May be used under the terms of the GNU Public License (GPL)
  */
 
 #include <malloc16.h>

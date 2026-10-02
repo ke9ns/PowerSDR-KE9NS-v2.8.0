@@ -1,5 +1,7 @@
 /* correctIQ.c
 
+Performs IQ amplitude and phase imbalance correction to suppress unwanted image responses on both receive and transmit.
+
 This routine restores quadrature between arms of an analytic signal
 possibly distorted by ADC hardware.
 

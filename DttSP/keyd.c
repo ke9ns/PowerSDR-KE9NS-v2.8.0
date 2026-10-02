@@ -1,5 +1,9 @@
 /* keyd.c */
 /*
+
+Keyer daemon/state logic that handles paddle timing, Iambic A/B logic, dot/dash weighting, and break-in delays.
+
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

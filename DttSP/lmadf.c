@@ -1,4 +1,6 @@
 /* lmadf.c 
+* 
+* Implements Least Mean Square (LMS) adaptive filter algorithms used for Noise Reduction (NR) and Auto-Notch Filter (ANF) functions.
 
 This file is part of a program that implements a Software-Defined Radio.
 

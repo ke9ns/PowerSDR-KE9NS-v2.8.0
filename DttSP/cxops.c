@@ -1,4 +1,7 @@
 /* cxops.c
+ 
+Provides low-level mathematical operations optimized for complex numbers (complex addition, multiplication, conjugate, dot products).
+ 
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

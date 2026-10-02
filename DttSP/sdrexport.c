@@ -1,5 +1,7 @@
 /* sdrexport.c
 
+CORE: Exposes C-style exported functions (DLL API) that allow external applications (like audio.cs in PowerSDR) to call into the DttSP library via P/Invoke.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

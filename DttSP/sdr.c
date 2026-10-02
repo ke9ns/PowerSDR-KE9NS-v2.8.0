@@ -1,4 +1,7 @@
 /* sdr.c
+ 
+ CORE: The central engine of DttSP. It manages the main processing loops, state transitions (RX/TX), buffer passing, and connects input/output audio streams to the DSP modules.
+
 
 This file is part of a program that implements a Software-Defined Radio.
 

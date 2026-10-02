@@ -1,5 +1,9 @@
 /** 
-* @file filterbank.c
+filterbank.c
+
+Manages filter coefficient sets and bank switching for different bandwidths and passbands across various modulation modes.
+
+
 * @brief Functions to implement a filter bank 
 * @author Frank Brickle, AB2KT and Bob McGwier, N4HY
 

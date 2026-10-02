@@ -1,5 +1,7 @@
 /* hilbert.c
 
+Implements Hilbert transforms to generate 90-degree phase shifts, essential for SSB (Single Sideband) generation and analytic signal processing.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006, 2007, 2008 by Frank Brickle, AB2KT and Bob McGwier, N4HY

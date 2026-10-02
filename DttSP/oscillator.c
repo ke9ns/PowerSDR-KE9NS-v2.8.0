@@ -1,5 +1,7 @@
 /* oscillator.c 
 
+Numerically Controlled Oscillator (NCO) for generating sine/cosine quadrature waveforms for frequency conversion and pitch generation.
+
 This routine implements a common fixed-frequency oscillator
 
 This file is part of a program that implements a Software-Defined Radio.

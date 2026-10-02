@@ -1,5 +1,8 @@
 /* meter.c */
 /*
+
+Calculates S-meter levels, peak output power, ALC levels, and SWR measurements across receive and transmit pipelines.
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

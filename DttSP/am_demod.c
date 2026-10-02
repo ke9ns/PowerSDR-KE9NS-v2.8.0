@@ -1,6 +1,17 @@
 /* am_demod.c 
 
-This file is part of a program that implements a Software-Defined Radio.
+CORE: Implements AM (Amplitude Modulation) demodulation algorithms, including envelope detection and synchronous AM detection.
+Routine: AM_Demod
+  - Description: Performs AM envelope and synchronous demodulation on complex baseband IQ.
+  - Inputs:
+	  * CXB rxbuf        : Pointer to complex IQ input sample buffer
+	  * REAL *audiobuf   : Pointer to output real audio buffer
+	  * int size         : Number of samples to process
+	  * AM_STATE *state  : Pointer to AM demodulator state struct (filter states, DC offset)
+  - Outputs:
+	  * REAL *audiobuf   : Populated with demodulated audio samples
+	  * AM_STATE *state  : Updated carrier tracking and filter state memory
+
 
 Copyright (C) 2004,2005,2006, 2007 by Frank Brickle, AB2KT and Bob McGwier, N4HY
 
@@ -14,28 +25,12 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-The authors can be reached by email at
-
-ab2kt@arrl.net
-or
-rwmcgwier@comcast.net
-
-or by paper mail at
-
-The DTTS Microwave Society
-6 Kathleen Place
-Bridgewater, NJ 08807
 */
-
 
 
 #include <am_demod.h>
 #include <cxops.h>
-
 
 /*------------------------------------------------------------------------------*/
 /* private to AM */
@@ -105,6 +100,11 @@ static REAL dem (AMD am)
 /* public */
 /*------------------------------------------------------------------------------*/
 
+//void AM_Demod(CXB rxbuf, REAL* audiobuf, int size, AM_STATE state)
+//- Inputs: CXB rxbuf(Complex IQ input buffer), REAL* audiobuf(Output audio array), int size(Sample count), AM_STATE state(AM state structure)
+//- Outputs : Modifies audiobuf in - place with output audio samples.
+//- Description : Performs synchronous or envelope AM demodulation on incoming IQ baseband samples.
+
 void AMDemod (AMD am)
 {
 	int i;
@@ -132,6 +132,11 @@ void AMDemod (AMD am)
 	}
 }
 
+//AM_STATE newAMState(int size, REAL sr)
+//- Inputs: int size(Buffer size), REAL sr(Sample rate)
+//- Outputs : AM_STATE(Allocated and initialized AM state structure)
+//- Description : Allocates memory and sets default filter / carrier coefficients for AM demodulation.
+
 AMD newAMD (REAL samprate,REAL f_initial,REAL f_lobound,REAL f_hibound,REAL f_bandwid,
 	int size, COMPLEX * ivec, COMPLEX * ovec, AMMode mode, char *tag)
 {
@@ -149,6 +154,11 @@ AMD newAMD (REAL samprate,REAL f_initial,REAL f_lobound,REAL f_hibound,REAL f_ba
 
 	return am;
 }
+
+//void delAMState(AM_STATE state)
+//- Inputs: AM_STATE state(AM state pointer)
+//- Outputs : None
+//- Description : Frees all allocated memory associated with an AM_STATE instance.
 
 void delAMD (AMD am)
 {

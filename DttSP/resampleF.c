@@ -1,5 +1,7 @@
 /* resampleF.c
 
+Polyphase sample-rate conversion routines (e.g., converting between hardware sample rates like 48kHz, 96kHz, or 192kHz and internal DSP rate).
+
 This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006 by Frank Brickle, AB2KT and Bob McGwier, N4HY

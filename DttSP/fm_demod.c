@@ -1,6 +1,10 @@
 /* fm_demod.c */
 
-/* This file is part of a program that implements a Software-Defined Radio.
+/*
+ 
+CORE: Implements FM (Frequency Modulation) demodulation, handling phase differentiation, limiter functions, and squelch/de-emphasis routines.
+
+This file is part of a program that implements a Software-Defined Radio.
 
 Copyright (C) 2004, 2005, 2006, 2007 by Frank Brickle, AB2KT and Bob McGwier, N4HY
 

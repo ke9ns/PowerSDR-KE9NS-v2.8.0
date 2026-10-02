@@ -1,5 +1,9 @@
 /* bufvec.c
-   creation, deletion, management for vectors and buffers 
+
+Circular buffer and vector math management used for streaming audio and IQ data between callback threads without dropouts.
+
+creation, deletion, management for vectors and buffers 
+
    
 This file is part of a program that implements a Software-Defined Radio.
 
