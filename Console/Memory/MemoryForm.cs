@@ -2511,6 +2511,8 @@ namespace PowerSDR
 
         //====================================================================================
         // ke9ns: .338 Look under PowerSDR properties->Settings->ColumnLayout,string,User was added
+        // saved in user.config at: C:\Users\<YourUsername>\AppData\Local\<CompanyName>\<AppName>_<EvidenceType>_<Hash>\<Version>\user.config
+
         private void SaveColumnLayout()
         {
             try

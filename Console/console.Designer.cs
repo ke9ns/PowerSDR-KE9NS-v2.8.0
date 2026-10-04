@@ -5767,7 +5767,10 @@ namespace PowerSDR
             this.grpVFOB.Name = "grpVFOB";
             this.grpVFOB.Paint += new System.Windows.Forms.PaintEventHandler(this.grpVFOB_Paint);
             this.grpVFOB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grpVFOB_MouseDown);
+            this.grpVFOB.MouseLeave += new System.EventHandler(this.grpVFOB_MouseLeave);
             this.grpVFOB.MouseHover += new System.EventHandler(this.grpVFOB_MouseHover);
+            this.grpVFOB.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grpVFOB_MouseMove);
+            this.grpVFOB.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grpVFOB_MouseUp);
             // 
             // panelVFOBSubHover
             // 
@@ -5850,7 +5853,10 @@ namespace PowerSDR
             this.grpVFOA.Name = "grpVFOA";
             this.grpVFOA.Paint += new System.Windows.Forms.PaintEventHandler(this.grpVFOA_Paint);
             this.grpVFOA.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grpVFOA_MouseDown);
+            this.grpVFOA.MouseLeave += new System.EventHandler(this.grpVFOA_MouseLeave);
             this.grpVFOA.MouseHover += new System.EventHandler(this.grpVFOA_MouseHover);
+            this.grpVFOA.MouseMove += new System.Windows.Forms.MouseEventHandler(this.grpVFOA_MouseMove);
+            this.grpVFOA.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grpVFOA_MouseUp);
             // 
             // panelVFOASubHover
             // 

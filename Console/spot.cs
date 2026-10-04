@@ -1093,20 +1093,20 @@ namespace PowerSDR
 
 
         // these are pulled from SWL2.csv file
-        public static string[] SWL2_Station = new string[2000];       // Station name
-        public static int[] SWL2_Freq = new int[2000];              // in hz
-        public static int[] SWL2_Band = new int[2000];              // in Mhz was byte .275
+        public static string[] SWL2_Station = new string[3000];       // Station name
+        public static int[] SWL2_Freq = new int[3000];              // in hz
+        public static int[] SWL2_Band = new int[3000];              // in Mhz was byte .275
 
-        public static string[] SWL2_Lang = new string[2000];          // language of transmitter
-        public static int[] SWL2_TimeN = new int[2000];                // UTC time of operation ON air
-        public static int[] SWL2_TimeF = new int[2000];                // UTC time of operation OFF air
-        public static string[] SWL2_Mode = new string[2000];          // operating mode
-        public static string[] SWL2_Day = new string[2000];          // days of operation
-        public static byte[] SWL2_Day1 = new byte[2000];          // days of operation mo,tu,we,th,fr,sa,su = 1,2,4,8,16,32,64
+        public static string[] SWL2_Lang = new string[3000];          // language of transmitter
+        public static int[] SWL2_TimeN = new int[3000];                // UTC time of operation ON air
+        public static int[] SWL2_TimeF = new int[3000];                // UTC time of operation OFF air
+        public static string[] SWL2_Mode = new string[3000];          // operating mode
+        public static string[] SWL2_Day = new string[3000];          // days of operation
+        public static byte[] SWL2_Day1 = new byte[3000];          // days of operation mo,tu,we,th,fr,sa,su = 1,2,4,8,16,32,64
 
 
-        public static string[] SWL2_Loc = new string[2000];          // location of transmitter
-        public static string[] SWL2_Target = new string[2000];          // target area of station
+        public static string[] SWL2_Loc = new string[3000];          // location of transmitter
+        public static string[] SWL2_Target = new string[3000];          // target area of station
         public static int SWL2_Index1;  // local index that reset back to 0 after reaching max
         public static byte Flag21 = 0; // flag to skip header line in SWL.csv file
 
