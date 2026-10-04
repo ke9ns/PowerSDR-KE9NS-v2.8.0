@@ -38274,17 +38274,7 @@ namespace PowerSDR
                 // ke9ns: this is for the visual band indicator "VFOA Slider"
                 if ((setupForm != null && setupForm.chkVisualBandInd.Checked) || initializing)
                 {
-                    (SlideflowA, SlidefhighA) = SliderCheck(VFOAFreq); //.339 update the slider position based on the VFOA frequency
-
-                    Slidex2A = SlidefhighA - SlideflowA; //width  2.0 - 1.8 = 0.2mhz
-                    Slidex3A = VFOAFreq; // in mhz  1.8mhz
-                    Slidex4A = grpVFOA.Width - 30;  // width of available line in pixels
-
-                    Slidex5A = ((Slidex3A - SlideflowA) / Slidex2A); // percent of the way
-
-                    Slidex1A = (int)(Slidex4A * Slidex5A);
-   
-                    grpVFOA.Invalidate(new Rectangle(12, 80, grpVFOA.Width - 12, 99)); // .334 slider redraw just the slider area
+                   grpVFOA.Invalidate(new Rectangle(12, 80, grpVFOA.Width - 12, 99)); // .334 slider redraw just the slider area
 
                 } // setupForm.chkVisualBandInd.Checked
 
@@ -38578,16 +38568,6 @@ namespace PowerSDR
 
                 if ((setupForm != null && setupForm.chkVisualBandInd.Checked) || initializing)
                 {
-                    (SlideflowB, SlidefhighB) = SliderCheck(VFOBFreq); //.339 update the slider position based on the VFOB frequency
-
-                    Slidex2B = SlidefhighB - SlideflowB; //width  2.0 - 1.8 = 0.2mhz
-                    Slidex3B = VFOBFreq; // in mhz  1.8mhz
-                    Slidex4B = grpVFOB.Width - 30;  // width of available line in pixels
-
-                    Slidex5B = ((Slidex3B - SlideflowB) / Slidex2B); // percent of the way
-
-                    Slidex1B = (int)(Slidex4B * Slidex5B);
-
                     grpVFOB.Invalidate(new Rectangle(12, 80, grpVFOB.Width - 12, 99)); // .339 slider redraw just the slider area
                 }
                
@@ -78815,9 +78795,19 @@ namespace PowerSDR
 
             
             //.334
-            if (setupForm != null && setupForm.chkVisualBandInd.Checked)
+            if (setupForm != null && setupForm.chkVisualBandInd.Checked || initializing)
             {
-              //.339 get data from VFOAFreq set 
+                //.339 get trigger from VFOAFreq set 
+
+                (SlideflowA, SlidefhighA) = SliderCheck(VFOAFreq); //.339 update the slider position based on the VFOA frequency
+
+                Slidex2A = SlidefhighA - SlideflowA; //width  2.0 - 1.8 = 0.2mhz
+                Slidex3A = VFOAFreq; // in mhz  1.8mhz
+                Slidex4A = grpVFOA.Width - 30;  // width of available line in pixels
+
+                Slidex5A = ((Slidex3A - SlideflowA) / Slidex2A); // percent of the way
+
+                Slidex1A = (int)(Slidex4A * Slidex5A);
 
                 p9.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), 15, 86, grpVFOA.Width - 15, 86);  // .334 ke9ns add line across top of VFOA box
                 p9.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), 15, 83, 15, 89);  // .334
@@ -79036,7 +79026,17 @@ namespace PowerSDR
             //.334
             if (setupForm != null && setupForm.chkVisualBandInd.Checked)
             {
-                //.339 get data from VFOBFreq set in VFOB slider and draw on VFOB groupbox
+                //.339 trigger is VFOBFrq
+                (SlideflowB, SlidefhighB) = SliderCheck(VFOBFreq); //.339 update the slider position based on the VFOB frequency
+
+                Slidex2B = SlidefhighB - SlideflowB; //width  2.0 - 1.8 = 0.2mhz
+                Slidex3B = VFOBFreq; // in mhz  1.8mhz
+                Slidex4B = grpVFOB.Width - 30;  // width of available line in pixels
+
+                Slidex5B = ((Slidex3B - SlideflowB) / Slidex2B); // percent of the way
+
+                Slidex1B = (int)(Slidex4B * Slidex5B);
+
                 p7.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), 15, 86, grpVFOB.Width - 15, 86);  // .334 ke9ns add line across top of VFOA box
                 p7.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), 15, 83, 15, 89);  // .334
                 p7.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), grpVFOB.Width - 15, 83, grpVFOB.Width - 15, 89);  // .334
