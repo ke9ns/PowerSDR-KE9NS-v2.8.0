@@ -90589,6 +90589,7 @@ namespace PowerSDR
 
                 btnSync.BackgroundImage = buttonOnImage;
                 ESCSYNC = true; // .249
+
             }
             else // not synced up
             {

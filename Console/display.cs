@@ -23353,7 +23353,7 @@ namespace PowerSDR
                 }
                 else if (rx == 1) // RX1 receive here
                 {
-                    if (autobright == 1) // rx1 adjust
+                    if (autobright == 1 && console.ESCSYNC == false) // rx1 adjust  //.339
                     {
                         AB3 = (float)(AB / W); // get avg of the entire read
 
