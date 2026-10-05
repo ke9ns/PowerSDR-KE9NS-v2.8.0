@@ -1,4 +1,4 @@
-/* am_demod.c 
+/*  am_demod.c 
 
 CORE: Implements AM (Amplitude Modulation) demodulation algorithms, including envelope detection and synchronous AM detection.
 Routine: AM_Demod

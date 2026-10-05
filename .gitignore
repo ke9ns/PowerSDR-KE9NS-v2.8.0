@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+!DttSP/libfftw3f-3.lib
+!DttSP/pthreadVC.lib
