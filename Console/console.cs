@@ -78814,10 +78814,9 @@ namespace PowerSDR
                 p9.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), grpVFOA.Width - 15, 83, grpVFOA.Width - 15, 89);  // .334
                 
                 SizeF size = p9.Graphics.MeasureString(SlidefhighA.ToString("0.0##"), ff2a);
-                float w = size.Width;
-               
+                              
                 p9.Graphics.DrawString(SlideflowA.ToString("0.0##"), ff2a, Brushes.White, 16, 87); //new SolidBrush(VFOTextLightColor)
-                p9.Graphics.DrawString(SlidefhighA.ToString("0.0##"), ff2a, Brushes.White, grpVFOA.Width -18 - w, 87);
+                p9.Graphics.DrawString(SlidefhighA.ToString("0.0##"), ff2a, Brushes.White, grpVFOA.Width -18 - size.Width, 87);
 
                 p9.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO2.Color, 3.0F), Slidex1A + 15, 82, Slidex1A + 15, 88);
 
@@ -78978,8 +78977,6 @@ namespace PowerSDR
         private void grpVFOA_MouseHover(object sender, EventArgs e)
         {
             grpVFOA.Invalidate();
-            Debug.WriteLine("grpVFOA_MouseHover invalidate");
-
         }
 
         //=================================================================================
@@ -79042,10 +79039,9 @@ namespace PowerSDR
                 p7.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO1.Color, 2.0F), grpVFOB.Width - 15, 83, grpVFOB.Width - 15, 89);  // .334
 
                 SizeF size = p7.Graphics.MeasureString(SlidefhighA.ToString("0.0##"), ff2a);
-                float w = size.Width;
-
+              
                 p7.Graphics.DrawString(SlideflowB.ToString("0.0##"), ff2a, Brushes.White, 16, 87); //new SolidBrush(VFOTextLightColor)
-                p7.Graphics.DrawString(SlidefhighB.ToString("0.0##"), ff2a, Brushes.White, grpVFOB.Width - 18 - w, 87);
+                p7.Graphics.DrawString(SlidefhighB.ToString("0.0##"), ff2a, Brushes.White, grpVFOB.Width - 18 - size.Width, 87);
 
                 p7.Graphics.DrawLine(new Pen(setupForm.clrbtnVFO2.Color, 3.0F), Slidex1B + 15, 82, Slidex1B + 15, 88);
 
