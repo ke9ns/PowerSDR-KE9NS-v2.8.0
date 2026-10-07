@@ -18,7 +18,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 69 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //================================================================= 
-// Serial port support for PowerSDR support of CAT and serial port control  
+// Serial port support for PowerSDR support of CAT and serial port control 
 //=================================================================
 
 #define DBG_PRINT

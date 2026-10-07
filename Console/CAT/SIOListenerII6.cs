@@ -19,6 +19,7 @@
 //
 // You may contact the author via email at: k6kdn@arrl.net
 //=================================================================
+//send CAT data to VFOB RX2 instead of the normal VFOA RX1
 
 #define DBG_PRINT
 
@@ -331,6 +332,7 @@ namespace PowerSDR
                         // IF get tranceiver status   IF000140740001010+0000000000020000000; // IF 00014074000 (FA) 1010(ZZST) +00000 0 0 0 00 0 2(MD) 0 0 0 0 00 0;
                         // 
                         // MD get/set tranceiver mode this is only 1 digit not 2
+                        
                         // SH get/set RX filter high
                         // SL get/set RX filter low
                         // UP VFOA increment by step size
@@ -349,7 +351,7 @@ namespace PowerSDR
                         // ZZOA > ZZOB GET/SET ANT CONNECTED TO RX1 SPOOF RX2
 
 
-                        Debug.WriteLine("S SIO6----->" + m.Value);
+                        Debug.WriteLine("SIO6 Received----->" + m.Value);
 
                         console.SpoofAB = true; // ke9ns add: .200 used by IF command in CATCommands.cs
 
@@ -362,7 +364,9 @@ namespace PowerSDR
                             result = SIO6.put(answer);                                   //send the answer to the serial port
 
                         console.SpoofAB = false;
-                        Debug.WriteLine("R SIO6----->" + answer + "<---");
+                        Debug.WriteLine("SIO6 returned----->" + answer + "<---");
+                        Debug.WriteLine("");
+
 
                         CommBuffer = CommBuffer.Replace(m.Value, "", 0, m.Length);                   //remove the match from the buffer
                                                                                                      //Debug.WriteLine("Parser decode time for "+m.Value.ToString()+":  "+T0.ToString()+ "ms");

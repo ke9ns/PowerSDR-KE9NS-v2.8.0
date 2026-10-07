@@ -19644,7 +19644,7 @@ namespace PowerSDR
         public bool SpoofAB = false; // .200     use special CAT port to spoof VFOB data as VFOA (to run 2 instances of a digitial mode program and use RX2 VFOB as VFOA
                                         // set in SIOListenerII6.cs
         public bool LastVFOBTX = false; // .200  true = SpoofAB caused the TX on VFOB, so return TX to VFOA after TX is over.
-        public bool SpoofTX = false; // 200       true=TX in spoof mode, false=not in TX with spoof
+        public bool SpoofTX = false; // 200     if your using the CAT spoof port, this flag lets you know your TX on VFOB   true=TX in spoof mode, false=not in TX with spoof
 
         public bool SpoofRXATXB = false; //.311   true = RX to VFOA, RX to VFOB
         public bool SpoofRXATXBF = false; //.311  flag... true = skimmer sent new split TX freq to vfob, so send END key to skimmer
@@ -27136,6 +27136,8 @@ namespace PowerSDR
             set { fwc_mic_ptt = value; }
         }
 
+
+        //ke9ns: part of SpoofAB, SwapVFOA_BTX is for the TX button false = VFOA, true = VFOB
         private bool swap_vfo_ab_tx = false;
         public bool SwapVFOA_BTX
         {
@@ -27148,11 +27150,13 @@ namespace PowerSDR
                     {
                         //chkVFOATX.Checked = false;
                         chkVFOBTX.Checked = true;
+                        Debug.WriteLine("SwapVFOA_BTX: VFOATX is false, VFOBTX is true");
                     }
                     else
                     {
                         chkVFOATX.Checked = true;
                         //chkVFOBTX.Checked = false;
+                        Debug.WriteLine("SwapVFOA_BTX: VFOATX is true, VFOBTX is false");
                     }
                     swap_vfo_ab_tx = value;
                 }
@@ -38274,13 +38278,15 @@ namespace PowerSDR
                 // ke9ns: this is for the visual band indicator "VFOA Slider"
                 if ((setupForm != null && setupForm.chkVisualBandInd.Checked) || initializing)
                 {
-                   grpVFOA.Invalidate(new Rectangle(12, 80, grpVFOA.Width - 12, 99)); // .334 slider redraw just the slider area
-
+                    
+                      grpVFOA.Invalidate(new Rectangle(12, 80, grpVFOA.Width - 12, 99)); // .334 slider redraw just the slider area
+                     
                 } // setupForm.chkVisualBandInd.Checked
 
             } //set
 
         } // VFOAFreq
+      
 
         public bool UP1 = false; // ke9ns add .251 RX1 vfo freq change true = UpdateRX1DDSFreq done
         public bool UP2 = false; // ke9ns add .251 RX2 vfo freq change = true
@@ -78373,13 +78379,11 @@ namespace PowerSDR
             if (txtTimer.ForeColor == Color.Red)
             {
                 p4.Graphics.DrawPath(new Pen(Color.Yellow, BorderThk), gPath); // ke9ns take color from setup Ring VFO color
-
             }
             else
             {
                 p4.Graphics.DrawPath(new Pen(ring_vfo_color, BorderThk), gPath); // ke9ns take color from setup Ring VFO color
             }
-
 
 
         } //panelDateTime_Paint

@@ -1547,9 +1547,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\Roslyn.Analyzers.1.0.3.4\analyzers\dotnet\cs\Roslyn.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\PowerMate\PowerMate.vcxproj">
       <Project>{bbd70852-1a81-4232-b094-c87bede243c9}</Project>
       <Name>PowerMate</Name>
