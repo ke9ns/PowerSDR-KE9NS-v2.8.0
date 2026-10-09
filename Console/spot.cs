@@ -305,11 +305,11 @@ namespace PowerSDR
 
             if (!File.Exists(file_name))
             {
-                console.DXMemList.List.Add(new DXMemRecord("wb8zrl.no-ip.org:7300")); // 
-                console.DXMemList.List.Add(new DXMemRecord("ve7cc.net:23"));
+                console.DXMemList.List.Add(new DXMemRecord("dxc.ai9t.com:7300")); // 
+                console.DXMemList.List.Add(new DXMemRecord("dxc.ve7cc.net:23"));
                 console.DXMemList.List.Add(new DXMemRecord("telnet.reversebeacon.net:7000"));
-                console.DXMemList.List.Add(new DXMemRecord("n7od.pentux.net:7300"));
-                console.DXMemList.List.Add(new DXMemRecord("dxspots.com:23"));
+                console.DXMemList.List.Add(new DXMemRecord("dxcluster.k0mvh.io:7300"));
+                console.DXMemList.List.Add(new DXMemRecord("dxc.dxspots.com:23"));
                 console.DXMemList.List.Add(new DXMemRecord(""));
                 console.DXMemList.List.Add(new DXMemRecord(""));
                 console.DXMemList.List.Add(new DXMemRecord(""));
@@ -18161,6 +18161,7 @@ namespace PowerSDR
                         {
                             button4.BackColor = Color.Red;
                             textBox1.Text += "No US State FCC database, could not find EN.dat nor FCCDATA.dat files..\r\n";
+                            textBox1.Text += "Middle button click over the LoTW button to download now.\r\n"; // .340
 
                             Debug.WriteLine("Failed opening EN.dat file");
                             goto LoTW1; // cant open file so end it now.

@@ -19636,7 +19636,6 @@ namespace PowerSDR
             if (KWAutoInformation7) BroadcastFreqChange7("A", freq); // TCP/IP CAT
 
             //.339 SliderUpdate now under VFOAFreq
-            
 
         } // update vfoA freq
 
@@ -27135,7 +27134,6 @@ namespace PowerSDR
             get { return fwc_mic_ptt; }
             set { fwc_mic_ptt = value; }
         }
-
 
         //ke9ns: part of SpoofAB, SwapVFOA_BTX is for the TX button false = VFOA, true = VFOB
         private bool swap_vfo_ab_tx = false;
@@ -38278,7 +38276,6 @@ namespace PowerSDR
                 // ke9ns: this is for the visual band indicator "VFOA Slider"
                 if ((setupForm != null && setupForm.chkVisualBandInd.Checked) || initializing)
                 {
-                    
                       grpVFOA.Invalidate(new Rectangle(12, 80, grpVFOA.Width - 12, 99)); // .334 slider redraw just the slider area
                      
                 } // setupForm.chkVisualBandInd.Checked
@@ -38287,7 +38284,6 @@ namespace PowerSDR
 
         } // VFOAFreq
       
-
         public bool UP1 = false; // ke9ns add .251 RX1 vfo freq change true = UpdateRX1DDSFreq done
         public bool UP2 = false; // ke9ns add .251 RX2 vfo freq change = true
 
@@ -59941,9 +59937,7 @@ namespace PowerSDR
             grpVFOA.Invalidate(); // ke9ns add to check for ring color during MOX
             grpVFOB.Invalidate();
 
-            Debug.WriteLine("chkMOX grpVFOA B Invalidate");
-
-
+        
             //   Debug.WriteLine("MOX: "+chkMOX.Checked);	
 
             t1.Start();  // hiperformance timer start
@@ -62280,8 +62274,7 @@ namespace PowerSDR
 
             //txtVFOAFreq.Text = freq.ToString("f6");
 
-            Debug.WriteLine("txtVFOAFreq_LostFocus INVALIDATE grpVFOA becuase txt was updated");
-
+ 
             UpdateVFOAFreq(freq.ToString("f6"));
 
 
@@ -64626,7 +64619,6 @@ namespace PowerSDR
             if (ZoomOn) //.241
             {
 
-
                 int xx = picDisplay.Width;  // size of picdisplay as user scales it to their screen
                 int yy = picDisplay.Height;
 
@@ -64654,12 +64646,7 @@ namespace PowerSDR
 
                 //    Debug.WriteLine("Zoom scaled to 1000,50 Y " + ZoomY);
 
-
-
-
             } // ZoomOn
-
-
 
             if (AGCTDIS == true)
             {
@@ -78727,12 +78714,9 @@ namespace PowerSDR
                 //  Debug.WriteLine("VFOA PAINT:  vfocheck out of range " + vfocheck);
                 return (0, 0);
             }
-
             return (flow, fhigh);
 
-
         } // SliderCheck
-
 
 
         double Slidex2A = 0; // fhigh - flow; //width  2.0 - 1.8 = 0.2mhz
@@ -90584,7 +90568,6 @@ namespace PowerSDR
 
                 btnSync.BackgroundImage = buttonOnImage;
                 ESCSYNC = true; // .249
-
             }
             else // not synced up
             {

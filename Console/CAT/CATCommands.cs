@@ -21,7 +21,6 @@
 //=================================================================
 
 
-using OpenQA.Selenium.DevTools.V135.Page;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -616,7 +615,7 @@ namespace PowerSDR
         {
             Debug.WriteLine("MD: " + s);
 
-            if (console.SpoofAB == true && console.CurrentModel == Model.FLEX5000 && FWCEEPROM.RX2OK)
+            if (console.SpoofAB == true && console.CurrentModel == Model.FLEX5000 && FWCEEPROM.RX2OK) //.339
             {
                 if (s.Length == parser.nSet)
                 {
@@ -6629,7 +6628,7 @@ namespace PowerSDR
         }
 
         //Swaps VFO A/B TX buttons
-        ////ke9ns: part of SpoofAB, SwapVFOA_BTX is for the TX button false = VFOA, true = VFOB
+        //ke9ns: part of SpoofAB, SwapVFOA_BTX is for the TX button false = VFOA, true = VFOB
         public string ZZSW(string s)
         {
             //  if (console.SpoofAB == true) // ke9ns add .200
@@ -7082,7 +7081,6 @@ namespace PowerSDR
                     if (console.SpoofTX == true) // if we spoofed the TX button, we need to turn it back to the original VFOA
                     {
                         console.SpoofTX = false;
-
                         if (console.LastVFOBTX == true)
                         {
                             console.LastVFOBTX = false;
@@ -7108,7 +7106,6 @@ namespace PowerSDR
                         console.SwapVFOA_BTX = true; // VFOB is TX so this sets console.chkVFOBTX.Checked = true; and console.chkVFOATX.Checked = false;
                         console.SpoofTX = true; // flag to put back TX to VFOA when done with TX
                        
-
                     }
                     else
                     {
@@ -10360,7 +10357,6 @@ namespace PowerSDR
             }
         } // String2ModeRX2
 
-
         public string Mode2String(DSPMode pMode)
         {
             DSPMode s = pMode;
@@ -10496,7 +10492,6 @@ namespace PowerSDR
                     break;
             }
         } // KString2ModeRX2
-
 
 
         // converts SDR mode to Kenwood single digit mode code
