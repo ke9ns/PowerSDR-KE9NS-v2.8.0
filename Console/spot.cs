@@ -16578,6 +16578,14 @@ namespace PowerSDR
             // need to re-scale to fit 1000 x 507
             // water temp map of world
 
+            //.340
+            //https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png
+            // 3600 x 1800
+            // need to re-scale to fit 1000 x 507
+
+
+
+
             // .241
             // IR Cloud map of mid-latitudes   University of Wisconsin-Madison  http://tropic.ssec.wisc.edu/tropic.php
 
@@ -16593,6 +16601,7 @@ namespace PowerSDR
                 chkLightningMap.Checked = false; //.240
                 chkCloudOn.Checked = false; //.241
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
 
                 var CSR = System.Windows.Forms.Cursor.Current; //.242
 
@@ -16706,6 +16715,7 @@ namespace PowerSDR
                 chkLightningMap.Checked = false;
                 chkCloudOn.Checked = false; //.241
                 chkWaterTempMap.Checked = false; //.316 
+                chkPrecipOn.Checked = false; //.340
 
                 int x = 17;
                 int x1 = 27;
@@ -16778,6 +16788,7 @@ namespace PowerSDR
                 chkFLayerON.Checked = false; //.240
                 chkCloudOn.Checked = false; //.241
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
 
                 Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
                 int x = 55;
@@ -16908,6 +16919,7 @@ namespace PowerSDR
                 chkFLayerON.Checked = false; //.240
                 chkCloudOn.Checked = false; //.241
                 chkLightningMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
 
                 Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
                 int x = 55;
@@ -17126,6 +17138,165 @@ namespace PowerSDR
                     }
                 }
             } // chkWaterTempMap
+            else if (chkPrecipOn.Checked) //.340 https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png  3600 x 1800
+            {
+                chkDLayerON.Checked = false;
+                chkFLayerON.Checked = false; //.240
+                chkCloudOn.Checked = false; //.241
+                chkLightningMap.Checked = false; //.316
+                chkWaterTempMap.Checked = false; //.316
+
+                Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
+                int x = 55;
+
+                var CSR = System.Windows.Forms.Cursor.Current; //.242
+
+                if (console.ZoomOn) //.242 
+                {
+
+                    try
+                    {
+                        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
+
+                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
+                        Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
+
+
+                  //      Rectangle r = new Rectangle(54, 83, 708, 417);    // cut out only the water bouy temp equirectangular map (ignore the lat/long data surounding it)
+                   //     Bitmap img8 = img7.Clone(r, img7.PixelFormat);  // make a new bitmap of just the lightning world map
+                        Rectangle r1 = new Rectangle(59, 19, 875, 450); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
+
+
+                        int xZ = console.ZoomX;    // =  mouse X location on a 1000 wide bitmap
+                        int yZ = console.ZoomY;     //= mouse Y location on a 507 tall bitmap
+                        float fZ = console.ZoomFactor; //= 2.0
+
+
+                        int xF = (int)((925.0 * .2)); // Upper left start of zoomed area
+                        int yF = (int)((591.0 * .2)); // 
+
+                        int xF1 = (int)(xF * 0.7); // zoom factor (1.3  small number bigger zoom)
+                        int yF1 = (int)(yF * 0.7);
+
+
+                        Rectangle SZoom = new Rectangle(xZ, yZ, xF1, yF1); // zoomed area of lightning map
+
+                        Rectangle DZoom = new Rectangle(xZ, yZ, 300, 230); // zoomed image goes in here
+
+                        if (xZ > 700)
+                        {
+                            if (yZ > 300)
+                            {
+                                DZoom = new Rectangle(xZ - 150, yZ - 110, 300, 230); // zoomed image goes in here
+                            }
+                            else DZoom = new Rectangle(xZ - 150, yZ, 300, 230); // zoomed image goes in here
+                        }
+                        else if (yZ > 300)
+                        {
+                            DZoom = new Rectangle(xZ, yZ - 110, 300, 230); // zoomed image goes in here
+                        }
+
+                        using (Graphics g = Graphics.FromImage(result))
+                        {
+
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+
+                            g.DrawImage(img7, r1);  // draw lightning map
+
+                            g.DrawString("Nasa", font2, new SolidBrush(Color.White), 10, 15);
+                            g.DrawString("Precipitation Map", font2, new SolidBrush(Color.Black), 80, 30);
+
+
+                            g.DrawImage(img7, DZoom, SZoom, GraphicsUnit.Pixel);  // draw lightning map zoom closeup
+
+                            g.DrawRectangle(new Pen(Color.Red, 5.0f), DZoom); //   Pen p44 = new Pen(Color.White, 1.0f);                  // ke9ns add color for vert line for TIME UTC pos
+
+                        } // using
+
+
+                        Rectangle cropRect = new Rectangle(38, 543, 722, 21); // get temp gradiant legend 
+                        Bitmap img9 = img7.Clone(cropRect, img7.PixelFormat);  // make a new bitmap of just the lightning world map
+                        img9.RotateFlip(RotateFlipType.Rotate270FlipNone);
+
+                        Rectangle r2 = new Rectangle(25, 32, 21, 350); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
+
+                        using (Graphics g = Graphics.FromImage(result))
+                        {
+
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+
+                            g.DrawImage(img9, r2);  // draw Precip map
+
+                       
+
+                        } // using
+
+
+
+                        System.Windows.Forms.Cursor.Current = CSR; //.242
+                        MAP = Lighten(result, MBG, MB);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        console.MapNOAA = true; //.243 update map
+
+                        // MessageBox.Show(ex.Message);
+                        MAP = Lighten(new Bitmap(Map_image), MBG, MB);
+                        System.Windows.Forms.Cursor.Current = CSR; //.242
+                    }
+
+
+                } // ZoomOn == true
+                else // ZoomOn == false
+                {
+                    Debug.WriteLine("Precipitation map imergert_composite.now.png display now now now");
+
+                    try
+                    {
+                        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
+
+                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.240
+                        Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
+
+                          Rectangle r1 = new Rectangle(59, 19, 875, 450);
+
+                        using (Graphics g = Graphics.FromImage(result))
+                        {
+
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+
+                        
+
+                           
+                            g.DrawImage(img7, r1);  // draw lightning map
+
+                            g.DrawString("NASA", font2, new SolidBrush(Color.White), 10, 15);
+                            g.DrawString("Precipiation Map", font2, new SolidBrush(Color.Black), 80, 30);
+
+                        } // using
+
+                      
+
+                        MAP = Lighten(result, MBG, MB);
+                        System.Windows.Forms.Cursor.Current = CSR; //.242
+                    }
+                    catch (Exception e)
+                    {
+                        console.MapNOAA = true; //.243 update map
+
+                        // MessageBox.Show(ex.Message);
+                        MAP = Lighten(new Bitmap(Map_image), MBG, MB);
+                        System.Windows.Forms.Cursor.Current = CSR; //.242
+                    }
+                }
+            } // chkPrecipON
 
             else if (chkCloudOn.Checked) // IRCloudE.jpg, IRCloudW.jpg, IRCloudS.jpg
             {
@@ -17133,6 +17304,7 @@ namespace PowerSDR
                 chkFLayerON.Checked = false; //.240
                 chkLightningMap.Checked = false; //.241
                 chkWaterTempMap.Checked = false; //.316 
+                chkPrecipOn.Checked = false; //.340
 
                 Debug.WriteLine("IR Cloud map DRAW");
 
@@ -18397,30 +18569,30 @@ namespace PowerSDR
                 SP_SPOTSTART = false; //.279b
                 SP_SHOWDX = false;
 
-               
-                    try
-                    {
-                        SP_writer.Close();
-                        SP_reader.Close();
-                    }
-                    catch (Exception)
-                    {
-                        Debug.Write("writer/reader was not open to close");
-                    }
 
-                    try
-                    {
+                try
+                {
+                    SP_writer.Close();
+                    SP_reader.Close();
+                }
+                catch (Exception)
+                {
+                    Debug.Write("writer/reader was not open to close");
+                }
 
-                        networkStream.Close();
-                        client.Close();
-                    }
-                    catch (Exception)
-                    {
-                        Debug.Write("networkstream was never open to close");
-                    }
+                try
+                {
 
-                    SP_Active = 0; // turn off DX Spotter
-                    SP2_Active = 0; // turn off DX Spotter
+                    networkStream.Close();
+                    client.Close();
+                }
+                catch (Exception)
+                {
+                    Debug.Write("networkstream was never open to close");
+                }
+
+                SP_Active = 0; // turn off DX Spotter
+                SP2_Active = 0; // turn off DX Spotter
 
 
 
@@ -18450,7 +18622,7 @@ namespace PowerSDR
                 lotwon = false;
                 chkLoTWOn.Checked = false;
 
-                button4.BackColor = Color.Ivory; 
+                button4.BackColor = Color.Ivory;
 
                 // download the latest FCC l_amat.zip file from the FCC website and extract it to the Database folder
                 Thread t = new Thread(new ThreadStart(FCC_l_amat)); //.337
@@ -18716,13 +18888,14 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first
 
 
-            if (chkFLayerON.Checked && (chkDLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked))
+            if (chkFLayerON.Checked && (chkDLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked || chkPrecipOn.Checked))
             {
 
                 chkDLayerON.Checked = false;
                 chkLightningMap.Checked = false;
                 chkCloudOn.Checked = false;
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
 
             }
 
@@ -18905,12 +19078,13 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first
 
 
-            if (chkDLayerON.Checked && (chkFLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked))
+            if (chkDLayerON.Checked && (chkFLayerON.Checked || chkLightningMap.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked || chkPrecipOn.Checked))
             {
                 chkFLayerON.Checked = false;
                 chkLightningMap.Checked = false;
                 chkCloudOn.Checked = false;
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
             }
 
             chkSUN_CheckedChanged(this, EventArgs.Empty);
@@ -19088,12 +19262,13 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first
 
 
-            if (chkLightningMap.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked))
+            if (chkLightningMap.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkCloudOn.Checked || chkWaterTempMap.Checked || chkPrecipOn.Checked))
             {
                 chkFLayerON.Checked = false;
                 chkDLayerON.Checked = false;
                 chkCloudOn.Checked = false;
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
             }
 
             chkSUN_CheckedChanged(this, EventArgs.Empty);
@@ -19272,23 +19447,20 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first
 
 
-            if (chkCloudOn.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkLightningMap.Checked || chkWaterTempMap.Checked))
+            if (chkCloudOn.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkLightningMap.Checked || chkWaterTempMap.Checked || chkPrecipOn.Checked))
             {
                 chkFLayerON.Checked = false;
                 chkDLayerON.Checked = false;
                 chkLightningMap.Checked = false;
                 chkWaterTempMap.Checked = false; //.316
+                chkPrecipOn.Checked = false; //.340
             }
 
             chkSUN_CheckedChanged(this, EventArgs.Empty);
 
-
             if (chkCloudOn.Checked == true) //.241
             {
-
                 console.MapNOAA = true; //.243 update map
-
-
 
                 MoonLast = chkMoon.Checked;   // turn off Moon
                 chkMoon.Checked = false;
@@ -19301,8 +19473,6 @@ namespace PowerSDR
 
                 //   GrayLineLast = chkGrayLine.Checked;   // turn off Grayline on the d-layer
                 //   chkGrayLine.Checked = false;
-
-
 
                 MapJustBandLast = chkMapBand.Checked;  // turn off spots on d-layer
                 chkMapBand.Checked = false;
@@ -19583,12 +19753,13 @@ namespace PowerSDR
                 btnTrack_Click(this, EventArgs.Empty); // turn on Map first+
 
 
-            if (chkWaterTempMap.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkCloudOn.Checked || chkLightningMap.Checked))
+            if (chkWaterTempMap.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkCloudOn.Checked || chkLightningMap.Checked || chkPrecipOn.Checked))
             {
                 chkFLayerON.Checked = false;
                 chkDLayerON.Checked = false;
                 chkCloudOn.Checked = false;
                 chkLightningMap.Checked = false;
+                chkPrecipOn.Checked = false; //.340
 
             }
 
@@ -19759,6 +19930,190 @@ namespace PowerSDR
 
 
         } // chkWaterTempMap
+
+        private void chkPrecipOn_CheckedChanged(object sender, EventArgs e) //.340
+        {
+
+            if (SP5_Active == 0)  // .239 if map was off when you turned on watertempmap
+                btnTrack_Click(this, EventArgs.Empty); // turn on Map first+
+
+
+            if (chkPrecipOn.Checked && (chkFLayerON.Checked || chkDLayerON.Checked || chkCloudOn.Checked || chkLightningMap.Checked || chkWaterTempMap.Checked))
+            {
+                chkFLayerON.Checked = false;
+                chkDLayerON.Checked = false;
+                chkCloudOn.Checked = false;
+                chkLightningMap.Checked = false;
+                chkWaterTempMap.Checked = false; //
+
+            }
+
+            chkSUN_CheckedChanged(this, EventArgs.Empty);
+
+
+            if (chkPrecipOn.Checked == true) //
+            {
+                console.MapNOAA = true; //.243 update map
+
+                MoonLast = chkMoon.Checked;   // turn off Moon
+                chkMoon.Checked = false;
+
+                SunLast = chkSUN.Checked;   // turn off Sun
+                chkSUN.Checked = false;
+
+                ISSLast = chkISS.Checked;   // turn off ISS
+                chkISS.Checked = false;
+
+                //   GrayLineLast = chkGrayLine.Checked;   // turn off Grayline on the d-layer
+                //   chkGrayLine.Checked = false;
+
+                MapJustBandLast = chkMapBand.Checked;  // turn off spots on d-layer
+                chkMapBand.Checked = false;
+
+                MapJustPanLast = chkBoxPan.Checked;
+                chkBoxPan.Checked = false;
+
+                MapBeamLast = chkBoxBeam.Checked;
+                chkBoxBeam.Checked = false;
+
+                MemoriesPanLast = chkBoxMem.Checked; // Turn off memories on d-layer
+                chkBoxMem.Checked = false;
+
+                VOACAPLast = checkBoxMUF.Checked;  // turn off VOACAP on d
+                                                   // -Layer
+                checkBoxMUF.Checked = false;
+
+                BandTextLast = chkBoxBandText.Checked;
+                chkBoxBandText.Checked = false;
+
+                MapCallLast = chkMapCall.Checked;
+                chkMapCall.Checked = false;
+
+                MapCountryLast = chkMapCountry.Checked;
+                chkMapCountry.Checked = false;
+
+                if (console.setupForm != null)
+                {
+                    if (Display.GridOff == 0)
+                    {
+                        GridBoxLast = !console.setupForm.gridBoxTS.Checked; // if GRID ON then = false so set GridBoxLast = true
+                        console.setupForm.gridBoxTS.Checked = true; // true = Grid OFF
+                    }
+
+                }
+
+                if (SP1_Active == 1) //.240
+                {
+                    SWLLast = true;
+                    SWLbutton_Click(this, EventArgs.Empty); // was on so turn off
+
+                }
+                else
+                {
+                    SWLLast = false;
+                }
+
+            }
+            else  // turn them back on if they were on before the F-layer map was turned on
+            {
+
+                if (MoonLast)
+                {
+                    MoonLast = false;
+                    chkMoon.Checked = true;
+                }
+
+                if (SunLast)
+                {
+                    SunLast = false;
+                    chkSUN.Checked = true;
+                }
+
+                if (ISSLast)
+                {
+                    ISSLast = false;
+                    chkISS.Checked = true;
+                }
+
+                //   if (GrayLineLast)
+                //   {
+                //     GrayLineLast = false;
+                //     chkGrayLine.Checked = true;
+                //  }
+
+                if (MapJustBandLast)
+                {
+                    MapJustBandLast = false;
+                    chkMapBand.Checked = true;
+                }
+
+                if (MapJustPanLast)
+                {
+                    MapJustPanLast = false;
+                    chkBoxPan.Checked = true;
+                }
+
+                if (MapBeamLast)
+                {
+                    MapBeamLast = false;
+                    chkBoxBeam.Checked = true;
+                }
+
+                if (MemoriesPanLast)
+                {
+                    MemoriesPanLast = false;
+                    chkBoxMem.Checked = true;
+                }
+
+                if (VOACAPLast)
+                {
+                    VOACAPLast = false;
+                    checkBoxMUF.Checked = true;
+                }
+
+                if (BandTextLast)
+                {
+                    BandTextLast = false;
+                    chkBoxBandText.Checked = true;
+                }
+
+                if (MapCallLast)
+                {
+                    MapCallLast = false;
+                    chkMapCall.Checked = true;
+                }
+
+                if (MapCountryLast)
+                {
+                    MapCountryLast = false;
+                    chkMapCountry.Checked = true;
+                }
+
+
+                if (console.setupForm != null)
+                {
+                    if (Display.GridOff == 0)
+                    {
+                        if (GridBoxLast) // grid was on before
+                        {
+                            GridBoxLast = false;
+                            console.setupForm.gridBoxTS.Checked = false; // true = Grid OFF
+                        }
+                    }
+
+                }
+
+                if (SWLLast) //.240
+                {
+                    SWLLast = false;
+                    SWLbutton_Click(this, EventArgs.Empty); // was on so turn back on again
+                }
+
+            } //  if (chkPrecipOn.Checked == true) //
+
+
+        } // chkPrecipOn_CheckedChanged
+
 
         private void SWLbutton2_MouseUp(object sender, MouseEventArgs e) //.337 mod
         {
