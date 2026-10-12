@@ -83235,7 +83235,7 @@ namespace PowerSDR
             }
             catch (Exception g)
             {
-                Debug.WriteLine("Unable to get Lightning from coolwx: " + g);
+                Debug.WriteLine("Unable to get buoydata from coolwx: " + g);
 
             }
 
@@ -83246,7 +83246,7 @@ namespace PowerSDR
                 using (WebClient client = new WebClient()) 
                 {
                     client.DownloadFileAsync(new Uri("https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png"), AppDataPath + "imergert_composite.now.png");
-                    Debug.WriteLine("+Precipitation Map from NASA+"); //.340
+                    Debug.WriteLine("+Precipitation Map from NASA+"); //.340 3600 x 1800 
                 }
 
             }

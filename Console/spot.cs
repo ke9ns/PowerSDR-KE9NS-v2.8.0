@@ -16583,9 +16583,6 @@ namespace PowerSDR
             // 3600 x 1800
             // need to re-scale to fit 1000 x 507
 
-
-
-
             // .241
             // IR Cloud map of mid-latitudes   University of Wisconsin-Madison  http://tropic.ssec.wisc.edu/tropic.php
 
@@ -16644,6 +16641,7 @@ namespace PowerSDR
                         g.CompositingQuality = CompositingQuality.HighQuality;
                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                         g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.PixelOffsetMode = PixelOffsetMode.HighQuality; //.340
 
                         g.DrawImage(img8, r1);  // draw F layer
 
@@ -16727,8 +16725,6 @@ namespace PowerSDR
 
                     System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
-
-
                     System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "DRAP.png"); // bring in D-layer full image
                     Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
                     Rectangle r = new Rectangle(0, 0, 700, 350);    // this is the portion of the full D layer image that has the world map
@@ -16744,6 +16740,7 @@ namespace PowerSDR
                         g.CompositingQuality = CompositingQuality.HighQuality;
                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                         g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.PixelOffsetMode = PixelOffsetMode.HighQuality; //.340
 
                         g.DrawImage(img8, r1);  // draw D layer
 
@@ -16844,6 +16841,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality; //.340
 
                             g.DrawImage(img8, r1);  // draw lightning map
 
@@ -16890,6 +16888,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;// .340
 
                             g.DrawImage(img8, r1);  // draw lightning map
 
@@ -16977,6 +16976,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
                             g.DrawImage(img8, r1);  // draw lightning map
 
@@ -17003,6 +17003,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
                             g.DrawImage(img9, r2);  // draw lightning map
 
@@ -17056,6 +17057,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
                             // darken this map as it starts out too bright for the panadapter display 
                             float[][] colorMatrixElements =
@@ -17092,6 +17094,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 
                             float[][] colorMatrixElements =
@@ -17138,6 +17141,7 @@ namespace PowerSDR
                     }
                 }
             } // chkWaterTempMap
+            // This is a cloud cover map: https://wvs.earthdata.nasa.gov/api/v1/snapshot?REQUEST=GetSnapshot&TIME=2026-10-11T18:00:00Z&BBOX=-90,-180,90,180&CRS=EPSG:4326&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor&FORMAT=image/png&WIDTH=4096&HEIGHT=2048
             else if (chkPrecipOn.Checked) //.340 https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png  3600 x 1800
             {
                 chkDLayerON.Checked = false;
@@ -17147,8 +17151,7 @@ namespace PowerSDR
                 chkWaterTempMap.Checked = false; //.316
 
                 Bitmap result = new Bitmap(1000, 507);          // this is the size we really want so it matches the built in world map
-                int x = 55;
-
+              
                 var CSR = System.Windows.Forms.Cursor.Current; //.242
 
                 if (console.ZoomOn) //.242 
@@ -17159,29 +17162,23 @@ namespace PowerSDR
                         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
                         System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
-                        Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
+                        Bitmap img7 = new Bitmap(imag); // 3600x1800image      ke9ns: To avoid indexed pixel format PNG issues
 
-
-                  //      Rectangle r = new Rectangle(54, 83, 708, 417);    // cut out only the water bouy temp equirectangular map (ignore the lat/long data surounding it)
-                   //     Bitmap img8 = img7.Clone(r, img7.PixelFormat);  // make a new bitmap of just the lightning world map
                         Rectangle r1 = new Rectangle(59, 19, 875, 450); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
 
+                        int xZ = console.ZoomX;     // =  mouse X location on a 1000 wide bitmap
+                        int yZ = console.ZoomY;     // = mouse Y location on a 507 tall bitmap
+                      //  float fZ = console.ZoomFactor; //= 2.0
+           
+                        int xW = (int)(((float)xZ -100) * 3.80); //starting position on 3600x1800 map to get zoomed area to fit into 300x230 zoom window on panadapter display 
+                        int yW = (int)(((float)yZ - 100) * 3.55); // 3.55 and 3.8 are the scaling factors to go from 1000x507 to 3600x1800 original image size
 
-                        int xZ = console.ZoomX;    // =  mouse X location on a 1000 wide bitmap
-                        int yZ = console.ZoomY;     //= mouse Y location on a 507 tall bitmap
-                        float fZ = console.ZoomFactor; //= 2.0
+                        int xF1 = (int)(300.0 * 1.5); // how many pixels to grab from the 3600x1800 original image to fill the 300x230 zoom window on the panadapter display
+                        int yF1 = (int)(230.0 * 1.5); //
+                                        
+                        Rectangle SZoom = new Rectangle(xW, yW, xF1, yF1); // zoomed area of Precip map based on 3600x1800 original image
 
-
-                        int xF = (int)((925.0 * .2)); // Upper left start of zoomed area
-                        int yF = (int)((591.0 * .2)); // 
-
-                        int xF1 = (int)(xF * 0.7); // zoom factor (1.3  small number bigger zoom)
-                        int yF1 = (int)(yF * 0.7);
-
-
-                        Rectangle SZoom = new Rectangle(xZ, yZ, xF1, yF1); // zoomed area of lightning map
-
-                        Rectangle DZoom = new Rectangle(xZ, yZ, 300, 230); // zoomed image goes in here
+                        Rectangle DZoom = new Rectangle(xZ, yZ, 300, 230); // this is the zoom window that will be drawn on the panadapter display where you clicked
 
                         if (xZ > 700)
                         {
@@ -17196,47 +17193,24 @@ namespace PowerSDR
                             DZoom = new Rectangle(xZ, yZ - 110, 300, 230); // zoomed image goes in here
                         }
 
+
                         using (Graphics g = Graphics.FromImage(result))
                         {
-
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                            g.DrawImage(img7, r1);  // draw lightning map
-
+                            g.DrawImage(img7, r1);  // draw 3600x1800 precip map reduced to 875x450 (1000x507 size of panadapter) 
                             g.DrawString("Nasa", font2, new SolidBrush(Color.White), 10, 15);
-                            g.DrawString("Precipitation Map", font2, new SolidBrush(Color.Black), 80, 30);
+                            g.DrawString("Precipitation Map", font2, new SolidBrush(Color.White), 80, 30);
 
-
-                            g.DrawImage(img7, DZoom, SZoom, GraphicsUnit.Pixel);  // draw lightning map zoom closeup
-
-                            g.DrawRectangle(new Pen(Color.Red, 5.0f), DZoom); //   Pen p44 = new Pen(Color.White, 1.0f);                  // ke9ns add color for vert line for TIME UTC pos
+                            g.DrawImage(img7, DZoom, SZoom, GraphicsUnit.Pixel);  // draw Precip map zoom closeup
+                            g.DrawRectangle(new Pen(Color.Red, 5.0f), DZoom); // draw red rectangle around zoomed area                 
 
                         } // using
 
-
-                        Rectangle cropRect = new Rectangle(38, 543, 722, 21); // get temp gradiant legend 
-                        Bitmap img9 = img7.Clone(cropRect, img7.PixelFormat);  // make a new bitmap of just the lightning world map
-                        img9.RotateFlip(RotateFlipType.Rotate270FlipNone);
-
-                        Rectangle r2 = new Rectangle(25, 32, 21, 350); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
-
-                        using (Graphics g = Graphics.FromImage(result))
-                        {
-
-                            g.CompositingQuality = CompositingQuality.HighQuality;
-                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            g.SmoothingMode = SmoothingMode.HighQuality;
-
-                            g.DrawImage(img9, r2);  // draw Precip map
-
-                       
-
-                        } // using
-
-
-
+                      
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                         MAP = Lighten(result, MBG, MB);
 
@@ -17254,37 +17228,31 @@ namespace PowerSDR
                 } // ZoomOn == true
                 else // ZoomOn == false
                 {
-                    Debug.WriteLine("Precipitation map imergert_composite.now.png display now now now");
+                    Debug.WriteLine("Precipitation map imergert_composite.now.png display now");
 
                     try
                     {
                         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
-                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.240
+                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
                         Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
 
-                          Rectangle r1 = new Rectangle(59, 19, 875, 450);
+                         Rectangle r1 = new Rectangle(59, 19, 875, 450); // portal inside console panadapter display
 
                         using (Graphics g = Graphics.FromImage(result))
                         {
-
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g. PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                        
-
-                           
-                            g.DrawImage(img7, r1);  // draw lightning map
-
+                            g.DrawImage(img7, r1);  // draw Precipitation map at 875x450 (1000x507) reduces from 3600 x 1800
                             g.DrawString("NASA", font2, new SolidBrush(Color.White), 10, 15);
-                            g.DrawString("Precipiation Map", font2, new SolidBrush(Color.Black), 80, 30);
+                            g.DrawString("Precipiation Map", font2, new SolidBrush(Color.White), 80, 30);
 
                         } // using
-
-                      
-
-                        MAP = Lighten(result, MBG, MB);
+                     
+                        MAP = Lighten(result, MBG, MB); // allow for darkening of the map to make it more visible on the panadapter display
                         System.Windows.Forms.Cursor.Current = CSR; //.242
                     }
                     catch (Exception e)
@@ -17313,12 +17281,9 @@ namespace PowerSDR
 
                 if (console.ZoomOn)
                 {
-
-
                     try
                     {
                         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
-
 
                         System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudE.jpg"); //.241
                         System.Drawing.Image imag3 = System.Drawing.Image.FromFile(console.AppDataPath + "IRCloudW.jpg"); //.241
@@ -17393,6 +17358,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
                             g.DrawImage(img111, r1);  // this results in a 
                             g.DrawImage(img222, r2);  // this results in a
@@ -17410,6 +17376,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 
                             g.DrawImage(result, 0, 0);
@@ -17519,6 +17486,7 @@ namespace PowerSDR
                             g.CompositingQuality = CompositingQuality.HighQuality;
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 
                             g.DrawImage(img111, r1);  // this results in a 
