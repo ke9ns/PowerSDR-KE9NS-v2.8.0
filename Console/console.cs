@@ -83240,12 +83240,14 @@ namespace PowerSDR
             }
 
             Debug.WriteLine("-Precipitation Map from NASA-"); //.340
-
+            // https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_1080p.now.png 1920 x 1080
+            // https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png
             try
             {
                 using (WebClient client = new WebClient()) 
                 {
                     client.DownloadFileAsync(new Uri("https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_composite.now.png"), AppDataPath + "imergert_composite.now.png");
+                    client.DownloadFileAsync(new Uri("https://svs.gsfc.nasa.gov/vis/a000000/a004200/a004285/imergert_1080p.now.png"), AppDataPath + "imergert_1080p.now.png");
                     Debug.WriteLine("+Precipitation Map from NASA+"); //.340 3600 x 1800 
                 }
 

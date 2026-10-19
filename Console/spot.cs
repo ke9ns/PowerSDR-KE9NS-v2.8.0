@@ -17161,17 +17161,22 @@ namespace PowerSDR
                     {
                         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
-                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
+                      //  System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
+                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_1080p.now.png"); //.340
+
                         Bitmap img7 = new Bitmap(imag); // 3600x1800image      ke9ns: To avoid indexed pixel format PNG issues
 
-                        Rectangle r1 = new Rectangle(59, 19, 875, 450); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
+                        Rectangle r1 = new Rectangle(64, 19, 875, 450); // 55, 0, 887, 457 this is where to place the smaller lightning world map into the big result bitmap
 
                         int xZ = console.ZoomX;     // =  mouse X location on a 1000 wide bitmap
                         int yZ = console.ZoomY;     // = mouse Y location on a 507 tall bitmap
                       //  float fZ = console.ZoomFactor; //= 2.0
            
-                        int xW = (int)(((float)xZ -100) * 3.80); //starting position on 3600x1800 map to get zoomed area to fit into 300x230 zoom window on panadapter display 
-                        int yW = (int)(((float)yZ - 100) * 3.55); // 3.55 and 3.8 are the scaling factors to go from 1000x507 to 3600x1800 original image size
+                     //   int xW = (int)(((float)xZ -100) * 3.80); //starting position on 3600x1800 map to get zoomed area to fit into 300x230 zoom window on panadapter display 
+                      //  int yW = (int)(((float)yZ - 100) * 3.55); // 3.55 and 3.8 are the scaling factors to go from 1000x507 to 3600x1800 original image size
+
+                        int xW = (int)(((float)xZ - 100) * 1.92); //starting position on 3600x1800 map to get zoomed area to fit into 300x230 zoom window on panadapter display 
+                        int yW = (int)(((float)yZ - 100) * 2.13); // 3.55 and 3.8 are the scaling factors to go from 1000x507 to 3600x1800 original image size
 
                         int xF1 = (int)(300.0 * 1.5); // how many pixels to grab from the 3600x1800 original image to fill the 300x230 zoom window on the panadapter display
                         int yF1 = (int)(230.0 * 1.5); //
@@ -17234,10 +17239,12 @@ namespace PowerSDR
                     {
                         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor; // .242 change cursor when to wait cursor when loading new image
 
-                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
+                      //  System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_composite.now.png"); //.340
+                        System.Drawing.Image imag = System.Drawing.Image.FromFile(console.AppDataPath + "imergert_1080p.now.png"); //.340
+
                         Bitmap img7 = new Bitmap(imag);                 // ke9ns: To avoid indexed pixel format PNG issues
 
-                         Rectangle r1 = new Rectangle(59, 19, 875, 450); // portal inside console panadapter display
+                         Rectangle r1 = new Rectangle(64, 19, 875, 450); // portal inside console panadapter display
 
                         using (Graphics g = Graphics.FromImage(result))
                         {
@@ -17248,7 +17255,7 @@ namespace PowerSDR
 
                             g.DrawImage(img7, r1);  // draw Precipitation map at 875x450 (1000x507) reduces from 3600 x 1800
                             g.DrawString("NASA", font2, new SolidBrush(Color.White), 10, 15);
-                            g.DrawString("Precipiation Map", font2, new SolidBrush(Color.White), 80, 30);
+                            g.DrawString("Precipitation Map", font2, new SolidBrush(Color.White), 10, 30);
 
                         } // using
                      
