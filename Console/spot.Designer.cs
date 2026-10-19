@@ -1307,8 +1307,6 @@ namespace PowerSDR
             // chkBoxMem
             // 
             this.chkBoxMem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkBoxMem.Checked = true;
-            this.chkBoxMem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBoxMem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.chkBoxMem.Image = null;
             this.chkBoxMem.Location = new System.Drawing.Point(421, 335);
